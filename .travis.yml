@@ -1,7 +1,5 @@
 language: cpp
 
-sudo: false
-
 env:
   global:
     - LUAROCKS=2.2.2
@@ -13,17 +11,12 @@ env:
     - LUA=luajit2.0  # current head of 2.0 branch
     - LUA=luajit2.1  # current head of 2.1 branch
 
-addons:
-  apt:
-    packages:
-    - libwt-dev
-    - libwthttp-dev
-
 branches:
   only:
     - master
 
 before_install:
+  - sudo aptitude install libwt-dev libwthttp-dev
   - source .travis/setenv_lua.sh
 
 install:
