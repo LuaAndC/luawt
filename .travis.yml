@@ -16,7 +16,7 @@ branches:
     - master
 
 before_install:
-  - sudo aptitude install libwt-dev libwthttp-dev
+  - sudo apt-get install libwt-dev libwthttp-dev
   - source .travis/setenv_lua.sh
 
 install:
