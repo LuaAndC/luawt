@@ -39,9 +39,9 @@ mkdir -p "$LUA_HOME_DIR"
 if [ "$LUAJIT" == "yes" ]; then
 
   if [ "$LUA" == "luajit" ]; then
-    curl http://luajit.org/download/$LUAJIT_BASE.tar.gz | tar xz;
+    curl -L https://github.com/LuaJIT/LuaJIT/archive/$(echo $LUAJIT_BASE | sed s/LuaJIT-/v/).tar.gz
   else
-    git clone http://luajit.org/git/luajit-2.0.git $LUAJIT_BASE;
+    git clone https://github.com/LuaJIT/LuaJIT $LUAJIT_BASE;
   fi
 
   cd $LUAJIT_BASE
