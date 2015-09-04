@@ -15,11 +15,6 @@ description = {
 dependencies = {
     "lua >= 5.1",
 }
-external_dependencies = {
-    WT = {
-        header = "Wt/DomElement.h",
-    },
-}
 build = {
     type = "builtin",
     modules = {
