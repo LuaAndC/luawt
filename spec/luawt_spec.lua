@@ -8,4 +8,16 @@ describe("luawt", function()
         local luawt = require 'luawt'
     end)
 
+    pending("creates simple application", function()
+        local luawt = require 'luawt'
+        luawt.WRun {
+            code = [[
+                local app, env = ...
+                local luawt = require 'luawt'
+                local text = "IP: " .. env:clientAddress()
+                app:root():addWidget(lua.WPushButton(text))
+            ]],
+        }
+    end)
+
 end)
