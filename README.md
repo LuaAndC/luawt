@@ -14,5 +14,5 @@ Lua bindings for Wt.
 `$ busted`
 
 [license]: https://img.shields.io/badge/License-MIT-brightgreen.png
-[travis]: https://travis-ci.org/zer0main/luawt
-[build-status]: https://travis-ci.org/zer0main/luawt.png?branch=master
+[travis]: https://travis-ci.org/LuaAndC/luawt
+[build-status]: https://travis-ci.org/LuaAndC/luawt.png?branch=master
