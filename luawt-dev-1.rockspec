@@ -5,11 +5,11 @@
 package = "luawt"
 version = "dev-1"
 source = {
-    url = "git@github.com:zer0main/luawt.git",
+    url = "git@github.com:LuaAndC/luawt.git",
 }
 description = {
     summary = "Lua bindings for Wt",
-    homepage = "https://github.com/zer0main/luawt",
+    homepage = "https://github.com/LuaAndC/luawt",
     license = "MIT",
 }
 dependencies = {
