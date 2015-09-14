@@ -10,7 +10,7 @@ source = {
 description = {
     summary = "Lua bindings for Wt",
     homepage = "https://github.com/LuaAndC/luawt",
-    license = "MIT",
+    license = "GPL 2.0",
 }
 dependencies = {
     "lua >= 5.1",
