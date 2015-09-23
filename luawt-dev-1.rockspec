@@ -15,6 +15,11 @@ description = {
 dependencies = {
     "lua >= 5.1",
 }
+external_dependencies = {
+    WT = {
+        header = "Wt/WConfig.h",
+    },
+}
 build = {
     type = "builtin",
     modules = {
