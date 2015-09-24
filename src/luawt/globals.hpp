@@ -4,6 +4,8 @@
  * See the LICENSE file for terms of use.
  */
 
+#include <lua.hpp>
+
 template<lua_CFunction F>
 struct wrap {
     static int func(lua_State* L) {
