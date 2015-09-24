@@ -1,0 +1,6 @@
+# vim
+*.swp
+
+# build
+*.so
+*.o
