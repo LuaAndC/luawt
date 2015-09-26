@@ -12,12 +12,6 @@
 
 #include "globals.hpp"
 
-// arguments:
-// 1. argc, integer
-// 2. argv, Lua string
-// 3. ApplicationCreator, Lua metatable
-static int lua_Wrun(lua_State* L) {
-    return 1;
 using namespace Wt;
 
 class LuaAppCreator {
@@ -35,5 +29,18 @@ public:
 private:
     std::string code_;
 };
+
+extern "C" {
+
+int lua_WRun(lua_State* L) {
+    luaL_checktype(L, 1, LUA_TTABLE);
+    lua_getfield(L, 1, "code");
+    size_t code_len;
+    const char* code = luaL_checklstring(L, 2, &code_len);
+    int argc = 1;
+    char* argv[] = {"", NULL};
+    WRun(argc, argv, LuaAppCreator(std::string(code, code_len)));
+    return 0;
+}
 
 }

@@ -31,4 +31,13 @@ struct wrap {
     }
 };
 
+extern "C" {
+/** Runs the Wt application server
+    Argument 1 is table of options
+    Possible options: code.
+*/
+int lua_WRun(lua_State* L);
+
+}
+
 #endif
