@@ -23,6 +23,28 @@ external_dependencies = {
 build = {
     type = "builtin",
     modules = {
-        ['luawt'] = 'src/luawt/init.lua',
+        luawt = {
+            sources = {
+                "src/luawt/init.cpp",
+                "src/luawt/WServer.cpp",
+            },
+            libraries = {
+                "wt",
+                "wthttp",
+            },
+        },
+    },
+    platforms = {
+        unix = {
+            modules = {
+                luawt = {
+                    libraries = {
+                        "wt",
+                        "wthttp",
+                        "stdc++"
+                    },
+                },
+            },
+        },
     },
 }
