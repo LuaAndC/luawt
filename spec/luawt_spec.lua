@@ -14,8 +14,13 @@ describe("luawt", function()
             code = [[
                 local app, env = ...
                 local luawt = require 'luawt'
-                local text = "IP: " .. env:clientAddress()
-                app:root():addWidget(lua.WPushButton(text))
+                if luawt.shared.test then
+                    luawt.server:stop()
+                else
+                    luawt.shared.test = 'true'
+                    local text = "IP: " .. env:clientAddress()
+                    app:root():addWidget(lua.WPushButton(text))
+                end
             ]],
         }
     end)
