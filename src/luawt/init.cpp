@@ -16,6 +16,9 @@ extern "C" {
 int luaopen_luawt(lua_State* L) {
     lua_newtable(L); // module luawt
     my_setfuncs(L, functions);
+    lua_pushcfunction(L, lua_shared);
+    lua_call(L, 0, 1);
+    lua_setfield(L, -2, "shared");
     return 1;
 }
 

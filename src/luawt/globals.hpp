@@ -38,6 +38,8 @@ extern "C" {
 */
 int lua_WRun(lua_State* L);
 
+int lua_shared(lua_State* L);
+
 }
 
 #endif

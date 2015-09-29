@@ -27,6 +27,7 @@ build = {
             sources = {
                 "src/luawt/init.cpp",
                 "src/luawt/WServer.cpp",
+                "src/luawt/shared.cpp",
             },
             libraries = {
                 "wt",
