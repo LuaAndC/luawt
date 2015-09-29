@@ -7,6 +7,8 @@
 #include <map>
 #include <string>
 
+#include <boost/thread/mutex.hpp>
+
 #include "globals.hpp"
 
 typedef std::string Str;
@@ -14,8 +16,10 @@ typedef std::map<Str, Str> Map;
 typedef Map::const_iterator It;
 
 Map shared;
+boost::mutex mtx;
 
 int lua_shared_index(lua_State* L) {
+    boost::mutex::scoped_lock lock(mtx);
     size_t key_len;
     const char* key = luaL_checklstring(L, 1, &key_len);
     It iterator = shared.find(Str(key, key_len));
@@ -29,6 +33,7 @@ int lua_shared_index(lua_State* L) {
 }
 
 int lua_shared_newindex(lua_State* L) {
+    boost::mutex::scoped_lock lock(mtx);
     size_t key_len, value_len;
     const char* key = luaL_checklstring(L, 1, &key_len);
     const char* value = lua_tolstring(L, 2, &value_len);
