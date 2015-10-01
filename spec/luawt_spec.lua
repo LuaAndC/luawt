@@ -8,14 +8,27 @@ describe("luawt", function()
         local luawt = require 'luawt'
     end)
 
+    it("uses shared correctly", function()
+        local luawt = require 'luawt'
+        luawt.shared.test = 'true'
+        assert.equal(luawt.shared.test, 'true')
+        luawt.shared.test = nil
+        assert.equal(luawt.shared.test, nil)
+    end)
+
     pending("creates simple application", function()
         local luawt = require 'luawt'
         luawt.WRun {
             code = [[
                 local app, env = ...
                 local luawt = require 'luawt'
-                local text = "IP: " .. env:clientAddress()
-                app:root():addWidget(lua.WPushButton(text))
+                if luawt.shared.test then
+                    luawt.server:stop()
+                else
+                    luawt.shared.test = 'true'
+                    local text = "IP: " .. env:clientAddress()
+                    app:root():addWidget(lua.WPushButton(text))
+                end
             ]],
         }
     end)
