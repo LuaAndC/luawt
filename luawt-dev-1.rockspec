@@ -33,6 +33,9 @@ build = {
                 "wt",
                 "wthttp",
             },
+            incdirs = {
+                "src", -- for boost-xtime.hpp
+            },
         },
     },
     platforms = {

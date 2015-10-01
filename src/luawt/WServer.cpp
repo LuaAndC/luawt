@@ -7,6 +7,7 @@
 #include <string>
 #include <memory>
 
+#include "boost-xtime.hpp"
 #include <Wt/WText>
 #include <Wt/WApplication>
 

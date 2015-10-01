@@ -7,6 +7,7 @@
 #include <map>
 #include <string>
 
+#include "boost-xtime.hpp"
 #include <boost/thread/mutex.hpp>
 
 #include "globals.hpp"
