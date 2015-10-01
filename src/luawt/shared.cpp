@@ -19,7 +19,7 @@ typedef Map::const_iterator It;
 Map shared;
 boost::mutex mtx;
 
-int lua_shared_index(lua_State* L) {
+int luawt_Shared_index(lua_State* L) {
     boost::mutex::scoped_lock lock(mtx);
     size_t key_len;
     const char* key = luaL_checklstring(L, 1, &key_len);
@@ -33,7 +33,7 @@ int lua_shared_index(lua_State* L) {
     return 1;
 }
 
-int lua_shared_newindex(lua_State* L) {
+int luawt_Shared_newindex(lua_State* L) {
     boost::mutex::scoped_lock lock(mtx);
     size_t key_len, value_len;
     const char* key = luaL_checklstring(L, 1, &key_len);
@@ -48,15 +48,14 @@ int lua_shared_newindex(lua_State* L) {
 }
 
 static const luaL_Reg shared_functions[] = {
-    {"lua_shared_newindex", wrap<lua_shared_newindex>::func},
-    {"lua_shared_index", wrap<lua_shared_index>::func},
+    METHOD(Shared, index),
+    METHOD(Shared, newindex),
     {NULL, NULL},
 };
 
-int lua_shared(lua_State* L) {
-    lua_newtable(L); // shared table
-    lua_newtable(L); // metatable of shared
+void luawtShared(lua_State* L) {
+    lua_newtable(L); // Shared table
+    lua_newtable(L); // metatable of Shared
     my_setfuncs(L, shared_functions);
     lua_setmetatable(L, -2);
-    return 1;
 }

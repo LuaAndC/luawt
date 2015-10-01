@@ -8,24 +8,24 @@ describe("luawt", function()
         local luawt = require 'luawt'
     end)
 
-    it("uses shared correctly", function()
+    it("uses Shared correctly", function()
         local luawt = require 'luawt'
-        luawt.shared.test = 'true'
-        assert.equal(luawt.shared.test, 'true')
-        luawt.shared.test = nil
-        assert.equal(luawt.shared.test, nil)
+        luawt.Shared.test = 'true'
+        assert.equal(luawt.Shared.test, 'true')
+        luawt.Shared.test = nil
+        assert.equal(luawt.Shared.test, nil)
     end)
 
     pending("creates simple application", function()
         local luawt = require 'luawt'
-        luawt.WRun {
+        luawt.WServer.WRun {
             code = [[
                 local app, env = ...
                 local luawt = require 'luawt'
-                if luawt.shared.test then
+                if luawt.Shared.test then
                     luawt.server:stop()
                 else
-                    luawt.shared.test = 'true'
+                    luawt.Shared.test = 'true'
                     local text = "IP: " .. env:clientAddress()
                     app:root():addWidget(lua.WPushButton(text))
                 end

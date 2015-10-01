@@ -31,14 +31,13 @@ struct wrap {
     }
 };
 
-extern "C" {
-/** Runs the Wt application server
-    Argument 1 is table of options
-    Possible options: code.
-*/
-int lua_WRun(lua_State* L);
+#define METHOD(Klass, method) \
+    {#method, wrap<luawt_##Klass##_##method>::func}
 
-int lua_shared(lua_State* L);
+extern "C" {
+
+void luawtShared(lua_State* L);
+void luawtWServer(lua_State* L);
 
 }
 

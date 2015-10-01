@@ -33,7 +33,11 @@ private:
 
 extern "C" {
 
-int lua_WRun(lua_State* L) {
+/** Runs the Wt application server
+    Argument 1 is table of options
+    Possible options: code.
+*/
+int luawt_WServer_WRun(lua_State* L) {
     luaL_checktype(L, 1, LUA_TTABLE);
     lua_getfield(L, 1, "code");
     size_t code_len;
@@ -42,6 +46,16 @@ int lua_WRun(lua_State* L) {
     char* argv[] = {"", NULL};
     WRun(argc, argv, LuaAppCreator(std::string(code, code_len)));
     return 0;
+}
+
+static const luaL_Reg functions[] = {
+    METHOD(WServer, WRun),
+    {NULL, NULL},
+};
+
+void luawtWServer(lua_State* L) {
+    lua_newtable(L);
+    my_setfuncs(L, functions);
 }
 
 }

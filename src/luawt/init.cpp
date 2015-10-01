@@ -6,8 +6,18 @@
 
 #include "globals.hpp"
 
-static const luaL_Reg functions[] = {
-    {"WRun", wrap<lua_WRun>::func},
+typedef void (*luawtFunction) (lua_State *L);
+
+typedef struct LuawtReg {
+  const char *name;
+  luawtFunction func;
+} LuawtReg;
+
+#define MODULE(name) {#name, luawt##name}
+
+static const LuawtReg luawt_modules[] = {
+    MODULE(Shared),
+    MODULE(WServer),
     {NULL, NULL},
 };
 
@@ -15,10 +25,10 @@ extern "C" {
 
 int luaopen_luawt(lua_State* L) {
     lua_newtable(L); // module luawt
-    my_setfuncs(L, functions);
-    lua_pushcfunction(L, lua_shared);
-    lua_call(L, 0, 1);
-    lua_setfield(L, -2, "shared");
+    for (const LuawtReg* reg = luawt_modules; reg->name; ++reg) {
+        reg->func(L); // must push 1 object (module)
+        lua_setfield(L, -2, reg->name);
+    }
     return 1;
 }
 
