@@ -16,6 +16,18 @@ describe("luawt", function()
         assert.equal(luawt.Shared.test, nil)
     end)
 
+    it("uses Shared from another thread", function()
+        local llthreads2 = require "llthreads2"
+        local thread = llthreads2.new [[
+            local luawt = require 'luawt'
+            luawt.Shared.abc = "def"
+        ]]
+        thread:start()
+        thread:join()
+        local luawt = require 'luawt'
+        assert.equal("def", luawt.Shared.abc)
+    end)
+
     pending("creates simple application", function()
         local luawt = require 'luawt'
         luawt.WServer.WRun {
