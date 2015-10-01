@@ -32,16 +32,12 @@ struct wrap {
 };
 
 #define METHOD(Klass, method) \
-    {#method, wrap<lua_##Klass##_##method>::func}
+    {#method, wrap<luawt_##Klass##_##method>::func}
 
 extern "C" {
-/** Runs the Wt application server
-    Argument 1 is table of options
-    Possible options: code.
-*/
-int lua_WRun(lua_State* L);
 
-int lua_shared(lua_State* L);
+void luawtShared(lua_State* L);
+void luawtWServer(lua_State* L);
 
 }
 
