@@ -34,6 +34,9 @@ struct wrap {
 #define METHOD(Klass, method) \
     {#method, wrap<luawt_##Klass##_##method>::func}
 
+#define MT_METHOD(Klass, method) \
+    {"__"#method, wrap<luawt_##Klass##_##method>::func}
+
 extern "C" {
 
 void luawtShared(lua_State* L);
