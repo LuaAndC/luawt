@@ -31,6 +31,9 @@ struct wrap {
     }
 };
 
+#define METHOD(Klass, method) \
+    {#method, wrap<lua_##Klass##_##method>::func}
+
 extern "C" {
 /** Runs the Wt application server
     Argument 1 is table of options
