@@ -26,4 +26,5 @@ before_script:
   - luarocks install busted
 
 script:
+  - export LD_PRELOAD=/lib/x86_64-linux-gnu/libpthread.so.0
   - busted

@@ -22,7 +22,7 @@ boost::mutex mtx;
 int luawt_Shared_index(lua_State* L) {
     boost::mutex::scoped_lock lock(mtx);
     size_t key_len;
-    const char* key = luaL_checklstring(L, 1, &key_len);
+    const char* key = luaL_checklstring(L, 2, &key_len);
     It iterator = shared.find(Str(key, key_len));
     if (iterator != shared.end()) {
         const Str& value = iterator->second;
@@ -36,8 +36,8 @@ int luawt_Shared_index(lua_State* L) {
 int luawt_Shared_newindex(lua_State* L) {
     boost::mutex::scoped_lock lock(mtx);
     size_t key_len, value_len;
-    const char* key = luaL_checklstring(L, 1, &key_len);
-    const char* value = lua_tolstring(L, 2, &value_len);
+    const char* key = luaL_checklstring(L, 2, &key_len);
+    const char* value = lua_tolstring(L, 3, &value_len);
     if (value == NULL) {
         // remove key
         shared.erase(Str(key, key_len));
@@ -48,8 +48,8 @@ int luawt_Shared_newindex(lua_State* L) {
 }
 
 static const luaL_Reg shared_functions[] = {
-    METHOD(Shared, index),
-    METHOD(Shared, newindex),
+    MT_METHOD(Shared, index),
+    MT_METHOD(Shared, newindex),
     {NULL, NULL},
 };
 

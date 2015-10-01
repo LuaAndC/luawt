@@ -8,14 +8,6 @@ describe("luawt", function()
         local luawt = require 'luawt'
     end)
 
-    it("uses Shared correctly", function()
-        local luawt = require 'luawt'
-        luawt.Shared.test = 'true'
-        assert.equal(luawt.Shared.test, 'true')
-        luawt.Shared.test = nil
-        assert.equal(luawt.Shared.test, nil)
-    end)
-
     pending("creates simple application", function()
         local luawt = require 'luawt'
         luawt.WServer.WRun {
