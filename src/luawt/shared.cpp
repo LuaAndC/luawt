@@ -48,8 +48,8 @@ int luawt_Shared_newindex(lua_State* L) {
 }
 
 static const luaL_Reg shared_functions[] = {
-    METHOD(Shared, index),
-    METHOD(Shared, newindex),
+    MT_METHOD(Shared, index),
+    MT_METHOD(Shared, newindex),
     {NULL, NULL},
 };
 
