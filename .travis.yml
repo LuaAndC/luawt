@@ -24,6 +24,7 @@ install:
 
 before_script:
   - luarocks install busted
+  - luarocks install luasocket
 
 script:
   - export LD_PRELOAD=/lib/x86_64-linux-gnu/libpthread.so.0
