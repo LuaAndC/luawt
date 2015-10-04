@@ -10,19 +10,31 @@ describe("luawt", function()
 
     pending("creates simple application", function()
         local luawt = require 'luawt'
-        luawt.WServer.WRun {
-            code = [[
-                local app, env = ...
-                local luawt = require 'luawt'
-                if luawt.Shared.test then
-                    luawt.server:stop()
-                else
-                    luawt.Shared.test = 'true'
-                    local text = "IP: " .. env:clientAddress()
-                    app:root():addWidget(lua.WPushButton(text))
-                end
-            ]],
-        }
+        local llthreads2 = require 'llthreads2'
+        local thread = llthreads2.new [=[
+            luawt.WServer.WRun {
+                code = [[
+                    local app, env = ...
+                    local luawt = require 'luawt'
+                    if luawt.Shared.test then
+                        luawt.server:stop()
+                    else
+                        luawt.Shared.test = 'true'
+                        local text = "IP: " .. env:clientAddress()
+                        app:root():addWidget(lua.WPushButton(text))
+                    end
+                ]],
+                port = 56789,
+            }
+        ]=]
+        thread:start()
+        os.execute("sleep 2")
+        local socket = require 'socket.http'
+        local data = socket.request('http://127.0.0.1:56789/')
+        assert.truthy(data:match('IP:'))
+        -- killing request
+        socket.request('http://127.0.0.1:56789/')
+        thread:join()
     end)
 
 end)
