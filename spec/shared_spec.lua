@@ -13,7 +13,7 @@ describe("luawt.Shared", function()
     end)
 
     it("uses Shared from another thread", function()
-        local llthreads2 = require "llthreads2"
+        local llthreads2 = require 'llthreads2'
         local thread = llthreads2.new [[
             local luawt = require 'luawt'
             luawt.Shared.abc = "def"
