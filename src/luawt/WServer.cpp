@@ -33,7 +33,7 @@ private:
 
 /** Runs the Wt application server
     Argument 1 is table of options
-    Possible options: code.
+    Possible options: code, port.
 */
 int luawt_WServer_WRun(lua_State* L) {
     luaL_checktype(L, 1, LUA_TTABLE);
