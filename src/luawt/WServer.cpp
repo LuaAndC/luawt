@@ -8,8 +8,9 @@
 #include <memory>
 
 #include "boost-xtime.hpp"
-#include <Wt/WText>
 #include <Wt/WApplication>
+#include <Wt/WServer>
+#include <Wt/WText>
 
 #include "globals.hpp"
 
@@ -59,8 +60,15 @@ int luawt_WServer_WRun(lua_State* L) {
     return 0;
 }
 
+/** Stops the server */
+int luawt_WServer_stop(lua_State* L) {
+    WServer::instance()->stop();
+    return 0;
+}
+
 static const luaL_Reg functions[] = {
     METHOD(WServer, WRun),
+    METHOD(WServer, stop),
     {NULL, NULL},
 };
 
