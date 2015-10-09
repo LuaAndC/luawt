@@ -39,5 +39,6 @@ struct wrap {
 
 void luawtShared(lua_State* L);
 void luawtWServer(lua_State* L);
+void luawtWEnvironment(lua_State* L);
 
 #endif

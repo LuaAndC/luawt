@@ -26,8 +26,9 @@ build = {
     modules = {
         luawt = {
             sources = {
-                "src/luawt/init.cpp",
+                "src/luawt/WEnvironment.cpp",
                 "src/luawt/WServer.cpp",
+                "src/luawt/init.cpp",
                 "src/luawt/shared.cpp",
             },
             libraries = {
