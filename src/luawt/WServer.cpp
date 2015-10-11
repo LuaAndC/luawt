@@ -31,8 +31,6 @@ private:
     std::string code_;
 };
 
-extern "C" {
-
 /** Runs the Wt application server
     Argument 1 is table of options
     Possible options: code.
@@ -69,6 +67,4 @@ static const luaL_Reg functions[] = {
 void luawtWServer(lua_State* L) {
     lua_newtable(L);
     my_setfuncs(L, functions);
-}
-
 }
