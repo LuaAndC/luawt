@@ -33,6 +33,7 @@ build = {
             libraries = {
                 "wt",
                 "wthttp",
+                "boost_system-mt",
             },
             incdirs = {
                 "src", -- for boost-xtime.hpp
@@ -46,6 +47,7 @@ build = {
                     libraries = {
                         "wt",
                         "wthttp",
+                        "boost_system-mt",
                         "stdc++"
                     },
                 },
