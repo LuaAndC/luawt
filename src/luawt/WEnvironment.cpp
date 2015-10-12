@@ -21,7 +21,7 @@ int luawt_WEnvironment_clientAddress(lua_State* L) {
     const std::string& address =
         WApplication::instance()->environment().clientAddress();
     lua_pushlstring(L, address.c_str(), address.size());
-    return 0;
+    return 1;
 }
 
 static const luaL_Reg functions[] = {
