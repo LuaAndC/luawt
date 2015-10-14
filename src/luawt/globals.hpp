@@ -7,7 +7,9 @@
 #ifndef GLOBALS_HPP_
 #define GLOBALS_HPP_
 
+#include <cassert>
 #include <exception>
+#include <typeinfo>
 
 #include <lua.hpp>
 
@@ -16,6 +18,17 @@
 #else
 #define my_setfuncs(L, funcs) luaL_setfuncs(L, funcs, 0)
 #endif
+
+template<typename T>
+const char* luawt_typeToStr() {
+    const char* name = typeid(T).name();
+    // TODO use wrapper for assert
+    assert(name != NULL);
+    assert(*name != NULL);
+    // Example: _ZN2Wt7WServer
+    // Remove _ from beginning of name
+    return name + 1;
+}
 
 template<lua_CFunction F>
 struct wrap {
@@ -39,5 +52,6 @@ struct wrap {
 
 void luawtShared(lua_State* L);
 void luawtWServer(lua_State* L);
+void luawtWEnvironment(lua_State* L);
 
 #endif
