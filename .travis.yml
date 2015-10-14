@@ -16,6 +16,7 @@ branches:
     - master
 
 before_install:
+  - sudo apt-get update
   - sudo apt-get install libwt-dev libwthttp-dev
   - source .travis/setenv_lua.sh
 
@@ -23,9 +24,11 @@ install:
   - luarocks make
 
 before_script:
+  - sudo apt-get install valgrind
   - luarocks install busted
   - luarocks install luasocket
 
 script:
   - export LD_PRELOAD=/lib/x86_64-linux-gnu/libpthread.so.0
   - busted
+  - if [[ "$LUA" != *"luajit"* ]]; then bash .travis/valgrind_test.sh; fi
