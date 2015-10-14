@@ -14,8 +14,6 @@
 
 using namespace Wt;
 
-extern "C" {
-
 /** Returns the IP address of the client */
 int luawt_WEnvironment_clientAddress(lua_State* L) {
     const std::string& address =
@@ -32,6 +30,4 @@ static const luaL_Reg functions[] = {
 void luawtWEnvironment(lua_State* L) {
     lua_newtable(L);
     my_setfuncs(L, functions);
-}
-
 }
