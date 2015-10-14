@@ -2,5 +2,4 @@
    wcscmp_boost_filesystem
    Memcheck:Addr8
    fun:wcscmp
-   fun:exit
 }
