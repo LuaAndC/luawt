@@ -8,6 +8,7 @@
 #define GLOBALS_HPP_
 
 #include <cassert>
+#include <cstring>
 #include <exception>
 #include <typeinfo>
 
@@ -28,6 +29,45 @@ const char* luawt_typeToStr() {
     // Example: _ZN2Wt7WServer
     // Remove _ from beginning of name
     return name + 1;
+}
+
+
+/* All Wt classes have metatables. Metatables have 2
+   fields:
+   - __parent -- parent class metatable
+   - __name -- name of class
+*/
+template<typename T>
+T* fromLua(lua_State* L, int index) {
+    if (!lua_getmetatable(L, index)) {
+        return 0;
+    }
+    const char* parent_type = luawt_typeToStr<T>();
+    while (true) {
+        lua_getfield(L, -1, "__name");
+        if (lua_type(L, -1) == LUA_TNIL) {
+            lua_pop(L, 2); // metatble, field name
+            return 0;
+        }
+        size_t name_len;
+        const char* name = lua_tolstring(L, -1, &name_len);
+        if (!name) {
+            lua_pop(L, 2); // metatble, field name
+            return 0;
+        }
+        if (memcmp(parent_type, name, name_len) == 0) {
+            lua_pop(L, 2); // metatble, field name
+            return lua_touserdata(L, index);
+        } else {
+            lua_pop(L, 1); // name
+            lua_getfield(L, -1, "__parent");
+            lua_remove(L, -2);
+            if (lua_type(L, -1) == LUA_TNIL) {
+                lua_pop(L, 2); // metatble, field name
+                return 0;
+            }
+        }
+    }
 }
 
 template<lua_CFunction F>
