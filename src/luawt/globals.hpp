@@ -10,6 +10,7 @@
 #include <cassert>
 #include <cstring>
 #include <exception>
+#include <stdexcept>
 #include <typeinfo>
 
 #include <lua.hpp>
@@ -67,6 +68,16 @@ T* fromLua(lua_State* L, int index) {
                 return 0;
             }
         }
+    }
+}
+
+template<typename T>
+T* checkFromLua(lua_State* L, int index) {
+    T* t = fromLua<T>(L, index);
+    if (t == 0) {
+        throw std::logic_error("LuaWt: Type mismatch");
+    } else {
+        return t;
     }
 }
 
