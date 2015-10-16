@@ -24,7 +24,7 @@ const char* luawt_typeToStr() {
     const char* name = typeid(T).name();
     // TODO use wrapper for assert
     assert(name != NULL);
-    assert(*name != NULL);
+    assert(*name != '\0');
     // Example: _ZN2Wt7WServer
     // Remove _ from beginning of name
     return name + 1;
