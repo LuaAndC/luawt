@@ -17,8 +17,10 @@
 
 #if LUA_VERSION_NUM == 501
 #define my_setfuncs(L, funcs) luaL_register(L, NULL, funcs)
+#define my_equal lua_equal
 #else
 #define my_setfuncs(L, funcs) luaL_setfuncs(L, funcs, 0)
+#define my_equal(L, i, j) lua_compare(L, i, j, LUA_OPEQ)
 #endif
 
 template<typename T>
