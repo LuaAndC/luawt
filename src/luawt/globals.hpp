@@ -34,7 +34,6 @@ const char* luawt_typeToStr() {
     return name + 1;
 }
 
-
 /* All Wt classes have metatables. Metatables have 2
    fields:
    - __parent -- parent class metatable
