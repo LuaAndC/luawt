@@ -59,7 +59,12 @@ T* fromLua(lua_State* L, int index) {
             return 0;
         }
         if (memcmp(parent_type, name, name_len) == 0) {
-            lua_pop(L, 2); // metatble, field name
+            luaL_getmetatable(L, parent_type);
+            if (!my_equal(L, -1, -3)) {
+                lua_pop(L, 3); // metatable, field name, mt2
+                return 0;
+            }
+            lua_pop(L, 3); // metatable, field name, mt2
             return lua_touserdata(L, index);
         } else {
             lua_pop(L, 1); // name
