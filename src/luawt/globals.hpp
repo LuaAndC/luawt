@@ -94,10 +94,11 @@ void declareType(lua_State* L, luaL_Reg* mt,
     // name
     lua_pushstring(L, luawt_typeToStr<T>());
     lua_setfield(L, -2, "name");
-    // parent
-    lua_getmetatable(L, parent);
-    assert(lua_type(L, -1) == LUA_TTABLE);
-    lua_setfield(L, -2, "__parent");
+    if (parent) {
+        lua_getmetatable(L, parent);
+        assert(lua_type(L, -1) == LUA_TTABLE);
+        lua_setfield(L, -2, "__parent");
+    }
     // set metatable's members
     my_setfuncs(L, mt);
     // index
