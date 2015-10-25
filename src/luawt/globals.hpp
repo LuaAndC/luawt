@@ -13,6 +13,11 @@
 #include <stdexcept>
 #include <typeinfo>
 
+#include "boost-xtime.hpp"
+#include <Wt/WApplication>
+#include <Wt/WText>
+#include <Wt/WServer>
+
 #include <lua.hpp>
 
 #if LUA_VERSION_NUM == 501
@@ -22,6 +27,29 @@
 #define my_setfuncs(L, funcs) luaL_setfuncs(L, funcs, 0)
 #define my_equal(L, i, j) lua_compare(L, i, j, LUA_OPEQ)
 #endif
+
+using namespace Wt;
+
+class LuaAppCreator {
+public:
+    LuaAppCreator(const std::string& code):
+        code_(code) {
+    }
+
+    lua_State* L() const {
+        return L_;
+    }
+
+    WApplication* operator()(const WEnvironment& env) const {
+        std::auto_ptr<WApplication> app(new WApplication(env));
+        new WText(code_, app->root());
+        return app.release();
+    }
+
+private:
+    std::string code_;
+    lua_State* L_;
+};
 
 template<typename T>
 const char* luawt_typeToStr() {
