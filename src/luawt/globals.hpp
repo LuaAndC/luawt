@@ -68,7 +68,8 @@ const char* luawt_typeToStr() {
    - __name -- name of class
 */
 template<typename T>
-T* fromLua(lua_State* L, int index) {
+T* fromLua(LuaAppCreator* creator, int index) {
+    lua_State* L = creator->L();
     if (!lua_getmetatable(L, index)) {
         return 0;
     }
@@ -106,7 +107,8 @@ T* fromLua(lua_State* L, int index) {
 }
 
 template<typename T>
-T* checkFromLua(lua_State* L, int index) {
+T* checkFromLua(LuaAppCreator* creator, int index) {
+    lua_State* L = creator->L();
     T* t = fromLua<T>(L, index);
     if (t == 0) {
         throw std::logic_error("LuaWt: Type mismatch");
@@ -116,8 +118,9 @@ T* checkFromLua(lua_State* L, int index) {
 }
 
 template<typename T>
-void declareType(lua_State* L, luaL_Reg* mt,
+void declareType(LuaAppCreator* creator, luaL_Reg* mt,
                  luaL_Reg* methods, const char* parent) {
+    lua_State* L = creator->L();
     assert(luaL_newmetatable(L, luawt_typeToStr<T>()));
     // name
     lua_pushstring(L, luawt_typeToStr<T>());
