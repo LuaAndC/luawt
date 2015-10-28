@@ -23,9 +23,11 @@
 #if LUA_VERSION_NUM == 501
 #define my_setfuncs(L, funcs) luaL_register(L, NULL, funcs)
 #define my_equal lua_equal
+#define my_rawlen lua_objlen
 #else
 #define my_setfuncs(L, funcs) luaL_setfuncs(L, funcs, 0)
 #define my_equal(L, i, j) lua_compare(L, i, j, LUA_OPEQ)
+#define my_rawlen lua_rawlen
 #endif
 
 using namespace Wt;
