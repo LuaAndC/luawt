@@ -68,7 +68,7 @@ const char* luawt_typeToStr() {
    - __name -- name of class
 */
 template<typename T>
-T* fromLua(LuaAppCreator* creator, int index) {
+T* luawt_fromLua(LuaAppCreator* creator, int index) {
     lua_State* L = creator->L();
     if (!lua_getmetatable(L, index)) {
         return 0;
@@ -107,9 +107,9 @@ T* fromLua(LuaAppCreator* creator, int index) {
 }
 
 template<typename T>
-T* checkFromLua(LuaAppCreator* creator, int index) {
+T* luawt_checkFromLua(LuaAppCreator* creator, int index) {
     lua_State* L = creator->L();
-    T* t = fromLua<T>(L, index);
+    T* t = luawt_fromLua<T>(L, index);
     if (t == 0) {
         throw std::logic_error("LuaWt: Type mismatch");
     } else {
@@ -118,7 +118,7 @@ T* checkFromLua(LuaAppCreator* creator, int index) {
 }
 
 template<typename T>
-void declareType(LuaAppCreator* creator, luaL_Reg* mt,
+void luawt_declareType(LuaAppCreator* creator, luaL_Reg* mt,
                  luaL_Reg* methods, const char* parent) {
     lua_State* L = creator->L();
     assert(luaL_newmetatable(L, luawt_typeToStr<T>()));
@@ -144,7 +144,7 @@ void declareType(LuaAppCreator* creator, luaL_Reg* mt,
    WApplication::findWidget(), WObject::id()
 */
 template<typename T>
-void toLua(LuaAppCreator* creator, T* obj) {
+void luawt_toLua(LuaAppCreator* creator, T* obj) {
     lua_State* L = creator->L();
     void* lobj = lua_newuserdata(L, obj->id().size());
     std::string id = obj->id();
