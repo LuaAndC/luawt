@@ -173,6 +173,8 @@ struct wrap {
 #define MT_METHOD(Klass, method) \
     {"__"#method, wrap<luawt_##Klass##_##method>::func}
 
+
+/* This functions are called from luaopen() */
 void luawtShared(lua_State* L);
 void luawtWServer(lua_State* L);
 void luawtWEnvironment(lua_State* L);
