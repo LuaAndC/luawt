@@ -15,8 +15,8 @@
 
 #include "boost-xtime.hpp"
 #include <Wt/WApplication>
-#include <Wt/WText>
 #include <Wt/WServer>
+#include <Wt/WText>
 
 #include <lua.hpp>
 
