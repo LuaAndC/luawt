@@ -140,6 +140,19 @@ void declareType(LuaAppCreator* creator, luaL_Reg* mt,
     lua_pop(L, 1);
 }
 
+/* In Lua: string with object ID instead of pointer
+   WApplication::findWidget(), WObject::id()
+*/
+template<typename T>
+void toLua(LuaAppCreator* creator, T* obj) {
+    lua_State* L = creator->L();
+    void* lobj = lua_newuserdata(L, obj->id().size());
+    std::string id = obj->id();
+    memcpy(lobj, id.c_str(), id.size());
+    assert(luaL_newmetatable(L, luawt_typeToStr<T>()));
+    lua_setmetatable(L, -2);
+}
+
 template<lua_CFunction F>
 struct wrap {
     static int func(lua_State* L) {
