@@ -122,7 +122,10 @@ T* luawt_fromLua(LuaWApplication* app, int index) {
                 return 0;
             }
             lua_pop(L, 3); // metatable, field name, mt2
-            return lua_touserdata(L, index);
+            char* obj = lua_touserdata(L, index);
+            size_t len = my_rawlen(L, -1);
+            std::string id(obj, len);
+            return app->root()->findById(id);
         } else {
             lua_pop(L, 1); // name
             lua_getfield(L, -1, "__parent");
