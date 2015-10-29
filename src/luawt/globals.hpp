@@ -59,22 +59,6 @@ private:
     bool owns_L_;
 };
 
-class LuaAppCreator {
-public:
-    LuaAppCreator(const std::string& code):
-        code_(code) {
-    }
-
-    WApplication* operator()(const WEnvironment& env) const {
-        std::auto_ptr<WApplication> app(new WApplication(env));
-        new WText(code_, app->root());
-        return app.release();
-    }
-
-private:
-    std::string code_;
-};
-
 template<typename T>
 const char* luawt_typeToStr() {
     const char* name = typeid(T).name();

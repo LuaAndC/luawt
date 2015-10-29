@@ -16,6 +16,22 @@
 
 using namespace Wt;
 
+class LuaAppCreator {
+public:
+    LuaAppCreator(const std::string& code):
+        code_(code) {
+    }
+
+    WApplication* operator()(const WEnvironment& env) const {
+        std::auto_ptr<WApplication> app(new WApplication(env));
+        new WText(code_, app->root());
+        return app.release();
+    }
+
+private:
+    std::string code_;
+};
+
 /** Runs the Wt application server
     Argument 1 is table of options
     Possible options: code, port.
