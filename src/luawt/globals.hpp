@@ -15,6 +15,7 @@
 
 #include "boost-xtime.hpp"
 #include <Wt/WApplication>
+#include <Wt/WContainerWidget>
 #include <Wt/WServer>
 #include <Wt/WText>
 
@@ -31,6 +32,32 @@
 #endif
 
 using namespace Wt;
+
+class LuaWApplication : public WApplication {
+public:
+    LuaWApplication(lua_State* L,
+                    const WEnvironment& env):
+        WApplication(env), L_(L), owns_L_(false) {
+        if (L == NULL) {
+            owns_L_ = true;
+            L_ = luaL_newstate();
+        }
+    }
+
+    ~LuaWApplication() {
+        if (owns_L_) {
+            lua_close(L_);
+        }
+    }
+
+    lua_State* L() const {
+        return L_;
+    }
+
+private:
+    lua_State* L_;
+    bool owns_L_;
+};
 
 class LuaAppCreator {
 public:
@@ -70,8 +97,8 @@ const char* luawt_typeToStr() {
    - __name -- name of class
 */
 template<typename T>
-T* luawt_fromLua(LuaAppCreator* creator, int index) {
-    lua_State* L = creator->L();
+T* luawt_fromLua(LuaWApplication* app, int index) {
+    lua_State* L = app->L();
     if (!lua_getmetatable(L, index)) {
         return 0;
     }
@@ -109,8 +136,8 @@ T* luawt_fromLua(LuaAppCreator* creator, int index) {
 }
 
 template<typename T>
-T* luawt_checkFromLua(LuaAppCreator* creator, int index) {
-    lua_State* L = creator->L();
+T* luawt_checkFromLua(LuaWApplication* app, int index) {
+    lua_State* L = app->L();
     T* t = luawt_fromLua<T>(L, index);
     if (t == 0) {
         throw std::logic_error("LuaWt: Type mismatch");
@@ -120,9 +147,9 @@ T* luawt_checkFromLua(LuaAppCreator* creator, int index) {
 }
 
 template<typename T>
-void luawt_declareType(LuaAppCreator* creator, luaL_Reg* mt,
+void luawt_declareType(LuaWApplication* app, luaL_Reg* mt,
                  luaL_Reg* methods, const char* parent) {
-    lua_State* L = creator->L();
+    lua_State* L = app->L();
     assert(luaL_newmetatable(L, luawt_typeToStr<T>()));
     // name
     lua_pushstring(L, luawt_typeToStr<T>());
@@ -146,8 +173,8 @@ void luawt_declareType(LuaAppCreator* creator, luaL_Reg* mt,
    WApplication::findWidget(), WObject::id()
 */
 template<typename T>
-void luawt_toLua(LuaAppCreator* creator, T* obj) {
-    lua_State* L = creator->L();
+void luawt_toLua(LuaWApplication* app, T* obj) {
+    lua_State* L = app->L();
     void* lobj = lua_newuserdata(L, obj->id().size());
     std::string id = obj->id();
     memcpy(lobj, id.c_str(), id.size());
