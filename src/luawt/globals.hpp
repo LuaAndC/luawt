@@ -65,10 +65,6 @@ public:
         code_(code) {
     }
 
-    lua_State* L() const {
-        return L_;
-    }
-
     WApplication* operator()(const WEnvironment& env) const {
         std::auto_ptr<WApplication> app(new WApplication(env));
         new WText(code_, app->root());
@@ -77,7 +73,6 @@ public:
 
 private:
     std::string code_;
-    lua_State* L_;
 };
 
 template<typename T>
