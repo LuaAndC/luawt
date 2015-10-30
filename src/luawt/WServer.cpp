@@ -14,8 +14,6 @@
 
 #include "globals.hpp"
 
-using namespace Wt;
-
 class LuaAppCreator {
 public:
     LuaAppCreator(const std::string& code):

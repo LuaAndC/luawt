@@ -12,8 +12,6 @@
 
 #include "globals.hpp"
 
-using namespace Wt;
-
 /** Returns the IP address of the client */
 int luawt_WEnvironment_clientAddress(lua_State* L) {
     const std::string& address =
