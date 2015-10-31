@@ -136,17 +136,19 @@ void luawt_declareType(LuaWApplication* app, luaL_Reg* mt,
     // name
     lua_pushstring(L, luawt_typeToStr<T>());
     lua_setfield(L, -2, "name");
+    if (mt) {
+        my_setfuncs(L, mt);
+    }
+    if (methods) {
+        lua_newtable(L);
+        my_setfuncs(L, methods);
+        lua_setfield(L, -2, "__index");
+    }
     if (parent) {
         lua_getmetatable(L, parent);
         assert(lua_type(L, -1) == LUA_TTABLE);
         lua_setfield(L, -2, "__parent");
     }
-    // set metatable's members
-    my_setfuncs(L, mt);
-    // index
-    lua_newtable(L);
-    my_setfuncs(L, methods);
-    lua_setfield(L, -2, "__index");
     // remove metatable from stack
     lua_pop(L, 1);
 }
