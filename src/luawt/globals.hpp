@@ -186,6 +186,14 @@ struct wrap {
 #define MT_METHOD(Klass, method) \
     {"__"#method, wrap<luawt_##Klass##_##method>::func}
 
+#define DECLARE_CLASS(app, type, constructor, mt, \
+                      methods, parent) \
+    if (constructor) { \
+        lua_getfield(L, LUA_REGISTRYINDEX, "luawt"); \
+        lua_pushcfunction(L, constructor); \
+        lua_setfield(L, -1, "constructor"); \
+     } \
+     declareType(app, mt, methods, parent);
 
 /* This functions are called from luaopen() */
 void luawtShared(lua_State* L);
