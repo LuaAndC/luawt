@@ -189,11 +189,12 @@ struct wrap {
 #define DECLARE_CLASS(app, type, constructor, mt, \
                       methods, parent) \
     if (constructor) { \
-        lua_getfield(L, LUA_REGISTRYINDEX, "luawt"); \
+        luaL_getmetatable(L, "luawt"); \
         lua_pushcfunction(L, constructor); \
-        lua_setfield(L, -1, "constructor"); \
+        lua_setfield(L, -2, "constructor"); \
+        lua_pop(L, 1); \
      } \
-     declareType(app, mt, methods, parent);
+     declareType<type>(app, mt, methods, parent);
 
 /* This functions are called from luaopen() */
 void luawtShared(lua_State* L);
