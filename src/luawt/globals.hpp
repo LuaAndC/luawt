@@ -72,7 +72,7 @@ const char* luawt_typeToStr() {
 
 /* All Wt classes have metatables. Metatables have 2
    fields:
-   - __parent -- parent class metatable
+   - __base -- base class metatable
    - __name -- name of class
 */
 template<typename T>
@@ -81,7 +81,7 @@ T* luawt_fromLua(LuaWApplication* app, int index) {
     if (!lua_getmetatable(L, index)) {
         return 0;
     }
-    const char* parent_type = luawt_typeToStr<T>();
+    const char* base_type = luawt_typeToStr<T>();
     while (true) {
         lua_getfield(L, -1, "__name");
         if (lua_type(L, -1) == LUA_TNIL) {
@@ -94,8 +94,8 @@ T* luawt_fromLua(LuaWApplication* app, int index) {
             lua_pop(L, 2); // metatable, field name
             return 0;
         }
-        if (memcmp(parent_type, name, name_len) == 0) {
-            luaL_getmetatable(L, parent_type);
+        if (memcmp(base_type, name, name_len) == 0) {
+            luaL_getmetatable(L, base_type);
             if (!my_equal(L, -1, -3)) {
                 lua_pop(L, 3); // metatable, field name, mt2
                 return 0;
@@ -107,7 +107,7 @@ T* luawt_fromLua(LuaWApplication* app, int index) {
             return app->root()->findById(id);
         } else {
             lua_pop(L, 1); // name
-            lua_getfield(L, -1, "__parent");
+            lua_getfield(L, -1, "__base");
             lua_remove(L, -2);
             if (lua_type(L, -1) == LUA_TNIL) {
                 lua_pop(L, 2); // metatable, field name
@@ -130,7 +130,7 @@ T* luawt_checkFromLua(LuaWApplication* app, int index) {
 
 template<typename T>
 void luawt_declareType(LuaWApplication* app, luaL_Reg* mt,
-                 luaL_Reg* methods, const char* parent) {
+                 luaL_Reg* methods, const char* base) {
     lua_State* L = app->L();
     assert(luaL_newmetatable(L, luawt_typeToStr<T>()));
     // name
@@ -144,10 +144,10 @@ void luawt_declareType(LuaWApplication* app, luaL_Reg* mt,
         my_setfuncs(L, methods);
         lua_setfield(L, -2, "__index");
     }
-    if (parent) {
-        lua_getmetatable(L, parent);
+    if (base) {
+        lua_getmetatable(L, base);
         assert(lua_type(L, -1) == LUA_TTABLE);
-        lua_setfield(L, -2, "__parent");
+        lua_setfield(L, -2, "__base");
     }
     // remove metatable from stack
     lua_pop(L, 1);
@@ -187,14 +187,14 @@ struct wrap {
     {"__"#method, wrap<luawt_##Klass##_##method>::func}
 
 #define DECLARE_CLASS(app, type, constructor, mt, \
-                      methods, parent) \
+                      methods, base) \
     if (constructor) { \
         luaL_getmetatable(L, "luawt"); \
         lua_pushcfunction(L, constructor); \
         lua_setfield(L, -2, "constructor"); \
         lua_pop(L, 1); \
      } \
-     declareType<type>(app, mt, methods, parent);
+     declareType<type>(app, mt, methods, base);
 
 /* This functions are called from luaopen() */
 void luawtShared(lua_State* L);
