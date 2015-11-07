@@ -13,6 +13,8 @@
 #include <stdexcept>
 #include <typeinfo>
 
+#include <boost/cast.hpp>
+
 #include "boost-xtime.hpp"
 #include <Wt/WApplication>
 #include <Wt/WContainerWidget>
@@ -48,6 +50,11 @@ public:
         if (owns_L_) {
             lua_close(L_);
         }
+    }
+
+    static LuaWApplication* instance() {
+         return boost::polymorphic_downcast
+             <LuaWApplication*>(Wt::WApplication::instance());
     }
 
     lua_State* L() const {
