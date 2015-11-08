@@ -136,9 +136,9 @@ T* luawt_checkFromLua(LuaWApplication* app, int index) {
 }
 
 template<typename T>
-void luawt_declareType(LuaWApplication* app, luaL_Reg* mt,
-                 luaL_Reg* methods, const char* base) {
-    lua_State* L = app->L();
+void luawt_declareType(lua_State* L, luaL_Reg* mt,
+                       luaL_Reg* methods,
+                       const char* base) {
     assert(luaL_newmetatable(L, luawt_typeToStr<T>()));
     // name
     lua_pushstring(L, luawt_typeToStr<T>());
@@ -193,7 +193,7 @@ struct wrap {
 #define MT_METHOD(Klass, method) \
     {"__"#method, wrap<luawt_##Klass##_##method>::func}
 
-#define DECLARE_CLASS(app, type, constructor, mt, \
+#define DECLARE_CLASS(L, type, constructor, mt, \
                       methods, base) \
     if (constructor) { \
         luaL_getmetatable(L, "luawt"); \
@@ -201,7 +201,7 @@ struct wrap {
         lua_setfield(L, -2, "constructor"); \
         lua_pop(L, 1); \
      } \
-     declareType<type>(app, mt, methods, base);
+     declareType<type>(L, mt, methods, base);
 
 /* This functions are called from luaopen() */
 void luawtShared(lua_State* L);
