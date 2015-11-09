@@ -167,8 +167,7 @@ void luawt_declareType(lua_State* L, luaL_Reg* mt,
    WApplication::findWidget(), WObject::id()
 */
 template<typename T>
-void luawt_toLua(LuaWApplication* app, T* obj) {
-    lua_State* L = app->L();
+void luawt_toLua(lua_State* L, T* obj) {
     void* lobj = lua_newuserdata(L, obj->id().size());
     std::string id = obj->id();
     memcpy(lobj, id.c_str(), id.size());
