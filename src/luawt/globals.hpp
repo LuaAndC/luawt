@@ -82,6 +82,7 @@ const char* luawt_typeToStr() {
    fields:
    - __base -- base class metatable
    - __name -- name of class
+   - __make -- function for creating object
 */
 template<typename T>
 T* luawt_fromLua(lua_State* L, int index) {
