@@ -84,8 +84,7 @@ const char* luawt_typeToStr() {
    - __name -- name of class
 */
 template<typename T>
-T* luawt_fromLua(LuaWApplication* app, int index) {
-    lua_State* L = app->L();
+T* luawt_fromLua(lua_State* L, int index) {
     if (!lua_getmetatable(L, index)) {
         return 0;
     }
@@ -112,7 +111,9 @@ T* luawt_fromLua(LuaWApplication* app, int index) {
             char* obj = lua_touserdata(L, index);
             size_t len = my_rawlen(L, -1);
             std::string id(obj, len);
-            return app->root()->findById(id);
+            LuaWApplication* app =
+                LuaWApplication::instance();
+            return app ? app->root()->findById(id) : 0;
         } else {
             lua_pop(L, 1); // name
             lua_getfield(L, -1, "__base");
@@ -126,8 +127,7 @@ T* luawt_fromLua(LuaWApplication* app, int index) {
 }
 
 template<typename T>
-T* luawt_checkFromLua(LuaWApplication* app, int index) {
-    lua_State* L = app->L();
+T* luawt_checkFromLua(lua_State* L, int index) {
     T* t = luawt_fromLua<T>(L, index);
     if (t == 0) {
         throw std::logic_error("LuaWt: Type mismatch or "
