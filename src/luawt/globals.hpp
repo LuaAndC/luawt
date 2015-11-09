@@ -195,12 +195,12 @@ struct wrap {
 #define MT_METHOD(Klass, method) \
     {"__"#method, wrap<luawt_##Klass##_##method>::func}
 
-#define DECLARE_CLASS(L, type, constructor, mt, \
+#define DECLARE_CLASS(L, type, make, mt, \
                       methods, base) \
-    if (constructor) { \
+    if (make) { \
         luaL_getmetatable(L, "luawt"); \
-        lua_pushcfunction(L, constructor); \
-        lua_setfield(L, -2, "constructor"); \
+        lua_pushcfunction(L, make); \
+        lua_setfield(L, -2, "make"); \
         lua_pop(L, 1); \
      } \
      declareType<type>(L, mt, methods, base);
