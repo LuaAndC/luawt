@@ -53,8 +53,9 @@ public:
     }
 
     static LuaWApplication* instance() {
-         return boost::polymorphic_downcast
-             <LuaWApplication*>(Wt::WApplication::instance());
+        WApplication* wapp = WApplication::instance();
+        return wapp ? boost::polymorphic_downcast
+            <LuaWApplication*>(wapp) : 0;
     }
 
     lua_State* L() const {
