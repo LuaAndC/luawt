@@ -130,7 +130,9 @@ T* luawt_checkFromLua(LuaWApplication* app, int index) {
     lua_State* L = app->L();
     T* t = luawt_fromLua<T>(L, index);
     if (t == 0) {
-        throw std::logic_error("LuaWt: Type mismatch");
+        throw std::logic_error("LuaWt: Type mismatch or "
+                               "no WApplication (no web "
+                               "session)");
     } else {
         return t;
     }
