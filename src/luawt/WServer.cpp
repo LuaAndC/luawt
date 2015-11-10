@@ -53,9 +53,11 @@ int luawt_WServer_WRun(lua_State* L) {
     opt.push_back(port);
     opt.push_back("--docroot=/usr/share/Wt");
     opt.push_back(0);
-    WRun(opt.size() - 1, const_cast<char**>(&opt[0]),
-         LuaAppCreator(std::string(code, code_len)));
-    return 0;
+    int status =
+        WRun(opt.size() - 1, const_cast<char**>(&opt[0]),
+             LuaAppCreator(std::string(code, code_len)));
+    lua_pushinteger(L, status);
+    return 1;
 }
 
 /** Stops the server */
