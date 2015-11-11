@@ -109,7 +109,8 @@ T* luawt_fromLua(lua_State* L, int index) {
                 return 0;
             }
             lua_pop(L, 3); // metatable, field name, mt2
-            char* obj = lua_touserdata(L, index);
+            void* raw_obj = lua_touserdata(L, index);
+            char* obj = reinterpret_cast<char*>(raw_obj);
             size_t len = my_rawlen(L, -1);
             std::string id(obj, len);
             LuaWApplication* app =
