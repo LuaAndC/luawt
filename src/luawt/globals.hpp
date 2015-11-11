@@ -114,7 +114,12 @@ T* luawt_fromLua(lua_State* L, int index) {
             std::string id(obj, len);
             LuaWApplication* app =
                 LuaWApplication::instance();
-            return app ? app->root()->findById(id) : 0;
+            if (!app) {
+                return 0;
+            } else {
+                WWidget* widget = app->root()->findById(id);
+                return boost::polymorphic_downcast<T*>(widget);
+            }
         } else {
             lua_pop(L, 1); // name
             lua_getfield(L, -1, "__base");
