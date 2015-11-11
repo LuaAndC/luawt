@@ -140,29 +140,33 @@ T* luawt_checkFromLua(lua_State* L, int index) {
 }
 
 template<typename T>
-void luawt_declareType(lua_State* L, luaL_Reg* mt,
-                       luaL_Reg* methods,
-                       const char* base) {
-    assert(luaL_newmetatable(L, luawt_typeToStr<T>()));
-    // name
-    lua_pushstring(L, luawt_typeToStr<T>());
-    lua_setfield(L, -2, "name");
-    if (mt) {
-        my_setfuncs(L, mt);
+class LuaDeclareType {
+public:
+    static void declare(lua_State* L,
+                        const luaL_Reg* mt,
+                        const luaL_Reg* methods,
+                        const char* base) {
+        assert(luaL_newmetatable(L, luawt_typeToStr<T>()));
+        // name
+        lua_pushstring(L, luawt_typeToStr<T>());
+        lua_setfield(L, -2, "__name");
+        if (mt) {
+            my_setfuncs(L, mt);
+        }
+        if (methods) {
+            lua_newtable(L);
+            my_setfuncs(L, methods);
+            lua_setfield(L, -2, "__index");
+        }
+        if (base) {
+            luaL_getmetatable(L, base);
+            assert(lua_type(L, -1) == LUA_TTABLE);
+            lua_setfield(L, -2, "__base");
+        }
+        // remove metatable from stack
+        lua_pop(L, 1);
     }
-    if (methods) {
-        lua_newtable(L);
-        my_setfuncs(L, methods);
-        lua_setfield(L, -2, "__index");
-    }
-    if (base) {
-        lua_getmetatable(L, base);
-        assert(lua_type(L, -1) == LUA_TTABLE);
-        lua_setfield(L, -2, "__base");
-    }
-    // remove metatable from stack
-    lua_pop(L, 1);
-}
+};
 
 /* In Lua: string with object ID instead of pointer
    WApplication::findWidget(), WObject::id()
@@ -198,13 +202,13 @@ struct wrap {
 
 #define DECLARE_CLASS(L, type, make, mt, \
                       methods, base) \
+    LuaDeclareType<type>::declare(L, mt, methods, base); \
     if (make) { \
         luaL_getmetatable(L, "luawt"); \
         lua_pushcfunction(L, make); \
         lua_setfield(L, -2, "make"); \
         lua_pop(L, 1); \
-     } \
-     declareType<type>(L, mt, methods, base);
+    }
 
 /* This functions are called from luaopen() */
 void luawtShared(lua_State* L);
