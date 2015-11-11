@@ -17,8 +17,9 @@ typedef struct LuawtReg {
 
 static const LuawtReg luawt_modules[] = {
     MODULE(Shared),
-    MODULE(WServer),
     MODULE(WEnvironment),
+    MODULE(WPushButton),
+    MODULE(WServer),
     {NULL, NULL},
 };
 
