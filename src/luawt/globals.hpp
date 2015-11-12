@@ -82,7 +82,6 @@ const char* luawt_typeToStr() {
    fields:
    - __base -- base class metatable
    - __name -- name of class
-   - __make -- function for creating object
 */
 template<typename T>
 T* luawt_fromLua(lua_State* L, int index) {
@@ -211,8 +210,9 @@ struct wrap {
     LuaDeclareType<type>::declare(L, mt, methods, base); \
     if (make) { \
         luaL_getmetatable(L, "luawt"); \
+        assert(lua_type(L, -1) == LUA_TTABLE); \
         lua_pushcfunction(L, make); \
-        lua_setfield(L, -2, "__make"); \
+        lua_setfield(L, -2, #type); \
         lua_pop(L, 1); \
     }
 
