@@ -26,6 +26,12 @@ static const luaL_Reg functions[] = {
 };
 
 void luawtWEnvironment(lua_State* L) {
-    lua_newtable(L);
-    my_setfuncs(L, functions);
+    DECLARE_CLASS(
+        WEnvironment,
+        L,
+        0,
+        0,
+        functions,
+        0
+    );
 }
