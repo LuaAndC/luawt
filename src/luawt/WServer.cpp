@@ -28,8 +28,18 @@ public:
     }
 
     WApplication* operator()(const WEnvironment& env) const {
-        std::auto_ptr<WApplication> app(new WApplication(env));
-        new WText(code_, app->root());
+        std::auto_ptr<LuaWApplication> app(
+            new LuaWApplication(0, env)
+        );
+        int status = luaL_loadstring(app->L(),
+                                     code_.c_str());
+        checkStatus(app->L(), status);
+        luawt_toLua<LuaWApplication>(app->L(), &(*app));
+        WEnvironment& env_nonconst =
+            const_cast<WEnvironment&>(env);
+        luawt_toLua<WEnvironment>(app->L(), &env_nonconst);
+        status = lua_pcall(app->L(), 2, 0, 0);
+        checkStatus(app->L(), status);
         return app.release();
     }
 
