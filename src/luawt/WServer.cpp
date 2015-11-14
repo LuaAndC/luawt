@@ -8,9 +8,8 @@
 #include <memory>
 
 #include "boost-xtime.hpp"
-#include <Wt/WApplication>
+#include <Wt/WEnvironment>
 #include <Wt/WServer>
-#include <Wt/WText>
 
 #include "globals.hpp"
 
@@ -56,11 +55,12 @@ int luawt_WServer_WRun(lua_State* L) {
     // get code
     lua_getfield(L, 1, "code");
     size_t code_len;
-    const char* code = luaL_checklstring(L, 2, &code_len);
-    lua_pop(L, 1);
+    const char* code = luaL_checklstring(L, -1, &code_len);
     // get port
     lua_getfield(L, 1, "port");
     const char* port = luaL_checkstring(L, -1);
+    lua_getfield(L, 1, "wt_config");
+    const char* config = luaL_checkstring(L, -1);
     // make argc, argv
     typedef std::vector<const char*> Options;
     Options opt;
@@ -69,6 +69,8 @@ int luawt_WServer_WRun(lua_State* L) {
     opt.push_back("--http-port");
     opt.push_back(port);
     opt.push_back("--docroot=/usr/share/Wt");
+    opt.push_back("--config");
+    opt.push_back(config);
     opt.push_back(0);
     int status =
         WRun(opt.size() - 1, const_cast<char**>(&opt[0]),
