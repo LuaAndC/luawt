@@ -14,10 +14,10 @@ typedef struct LuawtReg {
 } LuawtReg;
 
 #define MODULE(name) {#name, luawt##name}
-
 static const LuawtReg luawt_modules[] = {
     // Base must be before child
     MODULE(Shared),
+    MODULE(WApplication),
     MODULE(WEnvironment),
     MODULE(WServer),
     MODULE(WWidget),
