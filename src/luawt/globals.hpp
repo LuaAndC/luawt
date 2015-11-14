@@ -241,7 +241,7 @@ public:
                         const luaL_Reg* mt,
                         const luaL_Reg* methods,
                         const char* base) {
-        assert(luaL_newmetatable(L, luawt_typeToStr<T>()));
+        luaL_newmetatable(L, luawt_typeToStr<T>());
         // name
         lua_pushstring(L, luawt_typeToStr<T>());
         lua_setfield(L, -2, "__name");
