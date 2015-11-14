@@ -198,7 +198,7 @@ inline void luawt_toLua(lua_State* L, T* obj) {
 
 template<>
 inline void luawt_toLua<WEnvironment>(lua_State* L,
-                               WEnvironment* obj) {
+                                      WEnvironment* obj) {
     const char* id = luawt_typeToStr<WEnvironment>();
     size_t id_len = strlen(id) + 1;
     void* lobj = lua_newuserdata(L, id_len);
@@ -210,7 +210,7 @@ inline void luawt_toLua<WEnvironment>(lua_State* L,
 
 template<>
 inline void luawt_toLua<LuaWApplication>(lua_State* L,
-                               LuaWApplication* obj) {
+                                         LuaWApplication* obj) {
     const char* id = luawt_typeToStr<LuaWApplication>();
     size_t id_len = strlen(id) + 1;
     void* lobj = lua_newuserdata(L, id_len);
