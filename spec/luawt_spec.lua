@@ -11,7 +11,20 @@ describe("luawt", function()
     pending("creates simple application", function()
         local luawt = require 'luawt'
         local llthreads2 = require 'llthreads2'
-        local thread = llthreads2.new [=[
+        local thread = llthreads2.new [==[
+            local luawt = require 'luawt'
+            local wt_config = os.tmpname()
+            local file = io.open(wt_config, 'w')
+            local config = [=[
+                <server>
+                    <application-settings location="*">
+                        <progressive-bootstrap>
+                            true
+                        </progressive-bootstrap>
+                    </application-settings>
+                </server> ]=]
+            file:write(config)
+            file:close()
             luawt.WServer.WRun {
                 code = [[
                     local app, env = ...
@@ -26,8 +39,10 @@ describe("luawt", function()
                     end
                 ]],
                 port = 56789,
+                wt_config = wt_config,
             }
-        ]=]
+            os.remove(wt_config)
+        ]==]
         thread:start()
         os.execute("sleep 2")
         local socket = require 'socket.http'
