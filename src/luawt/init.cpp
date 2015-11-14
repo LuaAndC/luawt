@@ -25,6 +25,7 @@ static const LuawtReg luawt_modules[] = {
     MODULE(WPushButton),
     {NULL, NULL},
 };
+#undef MODULE
 
 extern "C" {
 
