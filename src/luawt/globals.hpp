@@ -18,6 +18,7 @@
 #include "boost-xtime.hpp"
 #include <Wt/WApplication>
 #include <Wt/WContainerWidget>
+#include <Wt/WEnvironment>
 #include <Wt/WServer>
 #include <Wt/WText>
 
