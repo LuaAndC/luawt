@@ -36,6 +36,10 @@
 
 using namespace Wt;
 
+extern "C" {
+int luaopen_luawt(lua_State* L);
+}
+
 class LuaWApplication : public WApplication {
 public:
     LuaWApplication(lua_State* L,
@@ -44,6 +48,8 @@ public:
         if (L == NULL) {
             owns_L_ = true;
             L_ = luaL_newstate();
+            luaL_openlibs(L_);
+            luaopen_luawt(L_);
         }
     }
 
