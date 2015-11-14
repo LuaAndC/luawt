@@ -145,6 +145,34 @@ T* luawt_checkFromLua(lua_State* L, int index) {
     }
 }
 
+/* In Lua: string with object ID instead of pointer
+   WApplication::findWidget(), WObject::id()
+*/
+template<typename T>
+inline void luawt_toLua(lua_State* L, T* obj) {
+    size_t lobj_size = 1 + obj->id().size(); // with 0x00
+    void* lobj = lua_newuserdata(L, lobj_size);
+    std::string id = obj->id();
+    memcpy(lobj, id.c_str(), id.size() + 1);
+    luaL_getmetatable(L, luawt_typeToStr<T>());
+    assert(lua_type(L, -1) == LUA_TTABLE);
+    lua_setmetatable(L, -2);
+}
+
+template<lua_CFunction F>
+struct wrap {
+    static int func(lua_State* L) {
+        try {
+            return F(L);
+        } catch (std::exception& e) {
+            lua_pushstring(L, e.what());
+        } catch (...) {
+            lua_pushliteral(L, "Unknown exception");
+        }
+        return lua_error(L);
+    }
+};
+
 template<typename T>
 class LuaDeclareType {
 public:
@@ -171,32 +199,6 @@ public:
         }
         // remove metatable from stack
         lua_pop(L, 1);
-    }
-};
-
-/* In Lua: string with object ID instead of pointer
-   WApplication::findWidget(), WObject::id()
-*/
-template<typename T>
-void luawt_toLua(lua_State* L, T* obj) {
-    void* lobj = lua_newuserdata(L, obj->id().size());
-    std::string id = obj->id();
-    memcpy(lobj, id.c_str(), id.size());
-    assert(luaL_newmetatable(L, luawt_typeToStr<T>()));
-    lua_setmetatable(L, -2);
-}
-
-template<lua_CFunction F>
-struct wrap {
-    static int func(lua_State* L) {
-        try {
-            return F(L);
-        } catch (std::exception& e) {
-            lua_pushstring(L, e.what());
-        } catch (...) {
-            lua_pushliteral(L, "Unknown exception");
-        }
-        return lua_error(L);
     }
 };
 
