@@ -20,6 +20,13 @@ public:
         code_(code) {
     }
 
+    static void checkStatus(lua_State* L, int status) {
+        if (status != 0) {
+            const char* e = lua_tostring(L, -1);
+            throw std::logic_error(e);
+        }
+    }
+
     WApplication* operator()(const WEnvironment& env) const {
         std::auto_ptr<WApplication> app(new WApplication(env));
         new WText(code_, app->root());
