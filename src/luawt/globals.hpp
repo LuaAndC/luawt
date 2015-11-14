@@ -196,6 +196,30 @@ inline void luawt_toLua(lua_State* L, T* obj) {
     lua_setmetatable(L, -2);
 }
 
+template<>
+inline void luawt_toLua<WEnvironment>(lua_State* L,
+                               WEnvironment* obj) {
+    const char* id = luawt_typeToStr<WEnvironment>();
+    size_t id_len = strlen(id) + 1;
+    void* lobj = lua_newuserdata(L, id_len);
+    memcpy(lobj, id, id_len);
+    luaL_getmetatable(L, luawt_typeToStr<WEnvironment>());
+    assert(lua_type(L, -1) == LUA_TTABLE);
+    lua_setmetatable(L, -2);
+}
+
+template<>
+inline void luawt_toLua<LuaWApplication>(lua_State* L,
+                               LuaWApplication* obj) {
+    const char* id = luawt_typeToStr<LuaWApplication>();
+    size_t id_len = strlen(id) + 1;
+    void* lobj = lua_newuserdata(L, id_len);
+    memcpy(lobj, id, id_len);
+    luaL_getmetatable(L, luawt_typeToStr<LuaWApplication>());
+    assert(lua_type(L, -1) == LUA_TTABLE);
+    lua_setmetatable(L, -2);
+}
+
 template<lua_CFunction F>
 struct wrap {
     static int func(lua_State* L) {
