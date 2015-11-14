@@ -29,6 +29,7 @@ build = {
                 "src/luawt/WEnvironment.cpp",
                 "src/luawt/WPushButton.cpp",
                 "src/luawt/WServer.cpp",
+                "src/luawt/WWidget.cpp",
                 "src/luawt/init.cpp",
                 "src/luawt/shared.cpp",
             },
