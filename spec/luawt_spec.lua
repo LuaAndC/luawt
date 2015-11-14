@@ -21,7 +21,7 @@ describe("luawt", function()
                     else
                         luawt.Shared.test = 'true'
                         local text = "IP: " .. env:clientAddress()
-                        local button = lua.WPushButton(app:root())
+                        local button = luawt.WPushButton(app:root())
                         button:setText(text)
                     end
                 ]],
