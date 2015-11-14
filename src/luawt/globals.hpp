@@ -90,6 +90,35 @@ const char* luawt_typeToStr() {
    - __base -- base class metatable
    - __name -- name of class
 */
+
+template<typename T>
+inline T* luawt_parseId(LuaWApplication* app, const char* id) {
+    WWidget* widget = app->root()->findById(id);
+    return boost::polymorphic_downcast<T*>(widget);
+}
+
+template<>
+inline WEnvironment* luawt_parseId<WEnvironment>(
+    LuaWApplication* app, const char* id) {
+    const char* wanted = luawt_typeToStr<WEnvironment>();
+    if (strcmp(id, wanted) == 0) {
+        return const_cast<WEnvironment*>(&app->environment());
+    } else {
+        return 0;
+    }
+}
+
+template<>
+inline LuaWApplication* luawt_parseId<LuaWApplication>(
+    LuaWApplication* app, const char* id) {
+    const char* wanted = luawt_typeToStr<LuaWApplication>();
+    if (strcmp(id, wanted) == 0) {
+        return app;
+    } else {
+        return 0;
+    }
+}
+
 template<typename T>
 T* luawt_fromLua(lua_State* L, int index) {
     // Stack usage:
@@ -120,16 +149,13 @@ T* luawt_fromLua(lua_State* L, int index) {
             }
             lua_pop(L, 3); // metatable, field name, mt2
             void* raw_obj = lua_touserdata(L, index);
-            char* obj = reinterpret_cast<char*>(raw_obj);
-            size_t len = my_rawlen(L, -1);
-            std::string id(obj, len);
+            char* id = reinterpret_cast<char*>(raw_obj);
             LuaWApplication* app =
                 LuaWApplication::instance();
             if (!app) {
                 return 0;
             } else {
-                WWidget* widget = app->root()->findById(id);
-                return boost::polymorphic_downcast<T*>(widget);
+                return luawt_parseId<T>(app, id);
             }
         } else {
             // go to next base class
