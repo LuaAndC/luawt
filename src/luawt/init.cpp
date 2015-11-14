@@ -19,9 +19,10 @@ static const LuawtReg luawt_modules[] = {
     // Base must be before child
     MODULE(Shared),
     MODULE(WEnvironment),
-    MODULE(WPushButton),
     MODULE(WServer),
     MODULE(WWidget),
+    MODULE(WContainerWidget),
+    MODULE(WPushButton),
     {NULL, NULL},
 };
 

@@ -218,9 +218,10 @@ struct wrap {
 
 /* This functions are called from luaopen() */
 void luawtShared(lua_State* L);
-void luawtWServer(lua_State* L);
+void luawtWContainerWidget(lua_State* L);
 void luawtWEnvironment(lua_State* L);
 void luawtWPushButton(lua_State* L);
+void luawtWServer(lua_State* L);
 void luawtWWidget(lua_State* L);
 
 #endif

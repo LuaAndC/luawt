@@ -26,6 +26,7 @@ build = {
     modules = {
         luawt = {
             sources = {
+                "src/luawt/WContainerWidget.cpp",
                 "src/luawt/WEnvironment.cpp",
                 "src/luawt/WPushButton.cpp",
                 "src/luawt/WServer.cpp",
