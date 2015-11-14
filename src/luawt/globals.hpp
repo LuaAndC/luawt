@@ -86,6 +86,9 @@ const char* luawt_typeToStr() {
 */
 template<typename T>
 T* luawt_fromLua(lua_State* L, int index) {
+    // Stack usage:
+    // 1. table: mt
+    // 2. string: name
     if (!lua_getmetatable(L, index)) {
         return 0;
     }
@@ -103,6 +106,7 @@ T* luawt_fromLua(lua_State* L, int index) {
             return 0;
         }
         if (memcmp(base_type, name, name_len) == 0) {
+            // get mt of target type to ensure it is equal
             luaL_getmetatable(L, base_type);
             if (!my_equal(L, -1, -3)) {
                 lua_pop(L, 3); // metatable, field name, mt2
@@ -122,6 +126,7 @@ T* luawt_fromLua(lua_State* L, int index) {
                 return boost::polymorphic_downcast<T*>(widget);
             }
         } else {
+            // go to next base class
             lua_pop(L, 1); // name
             lua_getfield(L, -1, "__base");
             lua_remove(L, -2);
