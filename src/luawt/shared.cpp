@@ -38,7 +38,7 @@ int luawt_Shared_newindex(lua_State* L) {
     size_t key_len, value_len;
     const char* key = luaL_checklstring(L, 2, &key_len);
     const char* value = lua_tolstring(L, 3, &value_len);
-    if (value == NULL) {
+    if (value == 0) {
         // remove key
         shared.erase(Str(key, key_len));
     } else {

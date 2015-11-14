@@ -25,7 +25,7 @@
 #include <lua.hpp>
 
 #if LUA_VERSION_NUM == 501
-#define my_setfuncs(L, funcs) luaL_register(L, NULL, funcs)
+#define my_setfuncs(L, funcs) luaL_register(L, 0, funcs)
 #define my_equal lua_equal
 #define my_rawlen lua_objlen
 #else
@@ -45,7 +45,7 @@ public:
     LuaWApplication(lua_State* L,
                     const WEnvironment& env):
         WApplication(env), L_(L), owns_L_(false) {
-        if (L == NULL) {
+        if (L == 0) {
             owns_L_ = true;
             L_ = luaL_newstate();
             luaL_openlibs(L_);
@@ -78,7 +78,7 @@ template<typename T>
 const char* luawt_typeToStr() {
     const char* name = typeid(T).name();
     // TODO use wrapper for assert
-    assert(name != NULL);
+    assert(name != 0);
     assert(*name != '\0');
     // Example: _ZN2Wt7WServer
     // Remove _ from beginning of name
