@@ -39,7 +39,7 @@ void luawtWPushButton(lua_State* L) {
     DECLARE_CLASS(
         WPushButton,
         L,
-        luawt_WPushButton_make,
+        wrap<luawt_WPushButton_make>::func,
         0,
         methods,
         base
