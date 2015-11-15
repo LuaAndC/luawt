@@ -30,10 +30,12 @@ static const LuawtReg luawt_modules[] = {
 extern "C" {
 
 int luaopen_luawt(lua_State* L) {
-    lua_newtable(L); // module luawt
+    luaL_newmetatable(L, "luawt"); // module luawt
     for (const LuawtReg* reg = luawt_modules; reg->name; ++reg) {
-        reg->func(L); // must push 1 object (module)
-        lua_setfield(L, -2, reg->name);
+        int stack_size1 = lua_gettop(L);
+        reg->func(L); // must not change stack
+        int stack_size2 = lua_gettop(L);
+        assert(stack_size2 == stack_size1);
     }
     return 1;
 }
