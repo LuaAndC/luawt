@@ -8,7 +8,7 @@ describe("luawt", function()
         local luawt = require 'luawt'
     end)
 
-    pending("creates simple application", function()
+    it("creates simple application", function()
         local luawt = require 'luawt'
         local wt_config = os.tmpname()
         local file = io.open(wt_config, 'w')
