@@ -52,7 +52,7 @@ build = {
                     libraries = {
                         "wt",
                         "wthttp",
-                        "boost_system-mt",
+                        "boost_system",
                         "stdc++"
                     },
                 },
