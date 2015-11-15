@@ -27,7 +27,7 @@ install:
   - luarocks make
 
 before_script:
-  - sudo apt-get install valgrind
+  - sudo apt-get install --yes valgrind
   - luarocks install busted
   - luarocks install luasocket
 
