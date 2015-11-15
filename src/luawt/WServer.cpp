@@ -79,7 +79,8 @@ int luawt_WServer_make(lua_State* L) {
     );
     int argc = opt.size() - 1;
     char** argv = const_cast<char**>(&opt[0]);
-    new (server) WServer(argc, argv);
+    new (server) WServer();
+    server->setServerConfiguration(argc, argv);
     server->addEntryPoint(
         Wt::Application,
         LuaAppCreator(std::string(code, code_len))
