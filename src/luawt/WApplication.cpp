@@ -4,30 +4,28 @@
  * See the LICENSE file for terms of use.
  */
 
-#include <string>
-
 #include "boost-xtime.hpp"
-#include <Wt/WApplication>
-#include <Wt/WEnvironment>
+#include <Wt/WContainerWidget>
 
 #include "globals.hpp"
 
 /** Returns the IP address of the client */
-int luawt_WEnvironment_clientAddress(lua_State* L) {
-    const std::string& address =
-        WApplication::instance()->environment().clientAddress();
-    lua_pushlstring(L, address.c_str(), address.size());
+int luawt_LuaWApplication_root(lua_State* L) {
+    LuaWApplication* app =
+        luawt_fromLua<LuaWApplication>(L, 1);
+    WContainerWidget* root = app->root();
+    luawt_toLua<WContainerWidget>(L, root);
     return 1;
 }
 
 static const luaL_Reg functions[] = {
-    METHOD(WEnvironment, clientAddress),
+    METHOD(LuaWApplication, root),
     {NULL, NULL},
 };
 
-void luawtWEnvironment(lua_State* L) {
+void luawtWApplication(lua_State* L) {
     DECLARE_CLASS(
-        WEnvironment,
+        LuaWApplication,
         L,
         0,
         0,

@@ -14,21 +14,28 @@ typedef struct LuawtReg {
 } LuawtReg;
 
 #define MODULE(name) {#name, luawt##name}
-
 static const LuawtReg luawt_modules[] = {
+    // Base must be before child
     MODULE(Shared),
-    MODULE(WServer),
+    MODULE(WApplication),
     MODULE(WEnvironment),
+    MODULE(WServer),
+    MODULE(WWidget),
+    MODULE(WContainerWidget),
+    MODULE(WPushButton),
     {NULL, NULL},
 };
+#undef MODULE
 
 extern "C" {
 
 int luaopen_luawt(lua_State* L) {
-    lua_newtable(L); // module luawt
+    luaL_newmetatable(L, "luawt"); // module luawt
     for (const LuawtReg* reg = luawt_modules; reg->name; ++reg) {
-        reg->func(L); // must push 1 object (module)
-        lua_setfield(L, -2, reg->name);
+        int stack_size1 = lua_gettop(L);
+        reg->func(L); // must not change stack
+        int stack_size2 = lua_gettop(L);
+        assert(stack_size2 == stack_size1);
     }
     return 1;
 }

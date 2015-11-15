@@ -38,7 +38,7 @@ int luawt_Shared_newindex(lua_State* L) {
     size_t key_len, value_len;
     const char* key = luaL_checklstring(L, 2, &key_len);
     const char* value = lua_tolstring(L, 3, &value_len);
-    if (value == NULL) {
+    if (value == 0) {
         // remove key
         shared.erase(Str(key, key_len));
     } else {
@@ -54,8 +54,12 @@ static const luaL_Reg shared_functions[] = {
 };
 
 void luawtShared(lua_State* L) {
+    luaL_getmetatable(L, "luawt");
+    assert(lua_type(L, -1) == LUA_TTABLE);
     lua_newtable(L); // Shared table
     lua_newtable(L); // metatable of Shared
     my_setfuncs(L, shared_functions);
     lua_setmetatable(L, -2);
+    lua_setfield(L, -2, "Shared");
+    lua_pop(L, 1); // luawt
 }

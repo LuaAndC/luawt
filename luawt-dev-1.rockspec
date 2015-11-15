@@ -26,8 +26,12 @@ build = {
     modules = {
         luawt = {
             sources = {
+                "src/luawt/WApplication.cpp",
+                "src/luawt/WContainerWidget.cpp",
                 "src/luawt/WEnvironment.cpp",
+                "src/luawt/WPushButton.cpp",
                 "src/luawt/WServer.cpp",
+                "src/luawt/WWidget.cpp",
                 "src/luawt/init.cpp",
                 "src/luawt/shared.cpp",
             },
@@ -48,7 +52,7 @@ build = {
                     libraries = {
                         "wt",
                         "wthttp",
-                        "boost_system-mt",
+                        "boost_system",
                         "stdc++"
                     },
                 },

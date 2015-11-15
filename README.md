@@ -14,8 +14,15 @@ Lua bindings for Wt.
 
 `$ busted`
 
-## Base format of names of LuaCFunctions:
+## Base format of names of lua_CFunctions:
 `luawt_class-name_method`
+
+## How to bind new class
+
+ - new .cpp file
+ - globals.hpp
+ - init.cpp (note that base must be before child)
+ - rockspec
 
 [license]: https://img.shields.io/badge/License-GPL2-brightgreen.png
 [travis]: https://travis-ci.org/LuaAndC/luawt

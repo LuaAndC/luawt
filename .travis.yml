@@ -1,4 +1,6 @@
 language: cpp
+sudo: required
+dist: trusty # modern Wt
 
 env:
   global:
@@ -17,7 +19,7 @@ branches:
 
 before_install:
   - sudo apt-get update
-  - sudo apt-get install libwt-dev libwthttp-dev
+  - sudo apt-get install --yes libwt-dev libwthttp-dev
   - sudo pip install cpp-coveralls
   - source .travis/setenv_lua.sh
 
@@ -25,7 +27,7 @@ install:
   - luarocks make
 
 before_script:
-  - sudo apt-get install valgrind
+  - sudo apt-get install --yes valgrind
   - luarocks install busted
   - luarocks install luasocket
 

@@ -8,33 +8,38 @@ describe("luawt", function()
         local luawt = require 'luawt'
     end)
 
-    pending("creates simple application", function()
+    it("creates simple application", function()
         local luawt = require 'luawt'
-        local llthreads2 = require 'llthreads2'
-        local thread = llthreads2.new [=[
-            luawt.WServer.WRun {
-                code = [[
-                    local app, env = ...
-                    local luawt = require 'luawt'
-                    if luawt.Shared.test then
-                        luawt.server:stop()
-                    else
-                        luawt.Shared.test = 'true'
-                        local text = "IP: " .. env:clientAddress()
-                        app:root():addWidget(lua.WPushButton(text))
-                    end
-                ]],
-                port = 56789,
-            }
-        ]=]
-        thread:start()
+        local wt_config = os.tmpname()
+        local file = io.open(wt_config, 'w')
+        local config = [=[
+            <server>
+                <application-settings location="*">
+                    <progressive-bootstrap>
+                        true
+                    </progressive-bootstrap>
+                </application-settings>
+            </server> ]=]
+        file:write(config)
+        file:close()
+        local server = luawt.WServer({
+            code = [[
+                local app, env = ...
+                local luawt = require 'luawt'
+                local text = "IP: " .. env:clientAddress()
+                local button = luawt.WPushButton(app:root())
+                button:setText(text)
+            ]],
+            port = 56789,
+            wt_config = wt_config,
+        })
+        server:start()
         os.execute("sleep 2")
         local socket = require 'socket.http'
         local data = socket.request('http://127.0.0.1:56789/')
         assert.truthy(data:match('IP:'))
-        -- killing request
-        socket.request('http://127.0.0.1:56789/')
-        thread:join()
+        server:stop()
+        os.remove(wt_config)
     end)
 
 end)
