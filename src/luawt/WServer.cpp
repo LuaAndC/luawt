@@ -10,6 +10,7 @@
 #include "boost-xtime.hpp"
 #include <Wt/WEnvironment>
 #include <Wt/WServer>
+#include <Wt/WIOService>
 
 #include "globals.hpp"
 
@@ -46,11 +47,11 @@ private:
     std::string code_;
 };
 
-/** Runs the Wt application server
+/** Creates the Wt application server
     Argument 1 is table of options
-    Possible options: code, port.
+    Possible options: code, port, config.
 */
-int luawt_WServer_WRun(lua_State* L) {
+int luawt_WServer_make(lua_State* L) {
     luaL_checktype(L, 1, LUA_TTABLE);
     // get code
     lua_getfield(L, 1, "code");
@@ -59,6 +60,7 @@ int luawt_WServer_WRun(lua_State* L) {
     // get port
     lua_getfield(L, 1, "port");
     const char* port = luaL_checkstring(L, -1);
+    // get config
     lua_getfield(L, 1, "wt_config");
     const char* config = luaL_checkstring(L, -1);
     // make argc, argv
@@ -72,10 +74,20 @@ int luawt_WServer_WRun(lua_State* L) {
     opt.push_back("--config");
     opt.push_back(config);
     opt.push_back(0);
-    int status =
-        WRun(opt.size() - 1, const_cast<char**>(&opt[0]),
-             LuaAppCreator(std::string(code, code_len)));
-    lua_pushinteger(L, status);
+    WServer* server = reinterpret_cast<WServer*>(
+        lua_newuserdata(L, sizeof(WServer))
+    );
+    int argc = opt.size() - 1;
+    char** argv = const_cast<char**>(&opt[0]);
+    new (server) WServer(argc, argv);
+    server->addEntryPoint(
+        Wt::Application,
+        LuaAppCreator(std::string(code, code_len))
+    );
+    luaL_getmetatable(L, "luawt_WServer");
+    lua_setmetatable(L, -2);
+    return 1;
+}
 
 int luawt_WServer_start(lua_State* L) {
     WServer* server = reinterpret_cast<WServer*>(
@@ -86,19 +98,47 @@ int luawt_WServer_start(lua_State* L) {
     return 1;
 }
 
-/** Stops the server */
 int luawt_WServer_stop(lua_State* L) {
-    WServer::instance()->stop();
+    WServer* s = reinterpret_cast<WServer*>(
+        luaL_checkudata(L, 1, "luawt_WServer")
+    );
+    bool force = lua_toboolean(L, 2);
+    if (force) {
+        s->ioService().boost::asio::io_service::stop();
+    }
+    s->stop();
     return 0;
 }
 
-static const luaL_Reg functions[] = {
-    METHOD(WServer, WRun),
+int luawt_WServer_gc(lua_State* L) {
+    WServer* s = reinterpret_cast<WServer*>(
+        luaL_checkudata(L, 1, "luawt_WServer")
+    );
+    s->WServer::~WServer();
+    return 0;
+}
+
+static const luaL_Reg WServer_mt[] = {
+    MT_METHOD(WServer, gc),
+    {NULL, NULL},
+};
+
+static const luaL_Reg WServer_methods[] = {
+    METHOD(WServer, start),
     METHOD(WServer, stop),
     {NULL, NULL},
 };
 
 void luawtWServer(lua_State* L) {
+    luaL_newmetatable(L, "luawt_WServer");
+    my_setfuncs(L, WServer_mt);
     lua_newtable(L);
-    my_setfuncs(L, functions);
+    my_setfuncs(L, WServer_methods);
+    lua_setfield(L, -2, "__index");
+    lua_pop(L, 1); // mt
+    // put make to luawt
+    luaL_getmetatable(L, "luawt");
+    lua_pushcfunction(L, luawt_WServer_make);
+    lua_setfield(L, -2, "WServer");
+    lua_pop(L, 1); // luawt
 }
