@@ -76,6 +76,13 @@ int luawt_WServer_WRun(lua_State* L) {
         WRun(opt.size() - 1, const_cast<char**>(&opt[0]),
              LuaAppCreator(std::string(code, code_len)));
     lua_pushinteger(L, status);
+
+int luawt_WServer_start(lua_State* L) {
+    WServer* server = reinterpret_cast<WServer*>(
+        luaL_checkudata(L, 1, "luawt_WServer")
+    );
+    bool ok = server->start();
+    lua_pushboolean(L, ok);
     return 1;
 }
 
