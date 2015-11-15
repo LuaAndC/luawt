@@ -3,3 +3,24 @@
    Memcheck:Addr8
    fun:wcscmp
 }
+
+{
+    travis_job_91275671_1
+    Memcheck:Leak
+    match-leak-kinds: possible
+    fun:calloc
+    fun:g_malloc0
+    fun:g_type_register_fundamental
+    fun:dl_open_worker
+}
+
+{
+    travis_job_91275671_2
+    Memcheck:Free
+    fun:free
+    fun:__libc_freeres
+    fun:_vgnU_freeres
+    fun:__run_exit_handlers
+    fun:exit
+    fun:(below main)
+}
