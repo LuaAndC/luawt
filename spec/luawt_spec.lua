@@ -8,6 +8,17 @@ describe("luawt", function()
         local luawt = require 'luawt'
     end)
 
+    it("can stop the server forcibly", function()
+        local luawt = require 'luawt'
+        local server = luawt.WServer({
+            code = '',
+            port = 0,
+            wt_config = '',
+        })
+        server:start()
+        server:stop(true)
+    end)
+
     it("creates simple application", function()
         local luawt = require 'luawt'
         local wt_config = os.tmpname()
