@@ -139,7 +139,7 @@ void luawtWServer(lua_State* L) {
     lua_pop(L, 1); // mt
     // put make to luawt
     luaL_getmetatable(L, "luawt");
-    lua_pushcfunction(L, luawt_WServer_make);
+    lua_pushcfunction(L, wrap<luawt_WServer_make>::func);
     lua_setfield(L, -2, "WServer");
     lua_pop(L, 1); // luawt
 }
