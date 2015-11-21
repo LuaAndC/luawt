@@ -36,6 +36,7 @@ static const luaL_Reg methods[] = {
 
 void luawtWPushButton(lua_State* L) {
     const char* base = luawt_typeToStr<WWidget>();
+    assert(base);
     DECLARE_CLASS(
         WPushButton,
         L,
