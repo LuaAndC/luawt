@@ -54,30 +54,13 @@ describe("luawt", function()
 
     it("doesn't throw on bad syntax in lua code", function()
         local luawt = require 'luawt'
-        local wt_config = os.tmpname()
-        local file = io.open(wt_config, 'w')
-        local config = [=[
-            <server>
-                <application-settings location="*">
-                    <progressive-bootstrap>
-                        true
-                    </progressive-bootstrap>
-                </application-settings>
-            </server> ]=]
-        file:write(config)
-        file:close()
+        local code = "(;(;(;)))))"
+        local port = 56789
+        local wt_config = baseConfig()
+        local server = createServer(code, port, wt_config)
         assert.has_no_error(function()
-            local server = luawt.WServer({
-                code = [[
-                    (;(;(;)))))
-                ]],
-                port = 56789,
-                wt_config = wt_config,
-            })
             server:start()
-            os.execute("sleep 2")
-            local socket = require 'socket.http'
-            local data = socket.request('http://127.0.0.1:56789/')
+            local data = socketRequest(port)
             server:stop()
         end)
         os.remove(wt_config)
