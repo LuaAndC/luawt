@@ -41,6 +41,22 @@ describe("luawt", function()
         local luawt = require 'luawt'
     end)
 
+    it("uses wrap with unknown exceptions", function()
+        local luawt = require 'luawt'
+        local code = [[
+            local luawt = require 'luawt'
+            luawt.Test.unknownException()
+        ]]
+        local port = 56789
+        local wt_config = baseConfig()
+        local server = createServer(code, port, wt_config)
+        assert.has_no_error(function()
+            server:start()
+            local data = socketRequest(port)
+            server:stop(true)
+        end)
+    end)
+
     it("can stop the server forcibly", function()
         local luawt = require 'luawt'
         local code = ''
