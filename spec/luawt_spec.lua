@@ -43,12 +43,12 @@ describe("luawt", function()
 
     it("can stop the server forcibly", function()
         local luawt = require 'luawt'
-        local server = luawt.WServer({
-            code = '',
-            port = 0,
-            wt_config = '',
-        })
+        local code = ''
+        local port = 56789
+        local wt_config = baseConfig()
+        local server = createServer(code, port, wt_config)
         server:start()
+        local data = socketRequest(port)
         server:stop(true)
     end)
 
