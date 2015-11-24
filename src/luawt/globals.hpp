@@ -282,6 +282,7 @@ public:
 
 /* This functions are called from luaopen() */
 void luawtShared(lua_State* L);
+void luawtTest(lua_State* L);
 void luawtWApplication(lua_State* L);
 void luawtWContainerWidget(lua_State* L);
 void luawtWEnvironment(lua_State* L);
