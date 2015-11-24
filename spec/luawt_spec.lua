@@ -25,6 +25,16 @@ local function baseConfig()
     return wt_config
 end
 
+local function createServer(code, port, wt_config)
+    local luawt = require 'luawt'
+    local server = luawt.WServer({
+        code = code,
+        port = port,
+        wt_config = wt_config,
+    })
+    return server
+end
+
 describe("luawt", function()
 
     it("requires main module", function()
