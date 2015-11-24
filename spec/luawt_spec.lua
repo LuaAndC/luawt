@@ -2,6 +2,12 @@
 -- Copyright (c) 2015 Pavel Dolgov and Boris Nagaev
 -- See the LICENSE file for terms of use.
 
+local function socketRequest(port)
+    os.execute("sleep 2")
+    local socket = require 'socket.http'
+    local data = socket.request('http://127.0.0.1:' .. port)
+    return data
+end
 
 local function baseConfig()
     local wt_config = os.tmpname()
