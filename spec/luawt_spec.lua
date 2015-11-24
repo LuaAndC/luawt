@@ -2,6 +2,23 @@
 -- Copyright (c) 2015 Pavel Dolgov and Boris Nagaev
 -- See the LICENSE file for terms of use.
 
+
+local function baseConfig()
+    local wt_config = os.tmpname()
+    local file = io.open(wt_config, 'w')
+    local config = [=[
+        <server>
+            <application-settings location="*">
+                <progressive-bootstrap>
+                    true
+                </progressive-bootstrap>
+            </application-settings>
+        </server> ]=]
+    file:write(config)
+    file:close()
+    return wt_config
+end
+
 describe("luawt", function()
 
     it("requires main module", function()
