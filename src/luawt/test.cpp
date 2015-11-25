@@ -17,9 +17,10 @@ static const luaL_Reg Test_functions[] = {
 };
 
 void luawtTest(lua_State* L) {
-    luaL_newmetatable(L, "luawt_Test");
+    luaL_getmetatable(L, "luawt");
+    assert(lua_type(L, -1) == LUA_TTABLE);
     lua_newtable(L); // Test table
     my_setfuncs(L, Test_functions);
-    lua_setfield(L, -2, "__index");
-    lua_pop(L, 1);
+    lua_setfield(L, -2, "Test");
+    lua_pop(L, 1); // luawt
 }
