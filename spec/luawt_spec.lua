@@ -53,7 +53,7 @@ describe("luawt", function()
         assert.has_no_error(function()
             server:start()
             local data = socketRequest(port)
-            server:stop(true)
+            server:stop()
         end)
     end)
 
