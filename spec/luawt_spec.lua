@@ -68,7 +68,7 @@ describe("luawt", function()
         server:stop(true)
     end)
 
-    it("doesn't throw on bad syntax in lua code", function()
+    pending("doesn't throw on bad syntax in lua code", function()
         local luawt = require 'luawt'
         local code = "(;(;(;)))))"
         local port = 56789
