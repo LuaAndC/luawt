@@ -53,7 +53,7 @@ describe("luawt", function()
         assert.has_no_error(function()
             server:start()
             local data = socketRequest(port)
-            server:stop()
+            server:stop(true)
         end)
     end)
 
@@ -68,7 +68,7 @@ describe("luawt", function()
         server:stop(true)
     end)
 
-    pending("doesn't throw on bad syntax in lua code", function()
+    it("doesn't throw on bad syntax in lua code", function()
         local luawt = require 'luawt'
         local code = "(;(;(;)))))"
         local port = 56789
@@ -77,7 +77,7 @@ describe("luawt", function()
         assert.has_no_error(function()
             server:start()
             local data = socketRequest(port)
-            server:stop()
+            server:stop(true)
         end)
         os.remove(wt_config)
     end)
