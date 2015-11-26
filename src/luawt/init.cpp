@@ -17,6 +17,7 @@ typedef struct LuawtReg {
 static const LuawtReg luawt_modules[] = {
     // Base must be before child
     MODULE(Shared),
+    MODULE(Test),
     MODULE(WApplication),
     MODULE(WEnvironment),
     MODULE(WServer),
