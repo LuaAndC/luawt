@@ -3,8 +3,8 @@
 -- See the LICENSE file for terms of use.
 
 local function socketRequest(port)
-    local socket = require 'socket.http'
-    local data = socket.request('http://127.0.0.1:' .. port)
+    local http_client = require 'socket.http'
+    local data = http_client.request('http://127.0.0.1:' .. port)
     return data
 end
 
