@@ -9,7 +9,7 @@
 
 #include "globals.hpp"
 
-void luawtWContainerWidget(lua_State* L) {
+void luawt_WContainerWidget(lua_State* L) {
     const char* base = luawt_typeToStr<WWidget>();
     DECLARE_CLASS(
         WContainerWidget,

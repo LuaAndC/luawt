@@ -9,7 +9,7 @@
 
 #include "globals.hpp"
 
-void luawtWWidget(lua_State* L) {
+void luawt_WWidget(lua_State* L) {
     DECLARE_CLASS(
         WWidget,
         L,

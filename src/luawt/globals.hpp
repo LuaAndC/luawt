@@ -40,9 +40,9 @@ extern "C" {
 int luaopen_luawt(lua_State* L);
 }
 
-class LuaWApplication : public WApplication {
+class luawt_Application : public WApplication {
 public:
-    LuaWApplication(lua_State* L,
+    luawt_Application(lua_State* L,
                     const WEnvironment& env):
         WApplication(env), L_(L), owns_L_(false) {
         if (L == 0) {
@@ -53,16 +53,16 @@ public:
         }
     }
 
-    ~LuaWApplication() {
+    ~luawt_Application() {
         if (owns_L_) {
             lua_close(L_);
         }
     }
 
-    static LuaWApplication* instance() {
+    static luawt_Application* instance() {
         WApplication* wapp = WApplication::instance();
         return wapp ? boost::polymorphic_downcast
-            <LuaWApplication*>(wapp) : 0;
+            <luawt_Application*>(wapp) : 0;
     }
 
     lua_State* L() const {
@@ -92,14 +92,14 @@ const char* luawt_typeToStr() {
 */
 
 template<typename T>
-inline T* luawt_parseId(LuaWApplication* app, const char* id) {
+inline T* luawt_parseId(luawt_Application* app, const char* id) {
     WWidget* widget = app->root()->findById(id);
     return boost::polymorphic_downcast<T*>(widget);
 }
 
 template<>
 inline WEnvironment* luawt_parseId<WEnvironment>(
-    LuaWApplication* app, const char* id) {
+    luawt_Application* app, const char* id) {
     const char* wanted = luawt_typeToStr<WEnvironment>();
     if (strcmp(id, wanted) == 0) {
         return const_cast<WEnvironment*>(&app->environment());
@@ -109,9 +109,9 @@ inline WEnvironment* luawt_parseId<WEnvironment>(
 }
 
 template<>
-inline LuaWApplication* luawt_parseId<LuaWApplication>(
-    LuaWApplication* app, const char* id) {
-    const char* wanted = luawt_typeToStr<LuaWApplication>();
+inline luawt_Application* luawt_parseId<luawt_Application>(
+    luawt_Application* app, const char* id) {
+    const char* wanted = luawt_typeToStr<luawt_Application>();
     if (strcmp(id, wanted) == 0) {
         return app;
     } else {
@@ -150,8 +150,8 @@ T* luawt_fromLua(lua_State* L, int index) {
             lua_pop(L, 3); // metatable, field name, mt2
             void* raw_obj = lua_touserdata(L, index);
             char* id = reinterpret_cast<char*>(raw_obj);
-            LuaWApplication* app =
-                LuaWApplication::instance();
+            luawt_Application* app =
+                luawt_Application::instance();
             if (!app) {
                 return 0;
             } else {
@@ -209,13 +209,13 @@ inline void luawt_toLua<WEnvironment>(lua_State* L,
 }
 
 template<>
-inline void luawt_toLua<LuaWApplication>(lua_State* L,
-                                         LuaWApplication* obj) {
-    const char* id = luawt_typeToStr<LuaWApplication>();
+inline void luawt_toLua<luawt_Application>(lua_State* L,
+                                         luawt_Application* obj) {
+    const char* id = luawt_typeToStr<luawt_Application>();
     size_t id_len = strlen(id) + 1;
     void* lobj = lua_newuserdata(L, id_len);
     memcpy(lobj, id, id_len);
-    luaL_getmetatable(L, luawt_typeToStr<LuaWApplication>());
+    luaL_getmetatable(L, luawt_typeToStr<luawt_Application>());
     assert(lua_type(L, -1) == LUA_TTABLE);
     lua_setmetatable(L, -2);
 }
@@ -235,7 +235,7 @@ struct wrap {
 };
 
 template<typename T>
-class LuaDeclareType {
+class luawt_DeclareType {
 public:
     static void declare(lua_State* L,
                         const luaL_Reg* mt,
@@ -271,7 +271,7 @@ public:
 
 #define DECLARE_CLASS(type, L, make, mt, \
                       methods, base) \
-    LuaDeclareType<type>::declare(L, mt, methods, base); \
+    luawt_DeclareType<type>::declare(L, mt, methods, base); \
     if (make) { \
         luaL_getmetatable(L, "luawt"); \
         assert(lua_type(L, -1) == LUA_TTABLE); \
@@ -281,13 +281,13 @@ public:
     }
 
 /* This functions are called from luaopen() */
-void luawtShared(lua_State* L);
-void luawtTest(lua_State* L);
-void luawtWApplication(lua_State* L);
-void luawtWContainerWidget(lua_State* L);
-void luawtWEnvironment(lua_State* L);
-void luawtWPushButton(lua_State* L);
-void luawtWServer(lua_State* L);
-void luawtWWidget(lua_State* L);
+void luawt_Shared(lua_State* L);
+void luawt_Test(lua_State* L);
+void luawt_WApplication(lua_State* L);
+void luawt_WContainerWidget(lua_State* L);
+void luawt_WEnvironment(lua_State* L);
+void luawt_WPushButton(lua_State* L);
+void luawt_WServer(lua_State* L);
+void luawt_WWidget(lua_State* L);
 
 #endif
