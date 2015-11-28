@@ -14,9 +14,9 @@
 
 #include "globals.hpp"
 
-class LuaAppCreator {
+class luawt_AppCreator {
 public:
-    LuaAppCreator(const std::string& code):
+    luawt_AppCreator(const std::string& code):
         code_(code) {
     }
 
@@ -28,13 +28,13 @@ public:
     }
 
     WApplication* operator()(const WEnvironment& env) const {
-        std::auto_ptr<LuaWApplication> app(
-            new LuaWApplication(0, env)
+        std::auto_ptr<luawt_Application> app(
+            new luawt_Application(0, env)
         );
         int status = luaL_loadstring(app->L(),
                                      code_.c_str());
         checkStatus(app->L(), status);
-        luawt_toLua<LuaWApplication>(app->L(), &(*app));
+        luawt_toLua<luawt_Application>(app->L(), &(*app));
         WEnvironment& env_nonconst =
             const_cast<WEnvironment&>(env);
         luawt_toLua<WEnvironment>(app->L(), &env_nonconst);
@@ -83,7 +83,7 @@ int luawt_WServer_make(lua_State* L) {
     server->setServerConfiguration(argc, argv);
     server->addEntryPoint(
         Wt::Application,
-        LuaAppCreator(std::string(code, code_len))
+        luawt_AppCreator(std::string(code, code_len))
     );
     luaL_getmetatable(L, "luawt_WServer");
     lua_setmetatable(L, -2);
@@ -119,22 +119,22 @@ int luawt_WServer_gc(lua_State* L) {
     return 0;
 }
 
-static const luaL_Reg WServer_mt[] = {
+static const luaL_Reg luawt_WServer_mt[] = {
     MT_METHOD(WServer, gc),
     {NULL, NULL},
 };
 
-static const luaL_Reg WServer_methods[] = {
+static const luaL_Reg luawt_WServer_methods[] = {
     METHOD(WServer, start),
     METHOD(WServer, stop),
     {NULL, NULL},
 };
 
-void luawtWServer(lua_State* L) {
+void luawt_WServer(lua_State* L) {
     luaL_newmetatable(L, "luawt_WServer");
-    my_setfuncs(L, WServer_mt);
+    my_setfuncs(L, luawt_WServer_mt);
     lua_newtable(L);
-    my_setfuncs(L, WServer_methods);
+    my_setfuncs(L, luawt_WServer_methods);
     lua_setfield(L, -2, "__index");
     lua_pop(L, 1); // mt
     // put make to luawt
