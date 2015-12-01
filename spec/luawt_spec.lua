@@ -37,11 +37,11 @@ end
 
 describe("luawt", function()
 
-    it("requires main module", function()
+    it("#requires main module", function()
         local luawt = require 'luawt'
     end)
 
-    it("uses wrap with unknown exceptions", function()
+    it("uses #wrap with unknown exceptions", function()
         local luawt = require 'luawt'
         local code = [[
             local luawt = require 'luawt'
@@ -57,7 +57,7 @@ describe("luawt", function()
         end)
     end)
 
-    it("can stop the server forcibly", function()
+    it("can stop the server #forcibly", function()
         local luawt = require 'luawt'
         local code = ''
         local port = 56789
@@ -68,7 +68,7 @@ describe("luawt", function()
         server:stop(true)
     end)
 
-    it("doesn't throw on bad syntax in lua code", function()
+    it("doesn't throw on bad #syntax in lua code", function()
         local luawt = require 'luawt'
         local code = "(;(;(;)))))"
         local port = 56789
@@ -82,7 +82,7 @@ describe("luawt", function()
         os.remove(wt_config)
     end)
 
-    it("creates simple application", function()
+    it("creates #simple application", function()
         local luawt = require 'luawt'
         local code = [[
             local app, env = ...
