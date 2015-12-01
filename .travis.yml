@@ -33,7 +33,7 @@ before_script:
 
 script:
   - export LD_PRELOAD=/lib/x86_64-linux-gnu/libpthread.so.0
-  - busted
+  - busted --shuffle --repeat=20
   - if [[ "$LUA" != *"luajit"* ]]; then bash .travis/valgrind_test.sh; fi
   - luarocks make CFLAGS="-O0 -g -fPIC -ftest-coverage -fprofile-arcs" LIBFLAG="-shared --coverage"
   - busted
