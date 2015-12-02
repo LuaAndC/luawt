@@ -3,7 +3,6 @@
 -- See the LICENSE file for terms of use.
 
 local function socketRequest(port)
-    os.execute("sleep 2")
     local socket = require 'socket.http'
     local data = socket.request('http://127.0.0.1:' .. port)
     return data
@@ -37,11 +36,11 @@ end
 
 describe("luawt", function()
 
-    it("requires main module", function()
+    it("#requires main module", function()
         local luawt = require 'luawt'
     end)
 
-    it("uses wrap with unknown exceptions", function()
+    it("uses #wrap with unknown exceptions", function()
         local luawt = require 'luawt'
         local code = [[
             local luawt = require 'luawt'
@@ -52,23 +51,27 @@ describe("luawt", function()
         local server = createServer(code, port, wt_config)
         assert.has_no_error(function()
             server:start()
+            os.execute("sleep 10")
             local data = socketRequest(port)
+            os.execute("sleep 10")
             server:stop(true)
         end)
     end)
 
-    it("can stop the server forcibly", function()
+    it("can stop the server #forcibly", function()
         local luawt = require 'luawt'
         local code = ''
         local port = 56789
         local wt_config = baseConfig()
         local server = createServer(code, port, wt_config)
         server:start()
+        os.execute("sleep 10")
         local data = socketRequest(port)
+        os.execute("sleep 10")
         server:stop(true)
     end)
 
-    it("doesn't throw on bad syntax in lua code", function()
+    it("doesn't throw on bad #syntax in lua code", function()
         local luawt = require 'luawt'
         local code = "(;(;(;)))))"
         local port = 56789
@@ -76,13 +79,15 @@ describe("luawt", function()
         local server = createServer(code, port, wt_config)
         assert.has_no_error(function()
             server:start()
+            os.execute("sleep 10")
             local data = socketRequest(port)
+            os.execute("sleep 10")
             server:stop(true)
         end)
         os.remove(wt_config)
     end)
 
-    it("creates simple application", function()
+    it("creates #simple application", function()
         local luawt = require 'luawt'
         local code = [[
             local app, env = ...
@@ -95,8 +100,10 @@ describe("luawt", function()
         local wt_config = baseConfig()
         local server = createServer(code, port, wt_config)
         server:start()
+        os.execute("sleep 10")
         local data = socketRequest(port)
         assert.truthy(data:match('IP:'))
+        os.execute("sleep 10")
         server:stop()
         os.remove(wt_config)
     end)
