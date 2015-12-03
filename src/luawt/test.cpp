@@ -11,16 +11,16 @@ int luawt_Test_unknownException(lua_State* L) {
     throw error;
 }
 
-static const luaL_Reg Test_functions[] = {
+static const luaL_Reg luawt_Test_functions[] = {
     METHOD(Test, unknownException),
     {NULL, NULL},
 };
 
-void luawtTest(lua_State* L) {
+void luawt_Test(lua_State* L) {
     luaL_getmetatable(L, "luawt");
     assert(lua_type(L, -1) == LUA_TTABLE);
     lua_newtable(L); // Test table
-    my_setfuncs(L, Test_functions);
+    my_setfuncs(L, luawt_Test_functions);
     lua_setfield(L, -2, "Test");
     lua_pop(L, 1); // luawt
 }

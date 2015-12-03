@@ -29,12 +29,12 @@ int luawt_WPushButton_setText(lua_State* L) {
     return 1;
 }
 
-static const luaL_Reg methods[] = {
+static const luaL_Reg luawt_WPushButton_methods[] = {
     METHOD(WPushButton, setText),
     {NULL, NULL},
 };
 
-void luawtWPushButton(lua_State* L) {
+void luawt_WPushButton(lua_State* L) {
     const char* base = luawt_typeToStr<WWidget>();
     assert(base);
     DECLARE_CLASS(
@@ -42,7 +42,7 @@ void luawtWPushButton(lua_State* L) {
         L,
         wrap<luawt_WPushButton_make>::func,
         0,
-        methods,
+        luawt_WPushButton_methods,
         base
     );
 }

@@ -10,26 +10,26 @@
 #include "globals.hpp"
 
 /** Returns the IP address of the client */
-int luawt_LuaWApplication_root(lua_State* L) {
-    LuaWApplication* app =
-        luawt_fromLua<LuaWApplication>(L, 1);
+int luawt_Application_root(lua_State* L) {
+    luawt_Application* app =
+        luawt_fromLua<luawt_Application>(L, 1);
     WContainerWidget* root = app->root();
     luawt_toLua<WContainerWidget>(L, root);
     return 1;
 }
 
-static const luaL_Reg functions[] = {
-    METHOD(LuaWApplication, root),
+static const luaL_Reg luawt_Application_methods[] = {
+    METHOD(Application, root),
     {NULL, NULL},
 };
 
-void luawtWApplication(lua_State* L) {
+void luawt_WApplication(lua_State* L) {
     DECLARE_CLASS(
-        LuaWApplication,
+        luawt_Application,
         L,
         0,
         0,
-        functions,
+        luawt_Application_methods,
         0
     );
 }

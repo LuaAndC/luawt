@@ -47,18 +47,18 @@ int luawt_Shared_newindex(lua_State* L) {
     return 0;
 }
 
-static const luaL_Reg shared_functions[] = {
+static const luaL_Reg luawt_shared_functions[] = {
     MT_METHOD(Shared, index),
     MT_METHOD(Shared, newindex),
     {NULL, NULL},
 };
 
-void luawtShared(lua_State* L) {
+void luawt_Shared(lua_State* L) {
     luaL_getmetatable(L, "luawt");
     assert(lua_type(L, -1) == LUA_TTABLE);
     lua_newtable(L); // Shared table
     lua_newtable(L); // metatable of Shared
-    my_setfuncs(L, shared_functions);
+    my_setfuncs(L, luawt_shared_functions);
     lua_setmetatable(L, -2);
     lua_setfield(L, -2, "Shared");
     lua_pop(L, 1); // luawt
