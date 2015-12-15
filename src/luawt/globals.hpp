@@ -127,6 +127,7 @@ Stack usage:
 */
 template<typename T>
 T* luawt_fromLua(lua_State* L, int index) {
+    // get mt of the object
     if (!lua_getmetatable(L, index)) {
         return 0;
     }
