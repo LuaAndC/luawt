@@ -133,7 +133,7 @@ T* luawt_fromLua(lua_State* L, int index) {
     const char* base_type = luawt_typeToStr<T>();
     while (true) {
         lua_getfield(L, -1, "__name");
-        if (lua_type(L, -1) == LUA_TNIL) {
+        if (lua_type(L, -1) != LUA_TSTRING) {
             lua_pop(L, 2); // metatable, field name
             return 0;
         }
@@ -165,7 +165,7 @@ T* luawt_fromLua(lua_State* L, int index) {
             lua_pop(L, 1); // name
             lua_getfield(L, -1, "__base");
             lua_remove(L, -2);
-            if (lua_type(L, -1) == LUA_TNIL) {
+            if (lua_type(L, -1) != LUA_TTABLE) {
                 lua_pop(L, 2); // metatable, field name
                 return 0;
             }
