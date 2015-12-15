@@ -119,11 +119,14 @@ inline luawt_Application* luawt_parseId<luawt_Application>(
     }
 }
 
+/*
+T is the object's class or a parent of its class
+Stack usage:
+1. mt of T
+2. mt of object or a parent
+*/
 template<typename T>
 T* luawt_fromLua(lua_State* L, int index) {
-    // Stack usage:
-    // 1. table: mt
-    // 2. string: name
     if (!lua_getmetatable(L, index)) {
         return 0;
     }
