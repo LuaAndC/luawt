@@ -131,27 +131,12 @@ T* luawt_fromLua(lua_State* L, int index) {
     if (!lua_getmetatable(L, index)) {
         return 0;
     }
+    // get mt of target class to ensure it is equal
     const char* base_type = luawt_typeToStr<T>();
+    luaL_getmetatable(L, base_type);
     while (true) {
-        lua_getfield(L, -1, "__name");
-        if (lua_type(L, -1) != LUA_TSTRING) {
-            lua_pop(L, 2); // metatable, field name
-            return 0;
-        }
-        size_t name_len;
-        const char* name = lua_tolstring(L, -1, &name_len);
-        if (!name) {
-            lua_pop(L, 2); // metatable, field name
-            return 0;
-        }
-        if (memcmp(base_type, name, name_len) == 0) {
-            // get mt of target type to ensure it is equal
-            luaL_getmetatable(L, base_type);
-            if (!my_equal(L, -1, -3)) {
-                lua_pop(L, 3); // metatable, field name, mt2
-                return 0;
-            }
-            lua_pop(L, 3); // metatable, field name, mt2
+        if (my_equal(L, -1, -2)) {
+            lua_pop(L, 2); // mt of T, mt of object
             void* raw_obj = lua_touserdata(L, index);
             char* id = reinterpret_cast<char*>(raw_obj);
             luawt_Application* app =
@@ -163,11 +148,10 @@ T* luawt_fromLua(lua_State* L, int index) {
             }
         } else {
             // go to next base class
-            lua_pop(L, 1); // name
             lua_getfield(L, -1, "__base");
             lua_remove(L, -2);
             if (lua_type(L, -1) != LUA_TTABLE) {
-                lua_pop(L, 1); // metatable
+                lua_pop(L, 2); // mt of base, mt of object
                 return 0;
             }
         }
