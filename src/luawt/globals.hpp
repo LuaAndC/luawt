@@ -162,7 +162,10 @@ T* luawt_fromLua(lua_State* L, int index) {
 
 template<typename T>
 T* luawt_checkFromLua(lua_State* L, int index) {
+    int stack_size1 = lua_gettop(L);
     T* t = luawt_fromLua<T>(L, index);
+    int stack_size2 = lua_gettop(L);
+    assert(stack_size1 == stack_size2);
     if (t == 0) {
         throw std::logic_error("LuaWt: Type mismatch or "
                                "no WApplication (no web "
