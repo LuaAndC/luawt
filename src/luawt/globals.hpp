@@ -131,7 +131,7 @@ T* luawt_fromLua(lua_State* L, int index) {
     if (!lua_getmetatable(L, index)) {
         return 0;
     }
-    // get mt of target class to ensure it is equal
+    // get mt of target class to find it among ancestors
     const char* base_type = luawt_typeToStr<T>();
     luaL_getmetatable(L, base_type);
     while (true) {
