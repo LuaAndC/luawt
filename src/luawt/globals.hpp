@@ -119,35 +119,26 @@ inline luawt_Application* luawt_parseId<luawt_Application>(
     }
 }
 
+/*
+T is the object's class or a parent of its class
+Stack usage:
+-1. mt of object or a parent
+-2. mt of T
+*/
 template<typename T>
 T* luawt_fromLua(lua_State* L, int index) {
-    // Stack usage:
-    // 1. table: mt
-    // 2. string: name
+    // get mt of the object
     if (!lua_getmetatable(L, index)) {
         return 0;
     }
+    // get mt of target class to find it among ancestors
     const char* base_type = luawt_typeToStr<T>();
+    luaL_getmetatable(L, base_type);
+    // swap -1 and -2 to follow comment about stack
+    lua_insert(L, -2);
     while (true) {
-        lua_getfield(L, -1, "__name");
-        if (lua_type(L, -1) == LUA_TNIL) {
-            lua_pop(L, 2); // metatable, field name
-            return 0;
-        }
-        size_t name_len;
-        const char* name = lua_tolstring(L, -1, &name_len);
-        if (!name) {
-            lua_pop(L, 2); // metatable, field name
-            return 0;
-        }
-        if (memcmp(base_type, name, name_len) == 0) {
-            // get mt of target type to ensure it is equal
-            luaL_getmetatable(L, base_type);
-            if (!my_equal(L, -1, -3)) {
-                lua_pop(L, 3); // metatable, field name, mt2
-                return 0;
-            }
-            lua_pop(L, 3); // metatable, field name, mt2
+        if (my_equal(L, -1, -2)) {
+            lua_pop(L, 2); // mt of T, mt of object
             void* raw_obj = lua_touserdata(L, index);
             char* id = reinterpret_cast<char*>(raw_obj);
             luawt_Application* app =
@@ -159,11 +150,10 @@ T* luawt_fromLua(lua_State* L, int index) {
             }
         } else {
             // go to next base class
-            lua_pop(L, 1); // name
             lua_getfield(L, -1, "__base");
             lua_remove(L, -2);
-            if (lua_type(L, -1) == LUA_TNIL) {
-                lua_pop(L, 2); // metatable, field name
+            if (lua_type(L, -1) != LUA_TTABLE) {
+                lua_pop(L, 2); // mt of base, mt of object
                 return 0;
             }
         }
@@ -172,7 +162,10 @@ T* luawt_fromLua(lua_State* L, int index) {
 
 template<typename T>
 T* luawt_checkFromLua(lua_State* L, int index) {
+    int stack_size1 = lua_gettop(L);
     T* t = luawt_fromLua<T>(L, index);
+    int stack_size2 = lua_gettop(L);
+    assert(stack_size1 == stack_size2);
     if (t == 0) {
         throw std::logic_error("LuaWt: Type mismatch or "
                                "no WApplication (no web "
