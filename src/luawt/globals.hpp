@@ -127,13 +127,15 @@ Stack usage:
 */
 template<typename T>
 T* luawt_fromLua(lua_State* L, int index) {
-    // get mt of target class to find it among ancestors
-    const char* base_type = luawt_typeToStr<T>();
-    luaL_getmetatable(L, base_type);
     // get mt of the object
     if (!lua_getmetatable(L, index)) {
         return 0;
     }
+    // get mt of target class to find it among ancestors
+    const char* base_type = luawt_typeToStr<T>();
+    luaL_getmetatable(L, base_type);
+    // swap -1 and -2 to follow comment about stack
+    lua_insert(L, -2);
     while (true) {
         if (my_equal(L, -1, -2)) {
             lua_pop(L, 2); // mt of T, mt of object
