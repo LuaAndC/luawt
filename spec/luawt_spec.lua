@@ -1,5 +1,5 @@
 -- luawt, Lua bindings for Wt
--- Copyright (c) 2015 Pavel Dolgov and Boris Nagaev
+-- Copyright (c) 2015-2016 Pavel Dolgov and Boris Nagaev
 -- See the LICENSE file for terms of use.
 
 local function socketRequest(port)
