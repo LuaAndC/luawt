@@ -6,12 +6,11 @@ env:
   global:
     - LUAROCKS=2.2.2
   matrix:
-    - LUA=lua5.1
-    - LUA=lua5.2
-    - LUA=lua5.3
-    - LUA=luajit     # latest stable version (2.0.4)
-    - LUA=luajit2.0  # current head of 2.0 branch
-    - LUA=luajit2.1  # current head of 2.1 branch
+    - LUA="lua 5.1"
+    - LUA="lua 5.2"
+    - LUA="lua 5.3"
+    - LUA="luajit 2.0"
+    - LUA="luajit 2.1"
 
 branches:
   only:
@@ -21,7 +20,9 @@ before_install:
   - sudo apt-get update
   - sudo apt-get install --yes libwt-dev libwthttp-dev
   - sudo pip install cpp-coveralls
-  - source .travis/setenv_lua.sh
+  - sudo pip install hererocks
+  - hererocks here --$LUA --luarocks $LUAROCKS
+  - eval $(./here/bin/luarocks path --bin)
 
 install:
   - luarocks make
