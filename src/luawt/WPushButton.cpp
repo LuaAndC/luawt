@@ -29,8 +29,17 @@ int luawt_WPushButton_setText(lua_State* L) {
     return 1;
 }
 
+int luawt_WPushButton_setDefault(lua_State* L) {
+    WPushButton* button =
+        luawt_checkFromLua<WPushButton>(L, 1);
+    bool enabled = lua_toboolean(L, 2);
+    button->setDefault(enabled);
+    return 0;
+}
+
 static const luaL_Reg luawt_WPushButton_methods[] = {
     METHOD(WPushButton, setText),
+    METHOD(WPushButton, setDefault),
     {NULL, NULL},
 };
 
