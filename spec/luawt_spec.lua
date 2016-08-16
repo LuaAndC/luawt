@@ -40,6 +40,30 @@ describe("luawt", function()
         require 'luawt'
     end)
 
+    it("#works fine with #WPushButton's set/isDefault", function()
+        local code = [[
+            local app, env = ...
+            local luawt = require 'luawt'
+            local button = luawt.WPushButton(app:root())
+            button:setDefault(true)
+            local state1 = button:isDefault()
+            button:setDefault(false)
+            local state2 = button:isDefault()
+            local text = tostring(state1) .. tostring(state2)
+            button:setText(text)
+        ]]
+        local port = 56789
+        local wt_config = baseConfig()
+        local server = createServer(code, port, wt_config)
+        server:start()
+        os.execute("sleep 10")
+        local data = socketRequest(port)
+        assert.truthy(data:match('10'))
+        os.execute("sleep 10")
+        server:stop()
+        os.remove(wt_config)
+    end)
+
     it("uses #wrap with unknown exceptions", function()
         local code = [[
             local luawt = require 'luawt'
