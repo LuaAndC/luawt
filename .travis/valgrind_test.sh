@@ -8,5 +8,5 @@ valgrind \
     --gen-suppressions=all \
     --suppressions=.travis/valgrind_test.supp \
     lua \
-    exitless-busted --sort spec/*
+    exitless-busted --sort --directory=spec
 rm exitless-busted
