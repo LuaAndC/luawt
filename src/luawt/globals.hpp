@@ -28,6 +28,7 @@
 #define my_setfuncs(L, funcs) luaL_register(L, 0, funcs)
 #define my_equal lua_equal
 #define my_rawlen lua_objlen
+#define LUA_OK 0
 #else
 #define my_setfuncs(L, funcs) luaL_setfuncs(L, funcs, 0)
 #define my_equal(L, i, j) lua_compare(L, i, j, LUA_OPEQ)
