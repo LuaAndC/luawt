@@ -75,6 +75,13 @@ private:
     bool owns_L_;
 };
 
+inline void checkPcallStatus(lua_State* L, int status) {
+    if (status != LUA_OK) {
+        const char* e = lua_tostring(L, -1);
+        throw std::logic_error(e);
+    }
+}
+
 template<typename T>
 const char* luawt_typeToStr() {
     const char* name = typeid(T).name();
