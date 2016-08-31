@@ -34,6 +34,7 @@ build = {
                 "src/luawt/WWidget.cpp",
                 "src/luawt/init.cpp",
                 "src/luawt/shared.cpp",
+                "src/luawt/slots.cpp",
                 "src/luawt/test.cpp",
             },
             libraries = {
