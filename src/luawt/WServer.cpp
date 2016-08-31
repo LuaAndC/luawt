@@ -20,26 +20,19 @@ public:
         code_(code) {
     }
 
-    static void checkStatus(lua_State* L, int status) {
-        if (status != 0) {
-            const char* e = lua_tostring(L, -1);
-            throw std::logic_error(e);
-        }
-    }
-
     WApplication* operator()(const WEnvironment& env) const {
         std::auto_ptr<luawt_Application> app(
             new luawt_Application(0, env)
         );
         int status = luaL_loadstring(app->L(),
                                      code_.c_str());
-        checkStatus(app->L(), status);
+        checkPcallStatus(app->L(), status);
         luawt_toLua<luawt_Application>(app->L(), &(*app));
         WEnvironment& env_nonconst =
             const_cast<WEnvironment&>(env);
         luawt_toLua<WEnvironment>(app->L(), &env_nonconst);
         status = lua_pcall(app->L(), 2, 0, 0);
-        checkStatus(app->L(), status);
+        checkPcallStatus(app->L(), status);
         return app.release();
     }
 
