@@ -62,3 +62,11 @@ int luawt_connect(lua_State* L) {
     SignalsMap[std::string(signal_name)](widget, slot_wrapper);
     return 0;
 }
+
+void luawt_Connect(lua_State* L) {
+    // put connect to luawt
+    luaL_getmetatable(L, "luawt");
+    lua_pushcfunction(L, wrap<luawt_connect>::func);
+    lua_setfield(L, -2, "connect");
+    lua_pop(L, 1); // luawt
+}
