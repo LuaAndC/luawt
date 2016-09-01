@@ -54,3 +54,11 @@ typedef void (*connectSignalFunc) (
     SlotWrapperPtr slot_wrapper
 );
 std::map<std::string, connectSignalFunc> SignalsMap;
+
+int luawt_connect(lua_State* L) {
+    SlotWrapperPtr slot_wrapper(L);
+    const char* signal_name = lua_tostring(L, 1);
+    WWidget* widget = luawt_fromLua<WWidget>(L, 2);
+    SignalsMap[std::string(signal_name)](widget, slot_wrapper);
+    return 0;
+}
