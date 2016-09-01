@@ -4,6 +4,7 @@
  * See the LICENSE file for terms of use.
  */
 
+#include <map>
 #include <memory>
 
 #include "boost-xtime.hpp"
@@ -52,3 +53,4 @@ typedef void (*connectSignalFunc) (
     WWidget* widget,
     SlotWrapperPtr slot_wrapper
 );
+std::map<std::string, connectSignalFunc> SignalsMap;
