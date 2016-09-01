@@ -7,6 +7,7 @@
 #include <memory>
 
 #include "boost-xtime.hpp"
+#include <Wt/WWidget>
 
 #include "globals.hpp"
 
@@ -46,3 +47,8 @@ public:
 private:
     std::auto_ptr<SlotWrapper> slot_wrapper_;
 };
+
+typedef void (*connectSignalFunc) (
+    WWidget* widget,
+    SlotWrapperPtr slot_wrapper
+);
