@@ -282,7 +282,6 @@ public:
     }
 
 /* This functions are called from luaopen() */
-void luawt_Connect(lua_State* L);
 void luawt_Shared(lua_State* L);
 void luawt_Test(lua_State* L);
 void luawt_WApplication(lua_State* L);
