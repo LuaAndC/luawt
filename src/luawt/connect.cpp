@@ -12,21 +12,6 @@
 
 #include "globals.hpp"
 
-struct SlotWrapper {
-    /* Slot func must be at the top of the stack. */
-    SlotWrapper(lua_State* L):
-        L_(L)
-    {
-        func_id_ = luaL_ref(L_, LUA_REGISTRYINDEX);
-    }
-
-    ~SlotWrapper() {
-        luaL_unref(L_, LUA_REGISTRYINDEX, func_id_);
-    }
-
-    lua_State* L_;
-    int func_id_;
-};
 
 class SlotWrapperPtr {
 public:
