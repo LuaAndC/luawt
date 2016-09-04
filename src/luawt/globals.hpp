@@ -15,6 +15,7 @@
 #include <typeinfo>
 
 #include <boost/cast.hpp>
+#include <boost/shared_ptr.hpp>
 
 #include "boost-xtime.hpp"
 #include <Wt/WApplication>
@@ -270,7 +271,7 @@ public:
     }
 
 private:
-    std::auto_ptr<SlotWrapper> slot_wrapper_;
+    boost::shared_ptr<SlotWrapper> slot_wrapper_;
 };
 
 template<typename T>
