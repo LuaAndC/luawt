@@ -10,6 +10,7 @@
 #include <cassert>
 #include <cstring>
 #include <exception>
+#include <memory>
 #include <stdexcept>
 #include <typeinfo>
 
@@ -249,6 +250,27 @@ struct SlotWrapper {
 
     lua_State* L_;
     int func_id_;
+};
+
+class SlotWrapperPtr {
+public:
+    SlotWrapperPtr(lua_State* L):
+        slot_wrapper_(new SlotWrapper(L)) {
+    }
+
+    /* Will be called from Wt as slot. */
+    void operator()() {
+        lua_rawgeti(
+            slot_wrapper_->L_,
+            LUA_REGISTRYINDEX,
+            slot_wrapper_->func_id_
+        );
+        int status = lua_pcall(slot_wrapper_->L_, 0, 0, 0);
+        checkPcallStatus(slot_wrapper_->L_, status);
+    }
+
+private:
+    std::auto_ptr<SlotWrapper> slot_wrapper_;
 };
 
 template<typename T>
