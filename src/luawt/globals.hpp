@@ -280,6 +280,17 @@ private:
     boost::shared_ptr<SlotWrapper> slot_wrapper_;
 };
 
+#define CREATE_CONNECT_SIGNAL_FUNC(signal, widget_type) \
+    int luawt_##widget_type##_connect_##signal(lua_State* L) { \
+        luaL_checktype(L, 1, LUA_TTABLE); \
+        lua_getfield(L, 1, "widget"); \
+        widget_type* widget = luawt_checkFromLua<widget_type>(L, -1); \
+        lua_pop(L, 1); \
+        SlotWrapperPtr slot_wrapper(L); \
+        widget->signal().connect(slot_wrapper); \
+        return 0; \
+    }
+
 template<typename T>
 class luawt_DeclareType {
 public:
