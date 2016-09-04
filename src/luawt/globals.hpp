@@ -265,7 +265,8 @@ public:
     }
 
     /* Will be called from Wt as slot. */
-    void operator()() {
+    template <typename T>
+    void operator()(T event) {
         lua_rawgeti(
             slot_wrapper_->L_,
             LUA_REGISTRYINDEX,
