@@ -259,6 +259,11 @@ public:
         slot_wrapper_(new SlotWrapper(L)) {
     }
 
+    SlotWrapperPtr(const SlotWrapperPtr& other)
+        : slot_wrapper_(other.slot_wrapper_)
+    {
+    }
+
     /* Will be called from Wt as slot. */
     void operator()() {
         lua_rawgeti(
