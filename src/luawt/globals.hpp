@@ -280,6 +280,13 @@ private:
     boost::shared_ptr<SlotWrapper> slot_wrapper_;
 };
 
+#define SET_SIGNAL_FIELD(signal, widget_type, field) \
+    lua_pushcfunction( \
+        L, \
+        wrap<luawt_##widget_type##_##field##_##signal>::func \
+    ); \
+    lua_setfield(L, -2, #field);
+
 #define CREATE_CONNECT_SIGNAL_FUNC(signal, widget_type) \
     int luawt_##widget_type##_connect_##signal(lua_State* L) { \
         luaL_checktype(L, 1, LUA_TTABLE); \
