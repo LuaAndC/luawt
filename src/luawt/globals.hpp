@@ -287,6 +287,12 @@ private:
     ); \
     lua_setfield(L, -2, #field);
 
+#define GET_WIDGET(widget_type) \
+    luaL_checktype(L, 1, LUA_TTABLE); \
+    lua_getfield(L, 1, "widget"); \
+    widget_type* widget = luawt_checkFromLua<widget_type>(L, -1); \
+    lua_pop(L, 1);
+
 #define CREATE_CONNECT_SIGNAL_FUNC(signal, widget_type) \
     int luawt_##widget_type##_connect_##signal(lua_State* L) { \
         luaL_checktype(L, 1, LUA_TTABLE); \
