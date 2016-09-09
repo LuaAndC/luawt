@@ -23,6 +23,7 @@
 #include <Wt/WEnvironment>
 #include <Wt/WServer>
 #include <Wt/WText>
+#include <Wt/WObject>
 
 #include <lua.hpp>
 
