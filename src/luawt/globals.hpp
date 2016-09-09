@@ -319,6 +319,11 @@ private:
         return 1; \
     }
 
+#define ADD_SIGNAL(signal, widget_type) \
+    CREATE_EMIT_SIGNAL_FUNC(signal, widget_type) \
+    CREATE_CONNECT_SIGNAL_FUNC(signal, widget_type) \
+    CREATE_SIGNAL_FUNC(signal, widget_type)
+
 template<typename T>
 class luawt_DeclareType {
 public:
