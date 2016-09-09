@@ -314,11 +314,8 @@ private:
         lua_newtable(L); \
         lua_insert(L, -2); \
         lua_setfield(L, -2, "widget"); \
-        lua_pushcfunction( \
-            L, \
-            wrap<luawt_##widget_type##_connect_##signal>::func \
-        ); \
-        lua_setfield(L, -2, "connect"); \
+        SET_SIGNAL_FIELD(signal, widget_type, connect) \
+        SET_SIGNAL_FIELD(signal, widget_type, emit) \
         return 1; \
     }
 
