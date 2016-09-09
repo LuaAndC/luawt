@@ -45,8 +45,7 @@ int luawt_WPushButton_isDefault(lua_State* L) {
     return 1;
 }
 
-CREATE_CONNECT_SIGNAL_FUNC(clicked, WPushButton)
-CREATE_SIGNAL_FUNC(clicked, WPushButton)
+ADD_SIGNAL(clicked, WPushButton)
 
 static const luaL_Reg luawt_WPushButton_methods[] = {
     METHOD(WPushButton, setText),
