@@ -254,7 +254,7 @@ struct SlotWrapper {
     int func_id_;
 };
 
-class SlotWrapperPtr : public WObject {
+class SlotWrapperPtr {
 public:
     SlotWrapperPtr(lua_State* L):
         slot_wrapper_(new SlotWrapper(L)) {
