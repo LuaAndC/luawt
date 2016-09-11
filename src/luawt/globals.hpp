@@ -85,6 +85,11 @@ inline void checkPcallStatus(lua_State* L, int status) {
     }
 }
 
+inline lua_State* getLuaState() {
+    luawt_Application* app = luawt_Application::instance();
+    return app ? app->L() : 0;
+}
+
 template<typename T>
 const char* luawt_typeToStr() {
     const char* name = typeid(T).name();
