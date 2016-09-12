@@ -245,24 +245,24 @@ struct wrap {
 
 struct SlotWrapper {
     /* Slot func must be at the top of the stack. */
-    SlotWrapper(lua_State* L):
-        L_(L)
-    {
-        func_id_ = luaL_ref(L_, LUA_REGISTRYINDEX);
+    SlotWrapper() {
+        func_id_ = luaL_ref(getLuaState(), LUA_REGISTRYINDEX);
     }
 
     ~SlotWrapper() {
-        luaL_unref(L_, LUA_REGISTRYINDEX, func_id_);
+        lua_State* L = getLuaState();
+        if (L) {
+            luaL_unref(L, LUA_REGISTRYINDEX, func_id_);
+        }
     }
 
-    lua_State* L_;
     int func_id_;
 };
 
 class SlotWrapperPtr {
 public:
-    SlotWrapperPtr(lua_State* L):
-        slot_wrapper_(new SlotWrapper(L)) {
+    SlotWrapperPtr():
+        slot_wrapper_(new SlotWrapper) {
     }
 
     SlotWrapperPtr(const SlotWrapperPtr& other)
@@ -273,13 +273,20 @@ public:
     /* Will be called from Wt as slot. */
     template <typename T>
     void operator()(T event) {
+        lua_State* L = getLuaState();
+        if (!L) {
+            throw std::logic_error(
+                "LuaWt: no WApplication (no web session) when "
+                "calling slot func."
+            );
+        }
         lua_rawgeti(
-            slot_wrapper_->L_,
+            L,
             LUA_REGISTRYINDEX,
             slot_wrapper_->func_id_
         );
-        int status = lua_pcall(slot_wrapper_->L_, 0, 0, 0);
-        checkPcallStatus(slot_wrapper_->L_, status);
+        int status = lua_pcall(L, 0, 0, 0);
+        checkPcallStatus(L, status);
     }
 
 private:
@@ -309,7 +316,7 @@ private:
 #define CREATE_CONNECT_SIGNAL_FUNC(signal, widget_type) \
     int luawt_##widget_type##_connect_##signal(lua_State* L) { \
         GET_WIDGET(widget_type) \
-        SlotWrapperPtr slot_wrapper(L); \
+        SlotWrapperPtr slot_wrapper; \
         widget->signal().connect(slot_wrapper); \
         return 0; \
     }
