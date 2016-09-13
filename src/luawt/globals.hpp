@@ -60,6 +60,7 @@ public:
     ~luawt_Application() {
         if (owns_L_) {
             lua_close(L_);
+            L_ = 0;
         }
     }
 
@@ -245,18 +246,20 @@ struct wrap {
 
 struct SlotWrapper {
     /* Slot func must be at the top of the stack. */
-    SlotWrapper() {
-        func_id_ = luaL_ref(getLuaState(), LUA_REGISTRYINDEX);
+    SlotWrapper():
+        app_(luawt_Application::instance())
+    {
+        func_id_ = luaL_ref(app_->L(), LUA_REGISTRYINDEX);
     }
 
     ~SlotWrapper() {
-        lua_State* L = getLuaState();
-        if (L) {
-            luaL_unref(L, LUA_REGISTRYINDEX, func_id_);
+        if (app_->L()) {
+            luaL_unref(app_->L(), LUA_REGISTRYINDEX, func_id_);
         }
     }
 
     int func_id_;
+    luawt_Application* app_;
 };
 
 class SlotWrapperPtr {
