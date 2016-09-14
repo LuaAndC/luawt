@@ -83,6 +83,14 @@ int luawt_WServer_make(lua_State* L) {
     return 1;
 }
 
+int luawt_WServer_isRunning(lua_State* L) {
+    WServer* server = reinterpret_cast<WServer*>(
+        luaL_checkudata(L, 1, "luawt_WServer")
+    );
+    lua_pushboolean(L, server->isRunning());
+    return 1;
+}
+
 int luawt_WServer_start(lua_State* L) {
     WServer* server = reinterpret_cast<WServer*>(
         luaL_checkudata(L, 1, "luawt_WServer")
@@ -118,6 +126,7 @@ static const luaL_Reg luawt_WServer_mt[] = {
 };
 
 static const luaL_Reg luawt_WServer_methods[] = {
+    METHOD(WServer, isRunning),
     METHOD(WServer, start),
     METHOD(WServer, stop),
     {NULL, NULL},
