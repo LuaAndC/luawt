@@ -83,6 +83,15 @@ int luawt_WServer_make(lua_State* L) {
     return 1;
 }
 
+int luawt_WServer_removeEntryPoint(lua_State* L) {
+    WServer* server = reinterpret_cast<WServer*>(
+        luaL_checkudata(L, 1, "luawt_WServer")
+    );
+    const char* path = luaL_checkstring(L, 2);
+    server->removeEntryPoint(path);
+    return 0;
+}
+
 int luawt_WServer_isRunning(lua_State* L) {
     WServer* server = reinterpret_cast<WServer*>(
         luaL_checkudata(L, 1, "luawt_WServer")
@@ -126,6 +135,7 @@ static const luaL_Reg luawt_WServer_mt[] = {
 };
 
 static const luaL_Reg luawt_WServer_methods[] = {
+    METHOD(WServer, removeEntryPoint),
     METHOD(WServer, isRunning),
     METHOD(WServer, start),
     METHOD(WServer, stop),
