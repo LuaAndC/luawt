@@ -3,6 +3,7 @@
 [![Build Status][build-status]][travis]
 [![Coverage Status][coveralls-badge]][coveralls-page]
 [![License][license]](LICENSE)
+[![gitter][gitter-badge]][gitter-page]
 
 Lua bindings for Wt.
 
@@ -29,3 +30,5 @@ Lua bindings for Wt.
 [build-status]: https://travis-ci.org/LuaAndC/luawt.png?branch=master
 [coveralls-page]: https://coveralls.io/r/LuaAndC/luawt
 [coveralls-badge]: https://coveralls.io/repos/LuaAndC/luawt/badge.png
+[gitter-page]: https://gitter.im/luawt/Lobby
+[gitter-badge]: https://badges.gitter.im/USER/REPO.png
