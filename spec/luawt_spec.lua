@@ -40,6 +40,28 @@ describe("luawt", function()
         require 'luawt'
     end)
 
+    it("supports Wt's #signal/slot system", function()
+        local code = [[
+            local app, env = ...
+            local luawt = require 'luawt'
+            local button = luawt.WPushButton(app:root())
+            button:clicked():connect(function()
+                button:setText("was pressed")
+            end)
+            button:clicked():emit()
+        ]]
+        local port = 56789
+        local wt_config = baseConfig()
+        local server = createServer(code, port, wt_config)
+        server:start()
+        os.execute("sleep 10")
+        local data = socketRequest(port)
+        assert.truthy(data:match('was pressed'))
+        os.execute("sleep 10")
+        server:stop()
+        os.remove(wt_config)
+    end)
+
     it("#works fine with #WPushButton's set/isDefault", function()
         local code = [[
             local app, env = ...

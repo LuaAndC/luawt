@@ -10,15 +10,18 @@
 #include <cassert>
 #include <cstring>
 #include <exception>
+#include <memory>
 #include <stdexcept>
 #include <typeinfo>
 
 #include <boost/cast.hpp>
+#include <boost/shared_ptr.hpp>
 
 #include "boost-xtime.hpp"
 #include <Wt/WApplication>
 #include <Wt/WContainerWidget>
 #include <Wt/WEnvironment>
+#include <Wt/WObject>
 #include <Wt/WServer>
 #include <Wt/WText>
 
@@ -28,6 +31,7 @@
 #define my_setfuncs(L, funcs) luaL_register(L, 0, funcs)
 #define my_equal lua_equal
 #define my_rawlen lua_objlen
+#define LUA_OK 0
 #else
 #define my_setfuncs(L, funcs) luaL_setfuncs(L, funcs, 0)
 #define my_equal(L, i, j) lua_compare(L, i, j, LUA_OPEQ)
@@ -56,6 +60,7 @@ public:
     ~luawt_Application() {
         if (owns_L_) {
             lua_close(L_);
+            L_ = 0;
         }
     }
 
@@ -73,6 +78,18 @@ private:
     lua_State* L_;
     bool owns_L_;
 };
+
+inline void checkPcallStatus(lua_State* L, int status) {
+    if (status != LUA_OK) {
+        const char* e = lua_tostring(L, -1);
+        throw std::logic_error(e);
+    }
+}
+
+inline lua_State* getLuaState() {
+    luawt_Application* app = luawt_Application::instance();
+    return app ? app->L() : 0;
+}
 
 template<typename T>
 const char* luawt_typeToStr() {
@@ -226,6 +243,104 @@ struct wrap {
         return lua_error(L);
     }
 };
+
+struct SlotWrapper {
+    /* Slot func must be at the top of the stack. */
+    SlotWrapper():
+        app_(luawt_Application::instance())
+    {
+        func_id_ = luaL_ref(app_->L(), LUA_REGISTRYINDEX);
+    }
+
+    ~SlotWrapper() {
+        if (app_->L()) {
+            luaL_unref(app_->L(), LUA_REGISTRYINDEX, func_id_);
+        }
+    }
+
+    int func_id_;
+    /* Use app_ member to access L. We can't keep L itself here
+       because lua_close() is triggered first in some cases.
+    */
+    luawt_Application* app_;
+};
+
+class SlotWrapperPtr {
+public:
+    SlotWrapperPtr():
+        slot_wrapper_(new SlotWrapper) {
+    }
+
+    SlotWrapperPtr(const SlotWrapperPtr& other)
+        : slot_wrapper_(other.slot_wrapper_)
+    {
+    }
+
+    /* Will be called from Wt as slot. */
+    template <typename T>
+    void operator()(T event) {
+        lua_State* L = getLuaState();
+        if (!L) {
+            throw std::logic_error(
+                "LuaWt: no WApplication (no web session) when "
+                "calling slot func."
+            );
+        }
+        lua_rawgeti(
+            L,
+            LUA_REGISTRYINDEX,
+            slot_wrapper_->func_id_
+        );
+        int status = lua_pcall(L, 0, 0, 0);
+        checkPcallStatus(L, status);
+    }
+
+private:
+    boost::shared_ptr<SlotWrapper> slot_wrapper_;
+};
+
+#define SET_SIGNAL_FIELD(signal, widget_type, field) \
+    lua_pushcfunction( \
+        L, \
+        wrap<luawt_##widget_type##_##field##_##signal>::func \
+    ); \
+    lua_setfield(L, -2, #field);
+
+#define GET_WIDGET(widget_type) \
+    luaL_checktype(L, 1, LUA_TTABLE); \
+    lua_getfield(L, 1, "widget"); \
+    widget_type* widget = luawt_checkFromLua<widget_type>(L, -1); \
+    lua_pop(L, 1);
+
+#define CREATE_EMIT_SIGNAL_FUNC(signal, widget_type) \
+    int luawt_##widget_type##_emit_##signal(lua_State* L) { \
+        GET_WIDGET(widget_type) \
+        widget->signal().emit(WMouseEvent()); \
+        return 0; \
+    }
+
+#define CREATE_CONNECT_SIGNAL_FUNC(signal, widget_type) \
+    int luawt_##widget_type##_connect_##signal(lua_State* L) { \
+        GET_WIDGET(widget_type) \
+        SlotWrapperPtr slot_wrapper; \
+        widget->signal().connect(slot_wrapper); \
+        return 0; \
+    }
+
+#define CREATE_SIGNAL_FUNC(signal, widget_type) \
+    int luawt_##widget_type##_##signal(lua_State* L) { \
+        lua_newtable(L); \
+        lua_insert(L, -2); \
+        lua_setfield(L, -2, "widget"); \
+        SET_SIGNAL_FIELD(signal, widget_type, connect) \
+        SET_SIGNAL_FIELD(signal, widget_type, emit) \
+        return 1; \
+    }
+
+#define ADD_SIGNAL(signal, widget_type) \
+    CREATE_EMIT_SIGNAL_FUNC(signal, widget_type) \
+    CREATE_CONNECT_SIGNAL_FUNC(signal, widget_type) \
+    CREATE_SIGNAL_FUNC(signal, widget_type)
 
 template<typename T>
 class luawt_DeclareType {
