@@ -259,6 +259,9 @@ struct SlotWrapper {
     }
 
     int func_id_;
+    /* Use app_ member to access L. We can't keep L itself here
+       because lua_close() is triggered first in some cases.
+    */
     luawt_Application* app_;
 };
 
