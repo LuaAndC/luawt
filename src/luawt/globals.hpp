@@ -21,9 +21,9 @@
 #include <Wt/WApplication>
 #include <Wt/WContainerWidget>
 #include <Wt/WEnvironment>
+#include <Wt/WObject>
 #include <Wt/WServer>
 #include <Wt/WText>
-#include <Wt/WObject>
 
 #include <lua.hpp>
 
