@@ -42,6 +42,13 @@ def getComplexArgument(argument_type, argument_name, index):
     '''
     return frame % options
 
+def returnComplexValue(value_name):
+    frame = r'''
+    luawt_toLua(L, %s);
+    return 1;
+    '''
+    return frame % value_name
+
 def bind(to_bind):
     with open(to_bind, 'r') as f:
         code = f.read()
