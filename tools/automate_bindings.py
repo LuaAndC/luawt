@@ -42,6 +42,15 @@ def getComplexArgument(argument_type, argument_name, index):
     '''
     return frame % options
 
+def callWtFunction(return_type, args, method_name):
+    call_s = 'self->%s(' % method_name
+    args_s = ', '.join(arg for arg in args)
+    func_s = call_s + args_s + ');'
+    if return_type == 'void':
+        return func_s
+    else:
+        return '%s result = %s' % return_type % func_s
+
 def returnComplexValue(value_name):
     frame = r'''
     luawt_toLua(L, %s);
