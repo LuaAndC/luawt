@@ -51,12 +51,12 @@ def callWtFunction(return_type, args, method_name):
     else:
         return '%s result = %s' % return_type % func_s
 
-def returnComplexValue(value_name):
+def returnComplexValue():
     frame = r'''
-    luawt_toLua(L, %s);
+    luawt_toLua(L, result);
     return 1;
     '''
-    return frame % value_name
+    return frame
 
 def bind(to_bind):
     with open(to_bind, 'r') as f:
