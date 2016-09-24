@@ -18,6 +18,11 @@ MAIN_FUNC_IMPL = r'''
 }
 '''
 
+TYPE_FROM_LUA_FUNCS = {
+    'int' : 'lua_tointeger',
+    'bool' : 'lua_toboolean',
+}
+
 def get_func_name(module_name):
     return "void luawt_%s(lua_State* L)" % module_name
 
