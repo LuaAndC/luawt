@@ -23,6 +23,11 @@ TYPE_FROM_LUA_FUNCS = {
     'bool' : 'lua_toboolean',
 }
 
+TYPE_TO_LUA_FUNCS = {
+    'int' : 'lua_pushinteger',
+    'bool' : 'lua_pushboolean',
+}
+
 def get_func_name(module_name):
     return "void luawt_%s(lua_State* L)" % module_name
 
