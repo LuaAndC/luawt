@@ -40,12 +40,7 @@ def generate_skeleton(module_name):
 def get_module_name(filename):
     return os.path.basename(filename)
 
-def getComplexArgument(argument_type, argument_name, index):
-    options = {
-        'argument_type' : argument_type,
-        'argument_name' : argument_name,
-        'index': index,
-    }
+def getComplexArgument(options):
     frame = r'''
     %(argument_type)* %(argument_name) =
         luawt_checkFromLua<%(argument_type)>(L, %(index));
