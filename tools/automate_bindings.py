@@ -40,6 +40,15 @@ def generate_skeleton(module_name):
 def get_module_name(filename):
     return os.path.basename(filename)
 
+def generateIncludes(module_name):
+    includes = r'''
+    #include "boost-xtime.hpp"
+    #include <Wt/%s>
+
+    #include "globals.hpp"
+    '''
+    return includes % module_name
+
 def getComplexArgument(options):
     frame = r'''
     %(argument_type)* %(argument_name) =
