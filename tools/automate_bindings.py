@@ -49,6 +49,12 @@ def generateIncludes(module_name):
     '''
     return includes % module_name
 
+def getInbuiltTypeArgument(options):
+    frame = r'''
+    %(argument_type) %(argument_name) = %(func)(L, %(index));
+    '''
+    return frame % options
+
 def getComplexArgument(options):
     frame = r'''
     %(argument_type)* %(argument_name) =
