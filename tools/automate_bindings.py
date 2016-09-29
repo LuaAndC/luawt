@@ -71,6 +71,16 @@ def callWtFunction(return_type, args, method_name):
     else:
         return '%s result = %s' % return_type % func_s
 
+def returnInbuiltTypeValue(return_type):
+    if return_type == 'void':
+        return 'return 0;'
+    else:
+        return_calls = r'''
+        %s(L, result);
+        return 1;
+        '''
+        return return_calls % TYPE_TO_LUA_FUNCS[return_type]
+
 def returnComplexValue():
     frame = r'''
     luawt_toLua(L, result);
