@@ -64,7 +64,7 @@ def getComplexArgument(options):
 
 def callWtFunction(return_type, args, method_name):
     call_s = 'self->%s(' % method_name
-    args_s = ', '.join(arg for arg in args)
+    args_s = ', '.join(arg.name for arg in args)
     func_s = call_s + args_s + ');'
     if return_type == 'void':
         return func_s
