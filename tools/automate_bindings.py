@@ -88,6 +88,12 @@ def returnComplexValue():
     '''
     return frame
 
+def isInbuilt(type):
+    for inbuilt_type in TYPE_FROM_LUA_FUNCS:
+        if type.find(inbuilt_type):
+            return True
+    return False
+
 def bind(to_bind):
     with open(to_bind, 'r') as f:
         code = f.read()
