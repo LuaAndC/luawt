@@ -94,6 +94,28 @@ def isInbuilt(type):
             return True
     return False
 
+def implementLuaCFunction(module_name, method_name, args, return_type):
+    head = 'int luawt_%s_%s(lua_State* L) {' % module_name % method_name
+    body = ''
+    for arg in args:
+        options = {
+            'argument_name' : arg.name,
+            'argument_type' : arg.type,
+            'index' : arg.index,
+        }
+        if isInbuilt(arg.type):
+            options['func'] = TYPE_FROM_LUA_FUNCS[arg.type]
+            body += getInbuiltTypeArgument(options)
+        else:
+            body += getComplexArgument(options)
+    body += callWtFunction(return_type, args, method_name)
+    if (isInbuilt(return_type)):
+        body += returnInbuiltTypeValue(return_type)
+    else:
+        body += returnComplexValue()
+    close = '}\n\n'
+    return head + body + close
+
 def bind(to_bind):
     with open(to_bind, 'r') as f:
         code = f.read()
