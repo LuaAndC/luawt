@@ -28,16 +28,16 @@ TYPE_TO_LUA_FUNCS = {
     'bool' : 'lua_pushboolean',
 }
 
-def get_func_name(module_name):
+def getFuncName(module_name):
     return "void luawt_%s(lua_State* L)" % module_name
 
-def generate_skeleton(module_name):
+def generateSkeleton(module_name):
     with open('src/luawt/%s.cpp' % module_name, 'wt') as f:
-        f.write(MAIN_FUNC_IMPL % get_func_name(module_name))
+        f.write(MAIN_FUNC_IMPL % getFuncName(module_name))
     with open('src/luawt/globals2.hpp', 'w') as f:
-        f.write(MAIN_FUNC_DEF % get_func_name(module_name))
+        f.write(MAIN_FUNC_DEF % getFuncName(module_name))
 
-def get_module_name(filename):
+def getModuleName(filename):
     return os.path.basename(filename)
 
 def generateIncludes(module_name):
@@ -132,8 +132,8 @@ def main():
         required=True,
     )
     args = parser.parse_args()
-    module_name = get_module_name(args.bind)
-    generate_skeleton(module_name)
+    module_name = getModuleName(args.bind)
+    generateSkeleton(module_name)
     bind(args.bind)
 
 if __name__ == '__main__':
