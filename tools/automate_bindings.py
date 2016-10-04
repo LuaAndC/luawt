@@ -116,6 +116,17 @@ def implementLuaCFunction(module_name, method_name, args, return_type):
     close = '}\n\n'
     return head + body + close
 
+def generateMethodsArray(module_name, methods):
+    head = 'static const luaL_Reg luawt_%s_methods[] = {' % module_name;
+    body = ''
+    for mathod in methods:
+        body += 'METHOD(%s, %s),\n' % module_name % method.name
+    close = r'''
+        {NULL, NULL},
+    };
+    '''
+    return head + body + close
+
 def bind(to_bind):
     with open(to_bind, 'r') as f:
         code = f.read()
