@@ -127,6 +127,27 @@ def generateMethodsArray(module_name, methods):
     '''
     return head + body + close
 
+def generateModuleFunc(module_name, base):
+    options = {
+        'module_name' : module_name,
+        'base' : base,
+    }
+    code = r'''
+    void luawt_%(module_name)(lua_State* L) {
+        const char* base = luawt_typeToStr<%(base)>();
+        assert(base);
+        DECLARE_CLASS(
+            %(module_name),
+            L,
+            wrap<luawt_%(module_name)_make>::func,
+            0,
+            luawt_%(module_name)_methods,
+            %(base)
+        );
+    }
+    '''
+    return code % options
+
 def bind(to_bind):
     with open(to_bind, 'r') as f:
         code = f.read()
