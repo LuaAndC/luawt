@@ -148,6 +148,20 @@ def generateModuleFunc(module_name, base):
     '''
     return code % options
 
+def generateModule(module_name, methods, base):
+    source = ''
+    source += generateIncludes(module_name)
+    for method in methods:
+        source += implementLuaCFunction(
+            module_name,
+            method.name,
+            method.args,
+            method.return_type
+        )
+    source += generateMethodsArray(module_name, methods)
+    source += generateModuleFunc(module_name, base)
+    return source
+
 def bind(to_bind):
     with open(to_bind, 'r') as f:
         code = f.read()
