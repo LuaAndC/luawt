@@ -9,6 +9,10 @@ of given class (types of arguments and return values).
 import argparse
 import os
 
+from pygccxml import utils
+from pygccxml import declarations
+from pygccxml import parser
+
 MAIN_FUNC_DEF = r'''
 %s;
 '''
@@ -27,6 +31,23 @@ TYPE_TO_LUA_FUNCS = {
     'int' : 'lua_pushinteger',
     'bool' : 'lua_pushboolean',
 }
+
+def parser(filename):
+    # Find out the c++ parser
+    generator_path, generator_name = utils.find_xml_generator()
+
+    # Configure the xml generator
+    xml_generator_config = parser.xml_generator_configuration_t(
+        xml_generator_path = generator_path,
+        xml_generator = generator_name
+    )
+
+    # Parse the c++ file
+    decls = parser.parse([filename], xml_generator_config)
+
+    # Get access to the global namespace
+    global_namespace = declarations.get_global_namespace(decls)
+    return global_namespace
 
 def getFuncName(module_name):
     return "void luawt_%s(lua_State* L)" % module_name
