@@ -52,11 +52,9 @@ def parser(filename):
 def getFuncName(module_name):
     return "void luawt_%s(lua_State* L)" % module_name
 
-def generateSkeleton(module_name):
+def writeSourceToFile(module_name, source):
     with open('src/luawt/%s.cpp' % module_name, 'wt') as f:
-        f.write(MAIN_FUNC_IMPL % getFuncName(module_name))
-    with open('src/luawt/globals2.hpp', 'w') as f:
-        f.write(MAIN_FUNC_DEF % getFuncName(module_name))
+        f.write(source)
 
 def getModuleName(filename):
     return os.path.basename(filename)
@@ -199,8 +197,6 @@ def main():
         required=True,
     )
     args = parser.parse_args()
-    module_name = getModuleName(args.bind)
-    generateSkeleton(module_name)
     bind(args.bind)
 
 if __name__ == '__main__':
