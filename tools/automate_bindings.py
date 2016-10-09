@@ -40,6 +40,16 @@ def parser(filename):
     global_namespace = declarations.get_global_namespace(decls)
     return global_namespace
 
+def getMethods(global_namespace):
+    Wt = global_namespace.namespace("Wt")
+    base = ''
+    mathods = []
+    for decl in Wt.declarations:
+        if isintance(decl, declarations.class_declaration_t):
+            base = str(decl.bases[0])
+        if isintance(decl, declarations.free_function_t):
+            methods.append(decl)
+    return mathods, base
 
 def writeSourceToFile(module_name, source):
     with open('src/luawt/%s.cpp' % module_name, 'wt') as f:
