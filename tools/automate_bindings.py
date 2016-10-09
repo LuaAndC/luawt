@@ -180,9 +180,12 @@ def generateModule(module_name, methods, base):
     source += generateModuleFunc(module_name, base)
     return source
 
-def bind(to_bind):
-    with open(to_bind, 'r') as f:
-        code = f.read()
+def bind(input_filename):
+    global_namespace = parser(input_filename)
+    methods, base = getMethods(global_namespace)
+    module_name = getModuleName(input_filename)
+    source = generateModule(module_name, methods, base)
+    return source
 
 def main():
     parser = argparse.ArgumentParser(
@@ -196,7 +199,8 @@ def main():
         required=True,
     )
     args = parser.parse_args()
-    bind(args.bind)
+    source = bind(args.bind)
+    writeSourceToFile(source)
 
 if __name__ == '__main__':
     main()
