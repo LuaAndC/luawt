@@ -13,15 +13,6 @@ from pygccxml import utils
 from pygccxml import declarations
 from pygccxml import parser
 
-MAIN_FUNC_DEF = r'''
-%s;
-'''
-
-MAIN_FUNC_IMPL = r'''
-%s {
-}
-'''
-
 TYPE_FROM_LUA_FUNCS = {
     'int' : 'lua_tointeger',
     'bool' : 'lua_toboolean',
@@ -49,8 +40,6 @@ def parser(filename):
     global_namespace = declarations.get_global_namespace(decls)
     return global_namespace
 
-def getFuncName(module_name):
-    return "void luawt_%s(lua_State* L)" % module_name
 
 def writeSourceToFile(module_name, source):
     with open('src/luawt/%s.cpp' % module_name, 'wt') as f:
