@@ -23,7 +23,7 @@ TYPE_TO_LUA_FUNCS = {
     'bool' : 'lua_pushboolean',
 }
 
-def parser(filename):
+def parse(filename):
     # Find out the c++ parser
     generator_path, generator_name = utils.find_xml_generator()
 
@@ -181,7 +181,7 @@ def generateModule(module_name, methods, base):
     return source
 
 def bind(input_filename):
-    global_namespace = parser(input_filename)
+    global_namespace = parse(input_filename)
     methods, base = getMethods(global_namespace)
     module_name = getModuleName(input_filename)
     source = generateModule(module_name, methods, base)
