@@ -1,4 +1,4 @@
-#!/usr/bin/python3
+#!/usr/bin/python
 
 """ Generate bindings of given Wt's class and all its dependencies.
 
