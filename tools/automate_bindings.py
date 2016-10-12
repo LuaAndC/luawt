@@ -45,9 +45,9 @@ def getMethods(global_namespace):
     base = ''
     mathods = []
     for decl in Wt.declarations:
-        if isintance(decl, declarations.class_declaration_t):
+        if isinstance(decl, declarations.class_declaration_t):
             base = str(decl.bases[0])
-        if isintance(decl, declarations.free_function_t):
+        if isinstance(decl, declarations.free_function_t):
             methods.append(decl)
     return mathods, base
 
