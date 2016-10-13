@@ -200,7 +200,8 @@ def main():
     )
     args = parser.parse_args()
     source = bind(args.bind)
-    writeSourceToFile(source)
+    module_name = getModuleName(args.bind)
+    writeSourceToFile(module_name, source)
 
 if __name__ == '__main__':
     main()
