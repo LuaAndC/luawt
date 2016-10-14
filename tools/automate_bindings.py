@@ -69,14 +69,14 @@ def generateIncludes(module_name):
 
 def getInbuiltTypeArgument(options):
     frame = r'''
-    %(argument_type) %(argument_name) = %(func)(L, %(index));
+    %(argument_type)s %(argument_name)s = %(func)s(L, %(index)s);
     '''
     return frame % options
 
 def getComplexArgument(options):
     frame = r'''
-    %(argument_type)* %(argument_name) =
-        luawt_checkFromLua<%(argument_type)>(L, %(index));
+    %(argument_type)s* %(argument_name)s =
+        luawt_checkFromLua<%(argument_type)s>(L, %(index)s);
     '''
     return frame % options
 
@@ -151,16 +151,16 @@ def generateModuleFunc(module_name, base):
         'base' : base,
     }
     code = r'''
-    void luawt_%(module_name)(lua_State* L) {
-        const char* base = luawt_typeToStr<%(base)>();
+    void luawt_%(module_name)s(lua_State* L) {
+        const char* base = luawt_typeToStr<%(base)s>();
         assert(base);
         DECLARE_CLASS(
-            %(module_name),
+            %(module_name)s,
             L,
-            wrap<luawt_%(module_name)_make>::func,
+            wrap<luawt_%(module_name)s_make>::func,
             0,
-            luawt_%(module_name)_methods,
-            %(base)
+            luawt_%(module_name)s_methods,
+            %(base)s
         );
     }
     '''
