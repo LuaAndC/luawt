@@ -85,7 +85,7 @@ def callWtFunction(return_type, args, method_name):
     if return_type == 'void':
         return func_s
     else:
-        return '%s result = %s' % return_type % func_s
+        return '%s result = %s' % (return_type, func_s)
 
 def returnInbuiltTypeValue(return_type):
     if return_type == 'void':
@@ -111,7 +111,7 @@ def isInbuilt(type):
     return False
 
 def implementLuaCFunction(module_name, method_name, args, return_type):
-    head = 'int luawt_%s_%s(lua_State* L) {' % module_name % method_name
+    head = 'int luawt_%s_%s(lua_State* L) {' % (module_name, method_name)
     body = ''
     for arg in args:
         options = {
@@ -135,8 +135,8 @@ def implementLuaCFunction(module_name, method_name, args, return_type):
 def generateMethodsArray(module_name, methods):
     head = 'static const luaL_Reg luawt_%s_methods[] = {' % module_name;
     body = ''
-    for mathod in methods:
-        body += 'METHOD(%s, %s),\n' % module_name % method.name
+    for method in methods:
+        body += 'METHOD(%s, %s),\n' % (module_name, method.name)
     close = r'''
         {NULL, NULL},
     };
