@@ -41,7 +41,11 @@
 using namespace Wt;
 
 extern "C" {
+#ifdef LUAWTEST
+int luaopen_luawtest(lua_State* L);
+#else
 int luaopen_luawt(lua_State* L);
+#endif
 }
 
 void* luawt_getShared(lua_State* L);
@@ -58,7 +62,11 @@ public:
             L_ = luaL_newstate();
             luaL_openlibs(L_);
             luawt_setShared(L_, shared);
+#ifdef LUAWTEST
+            luaopen_luawtest(L_);
+#else
             luaopen_luawt(L_);
+#endif
         }
     }
 
@@ -408,8 +416,11 @@ void luawt_WApplication(lua_State* L);
 void luawt_WContainerWidget(lua_State* L);
 void luawt_WEnvironment(lua_State* L);
 void luawt_WPushButton(lua_State* L);
-void luawt_WServer(lua_State* L);
+#ifdef LUAWTEST
 void luawt_WTestEnvironment(lua_State* L);
+#else
+void luawt_WServer(lua_State* L);
+#endif
 void luawt_WWidget(lua_State* L);
 
 #endif
