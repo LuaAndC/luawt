@@ -171,7 +171,7 @@ def generateModule(module_name, methods, base):
         source += implementLuaCFunction(
             module_name,
             method.name,
-            method.args,
+            method.arguments,
             method.return_type
         )
     source += generateMethodsArray(module_name, methods)
