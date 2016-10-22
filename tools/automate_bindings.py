@@ -26,16 +26,13 @@ TYPE_TO_LUA_FUNCS = {
 def parse(filename):
     # Find out the c++ parser
     generator_path, generator_name = utils.find_xml_generator()
-
     # Configure the xml generator
     xml_generator_config = parser.xml_generator_configuration_t(
         xml_generator_path = generator_path,
         xml_generator = generator_name
     )
-
     # Parse the c++ file
     decls = parser.parse([filename], xml_generator_config)
-
     # Get access to the global namespace
     global_namespace = declarations.get_global_namespace(decls)
     return global_namespace
@@ -171,7 +168,7 @@ def generateModule(module_name, methods, base):
             module_name,
             method.name,
             method.arguments,
-            method.return_type
+            method.return_type,
         )
     source += generateMethodsArray(module_name, methods)
     source += generateModuleFunc(module_name, base)
