@@ -9,9 +9,9 @@ of given class (types of arguments and return values).
 import argparse
 import os
 
-from pygccxml import utils
 from pygccxml import declarations
 from pygccxml import parser
+from pygccxml import utils
 
 TYPE_FROM_LUA_FUNCS = {
     'int' : 'lua_tointeger',
