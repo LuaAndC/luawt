@@ -87,48 +87,47 @@ def callWtFunction(return_type, args, method_name):
     else:
         return '%s result = %s' % (return_type, func_s)
 
-def returnInbuiltTypeValue(return_type):
+def returnValue(return_type):
     if return_type == 'void':
         return 'return 0;'
     else:
+        if return_type:
+            func_name = TYPE_TO_LUA_FUNCS[return_type]
+        else:
+            func_name = 'luawt_toLua'
         return_calls = r'''
         %s(L, result);
         return 1;
         '''
-        return return_calls % TYPE_TO_LUA_FUNCS[return_type]
+        return return_calls % func_name
 
-def returnComplexValue():
-    frame = r'''
-    luawt_toLua(L, result);
-    return 1;
-    '''
-    return frame
-
-def isInbuilt(type):
+def getInbuiltType(type):
     for inbuilt_type in TYPE_FROM_LUA_FUNCS:
-        if type.find(inbuilt_type):
-            return True
-    return False
+        if type.find(inbuilt_type) is not -1:
+            return inbuilt_type
+    return ''
 
 def implementLuaCFunction(module_name, method_name, args, return_type):
     head = 'int luawt_%s_%s(lua_State* L) {' % (module_name, method_name)
     body = ''
-    for arg in args:
+    arg_n = 0
+    while arg_n < len(args):
+        arg = args[arg_n]
         options = {
             'argument_name' : arg.name,
-            'argument_type' : arg.type,
-            'index' : arg.index,
+            'argument_type' : str(arg.decl_type),
+            'index' : arg_n,
         }
-        if isInbuilt(arg.type):
-            options['func'] = TYPE_FROM_LUA_FUNCS[arg.type]
+        arg_type = getInbuiltType(str(arg.decl_type))
+        if (arg_type):
+            options['func'] = TYPE_FROM_LUA_FUNCS[arg_type]
             body += getInbuiltTypeArgument(options)
         else:
             body += getComplexArgument(options)
+        arg_n = arg_n + 1
     body += callWtFunction(return_type, args, method_name)
-    if (isInbuilt(return_type)):
-        body += returnInbuiltTypeValue(return_type)
-    else:
-        body += returnComplexValue()
+    return_type = getInbuiltType(str(return_type))
+    body += returnValue(return_type)
     close = '}\n\n'
     return head + body + close
 
