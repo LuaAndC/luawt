@@ -39,7 +39,7 @@ def parse(filename):
 
 def getMethods(global_namespace):
     Wt = global_namespace.namespace("Wt")
-    base = ''
+    base = None
     methods = Wt.member_functions()
     for decl in Wt.declarations:
         if isinstance(decl, declarations.class_declaration_t):
@@ -102,7 +102,7 @@ def getInbuiltType(type):
     for inbuilt_type in TYPE_FROM_LUA_FUNCS:
         if type.find(inbuilt_type) is not -1:
             return inbuilt_type
-    return ''
+    return None
 
 def implementLuaCFunction(module_name, method_name, args, return_type):
     head = 'int luawt_%s_%s(lua_State* L) {' % (module_name, method_name)
