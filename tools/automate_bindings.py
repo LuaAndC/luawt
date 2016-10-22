@@ -43,6 +43,7 @@ def getMethods(global_namespace):
     methods = Wt.member_functions()
     for decl in Wt.declarations:
         if isinstance(decl, declarations.class_declaration_t):
+            assert base is None
             base = str(decl.bases[0])
     return methods, base
 
