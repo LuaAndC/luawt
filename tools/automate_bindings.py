@@ -23,6 +23,34 @@ TYPE_TO_LUA_FUNCS = {
     'bool' : 'lua_pushboolean',
 }
 
+INCLUDES_TEMPLATE = r'''
+#include "boost-xtime.hpp"
+#include <Wt/%s>
+
+#include "globals.hpp"
+
+'''
+
+MODULE_FUNC_TEMPLATE = r'''
+void luawt_%(module_name)s(lua_State* L) {
+    const char* base = luawt_typeToStr<%(base)s>();
+    assert(base);
+    DECLARE_CLASS(
+        %(module_name)s,
+        L,
+        wrap<luawt_%(module_name)s_make>::func,
+        0,
+        luawt_%(module_name)s_methods,
+        %(base)s
+    );
+}
+'''
+
+RETURN_CALLS_TEMPLATE = r'''
+    %s(L, result);
+    return 1;
+'''
+
 def parse(filename):
     # Find out the c++ parser
     generator_path, generator_name = utils.find_xml_generator()
@@ -55,13 +83,7 @@ def getModuleName(filename):
     return os.path.basename(filename)
 
 def generateIncludes(module_name):
-    includes = r'''
-    #include "boost-xtime.hpp"
-    #include <Wt/%s>
-
-    #include "globals.hpp"
-    '''
-    return includes % module_name
+    return INCLUDES_TEMPLATE.lstrip() % module_name
 
 def getInbuiltTypeArgument(options):
     frame = r'''
@@ -93,11 +115,7 @@ def returnValue(return_type):
             func_name = TYPE_TO_LUA_FUNCS[return_type]
         else:
             func_name = 'luawt_toLua'
-        return_calls = r'''
-        %s(L, result);
-        return 1;
-        '''
-        return return_calls % func_name
+        return RETURN_CALLS_TEMPLATE % func_name
 
 def getInbuiltType(type):
     for inbuilt_type in TYPE_FROM_LUA_FUNCS:
@@ -131,13 +149,17 @@ def implementLuaCFunction(module_name, method_name, args, return_type):
 
 def generateMethodsArray(module_name, methods):
     head = 'static const luaL_Reg luawt_%s_methods[] = {' % module_name;
+    base_element = r'''
+    METHOD(%s, %s),
+    '''
+    close_element = r'''
+    {NULL, NULL},
+    '''
     body = ''
     for method in methods:
-        body += 'METHOD(%s, %s),\n' % (module_name, method.name)
-    close = r'''
-        {NULL, NULL},
-    };
-    '''
+        body += base_element.rstrip() % (module_name, method.name)
+    body += close_element.rstrip()
+    close = '\n};\n'
     return head + body + close
 
 def generateModuleFunc(module_name, base):
@@ -145,21 +167,7 @@ def generateModuleFunc(module_name, base):
         'module_name' : module_name,
         'base' : base,
     }
-    code = r'''
-    void luawt_%(module_name)s(lua_State* L) {
-        const char* base = luawt_typeToStr<%(base)s>();
-        assert(base);
-        DECLARE_CLASS(
-            %(module_name)s,
-            L,
-            wrap<luawt_%(module_name)s_make>::func,
-            0,
-            luawt_%(module_name)s_methods,
-            %(base)s
-        );
-    }
-    '''
-    return code % options
+    return MODULE_FUNC_TEMPLATE % options
 
 def generateModule(module_name, methods, base):
     source = ''
