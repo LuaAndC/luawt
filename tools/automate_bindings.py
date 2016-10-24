@@ -89,14 +89,14 @@ def getInbuiltTypeArgument(options):
     frame = r'''
     %(argument_type)s %(argument_name)s = %(func)s(L, %(index)s);
     '''
-    return frame % options
+    return frame.lstrip() % options
 
 def getComplexArgument(options):
     frame = r'''
     %(argument_type)s* %(argument_name)s =
         luawt_checkFromLua<%(argument_type)s>(L, %(index)s);
     '''
-    return frame % options
+    return frame.lstrip() % options
 
 def callWtFunction(return_type, args, method_name):
     call_s = 'self->%s(' % method_name
