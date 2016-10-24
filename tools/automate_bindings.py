@@ -67,13 +67,10 @@ def parse(filename):
 
 def getMethods(global_namespace):
     Wt = global_namespace.namespace("Wt")
-    base = None
     methods = Wt.member_functions()
-    for decl in Wt.declarations:
-        if isinstance(decl, declarations.class_declaration_t):
-            assert base is None
-            base = str(decl.bases[0])
-    return methods, base
+    main_class = (Wt.classes())[0]
+    bases = main_class.bases
+    return methods, bases
 
 def writeSourceToFile(module_name, source):
     with open('src/luawt/%s.cpp' % module_name, 'wt') as f:
