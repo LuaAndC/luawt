@@ -85,6 +85,12 @@ def getModuleName(filename):
 def generateIncludes(module_name):
     return INCLUDES_TEMPLATE.lstrip() % module_name
 
+def getSelf(module_name):
+    frame = r'''
+    %s* self = luawt_checkFromLua<%s>(L, 1);
+    '''
+    return frame % (module_name, module_name)
+
 def getInbuiltTypeArgument(options):
     frame = r'''
     %(argument_type)s %(argument_name)s = %(func)s(L, %(index)s);
@@ -125,7 +131,7 @@ def getInbuiltType(type):
 
 def implementLuaCFunction(module_name, method_name, args, return_type):
     head = 'int luawt_%s_%s(lua_State* L) {' % (module_name, method_name)
-    body = ''
+    body = getSelf(module_name)
     arg_n = 0
     while arg_n < len(args):
         arg = args[arg_n]
