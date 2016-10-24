@@ -132,7 +132,9 @@ def implementLuaCFunction(module_name, method_name, args, return_type):
         options = {
             'argument_name' : arg.name,
             'argument_type' : str(arg.decl_type),
-            'index' : arg_n,
+            # In Lua indices start with 1; the first one is
+            # object itself, so we have to add 2 to arg_n.
+            'index' : arg_n + 2,
         }
         arg_type = getInbuiltType(str(arg.decl_type))
         if (arg_type):
