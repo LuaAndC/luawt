@@ -9,9 +9,7 @@ of given class (types of arguments and return values).
 import argparse
 import os
 
-from pygccxml import declarations
-from pygccxml import parser
-from pygccxml import utils
+import pygccxml
 
 TYPE_FROM_LUA_FUNCS = {
     'int' : 'lua_tointeger',
@@ -53,16 +51,16 @@ RETURN_CALLS_TEMPLATE = r'''
 
 def parse(filename):
     # Find out the c++ parser
-    generator_path, generator_name = utils.find_xml_generator()
+    generator_path, generator_name = pygccxml.utils.find_xml_generator()
     # Configure the xml generator
-    xml_generator_config = parser.xml_generator_configuration_t(
+    xml_generator_config = pygccxml.parser.xml_generator_configuration_t(
         xml_generator_path = generator_path,
         xml_generator = generator_name
     )
     # Parse the c++ file
-    decls = parser.parse([filename], xml_generator_config)
+    decls = pygccxml.parser.parse([filename], xml_generator_config)
     # Get access to the global namespace
-    global_namespace = declarations.get_global_namespace(decls)
+    global_namespace = pygccxml.declarations.get_global_namespace(decls)
     return global_namespace
 
 def getMethods(global_namespace):
