@@ -184,7 +184,7 @@ def generateModuleFunc(module_name, base):
         'module_name' : module_name,
         'base' : base,
     }
-    return MODULE_FUNC_TEMPLATE % options
+    return MODULE_FUNC_TEMPLATE.lstrip() % options
 
 def generateModule(module_name, methods, base):
     source = ''
