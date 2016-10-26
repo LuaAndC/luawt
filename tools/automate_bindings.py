@@ -103,9 +103,9 @@ def returnValue(return_type):
             func_name = 'luawt_toLua'
         return RETURN_CALLS_TEMPLATE % func_name
 
-def getInbuiltType(type):
+def getInbuiltType(full_type):
     for inbuilt_type in TYPE_FROM_LUA_FUNCS:
-        if type.find(inbuilt_type) is not -1:
+        if full_type.find(inbuilt_type) is not -1:
             return inbuilt_type
     return None
 
