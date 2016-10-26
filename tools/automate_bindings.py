@@ -21,34 +21,6 @@ TYPE_TO_LUA_FUNCS = {
     'bool' : 'lua_pushboolean',
 }
 
-INCLUDES_TEMPLATE = r'''
-#include "boost-xtime.hpp"
-#include <Wt/%s>
-
-#include "globals.hpp"
-
-'''
-
-MODULE_FUNC_TEMPLATE = r'''
-void luawt_%(module_name)s(lua_State* L) {
-    const char* base = luawt_typeToStr<%(base)s>();
-    assert(base);
-    DECLARE_CLASS(
-        %(module_name)s,
-        L,
-        wrap<luawt_%(module_name)s_make>::func,
-        0,
-        luawt_%(module_name)s_methods,
-        %(base)s
-    );
-}
-'''
-
-RETURN_CALLS_TEMPLATE = r'''
-    %s(L, result);
-    return 1;
-'''
-
 def parse(filename):
     # Find out the c++ parser
     generator_path, generator_name = pygccxml.utils.find_xml_generator()
@@ -76,6 +48,14 @@ def writeSourceToFile(module_name, source):
 
 def getModuleName(filename):
     return os.path.basename(filename)
+
+INCLUDES_TEMPLATE = r'''
+#include "boost-xtime.hpp"
+#include <Wt/%s>
+
+#include "globals.hpp"
+
+'''
 
 def generateIncludes(module_name):
     return INCLUDES_TEMPLATE.lstrip() % module_name
@@ -107,6 +87,11 @@ def callWtFunction(return_type, args, method_name):
         return func_s
     else:
         return '%s result = %s' % (return_type, func_s)
+
+RETURN_CALLS_TEMPLATE = r'''
+    %s(L, result);
+    return 1;
+'''
 
 def returnValue(return_type):
     if return_type == 'void':
@@ -164,6 +149,21 @@ def generateMethodsArray(module_name, methods):
     body += close_element.rstrip()
     close = '\n};\n'
     return head + body + close
+
+MODULE_FUNC_TEMPLATE = r'''
+void luawt_%(module_name)s(lua_State* L) {
+    const char* base = luawt_typeToStr<%(base)s>();
+    assert(base);
+    DECLARE_CLASS(
+        %(module_name)s,
+        L,
+        wrap<luawt_%(module_name)s_make>::func,
+        0,
+        luawt_%(module_name)s_methods,
+        %(base)s
+    );
+}
+'''
 
 def generateModuleFunc(module_name, base):
     options = {
