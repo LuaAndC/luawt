@@ -112,15 +112,13 @@ def getInbuiltType(full_type):
 def implementLuaCFunction(module_name, method_name, args, return_type):
     head = 'int luawt_%s_%s(lua_State* L) {' % (module_name, method_name)
     body = getSelf(module_name)
-    arg_n = 0
-    while arg_n < len(args):
-        arg = args[arg_n]
+    for i, arg in enumerate(args):
         options = {
             'argument_name' : arg.name,
             'argument_type' : str(arg.decl_type),
             # In Lua indices start with 1; the first one is
-            # object itself, so we have to add 2 to arg_n.
-            'index' : arg_n + 2,
+            # object itself, so we have to add 2 to i.
+            'index' : i + 2,
         }
         arg_type = getInbuiltType(str(arg.decl_type))
         if arg_type:
@@ -128,7 +126,6 @@ def implementLuaCFunction(module_name, method_name, args, return_type):
             body += getInbuiltTypeArgument(options)
         else:
             body += getComplexArgument(options)
-        arg_n = arg_n + 1
     body += callWtFunction(return_type, args, method_name)
     return_type = getInbuiltType(str(return_type))
     body += returnValue(return_type)
