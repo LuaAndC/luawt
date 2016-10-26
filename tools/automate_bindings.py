@@ -109,8 +109,14 @@ def getInbuiltType(full_type):
             return inbuilt_type
     return None
 
+LUACFUNCTION_TEMPLATE = r'''
+int luawt_%(module)s_%(method)s(lua_State* L) {
+    %(body)s
+}
+
+'''
+
 def implementLuaCFunction(module_name, method_name, args, return_type):
-    head = 'int luawt_%s_%s(lua_State* L) {' % (module_name, method_name)
     body = getSelf(module_name)
     for i, arg in enumerate(args):
         options = {
@@ -129,11 +135,20 @@ def implementLuaCFunction(module_name, method_name, args, return_type):
     body += callWtFunction(return_type, args, method_name)
     return_type = getInbuiltType(str(return_type))
     body += returnValue(return_type)
-    close = '}\n\n'
-    return head + body + close
+    return LUACFUNCTION_TEMPLATE.lstrip() % {
+        'module': module_name,
+        'method': method_name,
+        'body': body.strip(),
+    }
+
+METHODS_ARRAY_TEMPLATE = r'''
+static const luaL_Reg luawt_%(module_name)s_methods[] = {
+    %(body)s
+}
+
+'''
 
 def generateMethodsArray(module_name, methods):
-    head = 'static const luaL_Reg luawt_%s_methods[] = {' % module_name;
     base_element = r'''
     METHOD(%s, %s),
     '''
@@ -144,8 +159,10 @@ def generateMethodsArray(module_name, methods):
     for method in methods:
         body += base_element.rstrip() % (module_name, method.name)
     body += close_element.rstrip()
-    close = '\n};\n'
-    return head + body + close
+    return METHODS_ARRAY_TEMPLATE.lstrip() % {
+        'module_name' : module_name,
+        'body' : body.strip(),
+    }
 
 MODULE_FUNC_TEMPLATE = r'''
 void luawt_%(module_name)s(lua_State* L) {
