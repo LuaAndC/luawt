@@ -38,7 +38,7 @@ def parse(filename):
 def getMethods(global_namespace):
     Wt = global_namespace.namespace('Wt')
     methods = Wt.member_functions()
-    main_class = (Wt.classes())[0]
+    main_class = Wt.classes()[0]
     bases = main_class.bases
     return methods, bases
 
@@ -123,7 +123,7 @@ def implementLuaCFunction(module_name, method_name, args, return_type):
             'index' : arg_n + 2,
         }
         arg_type = getInbuiltType(str(arg.decl_type))
-        if (arg_type):
+        if arg_type:
             options['func'] = TYPE_FROM_LUA_FUNCS[arg_type]
             body += getInbuiltTypeArgument(options)
         else:
