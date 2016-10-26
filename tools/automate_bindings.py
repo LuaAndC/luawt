@@ -36,7 +36,7 @@ def parse(filename):
     return global_namespace
 
 def getMethods(global_namespace):
-    Wt = global_namespace.namespace("Wt")
+    Wt = global_namespace.namespace('Wt')
     methods = Wt.member_functions()
     main_class = (Wt.classes())[0]
     bases = main_class.bases
