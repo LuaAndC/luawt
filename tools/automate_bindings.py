@@ -42,6 +42,12 @@ def getMethodsAndBases(global_namespace):
     bases = main_class.bases
     return methods, bases
 
+def getConstructor(global_namespace):
+    Wt = global_namespace.namespace('Wt')
+    main_class = Wt.classes()[0]
+    # we need to support multiple constructors so it's just a gag
+    return pygccxml.declarations.find_trivial_constructor(main_class)
+
 def writeSourceToFile(module_name, source):
     with open('src/luawt/%s.cpp' % module_name, 'wt') as f:
         f.write(source)
@@ -78,6 +84,11 @@ def getComplexArgument(options):
         luawt_checkFromLua<%(argument_type)s>(L, %(index)s);
     '''
     return frame.lstrip() % options
+
+def callWtConstructor(return_type, args, module_name):
+    constructor_call = 'new %s()' % module_name
+    call_s = '%s result = %s' % (return_type, constructor_call)
+    return call_s
 
 def callWtFunction(return_type, args, method_name):
     call_s = 'self->%s(' % method_name
@@ -120,9 +131,16 @@ int luawt_%(module)s_%(method)s(lua_State* L) {
 
 '''
 
-def implementLuaCFunction(module_name, method_name, args, return_type):
+def implementLuaCFunction(
+    is_constructor,
+    module_name,
+    method_name,
+    args,
+    return_type,
+):
     body = []
-    body.append(getSelf(module_name))
+    if not is_constructor:
+        body.append(getSelf(module_name))
     for i, arg in enumerate(args):
         options = {
             'argument_name' : arg.name,
@@ -137,7 +155,10 @@ def implementLuaCFunction(module_name, method_name, args, return_type):
             body.append(getInbuiltTypeArgument(options))
         else:
             body.append(getComplexArgument(options))
-    body.append(callWtFunction(str(return_type), args, method_name))
+    if is_constructor:
+        body.append(callWtConstructor(str(return_type), args, module_name))
+    else:
+        body.append(callWtFunction(str(return_type), args, method_name))
     body.append(returnValue(str(return_type)))
     return LUACFUNCTION_TEMPLATE.lstrip() % {
         'module': module_name,
@@ -197,11 +218,24 @@ def generateModuleFunc(module_name, bases):
     }
     return MODULE_FUNC_TEMPLATE.lstrip() % options
 
-def generateModule(module_name, methods, bases):
+def generateConstructor(module_name, constructor):
+    constructor_name = 'make'
+    constructor_type = module_name + '*'
+    return implementLuaCFunction(
+        True,
+        module_name,
+        constructor_name,
+        constructor.arguments,
+        constructor_type,
+    )
+
+def generateModule(module_name, methods, bases, constructor):
     source = []
     source.append(generateIncludes(module_name))
+    source.append(generateConstructor(module_name, constructor))
     for method in methods:
         source.append(implementLuaCFunction(
+            False,
             module_name,
             method.name,
             method.arguments,
@@ -214,8 +248,9 @@ def generateModule(module_name, methods, bases):
 def bind(input_filename):
     global_namespace = parse(input_filename)
     methods, bases = getMethodsAndBases(global_namespace)
+    constructor = getConstructor(global_namespace)
     module_name = getModuleName(input_filename)
-    source = generateModule(module_name, methods, bases)
+    source = generateModule(module_name, methods, bases, constructor)
     return source
 
 def main():
