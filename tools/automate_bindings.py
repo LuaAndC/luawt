@@ -35,7 +35,7 @@ def parse(filename):
     global_namespace = pygccxml.declarations.get_global_namespace(decls)
     return global_namespace
 
-def getMethods(global_namespace):
+def getMethodsAndBases(global_namespace):
     Wt = global_namespace.namespace('Wt')
     methods = Wt.member_functions()
     main_class = Wt.classes()[0]
@@ -167,8 +167,7 @@ def generateMethodsArray(module_name, methods):
 
 MODULE_FUNC_TEMPLATE = r'''
 void luawt_%(module_name)s(lua_State* L) {
-    const char* base = luawt_typeToStr<%(base)s>();
-    assert(base);
+    %(get_base_str)s
     DECLARE_CLASS(
         %(module_name)s,
         L,
@@ -180,14 +179,22 @@ void luawt_%(module_name)s(lua_State* L) {
 }
 '''
 
-def generateModuleFunc(module_name, base):
+def generateModuleFunc(module_name, bases):
+    get_base_str, base = '// there is no base', 0
+    if len(bases) is not 0:
+        base = bases[0]
+        get_base_str = r'''
+        const char* base = luawt_typeToStr<%s>();
+        assert(base);
+        ''' % base
     options = {
         'module_name' : module_name,
+        'get_base_str' : get_base_str,
         'base' : base,
     }
     return MODULE_FUNC_TEMPLATE.lstrip() % options
 
-def generateModule(module_name, methods, base):
+def generateModule(module_name, methods, bases):
     source = []
     source.append(generateIncludes(module_name))
     for method in methods:
@@ -198,14 +205,14 @@ def generateModule(module_name, methods, base):
             method.return_type,
         ))
     source.append(generateMethodsArray(module_name, methods))
-    source.append(generateModuleFunc(module_name, base))
+    source.append(generateModuleFunc(module_name, bases))
     return ''.join(source)
 
 def bind(input_filename):
     global_namespace = parse(input_filename)
-    methods, base = getMethods(global_namespace)
+    methods, bases = getMethodsAndBases(global_namespace)
     module_name = getModuleName(input_filename)
-    source = generateModule(module_name, methods, base)
+    source = generateModule(module_name, methods, bases)
     return source
 
 def main():
