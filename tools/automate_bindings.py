@@ -87,9 +87,10 @@ def getComplexArgument(options):
     return frame.lstrip() % options
 
 def callWtConstructor(return_type, args, module_name):
-    constructor_call = 'new %s()' % module_name
-    call_s = '%s result = %s' % (return_type, constructor_call)
-    return call_s
+    call_s = 'new %s(' % module_name
+    args_s = ', '.join(arg.name for arg in args)
+    constructor_s = call_s + args_s + ');'
+    return '%s result = %s' % (return_type, constructor_s)
 
 def callWtFunction(return_type, args, method_name):
     call_s = 'self->%s(' % method_name
