@@ -117,7 +117,8 @@ int luawt_%(module)s_%(method)s(lua_State* L) {
 '''
 
 def implementLuaCFunction(module_name, method_name, args, return_type):
-    body = getSelf(module_name)
+    body = []
+    body.append(getSelf(module_name))
     for i, arg in enumerate(args):
         options = {
             'argument_name' : arg.name,
@@ -129,16 +130,16 @@ def implementLuaCFunction(module_name, method_name, args, return_type):
         arg_type = getInbuiltType(str(arg.decl_type))
         if arg_type:
             options['func'] = TYPE_FROM_LUA_FUNCS[arg_type]
-            body += getInbuiltTypeArgument(options)
+            body.append(getInbuiltTypeArgument(options))
         else:
-            body += getComplexArgument(options)
-    body += callWtFunction(return_type, args, method_name)
+            body.append(getComplexArgument(options))
+    body.append(callWtFunction(return_type, args, method_name))
     return_type = getInbuiltType(str(return_type))
-    body += returnValue(return_type)
+    body.append(returnValue(return_type))
     return LUACFUNCTION_TEMPLATE.lstrip() % {
         'module': module_name,
         'method': method_name,
-        'body': body.strip(),
+        'body': ''.join(body).strip(),
     }
 
 METHODS_ARRAY_TEMPLATE = r'''
@@ -155,13 +156,13 @@ def generateMethodsArray(module_name, methods):
     close_element = r'''
     {NULL, NULL},
     '''
-    body = ''
+    body = []
     for method in methods:
-        body += base_element.rstrip() % (module_name, method.name)
-    body += close_element.rstrip()
+        body.append(base_element.rstrip() % (module_name, method.name))
+    body.append(close_element.rstrip())
     return METHODS_ARRAY_TEMPLATE.lstrip() % {
         'module_name' : module_name,
-        'body' : body.strip(),
+        'body' : ''.join(body).strip(),
     }
 
 MODULE_FUNC_TEMPLATE = r'''
@@ -187,18 +188,18 @@ def generateModuleFunc(module_name, base):
     return MODULE_FUNC_TEMPLATE.lstrip() % options
 
 def generateModule(module_name, methods, base):
-    source = ''
-    source += generateIncludes(module_name)
+    source = []
+    source.append(generateIncludes(module_name))
     for method in methods:
-        source += implementLuaCFunction(
+        source.append(implementLuaCFunction(
             module_name,
             method.name,
             method.arguments,
             method.return_type,
-        )
-    source += generateMethodsArray(module_name, methods)
-    source += generateModuleFunc(module_name, base)
-    return source
+        ))
+    source.append(generateMethodsArray(module_name, methods))
+    source.append(generateModuleFunc(module_name, base))
+    return ''.join(source)
 
 def bind(input_filename):
     global_namespace = parse(input_filename)
