@@ -141,15 +141,17 @@ def implementLuaCFunction(
     return_type,
 ):
     body = []
+    # In Lua indices start with 1.
+    arg_index_offset = 1
     if not is_constructor:
+        # The first one is object itself, so we have to increse offset.
+        arg_index_offset += 1
         body.append(getSelf(module_name))
     for i, arg in enumerate(args):
         options = {
             'argument_name' : arg.name,
             'argument_type' : str(arg.decl_type),
-            # In Lua indices start with 1; the first one is
-            # object itself, so we have to add 2 to i.
-            'index' : i + 2,
+            'index' : i + arg_index_offset,
         }
         arg_type = getInbuiltType(str(arg.decl_type))
         if arg_type:
