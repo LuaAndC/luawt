@@ -191,29 +191,26 @@ def generateMethodsArray(module_name, methods):
 
 MODULE_FUNC_TEMPLATE = r'''
 void luawt_%(module_name)s(lua_State* L) {
-    %(get_base_str)s
+    const char* base = luawt_typeToStr<%(base)s>();
+    assert(base);
     DECLARE_CLASS(
         %(module_name)s,
         L,
         wrap<luawt_%(module_name)s_make>::func,
         0,
         luawt_%(module_name)s_methods,
-        %(base)s
+        base
     );
 }
 '''
 
 def generateModuleFunc(module_name, bases):
-    get_base_str, base = '// there is no base', 0
     if len(bases) is not 0:
         base = bases[0]
-        get_base_str = r'''
-        const char* base = luawt_typeToStr<%s>();
-        assert(base);
-        ''' % base
+    else:
+        base = 'WObject'
     options = {
         'module_name' : module_name,
-        'get_base_str' : get_base_str,
         'base' : base,
     }
     return MODULE_FUNC_TEMPLATE.lstrip() % options
