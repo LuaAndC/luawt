@@ -145,7 +145,7 @@ def implementLuaCFunction(module_name, method_name, args, return_type):
 METHODS_ARRAY_TEMPLATE = r'''
 static const luaL_Reg luawt_%(module_name)s_methods[] = {
     %(body)s
-}
+};
 
 '''
 
