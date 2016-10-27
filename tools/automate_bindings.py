@@ -94,8 +94,11 @@ RETURN_CALLS_TEMPLATE = r'''
 '''
 
 def returnValue(return_type):
+    void_frame = r'''
+    return 0;
+    '''
     if return_type == 'void':
-        return 'return 0;'
+        return void_frame
     else:
         if return_type:
             func_name = TYPE_TO_LUA_FUNCS[return_type]
