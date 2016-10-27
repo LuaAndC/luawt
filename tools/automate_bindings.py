@@ -27,7 +27,7 @@ def parse(filename):
     # Configure the xml generator
     xml_generator_config = pygccxml.parser.xml_generator_configuration_t(
         xml_generator_path = generator_path,
-        xml_generator = generator_name
+        xml_generator = generator_name,
     )
     # Parse the c++ file
     decls = pygccxml.parser.parse([filename], xml_generator_config)
