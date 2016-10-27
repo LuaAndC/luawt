@@ -22,16 +22,16 @@ TYPE_TO_LUA_FUNCS = {
 }
 
 def parse(filename):
-    # Find out the c++ parser
+    # Find out the c++ parser.
     generator_path, generator_name = pygccxml.utils.find_xml_generator()
-    # Configure the xml generator
+    # Configure the xml generator.
     xml_generator_config = pygccxml.parser.xml_generator_configuration_t(
         xml_generator_path = generator_path,
         xml_generator = generator_name,
     )
-    # Parse the c++ file
+    # Parse the c++ file.
     decls = pygccxml.parser.parse([filename], xml_generator_config)
-    # Get access to the global namespace
+    # Get access to the global namespace.
     global_namespace = pygccxml.declarations.get_global_namespace(decls)
     return global_namespace
 
@@ -45,7 +45,8 @@ def getMethodsAndBases(global_namespace):
 def getConstructor(global_namespace):
     Wt = global_namespace.namespace('Wt')
     main_class = Wt.classes()[0]
-    # we need to support multiple constructors so it's just a gag
+    # TODO (for zer0main).
+    # We need to support multiple constructors so it's just a dummy.
     return pygccxml.declarations.find_trivial_constructor(main_class)
 
 def writeSourceToFile(module_name, source):
