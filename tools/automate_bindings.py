@@ -100,8 +100,9 @@ def returnValue(return_type):
     if return_type == 'void':
         return void_frame
     else:
-        if return_type:
-            func_name = TYPE_TO_LUA_FUNCS[return_type]
+        inbuilt_type = getInbuiltType(return_type)
+        if inbuilt_type:
+            func_name = TYPE_TO_LUA_FUNCS[inbuilt_type]
         else:
             func_name = 'luawt_toLua'
         return RETURN_CALLS_TEMPLATE % func_name
@@ -110,7 +111,7 @@ def getInbuiltType(full_type):
     for inbuilt_type in TYPE_FROM_LUA_FUNCS:
         if full_type.find(inbuilt_type) is not -1:
             return inbuilt_type
-    return None
+    return ''
 
 LUACFUNCTION_TEMPLATE = r'''
 int luawt_%(module)s_%(method)s(lua_State* L) {
@@ -136,9 +137,8 @@ def implementLuaCFunction(module_name, method_name, args, return_type):
             body.append(getInbuiltTypeArgument(options))
         else:
             body.append(getComplexArgument(options))
-    body.append(callWtFunction(return_type, args, method_name))
-    return_type = getInbuiltType(str(return_type))
-    body.append(returnValue(return_type))
+    body.append(callWtFunction(str(return_type), args, method_name))
+    body.append(returnValue(str(return_type)))
     return LUACFUNCTION_TEMPLATE.lstrip() % {
         'module': module_name,
         'method': method_name,
