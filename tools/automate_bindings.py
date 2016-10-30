@@ -246,6 +246,10 @@ def generateModule(module_name, methods, bases, constructor):
     source.append(generateModuleFunc(module_name, bases))
     return ''.join(source)
 
+def writeToFile(filename, what):
+    with open(filename, 'wt') as f:
+        f.write(what)
+
 def bind(input_filename):
     global_namespace = parse(input_filename)
     methods, bases = getMethodsAndBases(global_namespace)
