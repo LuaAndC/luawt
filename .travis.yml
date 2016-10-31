@@ -25,6 +25,8 @@ before_install:
   - eval $(./here/bin/luarocks path --bin)
 
 install:
+  # TODO (for zer0main): make automate_bindings' output compilable
+  # - ./tools/./tools/automate_bindings.py --bind /usr/include/Wt/WRandom
   - luarocks make
 
 before_script:
