@@ -249,7 +249,8 @@ def addItem(pattern, added_str, content):
         list_beginning += 1
     curr_index = list_beginning
     # TODO (for zer0main).
-    # We need to consider that base must be before child in init.cpp
+    # We need to take into account that base must be before
+    # child in init.cpp
     while added_str > content[curr_index]:
         curr_index += 1
     content.insert(curr_index, added_str)
