@@ -49,10 +49,6 @@ def getConstructor(global_namespace):
     # We need to support multiple constructors so it's just a dummy.
     return pygccxml.declarations.find_trivial_constructor(main_class)
 
-def writeSourceToFile(module_name, source):
-    with open('src/luawt/%s.cpp' % module_name, 'wt') as f:
-        f.write(source)
-
 def getModuleName(filename):
     return os.path.basename(filename)
 
@@ -249,6 +245,9 @@ def generateModule(module_name, methods, bases, constructor):
 def writeToFile(filename, what):
     with open(filename, 'wt') as f:
         f.write(what)
+
+def writeSourceToFile(module_name, source):
+    writeToFile('src/luawt/%s.cpp' % module_name, source)
 
 def bind(input_filename):
     global_namespace = parse(input_filename)
