@@ -70,7 +70,7 @@ def getSelf(module_name):
     '''
     return frame % (module_name, module_name)
 
-def getInbuiltTypeArgument(options):
+def getBuiltinTypeArgument(options):
     frame = r'''
     %(argument_type)s %(argument_name)s = %(func)s(L, %(index)s);
     '''
@@ -110,17 +110,17 @@ def returnValue(return_type):
     if return_type == 'void':
         return void_frame
     else:
-        inbuilt_type = getInbuiltType(return_type)
-        if inbuilt_type:
-            func_name = TYPE_TO_LUA_FUNCS[inbuilt_type]
+        builtin_type = getBuiltinType(return_type)
+        if builtin_type:
+            func_name = TYPE_TO_LUA_FUNCS[builtin_type]
         else:
             func_name = 'luawt_toLua'
         return RETURN_CALLS_TEMPLATE % func_name
 
-def getInbuiltType(full_type):
-    for inbuilt_type in TYPE_FROM_LUA_FUNCS:
-        if full_type.find(inbuilt_type) is not -1:
-            return inbuilt_type
+def getBuiltinType(full_type):
+    for builtin_type in TYPE_FROM_LUA_FUNCS:
+        if full_type.find(builtin_type) is not -1:
+            return builtin_type
     return ''
 
 LUACFUNCTION_TEMPLATE = r'''
@@ -150,10 +150,10 @@ def implementLuaCFunction(
             'argument_type' : str(arg.decl_type),
             'index' : i + arg_index_offset,
         }
-        arg_type = getInbuiltType(str(arg.decl_type))
+        arg_type = getBuiltinType(str(arg.decl_type))
         if arg_type:
             options['func'] = TYPE_FROM_LUA_FUNCS[arg_type]
-            body.append(getInbuiltTypeArgument(options))
+            body.append(getBuiltinTypeArgument(options))
         else:
             body.append(getComplexArgument(options))
     if is_constructor:
