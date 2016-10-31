@@ -243,11 +243,13 @@ def generateModule(module_name, methods, bases, constructor):
     source.append(generateModuleFunc(module_name, bases))
     return ''.join(source)
 
+def getIndexOfFirstMatch(pattern, content):
+    for i, line in enumerate(content):
+        if re.search(pattern, line):
+            return i
+
 def addItem(pattern, added_str, content):
-    list_beginning = 0
-    while not re.search(pattern, content[list_beginning]):
-        list_beginning += 1
-    curr_index = list_beginning
+    curr_index = getIndexOfFirstMatch(pattern, content)
     # TODO (for zer0main).
     # We need to take into account that base must be before
     # child in init.cpp
