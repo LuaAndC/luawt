@@ -8,6 +8,7 @@ of given class (types of arguments and return values).
 
 import argparse
 import os
+import re
 
 import pygccxml
 
@@ -241,6 +242,16 @@ def generateModule(module_name, methods, bases, constructor):
     source.append(generateMethodsArray(module_name, methods))
     source.append(generateModuleFunc(module_name, bases))
     return ''.join(source)
+
+def addItem(pattern, added_str, content):
+    list_beginning = 0
+    while not re.search(pattern, content[list_beginning]):
+        list_beginning += 1
+    curr_index = list_beginning
+    while added_str > content[curr_index]:
+        curr_index += 1
+    content.insert(curr_index, added_str)
+    return ''.join(content)
 
 def writeToFile(filename, what):
     with open(filename, 'wt') as f:
