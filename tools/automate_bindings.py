@@ -246,6 +246,10 @@ def writeToFile(filename, what):
     with open(filename, 'wt') as f:
         f.write(what)
 
+def readFile(filename):
+    with open(filename, 'r') as f:
+        return f.readlines()
+
 def writeSourceToFile(module_name, source):
     writeToFile('src/luawt/%s.cpp' % module_name, source)
 
