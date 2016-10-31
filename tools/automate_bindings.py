@@ -272,11 +272,30 @@ def addItemToFiles(filenames, patterns, module_strs):
             addItem(patterns[i], module_strs[i], content),
         )
 
+def addModuleToLists(module_name):
+    filenames = [
+        'src/luawt/globals.hpp',
+        'src/luawt/init.cpp',
+        'luawt-dev-1.rockspec',
+    ]
+    patterns = [
+        r'void luawt_[a-zA-Z]+\(lua_State\* L\);',
+        r'MODULE\([a-zA-Z]+\),',
+        r'"src/luawt/[a-zA-Z]+\.cpp",',
+    ]
+    module_strs = [
+        'void luawt_%s(lua_State* L);\n' % module_name,
+        '    MODULE(%s),\n' % module_name,
+        '                "src/luawt/%s.cpp",\n' % module_name,
+    ]
+    addItemToFiles(filenames, patterns, module_strs)
+
 def bind(input_filename):
     global_namespace = parse(input_filename)
     methods, bases = getMethodsAndBases(global_namespace)
     constructor = getConstructor(global_namespace)
     module_name = getModuleName(input_filename)
+    addModuleToLists(module_name)
     source = generateModule(module_name, methods, bases, constructor)
     return source
 
