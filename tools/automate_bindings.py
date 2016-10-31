@@ -264,6 +264,14 @@ def readFile(filename):
 def writeSourceToFile(module_name, source):
     writeToFile('src/luawt/%s.cpp' % module_name, source)
 
+def addItemToFiles(filenames, patterns, module_strs):
+    for i, filename in enumerate(filenames):
+        content = readFile(filename)
+        writeToFile(
+            filename,
+            addItem(patterns[i], module_strs[i], content),
+        )
+
 def bind(input_filename):
     global_namespace = parse(input_filename)
     methods, bases = getMethodsAndBases(global_namespace)
