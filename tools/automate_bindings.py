@@ -269,31 +269,34 @@ def readFile(filename):
 def writeSourceToFile(module_name, source):
     writeToFile('src/luawt/%s.cpp' % module_name, source)
 
-def addItemToFiles(filenames, patterns, module_strs):
-    for i, filename in enumerate(filenames):
-        content = readFile(filename)
-        writeToFile(
-            filename,
-            addItem(patterns[i], module_strs[i], content),
-        )
+def addItemToFiles(parameters):
+    for parameter in parameters:
+        content = readFile(parameter["filename"])
+        writeToFile(parameter["filename"], addItem(
+            parameter["pattern"],
+            parameter["module_str"],
+            content
+        ))
 
 def addModuleToLists(module_name):
-    filenames = [
-        'src/luawt/globals.hpp',
-        'src/luawt/init.cpp',
-        'luawt-dev-1.rockspec',
+    parameters = [
+        {
+            'filename' : 'src/luawt/globals.hpp',
+            'pattern' : r'void luawt_[a-zA-Z]+\(lua_State\* L\);',
+            'module_str' : 'void luawt_%s(lua_State* L);\n' % module_name,
+        },
+        {
+            'filename' : 'src/luawt/init.cpp',
+            'pattern' : r'MODULE\([a-zA-Z]+\),',
+            'module_str' : '    MODULE(%s),\n' % module_name,
+        },
+        {
+            'filename' : 'luawt-dev-1.rockspec',
+            'pattern' : r'"src/luawt/[a-zA-Z]+\.cpp",',
+            'module_str' : '                "src/luawt/%s.cpp",\n' % module_name,
+        },
     ]
-    patterns = [
-        r'void luawt_[a-zA-Z]+\(lua_State\* L\);',
-        r'MODULE\([a-zA-Z]+\),',
-        r'"src/luawt/[a-zA-Z]+\.cpp",',
-    ]
-    module_strs = [
-        'void luawt_%s(lua_State* L);\n' % module_name,
-        '    MODULE(%s),\n' % module_name,
-        '                "src/luawt/%s.cpp",\n' % module_name,
-    ]
-    addItemToFiles(filenames, patterns, module_strs)
+    addItemToFiles(parameters)
 
 def bind(input_filename):
     global_namespace = parse(input_filename)
