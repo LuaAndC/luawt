@@ -260,7 +260,7 @@ def writeToFile(filename, what):
         f.write(what)
 
 def readFile(filename):
-    with open(filename, 'r') as f:
+    with open(filename, 'rt') as f:
         return f.readlines()
 
 def writeSourceToFile(module_name, source):
