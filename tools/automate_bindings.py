@@ -129,7 +129,7 @@ def callWtFunction(return_type, args, method_name):
         return '%s result = %s' % (return_type, func_s)
 
 RETURN_CALLS_TEMPLATE = r'''
-    %s(L, result);
+    %s(L, result%s);
     return 1;
 '''
 
@@ -141,11 +141,23 @@ def returnValue(return_type):
         return void_frame
     else:
         builtin_type = getBuiltinType(return_type)
+        # func - function for returning values to Lua
         if builtin_type:
             func_name = TYPE_TO_LUA_FUNCS[builtin_type]
         else:
             func_name = 'luawt_toLua'
-        return RETURN_CALLS_TEMPLATE % func_name
+        # Method to convert problematic type to built-in.
+        # Empty by defualt.
+        convert_f = ''
+        problematic_type = findCorrespondingKeyInDict(
+            PROBLEMATIC_TYPES_CONVERSIONS,
+            return_type,
+        )
+        if problematic_type:
+            convert_f += '.'
+            convert_f += PROBLEMATIC_TYPES_CONVERSIONS[problematic_type]
+            convert_f += '()'
+        return RETURN_CALLS_TEMPLATE % (func_name, convert_f)
 
 def getBuiltinType(full_type):
     builtin_type = findCorrespondingKeyInDict(
