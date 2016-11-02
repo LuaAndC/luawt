@@ -15,11 +15,16 @@ import pygccxml
 TYPE_FROM_LUA_FUNCS = {
     'int' : 'lua_tointeger',
     'bool' : 'lua_toboolean',
+    'double' : 'lua_tonumber',
+    'const char*' : 'lua_tostring',
 }
 
 TYPE_TO_LUA_FUNCS = {
     'int' : 'lua_pushinteger',
     'bool' : 'lua_pushboolean',
+    'double' : 'lua_pushnumber',
+    'const char*' : 'lua_pushstring',
+}
 }
 
 def parse(filename):
