@@ -273,10 +273,10 @@ def writeSourceToFile(module_name, source):
 
 def addItemToFiles(parameters):
     for parameter in parameters:
-        content = readFile(parameter["filename"])
-        writeToFile(parameter["filename"], addItem(
-            parameter["pattern"],
-            parameter["module_str"],
+        content = readFile(parameter['filename'])
+        writeToFile(parameter['filename'], addItem(
+            parameter['pattern'],
+            parameter['module_str'],
             content
         ))
 
