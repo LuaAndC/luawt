@@ -89,10 +89,22 @@ def findCorrespondingKeyInDict(dictionary, full_key):
     return ''
 
 def getBuiltinTypeArgument(options):
-    frame = r'''
+    get_problematic_arg_template = r'''
+    %(raw_type)s raw%(index)s = %(func)s(L, %(index)s);
+    %(argument_type)s %(argument_name)s(raw%(index)s);
+    '''
+    get_builtin_arg_template = r'''
     %(argument_type)s %(argument_name)s = %(func)s(L, %(index)s);
     '''
-    return frame.lstrip() % options
+    raw_type_key = findCorrespondingKeyInDict(
+        PROBLEMATIC_TYPES_TO_BUILTIN,
+        options['argument_type'],
+    )
+    if raw_type_key:
+        options['raw_type'] = PROBLEMATIC_TYPES_TO_BUILTIN[raw_type_key]
+        return get_problematic_arg_template.lstrip() % options
+    else:
+        return get_builtin_arg_template.lstrip() % options
 
 def getComplexArgument(options):
     frame = r'''
