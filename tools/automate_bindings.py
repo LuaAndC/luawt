@@ -25,6 +25,13 @@ TYPE_TO_LUA_FUNCS = {
     'double' : 'lua_pushnumber',
     'const char*' : 'lua_pushstring',
 }
+
+PROBLEMATIC_TYPES_TO_BUILTIN = {
+    'std::string' : 'const char*',
+}
+
+PROBLEMATIC_TYPES_CONVERSIONS = {
+    'std::string' : 'c_str',
 }
 
 def parse(filename):
