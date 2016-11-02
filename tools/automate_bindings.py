@@ -82,6 +82,12 @@ def getSelf(module_name):
     '''
     return frame % (module_name, module_name)
 
+def findCorrespondingKeyInDict(dictionary, full_key):
+    for key in dictionary:
+        if full_key.find(key) is not -1:
+            return key
+    return ''
+
 def getBuiltinTypeArgument(options):
     frame = r'''
     %(argument_type)s %(argument_name)s = %(func)s(L, %(index)s);
