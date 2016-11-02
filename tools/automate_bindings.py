@@ -136,10 +136,19 @@ def returnValue(return_type):
         return RETURN_CALLS_TEMPLATE % func_name
 
 def getBuiltinType(full_type):
-    for builtin_type in TYPE_FROM_LUA_FUNCS:
-        if full_type.find(builtin_type) is not -1:
-            return builtin_type
-    return ''
+    builtin_type = findCorrespondingKeyInDict(
+        TYPE_FROM_LUA_FUNCS,
+        full_type,
+    )
+    problematic_type = findCorrespondingKeyInDict(
+        PROBLEMATIC_TYPES_TO_BUILTIN,
+        full_type,
+    )
+    if problematic_type:
+        return PROBLEMATIC_TYPES_TO_BUILTIN[problematic_type]
+    else:
+        return builtin_type
+
 
 LUACFUNCTION_TEMPLATE = r'''
 int luawt_%(module)s_%(method)s(lua_State* L) {
