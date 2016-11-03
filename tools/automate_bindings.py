@@ -61,12 +61,12 @@ def getMethodsAndBases(global_namespace, module_name):
     bases = main_class.bases
     return methods, bases
 
-def getConstructor(global_namespace):
+def getConstructor(global_namespace, module_name):
     Wt = global_namespace.namespace('Wt')
-    main_class = Wt.classes()[0]
+    main_class = Wt.class_(name=module_name)
     # TODO (for zer0main).
     # We need to support multiple constructors so it's just a dummy.
-    return pygccxml.declarations.find_trivial_constructor(main_class)
+    return main_class.constructors()[0]
 
 def getModuleName(filename):
     return os.path.basename(filename)
@@ -360,7 +360,7 @@ def bind(input_filename, module_only):
     global_namespace = parse(input_filename)
     module_name = getModuleName(input_filename)
     methods, bases = getMethodsAndBases(global_namespace, module_name)
-    constructor = getConstructor(global_namespace)
+    constructor = getConstructor(global_namespace, module_name)
     if not module_only:
         addModuleToLists(module_name)
     source = generateModule(module_name, methods, bases, constructor)
