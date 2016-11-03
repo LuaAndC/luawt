@@ -84,7 +84,7 @@ def getSelf(module_name):
 
 def findCorrespondingKeyInDict(dictionary, full_key):
     for key in dictionary:
-        if full_key.find(key) is not -1:
+        if key in full_key:
             return key
     return ''
 
@@ -258,7 +258,7 @@ void luawt_%(module_name)s(lua_State* L) {
 '''
 
 def generateModuleFunc(module_name, bases):
-    if len(bases) is not 0:
+    if len(bases) != 0:
         base = bases[0]
     else:
         base = 'WObject'
