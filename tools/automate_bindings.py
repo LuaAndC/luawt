@@ -350,12 +350,13 @@ def addModuleToLists(module_name):
     ]
     addItemToFiles(parameters)
 
-def bind(input_filename):
+def bind(input_filename, module_only):
     global_namespace = parse(input_filename)
     methods, bases = getMethodsAndBases(global_namespace)
     constructor = getConstructor(global_namespace)
     module_name = getModuleName(input_filename)
-    addModuleToLists(module_name)
+    if not module_only:
+        addModuleToLists(module_name)
     source = generateModule(module_name, methods, bases, constructor)
     return source
 
@@ -370,8 +371,14 @@ def main():
         help='Header file (Wt) with class to bind',
         required=True,
     )
+    parser.add_argument(
+        '--module-only',
+        help='Do not change globals.hpp, init.cpp and rockspec',
+        action='store_true',
+        required=False,
+    )
     args = parser.parse_args()
-    source = bind(args.bind)
+    source = bind(args.bind, args.module_only)
     module_name = getModuleName(args.bind)
     writeSourceToFile(module_name, source)
 
