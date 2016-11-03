@@ -48,13 +48,16 @@ def parse(filename):
     global_namespace = pygccxml.declarations.get_global_namespace(decls)
     return global_namespace
 
-def getMethodsAndBases(global_namespace):
+def getMethodsAndBases(global_namespace, module_name):
     Wt = global_namespace.namespace('Wt')
+    main_class = Wt.class_(name=module_name)
     access_matcher = pygccxml.declarations.access_type_matcher_t(
-        'public'
+        'public',
     )
-    methods = Wt.member_functions(function=access_matcher)
-    main_class = Wt.classes()[0]
+    methods = main_class.member_functions(
+        function=access_matcher,
+        recursive=False,
+    )
     bases = main_class.bases
     return methods, bases
 
@@ -355,9 +358,9 @@ def addModuleToLists(module_name):
 
 def bind(input_filename, module_only):
     global_namespace = parse(input_filename)
-    methods, bases = getMethodsAndBases(global_namespace)
-    constructor = getConstructor(global_namespace)
     module_name = getModuleName(input_filename)
+    methods, bases = getMethodsAndBases(global_namespace, module_name)
+    constructor = getConstructor(global_namespace)
     if not module_only:
         addModuleToLists(module_name)
     source = generateModule(module_name, methods, bases, constructor)
