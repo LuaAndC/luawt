@@ -265,7 +265,7 @@ void luawt_%(module_name)s(lua_State* L) {
 
 def generateModuleFunc(module_name, bases):
     if len(bases) != 0:
-        base = bases[0]
+        base = bases[0].related_class.name
     else:
         base = 'WObject'
     options = {
