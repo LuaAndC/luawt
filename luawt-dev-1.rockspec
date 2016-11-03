@@ -45,6 +45,7 @@ build = {
                 "src", -- for boost-xtime.hpp
             },
         },
+        ['luawt.test'] = "src/luawt/test.lua",
     },
     platforms = {
         unix = {
