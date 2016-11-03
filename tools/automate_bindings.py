@@ -154,9 +154,8 @@ def returnValue(return_type):
             return_type,
         )
         if problematic_type:
-            convert_f += '.'
-            convert_f += PROBLEMATIC_TYPES_CONVERSIONS[problematic_type]
-            convert_f += '()'
+            method_str = PROBLEMATIC_TYPES_CONVERSIONS[problematic_type]
+            convert_f = '.' + method_str + '()'
         return RETURN_CALLS_TEMPLATE % (func_name, convert_f)
 
 def getBuiltinType(full_type):
