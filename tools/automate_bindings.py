@@ -147,7 +147,7 @@ def returnValue(return_type):
         else:
             func_name = 'luawt_toLua'
         # Method to convert problematic type to built-in.
-        # Empty by defualt.
+        # Empty by default.
         convert_f = ''
         problematic_type = findCorrespondingKeyInDict(
             PROBLEMATIC_TYPES_CONVERSIONS,
