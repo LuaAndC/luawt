@@ -50,7 +50,10 @@ def parse(filename):
 
 def getMethodsAndBases(global_namespace):
     Wt = global_namespace.namespace('Wt')
-    methods = Wt.member_functions()
+    access_matcher = pygccxml.declarations.access_type_matcher_t(
+        'public'
+    )
+    methods = Wt.member_functions(function=access_matcher)
     main_class = Wt.classes()[0]
     bases = main_class.bases
     return methods, bases
