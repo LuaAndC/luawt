@@ -328,7 +328,7 @@ def addItemToFiles(parameters):
         writeToFile(parameter['filename'], addItem(
             parameter['pattern'],
             parameter['module_str'],
-            content
+            content,
         ))
 
 def addModuleToLists(module_name):
