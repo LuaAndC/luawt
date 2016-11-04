@@ -39,8 +39,9 @@ script:
   - if [[ "$LUA" != *"luajit"* ]]; then bash .travis/valgrind_test.sh; fi
   - luarocks make CFLAGS="-O0 -g -fPIC -ftest-coverage -fprofile-arcs" LIBFLAG="-shared --coverage"
   - busted spec/*
-
-after_success:
+  # `after_success` section was moved to `script`, because we need to
+  # catch errors in automate_bindings.py, but all the errors in
+  # `after_success` sections are ignored by the worker.
   - coveralls --include src
   # TODO (for zer0main): make automate_bindings' output compilable
   - ./tools/automate_bindings.py --bind /usr/include/Wt/WText
