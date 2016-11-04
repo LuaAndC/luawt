@@ -145,12 +145,14 @@ def implementLuaCFunction(
         arg_index_offset += 1
         body.append(getSelf(module_name))
     for i, arg in enumerate(args):
+        # For compatibility with pygccxml v1.7.1
+        arg_field = hasattr(arg, 'decl_type') and arg.decl_type or arg.type
         options = {
             'argument_name' : arg.name,
-            'argument_type' : str(arg.decl_type),
+            'argument_type' : str(arg_field),
             'index' : i + arg_index_offset,
         }
-        arg_type = getBuiltinType(str(arg.decl_type))
+        arg_type = getBuiltinType(str(arg_field))
         if arg_type:
             options['func'] = TYPE_FROM_LUA_FUNCS[arg_type]
             body.append(getBuiltinTypeArgument(options))
