@@ -21,12 +21,11 @@ before_install:
   - sudo apt-get install --yes libwt-dev libwthttp-dev
   - sudo pip install cpp-coveralls
   - sudo pip install hererocks
+  - sudo pip install pygccxml
   - hererocks here --$LUA --luarocks $LUAROCKS
   - eval $(./here/bin/luarocks path --bin)
 
 install:
-  # TODO (for zer0main): make automate_bindings' output compilable
-  # - ./tools/./tools/automate_bindings.py --bind /usr/include/Wt/WRandom
   - luarocks make
 
 before_script:
@@ -43,3 +42,5 @@ script:
 
 after_success:
   - coveralls --include src
+  # TODO (for zer0main): make automate_bindings' output compilable
+  - ./tools/automate_bindings.py --bind /usr/include/Wt/WText
