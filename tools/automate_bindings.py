@@ -12,18 +12,11 @@ import re
 
 import pygccxml
 
-TYPE_FROM_LUA_FUNCS = {
-    'int' : 'lua_tointeger',
-    'bool' : 'lua_toboolean',
-    'double' : 'lua_tonumber',
-    'const char*' : 'lua_tostring',
-}
-
-TYPE_TO_LUA_FUNCS = {
-    'int' : 'lua_pushinteger',
-    'bool' : 'lua_pushboolean',
-    'double' : 'lua_pushnumber',
-    'const char*' : 'lua_pushstring',
+BUILTIN_TYPES_CONVERTERS = {
+    'int': ('lua_tointeger', 'lua_pushinteger'),
+    'bool': ('lua_toboolean', 'lua_pushboolean'),
+    'double': ('lua_tonumber', 'lua_pushnumber'),
+    'const char*': ('lua_tostring', 'lua_pushstring'),
 }
 
 PROBLEMATIC_TYPES_TO_BUILTIN = {
@@ -149,7 +142,7 @@ def returnValue(return_type):
         builtin_type = getBuiltinType(return_type)
         # func - function for returning values to Lua
         if builtin_type:
-            func_name = TYPE_TO_LUA_FUNCS[builtin_type]
+            _, func_name = BUILTIN_TYPES_CONVERTERS[builtin_type]
         else:
             func_name = 'luawt_toLua'
         # Method to convert problematic type to built-in.
@@ -166,7 +159,7 @@ def returnValue(return_type):
 
 def getBuiltinType(full_type):
     builtin_type = findCorrespondingKeyInDict(
-        TYPE_FROM_LUA_FUNCS,
+        BUILTIN_TYPES_CONVERTERS,
         full_type,
     )
     problematic_type = findCorrespondingKeyInDict(
@@ -210,7 +203,7 @@ def implementLuaCFunction(
         }
         arg_type = getBuiltinType(str(arg_field))
         if arg_type:
-            options['func'] = TYPE_FROM_LUA_FUNCS[arg_type]
+            options['func'], _ = BUILTIN_TYPES_CONVERTERS[arg_type]
             body.append(getBuiltinTypeArgument(options))
         else:
             body.append(getComplexArgument(options))
