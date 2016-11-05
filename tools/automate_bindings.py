@@ -7,6 +7,7 @@ of given class (types of arguments and return values).
 """
 
 import argparse
+import logging
 import os
 import re
 
@@ -184,6 +185,27 @@ def isConstReference(checked_type):
         unref = pygccxml.declarations.remove_reference(checked_type)
         if pygccxml.declarations.is_const(unref):
             return True
+    return False
+
+def checkReturnType(method_name, raw_return_type):
+    if str(raw_return_type) == 'void':
+        return True
+    # Built-in or problematic return type.
+    elif getBuiltinType(str(raw_return_type)):
+        if isConstReference(raw_return_type):
+            return True
+        elif not pygccxml.declarations.is_pointer(raw_return_type):
+            return True
+    # Descendant of WObject (or bindings aren't compilable).
+    else:
+        if pygccxml.declarations.is_pointer(raw_return_type):
+            return True
+        elif isConstReference(raw_return_type):
+            return True
+    logging.warning(
+        'Its impossible to bind method %s because of its return type %s'
+        % (method_name, str(raw_return_type))
+    )
     return False
 
 def implementLuaCFunction(
