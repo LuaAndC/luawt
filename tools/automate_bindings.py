@@ -179,6 +179,13 @@ int luawt_%(module)s_%(method)s(lua_State* L) {
 
 '''
 
+def isConstReference(checked_type):
+    if pygccxml.declarations.is_reference(checked_type):
+        unref = pygccxml.declarations.remove_reference(checked_type)
+        if pygccxml.declarations.is_const(unref):
+            return True
+    return False
+
 def implementLuaCFunction(
     is_constructor,
     module_name,
