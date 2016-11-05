@@ -240,6 +240,8 @@ def implementLuaCFunction(
         body.append(callWtConstructor(str(return_type), args, module_name))
     else:
         body.append(callWtFunction(str(return_type), args, method_name))
+        if not checkReturnType(method_name, return_type):
+            return ''
     body.append(returnValue(str(return_type)))
     return LUACFUNCTION_TEMPLATE.lstrip() % {
         'module': module_name,
