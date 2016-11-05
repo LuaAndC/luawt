@@ -298,13 +298,13 @@ def generateModuleFunc(module_name, bases):
 
 def generateConstructor(module_name, constructor):
     constructor_name = 'make'
-    constructor_type = module_name + '*'
+    constructor_return_type = module_name + ' *'
     return implementLuaCFunction(
         True,
         module_name,
         constructor_name,
         constructor.arguments,
-        constructor_type,
+        constructor_return_type,
     )
 
 def generateModule(module_name, methods, bases, constructor):
