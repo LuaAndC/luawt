@@ -134,13 +134,13 @@ def getArgsStr(args):
 
 def callWtConstructor(return_type, args, module_name):
     call_s = 'new %s(' % module_name
-    args_s = ', '.join(arg.name for arg in args)
+    args_s = getArgsStr(args)
     constructor_s = call_s + args_s + ');'
     return '%s result = %s' % (return_type, constructor_s)
 
 def callWtFunction(return_type, args, method_name):
     call_s = 'self->%s(' % method_name
-    args_s = ', '.join(arg.name for arg in args)
+    args_s = getArgsStr(args)
     func_s = call_s + args_s + ');'
     if return_type == 'void':
         return func_s
