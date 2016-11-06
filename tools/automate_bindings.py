@@ -98,7 +98,7 @@ def getBuiltinTypeArgument(options):
     '''
     raw_type_key = findCorrespondingKeyInDict(
         PROBLEMATIC_TYPES_TO_BUILTIN,
-        options['argument_type'],
+        str(options['argument_type']),
     )
     if raw_type_key:
         options['raw_type'] = PROBLEMATIC_TYPES_TO_BUILTIN[raw_type_key]
@@ -113,6 +113,8 @@ def clearType(type_o):
     return type_o
 
 def getComplexArgument(options):
+    options['argument_type'] = clearType(options['argument_type'])
+    options['argument_type'] = str(options['argument_type'])
     frame = r'''
     %(argument_type)s* %(argument_name)s =
         luawt_checkFromLua<%(argument_type)s>(L, %(index)s);
@@ -250,7 +252,7 @@ def implementLuaCFunction(
         arg_field = hasattr(arg, 'decl_type') and arg.decl_type or arg.type
         options = {
             'argument_name' : arg.name,
-            'argument_type' : str(arg_field),
+            'argument_type' : arg_field,
             'index' : i + arg_index_offset,
         }
         arg_type = getBuiltinType(str(arg_field))
