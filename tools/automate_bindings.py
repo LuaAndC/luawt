@@ -119,6 +119,19 @@ def getComplexArgument(options):
     '''
     return frame.lstrip() % options
 
+def getArgsStr(args):
+    args_list = []
+    for arg in args:
+        if getBuiltinType(str(arg.decl_type)):
+            args_list.append(arg.name)
+        else:
+            if pygccxml.declarations.is_pointer(arg.decl_type):
+                args_list.append(arg.name)
+            else:
+                args_list.append('*' + arg.name)
+    return ', '.join(arg_e for arg_e in args_list)
+
+
 def callWtConstructor(return_type, args, module_name):
     call_s = 'new %s(' % module_name
     args_s = ', '.join(arg.name for arg in args)
