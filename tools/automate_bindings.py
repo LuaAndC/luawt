@@ -106,6 +106,12 @@ def getBuiltinTypeArgument(options):
     else:
         return get_builtin_arg_template.lstrip() % options
 
+def clearType(type_o):
+    type_o = pygccxml.declarations.remove_reference(type_o)
+    type_o = pygccxml.declarations.remove_pointer(type_o)
+    type_o = pygccxml.declarations.remove_cv(type_o)
+    return type_o
+
 def getComplexArgument(options):
     frame = r'''
     %(argument_type)s* %(argument_name)s =
