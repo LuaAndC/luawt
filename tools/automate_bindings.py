@@ -197,7 +197,6 @@ def getBuiltinType(full_type):
     else:
         return builtin_type
 
-
 LUACFUNCTION_TEMPLATE = r'''
 int luawt_%(module)s_%(method)s(lua_State* L) {
     %(body)s
@@ -265,8 +264,6 @@ def implementLuaCFunction(
         body.append(callWtConstructor(str(return_type), args, module_name))
     else:
         body.append(callWtFunction(str(return_type), args, method_name))
-        if not checkReturnType(method_name, return_type):
-            return ''
     body.append(returnValue(str(return_type)))
     return LUACFUNCTION_TEMPLATE.lstrip() % {
         'module': module_name,
