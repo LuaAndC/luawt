@@ -139,6 +139,22 @@ def addEnum(type_obj):
         )
         BUILTIN_TYPES_CONVERTERS[enum_str] = enum_converters
 
+def checkWtFunction(is_constructor, func, Wt):
+    if isTemplate(func.name, func.decl_string):
+        return False
+    for arg in func.arguments:
+        # For compatibility with pygccxml v1.7.1
+        arg_field = hasattr(arg, 'decl_type') and arg.decl_type or arg.type
+        addEnum(arg_field)
+        if not checkArgumentType(func.name, arg_field, Wt):
+            return False
+    if not is_constructor:
+        addEnum(func.return_type)
+        if not checkReturnType(func.name, func.return_type, Wt):
+           return False
+    # OK, all checks've passed.
+    return True
+
 def getMethodsAndBases(global_namespace, module_name):
     Wt = global_namespace.namespace('Wt')
     main_class = Wt.class_(name=module_name)
