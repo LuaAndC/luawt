@@ -161,8 +161,11 @@ def getMethodsAndBases(global_namespace, module_name):
     access_matcher = pygccxml.declarations.access_type_matcher_t(
         'public',
     )
+    custom_matcher = pygccxml.declarations.custom_matcher_t(
+        lambda decl: checkWtFunction(False, decl, Wt),
+    )
     methods = main_class.member_functions(
-        function=access_matcher,
+        function=access_matcher & custom_matcher,
         recursive=False,
     )
     bases = main_class.bases
