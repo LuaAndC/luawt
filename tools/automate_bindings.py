@@ -42,6 +42,16 @@ def parse(filename):
     global_namespace = pygccxml.declarations.get_global_namespace(decls)
     return global_namespace
 
+def isTemplate(method_name, decl_str):
+    # Luawt doesn't support C++ templates.
+    if pygccxml.declarations.templates.is_instantiation(decl_str):
+        logging.warning(
+            'Its impossible to bind method %s because luawt doesn\'t support C++ templates'
+            % method_name
+        )
+        return True
+    return False
+
 def getMethodsAndBases(global_namespace, module_name):
     Wt = global_namespace.namespace('Wt')
     main_class = Wt.class_(name=module_name)
