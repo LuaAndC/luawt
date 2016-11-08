@@ -193,6 +193,10 @@ def getBuiltinTypeArgument(options):
     get_builtin_arg_template = r'''
     %(argument_type)s %(argument_name)s = %(func)s(L, %(index)s);
     '''
+    # Enum: need to close static_cast
+    get_enum_arg_template = r'''
+    %(argument_type)s %(argument_name)s = %(func)s(L, %(index)s));
+    '''
     raw_type_key = findCorrespondingKeyInDict(
         PROBLEMATIC_TYPES_TO_BUILTIN,
         str(options['argument_type']),
@@ -201,7 +205,11 @@ def getBuiltinTypeArgument(options):
         options['raw_type'] = PROBLEMATIC_TYPES_TO_BUILTIN[raw_type_key]
         return get_problematic_arg_template.lstrip() % options
     else:
-        return get_builtin_arg_template.lstrip() % options
+        # Enum
+        if 'static_cast' in options['func']:
+            return get_enum_arg_template.lstrip() % options
+        else:
+            return get_builtin_arg_template.lstrip() % options
 
 def clearType(type_o):
     type_o = pygccxml.declarations.remove_reference(type_o)
