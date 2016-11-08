@@ -52,6 +52,13 @@ def isTemplate(method_name, decl_str):
         return True
     return False
 
+def isConstReference(checked_type):
+    if pygccxml.declarations.is_reference(checked_type):
+        unref = pygccxml.declarations.remove_reference(checked_type)
+        if pygccxml.declarations.is_const(unref):
+            return True
+    return False
+
 def isWObjectsDescendant(obj, Wt):
     # Class or other type
     obj_str = hasattr(obj, 'name') and obj.name or str(obj)
@@ -262,12 +269,6 @@ int luawt_%(module)s_%(method)s(lua_State* L) {
 
 '''
 
-def isConstReference(checked_type):
-    if pygccxml.declarations.is_reference(checked_type):
-        unref = pygccxml.declarations.remove_reference(checked_type)
-        if pygccxml.declarations.is_const(unref):
-            return True
-    return False
 
 def checkReturnType(method_name, raw_return_type):
     if str(raw_return_type) == 'void':
