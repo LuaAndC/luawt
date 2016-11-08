@@ -130,6 +130,15 @@ def checkReturnType(method_name, raw_return_type, Wt):
     )
     return False
 
+def addEnum(type_obj):
+    if pygccxml.declarations.is_enum(type_obj):
+        enum_str = str(clearType(type_obj))
+        enum_converters = (
+            'static_cast<%s>(lua_tointeger' % enum_str,
+            'lua_pushinteger',
+        )
+        BUILTIN_TYPES_CONVERTERS[enum_str] = enum_converters
+
 def getMethodsAndBases(global_namespace, module_name):
     Wt = global_namespace.namespace('Wt')
     main_class = Wt.class_(name=module_name)
