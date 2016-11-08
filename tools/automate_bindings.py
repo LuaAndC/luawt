@@ -52,6 +52,21 @@ def isTemplate(method_name, decl_str):
         return True
     return False
 
+def isWObjectsDescendant(obj, Wt):
+    # Class or other type
+    obj_str = hasattr(obj, 'name') and obj.name or str(obj)
+    try:
+        obj_c = Wt.class_(name=obj_str.replace('Wt::', ''))
+        for base in obj_c.bases:
+            if base.related_class.name == 'WObject':
+                return True
+            elif isWObjectsDescendant(base.related_class, Wt):
+                return True
+    except:
+        logging.warning('%s wasn\'t found so there is no guarantee that it is WObject\'s descendant.' % obj_str)
+        return True
+    return False
+
 def getMethodsAndBases(global_namespace, module_name):
     Wt = global_namespace.namespace('Wt')
     main_class = Wt.class_(name=module_name)
