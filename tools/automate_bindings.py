@@ -107,6 +107,29 @@ def checkArgumentType(method_name, arg_type, Wt):
     )
     return False
 
+def checkReturnType(method_name, raw_return_type, Wt):
+    # Special cases.
+    if isTemplate(method_name, str(raw_return_type)):
+        return False
+    if str(raw_return_type) == 'void':
+        return True
+    # Built-in or problematic return type.
+    if getBuiltinType(str(raw_return_type)):
+        if isConstReference(raw_return_type):
+            return True
+        elif not pygccxml.declarations.is_pointer(raw_return_type):
+            return True
+    elif isWObjectsDescendant(clearType(raw_return_type), Wt):
+        if pygccxml.declarations.is_pointer(raw_return_type):
+            return True
+        elif isConstReference(raw_return_type):
+            return True
+    logging.warning(
+        'Its impossible to bind method %s because of its return type %s'
+        % (method_name, str(raw_return_type))
+    )
+    return False
+
 def getMethodsAndBases(global_namespace, module_name):
     Wt = global_namespace.namespace('Wt')
     main_class = Wt.class_(name=module_name)
@@ -268,28 +291,6 @@ int luawt_%(module)s_%(method)s(lua_State* L) {
 }
 
 '''
-
-
-def checkReturnType(method_name, raw_return_type):
-    if str(raw_return_type) == 'void':
-        return True
-    # Built-in or problematic return type.
-    elif getBuiltinType(str(raw_return_type)):
-        if isConstReference(raw_return_type):
-            return True
-        elif not pygccxml.declarations.is_pointer(raw_return_type):
-            return True
-    # Descendant of WObject (or bindings aren't compilable).
-    else:
-        if pygccxml.declarations.is_pointer(raw_return_type):
-            return True
-        elif isConstReference(raw_return_type):
-            return True
-    logging.warning(
-        'Its impossible to bind method %s because of its return type %s'
-        % (method_name, str(raw_return_type))
-    )
-    return False
 
 def implementLuaCFunction(
     is_constructor,
