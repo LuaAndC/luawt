@@ -67,6 +67,39 @@ def isWObjectsDescendant(obj, Wt):
         return True
     return False
 
+def checkArgumentType(method_name, arg_type, Wt):
+    if isTemplate(method_name, str(arg_type)):
+        return False
+    # Is built-in or problematic
+    if getBuiltinType(str(arg_type)):
+        # Is problematic
+        if findCorrespondingKeyInDict(
+            PROBLEMATIC_TYPES_TO_BUILTIN,
+            str(arg_type),
+        ):
+            if pygccxml.declarations.is_reference(arg_type):
+                if isConstReference(arg_type):
+                    return True
+            elif not pygccxml.declarations.is_pointer(arg_type):
+                return True
+        # Is built-in
+        else:
+            if not pygccxml.declarations.is_pointer(arg_type):
+                if not pygccxml.declarations.is_reference(arg_type):
+                    return True
+    elif isWObjectsDescendant(clearType(arg_type), Wt):
+        if not pygccxml.declarations.is_pointer(arg_type):
+            logging.info(
+                'Argument of method %s has strange type %s'
+                % (method_name, str(arg_type))
+            )
+        return True
+    logging.warning(
+        'Its impossible to bind method %s because its arg has type %s'
+        % (method_name, str(arg_type))
+    )
+    return False
+
 def getMethodsAndBases(global_namespace, module_name):
     Wt = global_namespace.namespace('Wt')
     main_class = Wt.class_(name=module_name)
