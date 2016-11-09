@@ -281,6 +281,14 @@ RETURN_CALLS_TEMPLATE = r'''
     return 1;
 '''
 
+def getBuiltinTypeFromProblematic(problematic_type):
+    next_type = problematic_type
+    convert_f = ''
+    while not next_type in BUILTIN_TYPES_CONVERTERS:
+        method_str, next_type = PROBLEMATIC_TO_BUILTIN_CONVERSIONS[next_type]
+        convert_f += '.' + method_str + '()'
+    return convert_f
+
 def returnValue(return_type):
     void_frame = r'''
     return 0;
