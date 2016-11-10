@@ -247,7 +247,6 @@ def getProblematicFromBuiltin(problematic_type, arg_n, arg_name):
 def getBuiltinTypeArgument(options):
     get_problematic_arg_template = r'''
     %(raw_type)s raw%(index)s = %(func)s(L, %(index)s);
-    %(argument_type)s %(argument_name)s(raw%(index)s);
     '''
     get_builtin_arg_template = r'''
     %(argument_type)s %(argument_name)s = %(func)s(L, %(index)s);
@@ -256,13 +255,19 @@ def getBuiltinTypeArgument(options):
     get_enum_arg_template = r'''
     %(argument_type)s %(argument_name)s = %(func)s(L, %(index)s));
     '''
-    raw_type_key = findCorrespondingKeyInDict(
+    problematic_type = findCorrespondingKeyInDict(
         PROBLEMATIC_TO_BUILTIN_CONVERSIONS,
         str(options['argument_type']),
     )
-    if raw_type_key:
-        options['raw_type'] = PROBLEMATIC_TYPES_TO_BUILTIN[raw_type_key]
-        return get_problematic_arg_template.lstrip() % options
+    if problematic_type:
+        options['raw_type'] = getBuiltinType(problematic_type)
+        code = get_problematic_arg_template.lstrip() % options
+        code += getProblematicFromBuiltin(
+            problematic_type,
+            options['index'],
+            options['argument_name'],
+        ).lstrip()
+        return code
     else:
         # Enum
         if 'static_cast' in options['func']:
