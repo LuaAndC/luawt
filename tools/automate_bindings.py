@@ -20,12 +20,12 @@ BUILTIN_TYPES_CONVERTERS = {
     'const char*': ('lua_tostring', 'lua_pushstring'),
 }
 
-PROBLEMATIC_TYPES_TO_BUILTIN = {
-    'std::string' : 'const char*',
+PROBLEMATIC_FROM_BUILTIN_CONVERSIONS = {
+    'std::string' : ('std::string', 'const char*'),
 }
 
-PROBLEMATIC_TYPES_CONVERSIONS = {
-    'std::string' : 'c_str',
+PROBLEMATIC_TO_BUILTIN_CONVERSIONS = {
+    'std::string' : ('c_str', 'const char*'),
 }
 
 def parse(filename):
@@ -81,7 +81,7 @@ def checkArgumentType(method_name, arg_type, Wt):
     if getBuiltinType(str(arg_type)):
         # Is problematic
         if findCorrespondingKeyInDict(
-            PROBLEMATIC_TYPES_TO_BUILTIN,
+            PROBLEMATIC_TO_BUILTIN_CONVERSIONS,
             str(arg_type),
         ):
             if pygccxml.declarations.is_reference(arg_type):
@@ -220,7 +220,7 @@ def getBuiltinTypeArgument(options):
     %(argument_type)s %(argument_name)s = %(func)s(L, %(index)s));
     '''
     raw_type_key = findCorrespondingKeyInDict(
-        PROBLEMATIC_TYPES_TO_BUILTIN,
+        PROBLEMATIC_TO_BUILTIN_CONVERSIONS,
         str(options['argument_type']),
     )
     if raw_type_key:
@@ -310,12 +310,11 @@ def returnValue(return_type):
         # Empty by default.
         convert_f = ''
         problematic_type = findCorrespondingKeyInDict(
-            PROBLEMATIC_TYPES_CONVERSIONS,
+            PROBLEMATIC_FROM_BUILTIN_CONVERSIONS,
             return_type,
         )
         if problematic_type:
-            method_str = PROBLEMATIC_TYPES_CONVERSIONS[problematic_type]
-            convert_f = '.' + method_str + '()'
+            convert_f = getBuiltinTypeFromProblematic(problematic_type)
         return RETURN_CALLS_TEMPLATE % (func_name, ref_str, convert_f)
 
 def getBuiltinType(full_type):
@@ -324,11 +323,13 @@ def getBuiltinType(full_type):
         full_type,
     )
     problematic_type = findCorrespondingKeyInDict(
-        PROBLEMATIC_TYPES_TO_BUILTIN,
+        PROBLEMATIC_TO_BUILTIN_CONVERSIONS,
         full_type,
     )
     if problematic_type:
-        return PROBLEMATIC_TYPES_TO_BUILTIN[problematic_type]
+        while not problematic_type in BUILTIN_TYPES_CONVERTERS:
+            _, problematic_type = PROBLEMATIC_TO_BUILTIN_CONVERSIONS[problematic_type]
+        return problematic_type
     else:
         return builtin_type
 
