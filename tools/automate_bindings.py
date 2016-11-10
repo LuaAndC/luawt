@@ -22,10 +22,12 @@ BUILTIN_TYPES_CONVERTERS = {
 
 PROBLEMATIC_FROM_BUILTIN_CONVERSIONS = {
     'std::string' : ('std::string', 'const char*'),
+    'Wt::WString' : ('Wt::WString', 'const char*'),
 }
 
 PROBLEMATIC_TO_BUILTIN_CONVERSIONS = {
     'std::string' : ('c_str', 'const char*'),
+    'Wt::WString' : ('toUTF8', 'std::string'),
 }
 
 def parse(filename):
