@@ -207,6 +207,13 @@ def findCorrespondingKeyInDict(dictionary, full_key):
             return key
     return ''
 
+def getNumberOfTransitionalTypes(problematic_type):
+    count = 0
+    while problematic_type in PROBLEMATIC_FROM_BUILTIN_CONVERSIONS:
+        problematic_type = PROBLEMATIC_FROM_BUILTIN_CONVERSIONS[problematic_type]
+        count += 1
+    return count
+
 def getBuiltinTypeArgument(options):
     get_problematic_arg_template = r'''
     %(raw_type)s raw%(index)s = %(func)s(L, %(index)s);
