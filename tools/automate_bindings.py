@@ -214,6 +214,36 @@ def getNumberOfTransitionalTypes(problematic_type):
         count += 1
     return count
 
+def getProblematicFromBuiltin(problematic_type, arg_n, arg_name):
+    builtin_to_problematic = r'''
+    %(curr_type)s %(curr_var)s = %(func)s(%(prev_var)s);
+    '''
+    convert_str = []
+    curr_type = problematic_type
+    n_transitional = getNumberOfTransitionalTypes(problematic_type)
+    curr_n = 1
+    while not curr_type in BUILTIN_TYPES_CONVERTERS:
+        if curr_n == 1:
+            prev_var = 'raw' + str(arg_n)
+        else:
+            prev_var = 'next' + str(n_transitional - curr_n - 1)
+        if curr_n == n_transitional:
+            curr_var = arg_name
+        else:
+            curr_var = 'next' + str(n_transitional - curr_n)
+        func, _ = PROBLEMATIC_FROM_BUILTIN_CONVERSIONS[curr_type]
+        options = {
+            'curr_type' : curr_type,
+            'curr_var' : curr_var,
+            'func' : func,
+            'prev_var' : prev_var,
+        }
+        convert_str.append(builtin_to_problematic % options)
+        _, curr_type = PROBLEMATIC_FROM_BUILTIN_CONVERSIONS[curr_type]
+        curr_n += 1
+    convert_str.reverse()
+    return ''.join(convert_str)
+
 def getBuiltinTypeArgument(options):
     get_problematic_arg_template = r'''
     %(raw_type)s raw%(index)s = %(func)s(L, %(index)s);
