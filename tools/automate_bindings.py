@@ -44,6 +44,13 @@ def parse(filename):
     global_namespace = pygccxml.declarations.get_global_namespace(decls)
     return global_namespace
 
+def loadAdditionalChunk(module_str):
+    file_str = '/usr/include/Wt/%s' % module_str
+    if os.path.isfile(file_str):
+        return parse(file_str).namespace('Wt')
+    else:
+        raise Exception('Unable to load module called %s' % module_str)
+
 def isTemplate(method_name, decl_str):
     # Luawt doesn't support C++ templates.
     if pygccxml.declarations.templates.is_instantiation(decl_str):
