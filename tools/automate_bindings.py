@@ -185,10 +185,11 @@ def getConstructor(global_namespace, module_name):
     main_class = Wt.class_(name=module_name)
     # TODO (for zer0main).
     # We need to support multiple constructors so it's just a dummy.
-    constructor = main_class.constructors()[0]
-    if not checkWtFunction(True, constructor, Wt):
-        raise Exception('Unable to bind constructor of %s' % module_name)
-    return constructor
+    for constructor in main_class.constructors():
+        if checkWtFunction(True, constructor, Wt):
+            if not constructor.is_artificial:
+                return constructor
+    raise Exception('Unable to bind any constructors of %s' % module_name)
 
 def getModuleName(filename):
     return os.path.basename(filename)
