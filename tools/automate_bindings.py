@@ -186,7 +186,7 @@ def checkWtFunction(is_constructor, func, Wt):
     # OK, all checks've passed.
     return True
 
-def getMethodsAndBases(global_namespace, module_name):
+def getMethodsAndBase(global_namespace, module_name):
     Wt = global_namespace.namespace('Wt')
     main_class = Wt.class_(name=module_name)
     access_matcher = pygccxml.declarations.access_type_matcher_t(
@@ -199,8 +199,12 @@ def getMethodsAndBases(global_namespace, module_name):
         function=access_matcher & custom_matcher,
         recursive=False,
     )
-    bases = main_class.bases
-    return methods, bases
+    for base in main_class.bases:
+        if isDescendantOf(base.related_class, 'WObject', Wt):
+            return methods, base.related_class
+        elif base.related_class.name == 'WObject':
+            return methods, base.related_class
+    raise Exception('Unable to bind %s, because it isnt descendant of WObject' % module_name)
 
 def getConstructor(global_namespace, module_name):
     Wt = global_namespace.namespace('Wt')
@@ -491,11 +495,8 @@ void luawt_%(module_name)s(lua_State* L) {
 }
 '''
 
-def generateModuleFunc(module_name, bases):
-    if len(bases) != 0:
-        base = bases[0].related_class.name
-    else:
-        base = 'WObject'
+def generateModuleFunc(module_name, base):
+    base = base.name
     options = {
         'module_name' : module_name,
         'base' : base,
@@ -513,7 +514,7 @@ def generateConstructor(module_name, constructor):
         constructor_return_type,
     )
 
-def generateModule(module_name, methods, bases, constructor):
+def generateModule(module_name, methods, base, constructor):
     source = []
     source.append(generateIncludes(module_name))
     source.append(generateConstructor(module_name, constructor))
@@ -526,7 +527,7 @@ def generateModule(module_name, methods, bases, constructor):
             method.return_type,
         ))
     source.append(generateMethodsArray(module_name, methods))
-    source.append(generateModuleFunc(module_name, bases))
+    source.append(generateModuleFunc(module_name, base))
     return ''.join(source)
 
 def getIndexOfFirstMatch(pattern, content):
@@ -587,11 +588,11 @@ def addModuleToLists(module_name):
 def bind(input_filename, module_only):
     global_namespace = parse(input_filename)
     module_name = getModuleName(input_filename)
-    methods, bases = getMethodsAndBases(global_namespace, module_name)
+    methods, base = getMethodsAndBase(global_namespace, module_name)
     constructor = getConstructor(global_namespace, module_name)
     if not module_only:
         addModuleToLists(module_name)
-    source = generateModule(module_name, methods, bases, constructor)
+    source = generateModule(module_name, methods, base, constructor)
     return source
 
 def main():
