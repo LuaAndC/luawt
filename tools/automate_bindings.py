@@ -542,6 +542,13 @@ def addItem(pattern, added_str, content):
     # child in init.cpp
     while added_str > content[curr_index]:
         curr_index += 1
+
+def getClassNameFromModuleStr(module_str):
+    class_name = module_str.replace('MODULE(', '')
+    class_name = class_name.replace('),', '')
+    class_name = class_name.strip()
+    return class_name
+
     content.insert(curr_index, added_str)
     return ''.join(content)
 
