@@ -105,21 +105,6 @@ def isDescendantOf(child, base, Wt):
         return False
     return isDescendantLogic(child_class, base_class)
 
-def isWObjectsDescendant(obj, Wt):
-    # Class or other type
-    obj_str = hasattr(obj, 'name') and obj.name or str(obj)
-    try:
-        obj_c = Wt.class_(name=obj_str.replace('Wt::', ''))
-        for base in obj_c.bases:
-            if base.related_class.name == 'WObject':
-                return True
-            elif isWObjectsDescendant(base.related_class, Wt):
-                return True
-    except:
-        logging.warning('%s wasn\'t found so there is no guarantee that it is WObject\'s descendant.' % obj_str)
-        return True
-    return False
-
 def checkArgumentType(method_name, arg_type, Wt):
     if isTemplate(method_name, str(arg_type)):
         return False
@@ -140,7 +125,7 @@ def checkArgumentType(method_name, arg_type, Wt):
             if not pygccxml.declarations.is_pointer(arg_type):
                 if not pygccxml.declarations.is_reference(arg_type):
                     return True
-    elif isWObjectsDescendant(clearType(arg_type), Wt):
+    elif isDescendantOf(clearType(arg_type), 'WObject', Wt):
         if not pygccxml.declarations.is_pointer(arg_type):
             logging.info(
                 'Argument of method %s has strange type %s'
@@ -165,7 +150,7 @@ def checkReturnType(method_name, raw_return_type, Wt):
             return True
         elif not pygccxml.declarations.is_pointer(raw_return_type):
             return True
-    elif isWObjectsDescendant(clearType(raw_return_type), Wt):
+    elif isDescendantOf(clearType(raw_return_type), 'WObject', Wt):
         if pygccxml.declarations.is_pointer(raw_return_type):
             return True
         elif isConstReference(raw_return_type):
