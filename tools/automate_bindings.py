@@ -89,6 +89,22 @@ def isDescendantLogic(child_class, base_class):
             return True
     return False
 
+def isDescendantOf(child, base, Wt):
+    try:
+        base_class = getClass(base, Wt)
+        child_class = getClass(child, Wt)
+    except:
+        warning_str = '''
+        %(base)s or %(child)s wasn\'t found so there is no guarantee that %(child)s isn't descendant of %(base)s.
+        '''
+        warning_options = {
+            'base': getClassStr(base),
+            'child': getClassStr(child),
+        }
+        logging.warning(warning_str.strip() % warning_options)
+        return False
+    return isDescendantLogic(child_class, base_class)
+
 def isWObjectsDescendant(obj, Wt):
     # Class or other type
     obj_str = hasattr(obj, 'name') and obj.name or str(obj)
