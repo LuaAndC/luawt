@@ -68,6 +68,11 @@ def isConstReference(checked_type):
             return True
     return False
 
+def getClassStr(obj):
+    # Class or other type
+    class_str = hasattr(obj, 'name') and obj.name or str(obj)
+    return class_str.replace('Wt::', '')
+
 def isWObjectsDescendant(obj, Wt):
     # Class or other type
     obj_str = hasattr(obj, 'name') and obj.name or str(obj)
