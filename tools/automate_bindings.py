@@ -530,18 +530,15 @@ def generateModule(module_name, methods, base, constructor):
     source.append(generateModuleFunc(module_name, base))
     return ''.join(source)
 
-def getIndexOfFirstMatch(pattern, content):
+def getMatchRange(pattern, content):
+    first, last = 0, 0
     for i, line in enumerate(content):
         if re.search(pattern, line):
-            return i
-
-def addItem(pattern, added_str, content):
-    curr_index = getIndexOfFirstMatch(pattern, content)
-    # TODO (for zer0main).
-    # We need to take into account that base must be before
-    # child in init.cpp
-    while added_str > content[curr_index]:
-        curr_index += 1
+            if first == 0:
+                first = i
+            else:
+                last = i
+    return (first, last)
 
 def getClassNameFromModuleStr(module_str):
     class_name = module_str.replace('MODULE(', '')
@@ -549,6 +546,22 @@ def getClassNameFromModuleStr(module_str):
     class_name = class_name.strip()
     return class_name
 
+def addItem(pattern, added_str, content, module_name, Wt):
+    curr_index, last = getMatchRange(pattern, content)
+    # init.cpp, special condition: base must be before descendant.
+    if pattern == r'MODULE\([a-zA-Z]+\),':
+        curr_class = getClassNameFromModuleStr(content[curr_index])
+        while not isDescendantOf(curr_class, module_name, Wt):
+            curr_index += 1
+            curr_class = getClassNameFromModuleStr(content[curr_index])
+            if curr_index > last:
+                break
+    # Lexicographical order.
+    else:
+        while added_str > content[curr_index]:
+            curr_index += 1
+            if curr_index > last:
+                break
     content.insert(curr_index, added_str)
     return ''.join(content)
 
@@ -563,16 +576,18 @@ def readFile(filename):
 def writeSourceToFile(module_name, source):
     writeToFile('src/luawt/%s.cpp' % module_name, source)
 
-def addItemToFiles(parameters):
+def addItemToFiles(parameters, module_name, Wt):
     for parameter in parameters:
         content = readFile(parameter['filename'])
         writeToFile(parameter['filename'], addItem(
             parameter['pattern'],
             parameter['module_str'],
             content,
+            module_name,
+            Wt,
         ))
 
-def addModuleToLists(module_name):
+def addModuleToLists(module_name, Wt):
     parameters = [
         {
             'filename' : 'src/luawt/globals.hpp',
@@ -590,7 +605,7 @@ def addModuleToLists(module_name):
             'module_str' : '                "src/luawt/%s.cpp",\n' % module_name,
         },
     ]
-    addItemToFiles(parameters)
+    addItemToFiles(parameters, module_name, Wt)
 
 def bind(input_filename, module_only):
     global_namespace = parse(input_filename)
@@ -598,7 +613,7 @@ def bind(input_filename, module_only):
     methods, base = getMethodsAndBase(global_namespace, module_name)
     constructor = getConstructor(global_namespace, module_name)
     if not module_only:
-        addModuleToLists(module_name)
+        addModuleToLists(module_name, global_namespace.namespace('Wt'))
     source = generateModule(module_name, methods, base, constructor)
     return source
 
