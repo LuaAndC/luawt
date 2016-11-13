@@ -73,6 +73,14 @@ def getClassStr(obj):
     class_str = hasattr(obj, 'name') and obj.name or str(obj)
     return class_str.replace('Wt::', '')
 
+def getClass(obj, Wt):
+    class_str = getClassStr(obj)
+    try:
+        return Wt.class_(name=class_str)
+    except:
+        namespace = loadAdditionalChunk(class_str)
+        return namespace.class_(name=class_str)
+
 def isWObjectsDescendant(obj, Wt):
     # Class or other type
     obj_str = hasattr(obj, 'name') and obj.name or str(obj)
