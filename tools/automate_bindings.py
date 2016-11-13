@@ -81,6 +81,14 @@ def getClass(obj, Wt):
         namespace = loadAdditionalChunk(class_str)
         return namespace.class_(name=class_str)
 
+def isDescendantLogic(child_class, base_class):
+    for base in child_class.bases:
+        if base.related_class == base_class:
+            return True
+        elif isDescendantLogic(base.related_class, base_class):
+            return True
+    return False
+
 def isWObjectsDescendant(obj, Wt):
     # Class or other type
     obj_str = hasattr(obj, 'name') and obj.name or str(obj)
