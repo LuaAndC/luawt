@@ -612,9 +612,9 @@ def bind(input_filename, module_only):
     module_name = getModuleName(input_filename)
     methods, base = getMethodsAndBase(global_namespace, module_name)
     constructor = getConstructor(global_namespace, module_name)
+    source = generateModule(module_name, methods, base, constructor)
     if not module_only:
         addModuleToLists(module_name, global_namespace.namespace('Wt'))
-    source = generateModule(module_name, methods, base, constructor)
     return source
 
 def main():
