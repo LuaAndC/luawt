@@ -17,16 +17,16 @@ BUILTIN_TYPES_CONVERTERS = {
     'int': ('lua_tointeger', 'lua_pushinteger'),
     'bool': ('lua_toboolean', 'lua_pushboolean'),
     'double': ('lua_tonumber', 'lua_pushnumber'),
-    'const char*': ('lua_tostring', 'lua_pushstring'),
+    'char const *': ('lua_tostring', 'lua_pushstring'),
 }
 
 PROBLEMATIC_FROM_BUILTIN_CONVERSIONS = {
-    'std::string' : ('std::string', 'const char*'),
-    'Wt::WString' : ('Wt::WString', 'const char*'),
+    'std::string' : ('std::string', 'char const *'),
+    'Wt::WString' : ('Wt::WString', 'char const *'),
 }
 
 PROBLEMATIC_TO_BUILTIN_CONVERSIONS = {
-    'std::string' : ('c_str', 'const char*'),
+    'std::string' : ('c_str', 'char const *'),
     'Wt::WString' : ('toUTF8', 'std::string'),
 }
 
