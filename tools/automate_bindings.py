@@ -170,6 +170,11 @@ def addEnum(type_obj):
         )
         BUILTIN_TYPES_CONVERTERS[enum_str] = enum_converters
 
+def getArgType(arg):
+    # For compatibility with pygccxml v1.7.1
+    arg_field = hasattr(arg, 'decl_type') and arg.decl_type or arg.type
+    return arg_field
+
 def checkWtFunction(is_constructor, func, Wt):
     if isTemplate(func.name, func.decl_string):
         return False
