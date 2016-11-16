@@ -179,8 +179,7 @@ def checkWtFunction(is_constructor, func, Wt):
     if isTemplate(func.name, func.decl_string):
         return False
     for arg in func.arguments:
-        # For compatibility with pygccxml v1.7.1
-        arg_field = hasattr(arg, 'decl_type') and arg.decl_type or arg.type
+        arg_field = getArgType(arg)
         addEnum(arg_field)
         if not checkArgumentType(func.name, arg_field, Wt):
             return False
@@ -438,8 +437,7 @@ def implementLuaCFunction(
         arg_index_offset += 1
         body.append(getSelf(module_name))
     for i, arg in enumerate(args):
-        # For compatibility with pygccxml v1.7.1
-        arg_field = hasattr(arg, 'decl_type') and arg.decl_type or arg.type
+        arg_field = getArgType(arg)
         options = {
             'argument_name' : arg.name,
             'argument_type' : arg_field,
