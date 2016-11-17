@@ -193,6 +193,8 @@ def checkWtFunction(is_constructor, func, Wt):
 def getMethodsAndBase(global_namespace, module_name):
     Wt = global_namespace.namespace('Wt')
     main_class = Wt.class_(name=module_name)
+    if main_class.is_abstract:
+        raise Exception('Unable to bind %s, because it\'s abstract' % module_name)
     access_matcher = pygccxml.declarations.access_type_matcher_t(
         'public',
     )
