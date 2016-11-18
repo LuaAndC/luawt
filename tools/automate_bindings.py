@@ -223,6 +223,10 @@ def getConstructor(global_namespace, module_name):
                 return constructor
     raise Exception('Unable to bind any constructors of %s' % module_name)
 
+def isModule(module_str):
+    path = '/usr/include/Wt/%s' % module_str
+    return os.path.isfile(path)
+
 def getModuleName(filename):
     return os.path.basename(filename)
 
