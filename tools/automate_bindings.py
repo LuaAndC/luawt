@@ -227,6 +227,12 @@ def isModule(module_str):
     path = '/usr/include/Wt/%s' % module_str
     return os.path.isfile(path)
 
+def addIncludeDir(type_o, list_o):
+    type_o = clearType(type_o)
+    type_o = getClassStr(type_o)
+    if isModule(type_o):
+        list_o.append(type_o)
+
 def getModuleName(filename):
     return os.path.basename(filename)
 
