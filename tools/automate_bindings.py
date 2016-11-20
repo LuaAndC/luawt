@@ -213,12 +213,18 @@ def getMethodsAndBase(global_namespace, module_name):
 def getConstructor(global_namespace, module_name):
     Wt = global_namespace.namespace('Wt')
     main_class = Wt.class_(name=module_name)
+    custom_matcher = pygccxml.declarations.custom_matcher_t(
+        lambda decl: checkWtFunction(True, decl, Wt),
+    )
+    constructors = main_class.constructors(
+        function=custom_matcher,
+        recursive=False,
+    )
     # TODO (for zer0main).
     # We need to support multiple constructors so it's just a dummy.
-    for constructor in main_class.constructors():
-        if checkWtFunction(True, constructor, Wt):
-            if not constructor.is_artificial:
-                return constructor
+    for constructor in constructors:
+        if not constructor.is_artificial:
+            return constructor
     raise Exception('Unable to bind any constructors of %s' % module_name)
 
 def isModule(module_str):
