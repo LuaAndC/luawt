@@ -1,9 +1,8 @@
 #!/usr/bin/python
 
-""" Generate bindings of given Wt's class and all its dependencies.
+""" Generate bindings of given Wt's class.
 
-Dependencies are all other classes from interface of methods
-of given class (types of arguments and return values).
+If --bind option is not specified, script binds all the library.
 """
 
 import argparse
@@ -700,7 +699,7 @@ def main():
         '--bind',
         type=str,
         help='Header file (Wt) with class to bind',
-        required=True,
+        required=False,
     )
     parser.add_argument(
         '--module-only',
