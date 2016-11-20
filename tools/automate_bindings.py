@@ -585,17 +585,20 @@ def getClassNameFromModuleStr(module_str):
     return class_name
 
 def addItem(pattern, added_str, content, module_name, Wt):
-    curr_index, last = getMatchRange(pattern, content)
+    first, last = getMatchRange(pattern, content)
     # init.cpp, special condition: base must be before descendant.
     if pattern == r'MODULE\([a-zA-Z]+\),':
+        curr_index = last
         curr_class = getClassNameFromModuleStr(content[curr_index])
-        while not isDescendantOf(curr_class, module_name, Wt):
-            curr_index += 1
+        while not isDescendantOf(module_name, curr_class, Wt):
+            curr_index -= 1
             curr_class = getClassNameFromModuleStr(content[curr_index])
-            if curr_index > last:
+            if curr_index < first:
                 break
+        curr_index += 1
     # Lexicographical order.
     else:
+        curr_index = first
         while added_str > content[curr_index]:
             curr_index += 1
             if curr_index > last:
