@@ -7,6 +7,7 @@ of given class (types of arguments and return values).
 """
 
 import argparse
+import glob
 import logging
 import os
 import re
@@ -659,6 +660,15 @@ def addModuleToLists(module_name, Wt):
         },
     ]
     addItemToFiles(parameters, module_name, Wt)
+
+def getAllModules():
+    path = '/usr/include/Wt/*'
+    content = glob.glob(path)
+    modules = []
+    for el in content:
+        if os.path.isfile(el):
+            modules.append(el)
+    return modules
 
 def bind(input_filename, module_only):
     global_namespace = parse(input_filename)
