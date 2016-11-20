@@ -81,29 +81,28 @@ def getClass(obj, Wt):
         namespace = loadAdditionalChunk(class_str)
         return namespace.class_(name=class_str)
 
-def isDescendantLogic(child_class, base_class):
+def isDescendantLogic(child_class, base_class_name):
     for base in child_class.bases:
-        if base.related_class == base_class:
+        if base.related_class.name == base_class_name:
             return True
-        elif isDescendantLogic(base.related_class, base_class):
+        elif isDescendantLogic(base.related_class, base_class_name):
             return True
     return False
 
-def isDescendantOf(child, base, Wt):
+def isDescendantOf(child, base_name, Wt):
     try:
-        base_class = getClass(base, Wt)
         child_class = getClass(child, Wt)
     except:
         warning_str = '''
-        %(base)s or %(child)s wasn\'t found so there is no guarantee that %(child)s isn't descendant of %(base)s.
+        %(child)s wasn\'t found so there is no guarantee that %(child)s isn't descendant of %(base)s.
         '''
         warning_options = {
-            'base': getClassStr(base),
+            'base': base_name,
             'child': getClassStr(child),
         }
         logging.warning(warning_str.strip() % warning_options)
         return False
-    return isDescendantLogic(child_class, base_class)
+    return isDescendantLogic(child_class, base_name)
 
 def checkArgumentType(method_name, arg_type, Wt):
     if isTemplate(method_name, str(arg_type)):
