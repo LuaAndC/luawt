@@ -131,7 +131,7 @@ def checkArgumentType(method_name, arg_type, Wt):
             if not pygccxml.declarations.is_pointer(arg_type):
                 if not pygccxml.declarations.is_reference(arg_type):
                     return True
-    elif isDescendantOf(clearType(arg_type), 'WObject', Wt):
+    elif isDescendantOf(clearType(arg_type), 'WWidget', Wt):
         if not pygccxml.declarations.is_pointer(arg_type):
             logging.info(
                 'Argument of method %s has strange type %s'
@@ -156,7 +156,7 @@ def checkReturnType(method_name, raw_return_type, Wt):
             return True
         elif not pygccxml.declarations.is_pointer(raw_return_type):
             return True
-    elif isDescendantOf(clearType(raw_return_type), 'WObject', Wt):
+    elif isDescendantOf(clearType(raw_return_type), 'WWidget', Wt):
         if pygccxml.declarations.is_pointer(raw_return_type):
             return True
         elif isConstReference(raw_return_type):
@@ -211,11 +211,11 @@ def getMethodsAndBase(global_namespace, module_name):
         recursive=False,
     )
     for base in main_class.bases:
-        if isDescendantOf(base.related_class, 'WObject', Wt):
+        if isDescendantOf(base.related_class, 'WWidget', Wt):
             return methods, base.related_class
-        elif base.related_class.name == 'WObject':
+        elif base.related_class.name == 'WWidget':
             return methods, base.related_class
-    raise Exception('Unable to bind %s, because it isnt descendant of WObject' % module_name)
+    raise Exception('Unable to bind %s, because it isnt descendant of WWidget' % module_name)
 
 def getConstructor(global_namespace, module_name):
     Wt = global_namespace.namespace('Wt')
