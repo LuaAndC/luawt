@@ -242,6 +242,15 @@ def getModulesFromFuncSig(func):
         addIncludeDir(arg_type, class_strs)
     return class_strs
 
+def getIncludes(module_name, methods, constructor):
+    includes = []
+    includes.append(module_name)
+    for method in methods:
+        includes += getModulesFromFuncSig(method)
+    includes += getModulesFromFuncSig(constructor)
+    # Erase repeats
+    return set(includes)
+
 def getModuleName(filename):
     return os.path.basename(filename)
 
