@@ -256,14 +256,19 @@ def getModuleName(filename):
 
 INCLUDES_TEMPLATE = r'''
 #include "boost-xtime.hpp"
-#include <Wt/%s>
+
+%s
 
 #include "globals.hpp"
 
 '''
 
-def generateIncludes(module_name):
-    return INCLUDES_TEMPLATE.lstrip() % module_name
+def generateIncludes(includes):
+    wt_includes = []
+    for include in includes:
+        include_str = '#include <Wt/%s>' % include
+        wt_includes.append(include_str)
+    return INCLUDES_TEMPLATE.lstrip() % '\n'.join(wt_includes)
 
 def getSelf(module_name):
     frame = r'''
@@ -549,7 +554,8 @@ def generateConstructor(module_name, constructor):
 
 def generateModule(module_name, methods, base, constructor):
     source = []
-    source.append(generateIncludes(module_name))
+    includes = getIncludes(module_name, methods, constructor)
+    source.append(generateIncludes(includes))
     source.append(generateConstructor(module_name, constructor))
     for method in methods:
         source.append(implementLuaCFunction(
