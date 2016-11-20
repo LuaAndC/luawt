@@ -233,6 +233,15 @@ def addIncludeDir(type_o, list_o):
     if isModule(type_o):
         list_o.append(type_o)
 
+def getModulesFromFuncSig(func):
+    class_strs = []
+    if hasattr(func, 'return_type'):
+        addIncludeDir(func.return_type, class_strs)
+    for arg in func.arguments:
+        arg_type = getArgType(arg)
+        addIncludeDir(arg_type, class_strs)
+    return class_strs
+
 def getModuleName(filename):
     return os.path.basename(filename)
 
