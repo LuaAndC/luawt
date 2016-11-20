@@ -175,6 +175,8 @@ def getArgType(arg):
     return arg_field
 
 def checkWtFunction(is_constructor, func, Wt):
+    if func.access_type != 'public':
+        return False
     if isTemplate(func.name, func.decl_string):
         return False
     for arg in func.arguments:
@@ -194,14 +196,11 @@ def getMethodsAndBase(global_namespace, module_name):
     main_class = Wt.class_(name=module_name)
     if main_class.is_abstract:
         raise Exception('Unable to bind %s, because it\'s abstract' % module_name)
-    access_matcher = pygccxml.declarations.access_type_matcher_t(
-        'public',
-    )
     custom_matcher = pygccxml.declarations.custom_matcher_t(
         lambda decl: checkWtFunction(False, decl, Wt),
     )
     methods = main_class.member_functions(
-        function=access_matcher & custom_matcher,
+        function=custom_matcher,
         recursive=False,
     )
     for base in main_class.bases:
