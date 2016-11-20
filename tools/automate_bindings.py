@@ -38,8 +38,15 @@ def parse(filename):
         xml_generator_path = generator_path,
         xml_generator = generator_name,
     )
+    file_config = pygccxml.parser.create_cached_source_fc(
+        filename,
+        'src/luawt/xml/%s' % getModuleName(filename),
+    )
+    project_reader = pygccxml.parser.project_reader_t(xml_generator_config)
     # Parse the c++ file.
-    decls = pygccxml.parser.parse([filename], xml_generator_config)
+    decls = project_reader.read_files(
+        files = [file_config],
+    )
     # Get access to the global namespace.
     global_namespace = pygccxml.declarations.get_global_namespace(decls)
     return global_namespace
