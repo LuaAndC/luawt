@@ -671,14 +671,25 @@ def getAllModules():
     return modules
 
 def bind(input_filename, module_only):
-    global_namespace = parse(input_filename)
-    module_name = getModuleName(input_filename)
-    methods, base = getMethodsAndBase(global_namespace, module_name)
-    constructor = getConstructor(global_namespace, module_name)
-    source = generateModule(module_name, methods, base, constructor)
-    if not module_only:
-        addModuleToLists(module_name, global_namespace.namespace('Wt'))
-    return source
+    if input_filename:
+        modules = [input_filename]
+    else:
+        modules = getAllModules()
+    for module in modules:
+        try:
+            global_namespace = parse(module)
+            module_name = getModuleName(module)
+            methods, base = getMethodsAndBase(global_namespace, module_name)
+            constructor = getConstructor(global_namespace, module_name)
+            source = generateModule(module_name, methods, base, constructor)
+            if not module_only:
+                addModuleToLists(module_name, global_namespace.namespace('Wt'))
+            writeSourceToFile(module_name, source)
+        except:
+            if input_filename:
+                raise
+            else:
+                logging.warning('Uable to bind %s' % module)
 
 def main():
     parser = argparse.ArgumentParser(
@@ -698,9 +709,7 @@ def main():
         required=False,
     )
     args = parser.parse_args()
-    source = bind(args.bind, args.module_only)
-    module_name = getModuleName(args.bind)
-    writeSourceToFile(module_name, source)
+    bind(args.bind, args.module_only)
 
 if __name__ == '__main__':
     main()
