@@ -203,6 +203,14 @@ def getMethodsAndBase(global_namespace, module_name):
     main_class = Wt.class_(name=module_name)
     if main_class.is_abstract:
         raise Exception('Unable to bind %s, because it\'s abstract' % module_name)
+    base_r = None
+    for base in main_class.bases:
+        if isDescendantOf(base.related_class, 'WWidget', Wt):
+            base_r = base.related_class
+        elif base.related_class.name == 'WWidget':
+            base_r = base.related_class
+    if not base_r:
+        raise Exception('Unable to bind %s, because it isnt descendant of WWidget' % module_name)
     custom_matcher = pygccxml.declarations.custom_matcher_t(
         lambda decl: checkWtFunction(False, decl, Wt),
     )
@@ -210,12 +218,7 @@ def getMethodsAndBase(global_namespace, module_name):
         function=custom_matcher,
         recursive=False,
     )
-    for base in main_class.bases:
-        if isDescendantOf(base.related_class, 'WWidget', Wt):
-            return methods, base.related_class
-        elif base.related_class.name == 'WWidget':
-            return methods, base.related_class
-    raise Exception('Unable to bind %s, because it isnt descendant of WWidget' % module_name)
+    return methods, base_r
 
 def getConstructor(global_namespace, module_name):
     Wt = global_namespace.namespace('Wt')
