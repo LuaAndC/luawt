@@ -33,6 +33,7 @@ PROBLEMATIC_TO_BUILTIN_CONVERSIONS = {
 }
 
 XML_CACHE = 'src/luawt/xml'
+INCLUDE_WT = '/usr/include/Wt'
 
 def parse(filename, include_paths=None):
     # Find out the c++ parser.
@@ -58,7 +59,7 @@ def parse(filename, include_paths=None):
     return global_namespace
 
 def loadAdditionalChunk(module_str):
-    file_str = '/usr/include/Wt/%s' % module_str
+    file_str = '%s/%s' % (INCLUDE_WT, module_str)
     if os.path.isfile(file_str):
         return parse(file_str).namespace('Wt')
     else:
@@ -303,7 +304,7 @@ def getConstructors(global_namespace, module_name, blacklisted):
     raise Exception('Unable to bind any constructors of %s' % module_name)
 
 def isModule(module_str):
-    path = '/usr/include/Wt/%s' % module_str
+    path = '%s/%s' % (INCLUDE_WT, module_str)
     return os.path.isfile(path)
 
 def addIncludeDir(type_o, list_o):
@@ -803,7 +804,7 @@ def addModuleToLists(module_name, Wt):
     ]
     addItemToFiles(parameters, module_name, Wt)
 
-def getAllModules(path='/usr/include/Wt/*'):
+def getAllModules(path='%s/*'%INCLUDE_WT):
     content = glob.glob(path)
     modules = []
     for el in content:
