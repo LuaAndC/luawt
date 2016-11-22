@@ -44,4 +44,4 @@ script:
   # `after_success` sections are ignored by the worker.
   - coveralls --include src
   - ./tools/automate_bindings.py --bind /usr/include/Wt/WText
-  - luarocks make --local
+  - luarocks make
