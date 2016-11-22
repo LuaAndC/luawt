@@ -220,7 +220,7 @@ def getMethodsAndBase(global_namespace, module_name):
     )
     return methods, base_r
 
-def getConstructor(global_namespace, module_name):
+def getConstructors(global_namespace, module_name):
     Wt = global_namespace.namespace('Wt')
     main_class = Wt.class_(name=module_name)
     custom_matcher = pygccxml.declarations.custom_matcher_t(
@@ -232,9 +232,12 @@ def getConstructor(global_namespace, module_name):
     )
     # TODO (for zer0main).
     # We need to support multiple constructors so it's just a dummy.
+    result = []
     for constructor in constructors:
         if not constructor.is_artificial:
-            return constructor
+            result.append(constructor)
+    if result:
+        return result
     raise Exception('Unable to bind any constructors of %s' % module_name)
 
 def isModule(module_str):
@@ -256,12 +259,13 @@ def getModulesFromFuncSig(func):
         addIncludeDir(arg_type, class_strs)
     return class_strs
 
-def getIncludes(module_name, methods, constructor):
+def getIncludes(module_name, methods, constructors):
     includes = []
     includes.append(module_name)
     for method in methods:
         includes += getModulesFromFuncSig(method)
-    includes += getModulesFromFuncSig(constructor)
+    for constructor in constructors:
+        includes += getModulesFromFuncSig(constructor)
     # Erase repeats
     return set(includes)
 
@@ -283,6 +287,28 @@ def generateIncludes(includes):
         include_str = '#include <Wt/%s>' % include
         wt_includes.append(include_str)
     return INCLUDES_TEMPLATE.lstrip() % '\n'.join(wt_includes)
+
+def storeArgc(is_constructor):
+    if is_constructor:
+        return "int argc = lua_gettop(L);\n"
+    else:
+        # Do not count self as an argument for argc.
+        return "int argc = lua_gettop(L) - 1;\n"
+
+def ifArgc(argc):
+    # otstup poehal
+    frame = r'''    if (argc == %d) {
+    '''
+    return frame % argc
+
+def elseArgc():
+    return r'''
+    } else '''
+
+def elseFail(module_name, method_name):
+    return r'''{
+        return luaL_error(L, "Wrong arguments number for %s.%s: %%d", argc);
+    }''' % (module_name, method_name)
 
 def getSelf(module_name):
     frame = r'''
@@ -382,10 +408,11 @@ def getComplexArgument(options):
 def getArgsStr(args):
     args_list = []
     for arg in args:
-        if getBuiltinType(str(arg.decl_type)):
+        t = getArgType(arg)
+        if getBuiltinType(str(t)):
             args_list.append(arg.name)
         else:
-            if pygccxml.declarations.is_pointer(arg.decl_type):
+            if pygccxml.declarations.is_pointer(t):
                 args_list.append(arg.name)
             else:
                 args_list.append('*' + arg.name)
@@ -475,34 +502,47 @@ def implementLuaCFunction(
     is_constructor,
     module_name,
     method_name,
-    args,
+    args_overloads,
     return_type,
 ):
+    argc2args = {len(args): args for args in args_overloads}
+    if len(argc2args) != len(args_overloads):
+        logging.warn(
+            "TODO some overloads of %s.%s have the same number of " +
+            "arguments and can't be distinguished.",
+            module_name,
+            method_name,
+        )
     body = []
+    body.append(storeArgc(is_constructor))
     # In Lua indices start with 1.
     arg_index_offset = 1
     if not is_constructor:
         # The first one is object itself, so we have to increse offset.
         arg_index_offset += 1
         body.append(getSelf(module_name))
-    for i, arg in enumerate(args):
-        arg_field = getArgType(arg)
-        options = {
-            'argument_name' : arg.name,
-            'argument_type' : arg_field,
-            'index' : i + arg_index_offset,
-        }
-        arg_type = getBuiltinType(str(arg_field))
-        if arg_type:
-            options['func'], _ = BUILTIN_TYPES_CONVERTERS[arg_type]
-            body.append(getBuiltinTypeArgument(options))
+    for argc, args in argc2args.items():
+        body.append(ifArgc(argc))
+        for i, arg in enumerate(args):
+            arg_field = getArgType(arg)
+            options = {
+                'argument_name' : arg.name,
+                'argument_type' : arg_field,
+                'index' : i + arg_index_offset,
+            }
+            arg_type = getBuiltinType(str(arg_field))
+            if arg_type:
+                options['func'], _ = BUILTIN_TYPES_CONVERTERS[arg_type]
+                body.append(getBuiltinTypeArgument(options))
+            else:
+                body.append(getComplexArgument(options))
+        if is_constructor:
+            body.append(callWtConstructor(str(return_type), args, module_name))
         else:
-            body.append(getComplexArgument(options))
-    if is_constructor:
-        body.append(callWtConstructor(str(return_type), args, module_name))
-    else:
-        body.append(callWtFunction(str(return_type), args, method_name))
-    body.append(returnValue(str(return_type)))
+            body.append(callWtFunction(str(return_type), args, method_name))
+        body.append(returnValue(str(return_type)))
+        body.append(elseArgc())
+    body.append(elseFail(module_name, method_name))
     return LUACFUNCTION_TEMPLATE.lstrip() % {
         'module': module_name,
         'method': method_name,
@@ -555,29 +595,38 @@ def generateModuleFunc(module_name, base):
     }
     return MODULE_FUNC_TEMPLATE.lstrip() % options
 
-def generateConstructor(module_name, constructor):
+def generateConstructor(module_name, constructors):
     constructor_name = 'make'
     constructor_return_type = module_name + ' *'
     return implementLuaCFunction(
         True,
         module_name,
         constructor_name,
-        constructor.arguments,
+        [c.arguments for c in constructors],
         constructor_return_type,
     )
 
-def generateModule(module_name, methods, base, constructor):
+def generateModule(module_name, methods, base, constructors):
     source = []
-    includes = getIncludes(module_name, methods, constructor)
+    includes = getIncludes(module_name, methods, constructors)
     source.append(generateIncludes(includes))
-    source.append(generateConstructor(module_name, constructor))
+    source.append(generateConstructor(module_name, constructors))
+    # Group by method name to find overloaded groups.
+    name2methods = {}
     for method in methods:
+        if method.name not in name2methods:
+            name2methods[method.name] = []
+        name2methods[method.name].append(method)
+    for method_name, group in name2methods.items():
+        return_type = group[0].return_type
+        for method in group:
+            assert method.return_type == return_type
         source.append(implementLuaCFunction(
             False,
             module_name,
-            method.name,
-            method.arguments,
-            method.return_type,
+            method_name,
+            [method.arguments for method in group],
+            return_type,
         ))
     source.append(generateMethodsArray(module_name, methods))
     source.append(generateModuleFunc(module_name, base))
@@ -682,8 +731,8 @@ def bind(input_filename, module_only):
             global_namespace = parse(module)
             module_name = getModuleName(module)
             methods, base = getMethodsAndBase(global_namespace, module_name)
-            constructor = getConstructor(global_namespace, module_name)
-            source = generateModule(module_name, methods, base, constructor)
+            constructors = getConstructors(global_namespace, module_name)
+            source = generateModule(module_name, methods, base, constructors)
             if not module_only:
                 addModuleToLists(module_name, global_namespace.namespace('Wt'))
             writeSourceToFile(module_name, source)
