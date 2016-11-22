@@ -382,10 +382,11 @@ def getComplexArgument(options):
 def getArgsStr(args):
     args_list = []
     for arg in args:
-        if getBuiltinType(str(arg.decl_type)):
+        t = getArgType(arg)
+        if getBuiltinType(str(t)):
             args_list.append(arg.name)
         else:
-            if pygccxml.declarations.is_pointer(arg.decl_type):
+            if pygccxml.declarations.is_pointer(t):
                 args_list.append(arg.name)
             else:
                 args_list.append('*' + arg.name)
