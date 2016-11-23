@@ -627,6 +627,21 @@ def generateConstructor(module_name, constructors):
         constructor_return_type,
     )
 
+def generateSignals(signals, module_name):
+    SIG_TEMPLATE = 'ADD_SIGNAL(%(name)s, %(module)s, %(event)s)\n'
+    sig_code = []
+    for signal in signals:
+        events = pygccxml.declarations.templates.args(str(signal))
+        if len(events) != 1:
+            continue
+        options = {
+            'name' : signal.name,
+            'module' : module_name,
+            'event' : events[0],
+        }
+        sig_code.append(SIG_TEMPLATE % options)
+    return ''.join(sig_code)
+
 def generateModule(module_name, methods, base, constructors):
     source = []
     includes = getIncludes(module_name, methods, constructors)
