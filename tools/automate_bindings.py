@@ -230,8 +230,6 @@ def getConstructors(global_namespace, module_name):
         function=custom_matcher,
         recursive=False,
     )
-    # TODO (for zer0main).
-    # We need to support multiple constructors so it's just a dummy.
     result = []
     for constructor in constructors:
         if not constructor.is_artificial:
