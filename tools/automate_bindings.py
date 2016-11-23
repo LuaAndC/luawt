@@ -588,7 +588,7 @@ def generateMethodsArray(module_name, methods):
     for method in methods:
         body.append(base_element.rstrip() % (module_name, method.name))
     body.append(close_element.rstrip())
-    return METHODS_ARRAY_TEMPLATE.lstrip() % {
+    return METHODS_ARRAY_TEMPLATE % {
         'module_name' : module_name,
         'body' : ''.join(body).strip(),
     }
