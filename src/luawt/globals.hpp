@@ -312,10 +312,10 @@ private:
     widget_type* widget = luawt_checkFromLua<widget_type>(L, -1); \
     lua_pop(L, 1);
 
-#define CREATE_EMIT_SIGNAL_FUNC(signal, widget_type) \
+#define CREATE_EMIT_SIGNAL_FUNC(signal, widget_type, event_for_emit) \
     int luawt_##widget_type##_emit_##signal(lua_State* L) { \
         GET_WIDGET(widget_type) \
-        widget->signal().emit(WMouseEvent()); \
+        widget->signal().emit(event_for_emit()); \
         return 0; \
     }
 
@@ -337,8 +337,8 @@ private:
         return 1; \
     }
 
-#define ADD_SIGNAL(signal, widget_type) \
-    CREATE_EMIT_SIGNAL_FUNC(signal, widget_type) \
+#define ADD_SIGNAL(signal, widget_type, event_for_emit) \
+    CREATE_EMIT_SIGNAL_FUNC(signal, widget_type, event_for_emit) \
     CREATE_CONNECT_SIGNAL_FUNC(signal, widget_type) \
     CREATE_SIGNAL_FUNC(signal, widget_type)
 
