@@ -221,7 +221,8 @@ def getSignals(main_class):
         signals += getSignals(base.related_class)
     return signals
 
-def getMethodsAndBase(global_namespace, module_name):
+# This function returns methods, signals and base of the given class.
+def getMembers(global_namespace, module_name):
     Wt = global_namespace.namespace('Wt')
     main_class = Wt.class_(name=module_name)
     if main_class.is_abstract:
@@ -240,8 +241,9 @@ def getMethodsAndBase(global_namespace, module_name):
     methods = main_class.member_functions(
         function=custom_matcher,
         recursive=False,
-    )
-    return methods, base_r
+    ).to_list()
+    signals = getSignals(main_class)
+    return methods, signals, base_r
 
 def getConstructors(global_namespace, module_name):
     Wt = global_namespace.namespace('Wt')
@@ -642,7 +644,7 @@ def generateSignals(signals, module_name):
         sig_code.append(SIG_TEMPLATE % options)
     return ''.join(sig_code)
 
-def generateModule(module_name, methods, base, constructors):
+def generateModule(module_name, methods, base, constructors, signals):
     source = []
     includes = getIncludes(module_name, methods, constructors)
     source.append(generateIncludes(includes))
@@ -664,7 +666,8 @@ def generateModule(module_name, methods, base, constructors):
             [method.arguments for method in group],
             return_type,
         ))
-    source.append(generateMethodsArray(module_name, methods))
+    source.append(generateSignals(signals, module_name))
+    source.append(generateMethodsArray(module_name, methods + signals))
     source.append(generateModuleFunc(module_name, base))
     return ''.join(source)
 
@@ -766,9 +769,15 @@ def bind(input_filename, module_only):
         try:
             global_namespace = parse(module)
             module_name = getModuleName(module)
-            methods, base = getMethodsAndBase(global_namespace, module_name)
+            methods, signals, base = getMembers(global_namespace, module_name)
             constructors = getConstructors(global_namespace, module_name)
-            source = generateModule(module_name, methods, base, constructors)
+            source = generateModule(
+                module_name,
+                methods,
+                base,
+                constructors,
+                signals,
+            )
             if not module_only:
                 addModuleToLists(module_name, global_namespace.namespace('Wt'))
             writeSourceToFile(module_name, source)
