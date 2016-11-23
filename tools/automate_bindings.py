@@ -198,6 +198,20 @@ def checkWtFunction(is_constructor, func, Wt):
     # OK, all checks've passed.
     return True
 
+def isSignal(func):
+    if len(func.arguments) != 0:
+        return False
+    if func.access_type != 'public':
+        return False
+    # Workaround!
+    if not 'EventSignal<' in str(func.return_type):
+        return False
+    if func.virtuality == "pure virtual":
+        return False
+    if not pygccxml.declarations.is_reference(func.return_type):
+        return False
+    return True
+
 def getMethodsAndBase(global_namespace, module_name):
     Wt = global_namespace.namespace('Wt')
     main_class = Wt.class_(name=module_name)
