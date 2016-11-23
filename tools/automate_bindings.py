@@ -212,6 +212,15 @@ def isSignal(func):
         return False
     return True
 
+def getSignals(main_class):
+    signals = main_class.member_functions(
+        function=isSignal,
+        allow_empty=True,
+    ).to_list()
+    for base in main_class.bases:
+        signals += getSignals(base.related_class)
+    return signals
+
 def getMethodsAndBase(global_namespace, module_name):
     Wt = global_namespace.namespace('Wt')
     main_class = Wt.class_(name=module_name)
