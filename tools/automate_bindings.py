@@ -198,7 +198,31 @@ def checkWtFunction(is_constructor, func, Wt):
     # OK, all checks've passed.
     return True
 
-def getMethodsAndBase(global_namespace, module_name):
+def isSignal(func):
+    if len(func.arguments) != 0:
+        return False
+    if func.access_type != 'public':
+        return False
+    # Workaround!
+    if not 'EventSignal<' in str(func.return_type):
+        return False
+    if func.virtuality == "pure virtual":
+        return False
+    if not pygccxml.declarations.is_reference(func.return_type):
+        return False
+    return True
+
+def getSignals(main_class):
+    signals = main_class.member_functions(
+        function=isSignal,
+        allow_empty=True,
+    ).to_list()
+    for base in main_class.bases:
+        signals += getSignals(base.related_class)
+    return signals
+
+# This function returns methods, signals and base of the given class.
+def getMembers(global_namespace, module_name):
     Wt = global_namespace.namespace('Wt')
     main_class = Wt.class_(name=module_name)
     if main_class.is_abstract:
@@ -217,8 +241,9 @@ def getMethodsAndBase(global_namespace, module_name):
     methods = main_class.member_functions(
         function=custom_matcher,
         recursive=False,
-    )
-    return methods, base_r
+    ).to_list()
+    signals = getSignals(main_class)
+    return methods, signals, base_r
 
 def getConstructors(global_namespace, module_name):
     Wt = global_namespace.namespace('Wt')
@@ -230,8 +255,6 @@ def getConstructors(global_namespace, module_name):
         function=custom_matcher,
         recursive=False,
     )
-    # TODO (for zer0main).
-    # We need to support multiple constructors so it's just a dummy.
     result = []
     for constructor in constructors:
         if not constructor.is_artificial:
@@ -567,7 +590,7 @@ def generateMethodsArray(module_name, methods):
     for method in methods:
         body.append(base_element.rstrip() % (module_name, method.name))
     body.append(close_element.rstrip())
-    return METHODS_ARRAY_TEMPLATE.lstrip() % {
+    return METHODS_ARRAY_TEMPLATE % {
         'module_name' : module_name,
         'body' : ''.join(body).strip(),
     }
@@ -606,7 +629,22 @@ def generateConstructor(module_name, constructors):
         constructor_return_type,
     )
 
-def generateModule(module_name, methods, base, constructors):
+def generateSignals(signals, module_name):
+    SIG_TEMPLATE = 'ADD_SIGNAL(%(name)s, %(module)s, %(event)s)\n'
+    sig_code = []
+    for signal in signals:
+        events = pygccxml.declarations.templates.args(str(signal))
+        if len(events) != 1:
+            continue
+        options = {
+            'name' : signal.name,
+            'module' : module_name,
+            'event' : events[0],
+        }
+        sig_code.append(SIG_TEMPLATE % options)
+    return ''.join(sig_code)
+
+def generateModule(module_name, methods, base, constructors, signals):
     source = []
     includes = getIncludes(module_name, methods, constructors)
     source.append(generateIncludes(includes))
@@ -628,7 +666,8 @@ def generateModule(module_name, methods, base, constructors):
             [method.arguments for method in group],
             return_type,
         ))
-    source.append(generateMethodsArray(module_name, methods))
+    source.append(generateSignals(signals, module_name))
+    source.append(generateMethodsArray(module_name, methods + signals))
     source.append(generateModuleFunc(module_name, base))
     return ''.join(source)
 
@@ -730,9 +769,15 @@ def bind(input_filename, module_only):
         try:
             global_namespace = parse(module)
             module_name = getModuleName(module)
-            methods, base = getMethodsAndBase(global_namespace, module_name)
+            methods, signals, base = getMembers(global_namespace, module_name)
             constructors = getConstructors(global_namespace, module_name)
-            source = generateModule(module_name, methods, base, constructors)
+            source = generateModule(
+                module_name,
+                methods,
+                base,
+                constructors,
+                signals,
+            )
             if not module_only:
                 addModuleToLists(module_name, global_namespace.namespace('Wt'))
             writeSourceToFile(module_name, source)
