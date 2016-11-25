@@ -36,6 +36,11 @@ XML_CACHE = 'src/luawt/xml'
 INCLUDE_WT = '/usr/include/Wt'
 
 def parse(filename, include_paths=None):
+    # Make sure Wt is installed to correct directory.
+    wconfigh = '%s/WConfig.h' % INCLUDE_WT
+    if not os.path.exists(wconfigh):
+        logging.fatal('Can not find file %s', wconfigh)
+        raise Exception('Can not find file %s' % wconfigh)
     # Find out the c++ parser.
     generator_path, generator_name = pygccxml.utils.find_xml_generator()
     # Configure the xml generator.
