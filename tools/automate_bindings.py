@@ -12,6 +12,7 @@ import os
 import re
 
 import pygccxml
+import yaml
 
 BUILTIN_TYPES_CONVERTERS = {
     'int': ('lua_tointeger', 'lua_pushinteger'),
@@ -221,8 +222,20 @@ def getSignals(main_class):
         signals += getSignals(base.related_class)
     return signals
 
+def inBlacklist(member, blacklist):
+    # member.decl_string is a string in form
+    # ' ( ::Wt::WText::* )( ::Wt::WString const &,::Wt::WContainerWidget * )'
+    # Target format is in form 'WText(WString,WContainerWidget*)'
+    args = member.decl_string.split(')(')[1].split(')')[0]
+    args = args.replace(' const ', ' ')
+    args = args.replace('::Wt::', ' ')
+    args = args.replace('&', '')
+    args = args.replace(' ', '')
+    signature = '%s(%s)' % (member.name, args)
+    return member.name in blacklist or signature in blacklist
+
 # This function returns methods, signals and base of the given class.
-def getMembers(global_namespace, module_name):
+def getMembers(global_namespace, module_name, blacklisted_methods):
     Wt = global_namespace.namespace('Wt')
     main_class = Wt.class_(name=module_name)
     if main_class.is_abstract:
@@ -242,10 +255,19 @@ def getMembers(global_namespace, module_name):
         function=custom_matcher,
         recursive=False,
     ).to_list()
-    signals = getSignals(main_class)
+    methods = [
+        method
+        for method in methods
+        if not inBlacklist(method, blacklisted_methods)
+    ]
+    signals = [
+        signal
+        for signal in getSignals(main_class)
+        if not inBlacklist(signal, blacklisted_methods)
+    ]
     return methods, signals, base_r
 
-def getConstructors(global_namespace, module_name):
+def getConstructors(global_namespace, module_name, blacklisted_constructors):
     Wt = global_namespace.namespace('Wt')
     main_class = Wt.class_(name=module_name)
     custom_matcher = pygccxml.declarations.custom_matcher_t(
@@ -258,7 +280,8 @@ def getConstructors(global_namespace, module_name):
     result = []
     for constructor in constructors:
         if not constructor.is_artificial:
-            result.append(constructor)
+            if not inBlacklist(constructor, blacklisted_constructors):
+                result.append(constructor)
     if result:
         return result
     raise Exception('Unable to bind any constructors of %s' % module_name)
@@ -760,7 +783,7 @@ def getAllModules():
             modules.append(el)
     return modules
 
-def bind(input_filename, module_only):
+def bind(input_filename, module_only, blacklist):
     if input_filename:
         modules = [input_filename]
     else:
@@ -769,8 +792,16 @@ def bind(input_filename, module_only):
         try:
             global_namespace = parse(module)
             module_name = getModuleName(module)
-            methods, signals, base = getMembers(global_namespace, module_name)
-            constructors = getConstructors(global_namespace, module_name)
+            methods, signals, base = getMembers(
+                global_namespace,
+                module_name,
+                blacklist.get(module_name, []),
+            )
+            constructors = getConstructors(
+                global_namespace,
+                module_name,
+                blacklist.get(module_name, []),
+            )
             source = generateModule(
                 module_name,
                 methods,
@@ -804,8 +835,19 @@ def main():
         action='store_true',
         required=False,
     )
+    # Example: tools/blacklist.yaml.
+    parser.add_argument(
+        '--blacklist',
+        help='YAML file with blacklist of classes/methods (optional)',
+        required=False,
+    )
     args = parser.parse_args()
-    bind(args.bind, args.module_only)
+    if args.blacklist:
+        with open(args.blacklist) as b:
+            blacklist = yaml.load(b)
+    else:
+        blacklist = {}
+    bind(args.bind, args.module_only, blacklist)
 
 if __name__ == '__main__':
     main()
