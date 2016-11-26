@@ -1,0 +1,3 @@
+WText:
+ - WText(WString,WContainerWidget*) # Can include arguments...
+ - mouseWentDown                     # ... or not.

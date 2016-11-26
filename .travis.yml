@@ -18,10 +18,11 @@ branches:
 
 before_install:
   - sudo apt-get update
-  - sudo apt-get install --yes gccxml libwt-dev libwthttp-dev
+  - sudo apt-get install --yes gccxml libwt-dev libwthttp-dev libyaml-dev
   - sudo pip install cpp-coveralls
   - sudo pip install hererocks
   - sudo pip install pygccxml
+  - sudo pip install pyyaml
   - hererocks here --$LUA --luarocks $LUAROCKS
   - eval $(./here/bin/luarocks path --bin)
 
@@ -44,4 +45,7 @@ script:
   # `after_success` sections are ignored by the worker.
   - coveralls --include src
   - ./tools/automate_bindings.py --bind /usr/include/Wt/WText
+  - mv src/luawt/WText.cpp src/luawt/WText.cpp.orig
+  - ./tools/automate_bindings.py --bind /usr/include/Wt/WText --blacklist tools/blacklist.yaml --module-only
+  - "! cmp src/luawt/WText.cpp src/luawt/WText.cpp.orig"
   - luarocks make
