@@ -222,7 +222,7 @@ def getSignals(main_class):
         signals += getSignals(base.related_class)
     return signals
 
-def inBlacklist(member, blacklist):
+def makeSignature(member):
     # member.decl_string is a string in form
     # ' ( ::Wt::WText::* )( ::Wt::WString const &,::Wt::WContainerWidget * )'
     # Target format is in form 'WText(WString,WContainerWidget*)'
@@ -231,8 +231,19 @@ def inBlacklist(member, blacklist):
     args = args.replace('::Wt::', ' ')
     args = args.replace('&', '')
     args = args.replace(' ', '')
-    signature = '%s(%s)' % (member.name, args)
-    return member.name in blacklist or signature in blacklist
+    return '%s(%s)' % (member.name, args)
+
+def inBlacklist(member, blacklisted):
+    if blacklisted is None:
+        # No record for this class in blacklist file.
+        return False
+    if 'whole class' in blacklisted:
+        return True
+    if member.name in blacklisted.get('methods', []):
+        return True
+    if makeSignature(member) in blacklisted.get('signatures', []):
+        return True
+    return False
 
 # This function returns methods, signals and base of the given class.
 def getMembers(global_namespace, module_name, blacklisted):
@@ -795,12 +806,12 @@ def bind(input_filename, module_only, blacklist):
             methods, signals, base = getMembers(
                 global_namespace,
                 module_name,
-                blacklist.get(module_name, []),
+                blacklist.get(module_name),
             )
             constructors = getConstructors(
                 global_namespace,
                 module_name,
-                blacklist.get(module_name, []),
+                blacklist.get(module_name),
             )
             source = generateModule(
                 module_name,
