@@ -235,7 +235,7 @@ def inBlacklist(member, blacklist):
     return member.name in blacklist or signature in blacklist
 
 # This function returns methods, signals and base of the given class.
-def getMembers(global_namespace, module_name, blacklisted_methods):
+def getMembers(global_namespace, module_name, blacklisted):
     Wt = global_namespace.namespace('Wt')
     main_class = Wt.class_(name=module_name)
     if main_class.is_abstract:
@@ -258,16 +258,16 @@ def getMembers(global_namespace, module_name, blacklisted_methods):
     methods = [
         method
         for method in methods
-        if not inBlacklist(method, blacklisted_methods)
+        if not inBlacklist(method, blacklisted)
     ]
     signals = [
         signal
         for signal in getSignals(main_class)
-        if not inBlacklist(signal, blacklisted_methods)
+        if not inBlacklist(signal, blacklisted)
     ]
     return methods, signals, base_r
 
-def getConstructors(global_namespace, module_name, blacklisted_constructors):
+def getConstructors(global_namespace, module_name, blacklisted):
     Wt = global_namespace.namespace('Wt')
     main_class = Wt.class_(name=module_name)
     custom_matcher = pygccxml.declarations.custom_matcher_t(
@@ -280,7 +280,7 @@ def getConstructors(global_namespace, module_name, blacklisted_constructors):
     result = []
     for constructor in constructors:
         if not constructor.is_artificial:
-            if not inBlacklist(constructor, blacklisted_constructors):
+            if not inBlacklist(constructor, blacklisted):
                 result.append(constructor)
     if result:
         return result
