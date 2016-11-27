@@ -816,7 +816,7 @@ def bind(input_filename, module_only, blacklist):
             if input_filename:
                 raise
             else:
-                logging.warning('Uable to bind %s' % module)
+                logging.warning('Unable to bind %s' % module)
 
 def main():
     parser = argparse.ArgumentParser(
