@@ -10,6 +10,7 @@ import glob
 import logging
 import os
 import re
+import shutil
 
 import pygccxml
 import yaml
@@ -31,17 +32,21 @@ PROBLEMATIC_TO_BUILTIN_CONVERSIONS = {
     'Wt::WString' : ('toUTF8', 'std::string'),
 }
 
-def parse(filename):
+XML_CACHE = 'src/luawt/xml'
+
+def parse(filename, include_paths=None):
     # Find out the c++ parser.
     generator_path, generator_name = pygccxml.utils.find_xml_generator()
     # Configure the xml generator.
     xml_generator_config = pygccxml.parser.xml_generator_configuration_t(
         xml_generator_path = generator_path,
         xml_generator = generator_name,
+        include_paths = include_paths,
+        cflags = '-DWT_USE_BOOST_SIGNALS',
     )
     file_config = pygccxml.parser.create_cached_source_fc(
         filename,
-        'src/luawt/xml/%s' % getModuleName(filename),
+        XML_CACHE + '/' + getModuleName(filename),
     )
     project_reader = pygccxml.parser.project_reader_t(xml_generator_config)
     # Parse the c++ file.
@@ -222,7 +227,7 @@ def getSignals(main_class):
         signals += getSignals(base.related_class)
     return signals
 
-def inBlacklist(member, blacklist):
+def makeSignature(member):
     # member.decl_string is a string in form
     # ' ( ::Wt::WText::* )( ::Wt::WString const &,::Wt::WContainerWidget * )'
     # Target format is in form 'WText(WString,WContainerWidget*)'
@@ -231,11 +236,22 @@ def inBlacklist(member, blacklist):
     args = args.replace('::Wt::', ' ')
     args = args.replace('&', '')
     args = args.replace(' ', '')
-    signature = '%s(%s)' % (member.name, args)
-    return member.name in blacklist or signature in blacklist
+    return '%s(%s)' % (member.name, args)
+
+def inBlacklist(member, blacklisted):
+    if blacklisted is None:
+        # No record for this class in blacklist file.
+        return False
+    if 'whole class' in blacklisted:
+        return True
+    if member.name in blacklisted.get('methods', []):
+        return True
+    if makeSignature(member) in blacklisted.get('signatures', []):
+        return True
+    return False
 
 # This function returns methods, signals and base of the given class.
-def getMembers(global_namespace, module_name, blacklisted_methods):
+def getMembers(global_namespace, module_name, blacklisted):
     Wt = global_namespace.namespace('Wt')
     main_class = Wt.class_(name=module_name)
     if main_class.is_abstract:
@@ -258,16 +274,16 @@ def getMembers(global_namespace, module_name, blacklisted_methods):
     methods = [
         method
         for method in methods
-        if not inBlacklist(method, blacklisted_methods)
+        if not inBlacklist(method, blacklisted)
     ]
     signals = [
         signal
         for signal in getSignals(main_class)
-        if not inBlacklist(signal, blacklisted_methods)
+        if not inBlacklist(signal, blacklisted)
     ]
     return methods, signals, base_r
 
-def getConstructors(global_namespace, module_name, blacklisted_constructors):
+def getConstructors(global_namespace, module_name, blacklisted):
     Wt = global_namespace.namespace('Wt')
     main_class = Wt.class_(name=module_name)
     custom_matcher = pygccxml.declarations.custom_matcher_t(
@@ -280,7 +296,7 @@ def getConstructors(global_namespace, module_name, blacklisted_constructors):
     result = []
     for constructor in constructors:
         if not constructor.is_artificial:
-            if not inBlacklist(constructor, blacklisted_constructors):
+            if not inBlacklist(constructor, blacklisted):
                 result.append(constructor)
     if result:
         return result
@@ -774,12 +790,12 @@ def addModuleToLists(module_name, Wt):
     ]
     addItemToFiles(parameters, module_name, Wt)
 
-def getAllModules():
-    path = '/usr/include/Wt/*'
+def getAllModules(path='/usr/include/Wt/*'):
     content = glob.glob(path)
     modules = []
     for el in content:
-        if os.path.isfile(el):
+        extension = os.path.splitext(el)[1]
+        if os.path.isfile(el) and extension == '':
             modules.append(el)
     return modules
 
@@ -795,12 +811,12 @@ def bind(input_filename, module_only, blacklist):
             methods, signals, base = getMembers(
                 global_namespace,
                 module_name,
-                blacklist.get(module_name, []),
+                blacklist.get(module_name),
             )
             constructors = getConstructors(
                 global_namespace,
                 module_name,
-                blacklist.get(module_name, []),
+                blacklist.get(module_name),
             )
             source = generateModule(
                 module_name,
@@ -816,17 +832,108 @@ def bind(input_filename, module_only, blacklist):
             if input_filename:
                 raise
             else:
-                logging.warning('Uable to bind %s' % module)
+                logging.warning('Unable to bind %s' % module)
+
+def collectMembers(path):
+    if os.path.exists(XML_CACHE):
+        shutil.rmtree(XML_CACHE)
+    modules = getAllModules(path + '/src/Wt/*')
+    members = []
+    blacklisted = None
+    for module in modules:
+        try:
+            include_paths = [
+                path + '/src/',
+                path + '/src/web/', # DomElement.h
+            ]
+            global_namespace = parse(module, include_paths)
+            module_name = getModuleName(module)
+            methods, _, _ = getMembers(
+                global_namespace,
+                module_name,
+                blacklisted,
+            )
+            constructors = getConstructors(
+                global_namespace,
+                module_name,
+                blacklisted,
+            )
+            for member in methods + constructors:
+                t = (module_name, member.name, makeSignature(member))
+                members.append(t)
+        except:
+            logging.warning('Unable to bind %s' % module)
+    if os.path.exists(XML_CACHE):
+        shutil.rmtree(XML_CACHE)
+    return set(members)
+
+def generateBlacklist(mem1, mem2):
+    with open(mem1) as m1:
+        members1 = yaml.load(m1)
+    with open(mem2) as m2:
+        members2 = yaml.load(m2)
+    # Find classes, completely missing in one of versions.
+    classes1 = set(klass for (klass, method, sig) in members1)
+    classes2 = set(klass for (klass, method, sig) in members2)
+    whole_classes = classes1.symmetric_difference(classes2)
+    # Find methods, completely missing in one of versions.
+    methods1 = set((klass, method) for (klass, method, sig) in members1)
+    methods2 = set((klass, method) for (klass, method, sig) in members2)
+    whole_methods = methods1.symmetric_difference(methods2)
+    # Signatures missing in one of versions.
+    signatures = members1.symmetric_difference(members2)
+    # Generate blacklist.
+    blacklist = {}
+    for klass in whole_classes:
+        blacklist[klass] = {'whole class': True}
+    for (klass, method) in whole_methods:
+        if klass in whole_classes:
+            continue
+        if klass not in blacklist:
+            blacklist[klass] = {}
+        if 'methods' not in blacklist[klass]:
+            blacklist[klass]['methods'] = []
+        blacklist[klass]['methods'].append(method)
+    for (klass, method, signature) in signatures:
+        if klass in whole_classes or (klass, method) in whole_methods:
+            continue
+        if klass not in blacklist:
+            blacklist[klass] = {}
+        if 'signatures' not in blacklist[klass]:
+            blacklist[klass]['signatures'] = []
+        blacklist[klass]['signatures'].append(signature)
+    for blacklisted in blacklist.values():
+        if 'methods' in blacklisted:
+            blacklisted['methods'].sort()
+        if 'signatures' in blacklisted:
+            blacklisted['signatures'].sort()
+    return blacklist
 
 def main():
     parser = argparse.ArgumentParser(
         description=__doc__,
         formatter_class=argparse.ArgumentDefaultsHelpFormatter,
     )
-    parser.add_argument(
+    mode = parser.add_mutually_exclusive_group(required=True)
+    mode.add_argument(
         '--bind',
         type=str,
         help='Header file (Wt) with class to bind',
+        required=False,
+    )
+    mode.add_argument(
+        '--gen-members',
+        type=str,
+        help='Print full list of members for a Wt dir',
+        metavar='WT_INCLUDE_DIR',
+        required=False,
+    )
+    mode.add_argument(
+        '--gen-blacklist',
+        type=str,
+        nargs=2,
+        help='2 files generated by --gen-members',
+        metavar='MEMBERS_YAML',
         required=False,
     )
     parser.add_argument(
@@ -847,7 +954,21 @@ def main():
             blacklist = yaml.load(b)
     else:
         blacklist = {}
-    bind(args.bind, args.module_only, blacklist)
+    if args.bind:
+        bind(args.bind, args.module_only, blacklist)
+    elif args.gen_members:
+        print(yaml.dump(
+            collectMembers(args.gen_members),
+            default_flow_style=False,
+        ))
+    elif args.gen_blacklist:
+        (mem1, mem2) = args.gen_blacklist
+        print(yaml.dump(
+            generateBlacklist(mem1, mem2),
+            default_flow_style=False,
+        ))
+    else:
+        raise Exception('Mode of operation is unknown')
 
 if __name__ == '__main__':
     main()
