@@ -74,8 +74,9 @@ def isTemplate(method_name, decl_str):
     # Luawt doesn't support C++ templates.
     if pygccxml.declarations.templates.is_instantiation(decl_str):
         logging.warning(
-            'Its impossible to bind method %s because luawt doesn\'t support C++ templates'
-            % method_name
+            "Its impossible to bind method %s because luawt " +
+            "doesn't support C++ templates",
+            method_name,
         )
         return True
     return False
@@ -146,13 +147,15 @@ def checkArgumentType(method_name, arg_type, Wt):
     elif isDescendantOf(clearType(arg_type), 'WWidget', Wt):
         if not pygccxml.declarations.is_pointer(arg_type):
             logging.info(
-                'Argument of method %s has strange type %s'
-                % (method_name, str(arg_type))
+                'Argument of method %s has strange type %s',
+                method_name,
+                arg_type,
             )
         return True
     logging.warning(
-        'Its impossible to bind method %s because its arg has type %s'
-        % (method_name, str(arg_type))
+        'Its impossible to bind method %s: its arg has type %s',
+        method_name,
+        arg_type,
     )
     return False
 
@@ -174,8 +177,9 @@ def checkReturnType(method_name, raw_return_type, Wt):
         elif isConstReference(raw_return_type):
             return True
     logging.warning(
-        'Its impossible to bind method %s because of its return type %s'
-        % (method_name, str(raw_return_type))
+        'Its impossible to bind method %s: of its return type %s',
+        method_name,
+        raw_return_type,
     )
     return False
 
@@ -867,7 +871,7 @@ def bind(modules, module_only, blacklist):
             if len(modules) == 1:
                 raise
             else:
-                logging.warning('Unable to bind %s' % module)
+                logging.warning('Unable to bind %s', module)
 
 def collectMembers(path):
     if os.path.exists(XML_CACHE):
@@ -897,7 +901,7 @@ def collectMembers(path):
                 t = (module_name, member.name, makeSignature(member))
                 members.append(t)
         except:
-            logging.warning('Unable to bind %s' % module)
+            logging.warning('Unable to bind %s', module)
     if os.path.exists(XML_CACHE):
         shutil.rmtree(XML_CACHE)
     return set(members)
