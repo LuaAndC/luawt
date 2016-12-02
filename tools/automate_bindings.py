@@ -867,11 +867,11 @@ def bind(modules, module_only, blacklist):
                 # Is not abstract
                 addTest(module_name)
             writeSourceToFile(module_name, source)
-        except:
+        except Exception as e:
             if len(modules) == 1:
                 raise
             else:
-                logging.warning('Unable to bind %s', module)
+                logging.warning('Unable to bind %s: %s', module, e)
 
 def collectMembers(path):
     if os.path.exists(XML_CACHE):
@@ -900,8 +900,8 @@ def collectMembers(path):
             for member in methods + constructors:
                 t = (module_name, member.name, makeSignature(member))
                 members.append(t)
-        except:
-            logging.warning('Unable to bind %s', module)
+        except Exception as e:
+            logging.warning('Unable to bind %s: %s', module, e)
     if os.path.exists(XML_CACHE):
         shutil.rmtree(XML_CACHE)
     return set(members)
