@@ -799,11 +799,7 @@ def getAllModules(path='/usr/include/Wt/*'):
             modules.append(el)
     return modules
 
-def bind(input_filename, module_only, blacklist):
-    if input_filename:
-        modules = [input_filename]
-    else:
-        modules = getAllModules()
+def bind(modules, module_only, blacklist):
     for module in modules:
         try:
             global_namespace = parse(module)
@@ -829,7 +825,7 @@ def bind(input_filename, module_only, blacklist):
                 addModuleToLists(module_name, global_namespace.namespace('Wt'))
             writeSourceToFile(module_name, source)
         except:
-            if input_filename:
+            if len(modules) == 1:
                 raise
             else:
                 logging.warning('Unable to bind %s' % module)
@@ -955,7 +951,7 @@ def main():
     else:
         blacklist = {}
     if args.bind:
-        bind(args.bind, args.module_only, blacklist)
+        bind([args.bind], args.module_only, blacklist)
     elif args.gen_members:
         print(yaml.dump(
             collectMembers(args.gen_members),
