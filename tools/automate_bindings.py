@@ -912,6 +912,12 @@ def main():
     )
     mode = parser.add_mutually_exclusive_group(required=True)
     mode.add_argument(
+        '--bind-all',
+        help='Bind all the library',
+        action='store_true',
+        required=False,
+    )
+    mode.add_argument(
         '--bind',
         type=str,
         help='Header file (Wt) with class to bind',
@@ -952,6 +958,8 @@ def main():
         blacklist = {}
     if args.bind:
         bind([args.bind], args.module_only, blacklist)
+    elif args.bind_all:
+        bind(getAllModules(), args.module_only, blacklist)
     elif args.gen_members:
         print(yaml.dump(
             collectMembers(args.gen_members),
