@@ -1,8 +1,6 @@
 #!/usr/bin/python
 
-""" Generate bindings of given Wt's class.
-
-If --bind option is not specified, script binds all the library.
+""" Generate bindings of Wt module(s).
 """
 
 import argparse
