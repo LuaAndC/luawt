@@ -1,5 +1,138 @@
-WText:
- methods:
- - mouseWentDown
- signatures:
- - WText(WString,WContainerWidget*)
+WComboBox:
+  methods:
+  - noSelectionEnabled
+  - selectionMode
+  - setNoSelectionEnabled
+WCompositeWidget:
+  methods:
+  - canReceiveFocus
+  - hasFocus
+  - isScrollVisible
+  - propagateSetVisible
+  - scrollVisibilityEnabled
+  - scrollVisibilityMargin
+  - setCanReceiveFocus
+  - setDeferredToolTip
+  - setFirstFocus
+  - setFocus
+  - setScrollVisibilityEnabled
+  - setScrollVisibilityMargin
+WDateEdit:
+  methods:
+  - load
+  - refresh
+WDoubleSpinBox:
+  methods:
+  - refresh
+WFileDropWidget:
+  whole class: true
+WFileUpload:
+  methods:
+  - setFilters
+WGLWidget:
+  methods:
+  - attachShader
+  - bindAttribLocation
+  - bindBuffer
+  - bindFramebuffer
+  - bindRenderbuffer
+  - bindTexture
+  - bufferSubData
+  - clearBinaryResources
+  - compileShader
+  - createAndLoadArrayBuffer
+  - createBuffer
+  - createFramebuffer
+  - createProgram
+  - createRenderbuffer
+  - createShader
+  - createTexture
+  - createTextureAndLoad
+  - deleteBuffer
+  - deleteFramebuffer
+  - deleteProgram
+  - deleteRenderbuffer
+  - deleteShader
+  - deleteTexture
+  - detachShader
+  - disableVertexAttribArray
+  - enableVertexAttribArray
+  - framebufferRenderbuffer
+  - framebufferTexture2D
+  - getAttribLocation
+  - getUniformLocation
+  - initializeGL
+  - linkProgram
+  - paintGL
+  - resizeGL
+  - restoringContext
+  - setClientSideMouseHandler
+  - shaderSource
+  - uniform1f
+  - uniform1i
+  - uniform2f
+  - uniform2i
+  - uniform3f
+  - uniform3i
+  - uniform4f
+  - uniform4i
+  - updateGL
+  - useProgram
+  - validateProgram
+  - vertexAttrib1f
+  - vertexAttrib2f
+  - vertexAttrib3f
+  - vertexAttrib4f
+  - vertexAttribPointer
+  - webglNotAvailable
+  signatures:
+  - bufferData(WGLWidget::GLenum,::std::string,WGLWidget::GLenum)
+  - bufferData(WGLWidget::GLenum,::std::string,unsignedint,unsignedint,WGLWidget::GLenum)
+WIcon:
+  methods:
+  - loadIconFont
+WInPlaceEdit:
+  methods:
+  - placeholderText
+  - setPlaceholderText
+  signatures:
+  - WInPlaceEdit(WContainerWidget*)
+  - WInPlaceEdit(bool,WString,WContainerWidget*)
+WMediaPlayer:
+  methods:
+  - refresh
+WPushButton:
+  methods:
+  - setFirstFocus
+  signatures:
+  - WPushButton(WString,TextFormat,WContainerWidget*)
+WSpinBox:
+  methods:
+  - setWrapAroundEnabled
+  - wrapAroundEnabled
+WTableCell:
+  whole class: true
+WTableView:
+  methods:
+  - scrollTo
+WTemplate:
+  methods:
+  - encodeTemplateText
+  - getErrorText
+  - setEncodeTemplateText
+  - setWidgetIdMode
+  - widgetIdMode
+WTextEdit:
+  methods:
+  - propagateSetEnabled
+  - setPlaceholderText
+  - setReadOnly
+WTimeEdit:
+  whole class: true
+WTimePicker:
+  whole class: true
+WToolBar:
+  signatures:
+  - addButton(WSplitButton*)
+  - addButton(WSplitButton*,AlignmentFlag)
+
