@@ -1,13 +1,28 @@
+WAnchor:
+  methods:
+  - setTextFormat
+  - textFormat
+  signatures:
+  - WAnchor(::std::string,WContainerWidget*)
+  - WAnchor(::std::string,WImage*,WContainerWidget*)
+  - WAnchor(::std::string,WString,WContainerWidget*)
+WAudio:
+  whole class: true
 WComboBox:
   methods:
   - noSelectionEnabled
   - selectionMode
   - setNoSelectionEnabled
+  - setValueText
+  - validate
+  - valueText
 WCompositeWidget:
   methods:
   - canReceiveFocus
   - hasFocus
+  - hasStyleClass
   - isScrollVisible
+  - objectName
   - propagateSetVisible
   - scrollVisibilityEnabled
   - scrollVisibilityMargin
@@ -15,15 +30,26 @@ WCompositeWidget:
   - setDeferredToolTip
   - setFirstFocus
   - setFocus
+  - setHidden
+  - setObjectName
   - setScrollVisibilityEnabled
   - setScrollVisibilityMargin
+  - zIndex
+  signatures:
+  - setToolTip(WString)
+  - setToolTip(WString,TextFormat)
 WDateEdit:
+  whole class: true
+WDatePicker:
   methods:
-  - load
-  - refresh
+  - popupWidget
+  - setHidden
+  signatures:
+  - WDatePicker(WLineEdit*,WContainerWidget*)
+WDialog:
+  whole class: true
 WDoubleSpinBox:
-  methods:
-  - refresh
+  whole class: true
 WFileDropWidget:
   whole class: true
 WFileUpload:
@@ -34,36 +60,29 @@ WGLWidget:
   - attachShader
   - bindAttribLocation
   - bindBuffer
-  - bindFramebuffer
-  - bindRenderbuffer
   - bindTexture
-  - bufferSubData
+  - bufferData
   - clearBinaryResources
   - compileShader
-  - createAndLoadArrayBuffer
   - createBuffer
-  - createFramebuffer
   - createProgram
-  - createRenderbuffer
   - createShader
   - createTexture
   - createTextureAndLoad
   - deleteBuffer
-  - deleteFramebuffer
   - deleteProgram
-  - deleteRenderbuffer
   - deleteShader
   - deleteTexture
   - detachShader
-  - disableVertexAttribArray
+  - enableClientErrorChecks
   - enableVertexAttribArray
-  - framebufferRenderbuffer
-  - framebufferTexture2D
   - getAttribLocation
   - getUniformLocation
   - initializeGL
+  - injectJS
   - linkProgram
   - paintGL
+  - renderbufferStorage
   - resizeGL
   - restoringContext
   - setClientSideMouseHandler
@@ -86,53 +105,164 @@ WGLWidget:
   - vertexAttribPointer
   - webglNotAvailable
   signatures:
-  - bufferData(WGLWidget::GLenum,::std::string,WGLWidget::GLenum)
-  - bufferData(WGLWidget::GLenum,::std::string,unsignedint,unsignedint,WGLWidget::GLenum)
+  - texImage2D(WGLWidget::GLenum,int,WGLWidget::GLenum,WGLWidget::GLenum,WGLWidget::GLenum,WVideo*)
+  - texImage2D(WGLWidget::GLenum,int,WGLWidget::GLenum,unsignedint,unsignedint,int,WGLWidget::GLenum)
+WHTML5Audio:
+  whole class: true
 WIcon:
-  methods:
-  - loadIconFont
+  whole class: true
 WInPlaceEdit:
   methods:
   - placeholderText
   - setPlaceholderText
+  - textWidget
   signatures:
   - WInPlaceEdit(WContainerWidget*)
   - WInPlaceEdit(bool,WString,WContainerWidget*)
-WMediaPlayer:
+WLabel:
   methods:
-  - refresh
+  - setTextFormat
+  - textFormat
+WMediaPlayer:
+  whole class: true
+WMenu:
+  methods:
+  - addItem
+  - addMenu
+  - addSectionHeader
+  - addSeparator
+  - count
+  - currentItem
+  - indexOf
+  - insertItem
+  - insertMenu
+  - itemAt
+  - parentItem
+  - removeItem
+  signatures:
+  - WMenu(WContainerWidget*)
+  - WMenu(WStackedWidget*,WContainerWidget*)
+  - close(WMenuItem*)
+  - isItemDisabled(WMenuItem*)
+  - isItemHidden(WMenuItem*)
+  - select(WMenuItem*)
+  - setItemDisabled(WMenuItem*,bool)
+  - setItemHidden(WMenuItem*,bool)
+WMessageBox:
+  whole class: true
+WNavigationBar:
+  whole class: true
+WPopupMenu:
+  methods:
+  - add
+  - addItem
+  - addMenu
+  - addSeparator
+  - setAutoHide
+  - setButton
+  - setHidden
+  signatures:
+  - WPopupMenu()
+  - WPopupMenu(WStackedWidget*)
+WPopupMenuItem:
+  whole class: true
+WProgressBar:
+  methods:
+  - setState
+  - setValueStyleClass
 WPushButton:
   methods:
+  - icon
+  - isCheckable
+  - isChecked
+  - isDefault
+  - linkTarget
+  - menu
+  - setCheckable
+  - setChecked
+  - setDefault
   - setFirstFocus
+  - setIcon
+  - setLinkTarget
+  - setMenu
+  - setTextFormat
+  - setUnChecked
+  - setValueText
+  - textFormat
+  - valueText
   signatures:
   - WPushButton(WString,TextFormat,WContainerWidget*)
+WSlider:
+  methods:
+  - handleWidth
+  - nativeControl
+  - setDisabled
+  - setHandleWidth
+  - setNativeControl
+  - setValueText
+  - valueText
 WSpinBox:
   methods:
   - setWrapAroundEnabled
   - wrapAroundEnabled
+  signatures:
+  - setMaximum(double)
+  - setMaximum(int)
+  - setMinimum(double)
+  - setMinimum(int)
+  - setRange(double,double)
+  - setRange(int,int)
+  - setSingleStep(double)
+  - setSingleStep(int)
+  - setValue(double)
+  - setValue(int)
+WSplitButton:
+  whole class: true
+WSuggestionPopup:
+  whole class: true
+WTabWidget:
+  methods:
+  - contentsStack
 WTableCell:
   whole class: true
 WTableView:
   methods:
   - scrollTo
+  - setRowHeaderCount
 WTemplate:
   methods:
+  - bindEmpty
+  - conditionValue
   - encodeTemplateText
   - getErrorText
+  - hasInternalPathEncoding
+  - setCondition
   - setEncodeTemplateText
+  - setInternalPathEncoding
   - setWidgetIdMode
   - widgetIdMode
+WTextArea:
+  methods:
+  - setValueText
+  - validate
+  - valueText
 WTextEdit:
   methods:
   - propagateSetEnabled
   - setPlaceholderText
   - setReadOnly
+  - version
 WTimeEdit:
   whole class: true
 WTimePicker:
   whole class: true
 WToolBar:
-  signatures:
-  - addButton(WSplitButton*)
-  - addButton(WSplitButton*,AlignmentFlag)
+  whole class: true
+WTreeView:
+  methods:
+  - column1Fixed
+  - setColumn1Fixed
+  - setRowHeaderCount
+WVideo:
+  whole class: true
 
