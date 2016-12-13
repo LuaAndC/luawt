@@ -401,6 +401,7 @@ void luawt_WContainerWidget(lua_State* L);
 void luawt_WEnvironment(lua_State* L);
 void luawt_WPushButton(lua_State* L);
 void luawt_WServer(lua_State* L);
+void luawt_WTestEnvironment(lua_State* L);
 void luawt_WWidget(lua_State* L);
 
 #endif

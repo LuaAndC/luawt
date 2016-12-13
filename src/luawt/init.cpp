@@ -21,6 +21,7 @@ static const luawt_Reg luawt_modules[] = {
     MODULE(WApplication),
     MODULE(WEnvironment),
     MODULE(WServer),
+    // MODULE(WTestEnvironment),
     MODULE(WWidget),
     MODULE(WContainerWidget),
     MODULE(WPushButton),
