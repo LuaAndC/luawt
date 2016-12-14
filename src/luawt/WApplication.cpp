@@ -6,8 +6,19 @@
 
 #include "boost-xtime.hpp"
 #include <Wt/WContainerWidget>
+#include <Wt/WEnvironment>
+#include <Wt/Test/WTestEnvironment>
 
 #include "globals.hpp"
+
+int luawt_Application_make(lua_State* L) {
+    WEnvironment* env = reinterpret_cast<WEnvironment*>(
+        lua_touserdata(L, 1)
+    );
+    luawt_Application* app = new luawt_Application(L, *env);
+    luawt_toLua(L, app);
+    return 1;
+}
 
 /** Returns the IP address of the client */
 int luawt_Application_root(lua_State* L) {
@@ -27,7 +38,7 @@ void luawt_WApplication(lua_State* L) {
     DECLARE_CLASS(
         luawt_Application,
         L,
-        0,
+        wrap<luawt_Application_make>::func,
         0,
         luawt_Application_methods,
         0
