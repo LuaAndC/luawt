@@ -7,7 +7,6 @@
 #include "boost-xtime.hpp"
 #include <Wt/WContainerWidget>
 #include <Wt/WEnvironment>
-#include <Wt/Test/WTestEnvironment>
 
 #include "globals.hpp"
 
