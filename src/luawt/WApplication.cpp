@@ -14,7 +14,11 @@ int luawt_Application_make(lua_State* L) {
     WEnvironment* env = reinterpret_cast<WEnvironment*>(
         lua_touserdata(L, 1)
     );
-    luawt_Application* app = new luawt_Application(L, *env);
+    luawt_Application* app = new luawt_Application(
+        L,
+        luawt_getShared(L),
+        *env
+    );
     luawt_toLua(L, app);
     return 1;
 }
