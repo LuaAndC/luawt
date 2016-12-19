@@ -367,6 +367,14 @@ public:
             lua_setfield(L, -2, "__index");
         }
         if (base) {
+            // mt(__index) = base_mt
+            // in order to enable base methods in current obj
+            lua_getfield(L, -1, "__index");
+            luaL_getmetatable(L, base);
+            lua_setmetatable(L, -2);
+            lua_pop(L, 1);
+            // this_mt.__base = base_mt
+            // in order to enable type conversions (curr --> base)
             luaL_getmetatable(L, base);
             assert(lua_type(L, -1) == LUA_TTABLE);
             lua_setfield(L, -2, "__base");
