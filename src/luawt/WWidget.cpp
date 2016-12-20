@@ -9,13 +9,25 @@
 
 #include "globals.hpp"
 
+int luawt_WWidget_id(lua_State* L) {
+    WWidget* widget = luawt_checkFromLua<WWidget>(L, -1);
+    std::string id = widget->id();
+    lua_pushstring(L, id.c_str());
+    return 1;
+}
+
+static const luaL_Reg luawt_WWidget_methods[] = {
+    METHOD(WWidget, id),
+    {NULL, NULL},
+};
+
 void luawt_WWidget(lua_State* L) {
     DECLARE_CLASS(
         WWidget,
         L,
         0,
         0,
-        0,
+        luawt_WWidget_methods,
         0
     );
 }
