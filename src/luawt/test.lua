@@ -47,7 +47,7 @@ function test.testWidget(name)
     local server = test.createServer(code, port, wt_config)
     server:start()
     os.execute("sleep 10")
-    local data = socketRequest(port)
+    local data = test.socketRequest(port)
     assert.truthy(data:match(name)) -- name appears in object ID
     os.execute("sleep 10")
     server:stop()
