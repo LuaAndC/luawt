@@ -1,8 +1,6 @@
 #!/usr/bin/python
 
-""" Generate bindings of given Wt's class.
-
-If --bind option is not specified, script binds all the library.
+""" Generate bindings of Wt module(s).
 """
 
 import argparse
@@ -799,11 +797,7 @@ def getAllModules(path='/usr/include/Wt/*'):
             modules.append(el)
     return modules
 
-def bind(input_filename, module_only, blacklist):
-    if input_filename:
-        modules = [input_filename]
-    else:
-        modules = getAllModules()
+def bind(modules, module_only, blacklist):
     for module in modules:
         try:
             global_namespace = parse(module)
@@ -829,7 +823,7 @@ def bind(input_filename, module_only, blacklist):
                 addModuleToLists(module_name, global_namespace.namespace('Wt'))
             writeSourceToFile(module_name, source)
         except:
-            if input_filename:
+            if len(modules) == 1:
                 raise
             else:
                 logging.warning('Unable to bind %s' % module)
@@ -916,6 +910,12 @@ def main():
     )
     mode = parser.add_mutually_exclusive_group(required=True)
     mode.add_argument(
+        '--bind-all',
+        help='Bind all the library',
+        action='store_true',
+        required=False,
+    )
+    mode.add_argument(
         '--bind',
         type=str,
         help='Header file (Wt) with class to bind',
@@ -955,7 +955,9 @@ def main():
     else:
         blacklist = {}
     if args.bind:
-        bind(args.bind, args.module_only, blacklist)
+        bind([args.bind], args.module_only, blacklist)
+    elif args.bind_all:
+        bind(getAllModules(), args.module_only, blacklist)
     elif args.gen_members:
         print(yaml.dump(
             collectMembers(args.gen_members),
