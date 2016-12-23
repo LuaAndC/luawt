@@ -1,0 +1,5 @@
+WText:
+ methods:
+ - mouseWentDown
+ signatures:
+ - WText(WString,WContainerWidget*)

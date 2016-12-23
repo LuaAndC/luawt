@@ -46,6 +46,6 @@ script:
   - coveralls --include src
   - ./tools/automate_bindings.py --bind /usr/include/Wt/WText
   - mv src/luawt/WText.cpp src/luawt/WText.cpp.orig
-  - ./tools/automate_bindings.py --bind /usr/include/Wt/WText --blacklist tools/blacklist.yaml --module-only
+  - ./tools/automate_bindings.py --bind /usr/include/Wt/WText --blacklist tools/blacklist_test.yaml --module-only
   - "! cmp src/luawt/WText.cpp src/luawt/WText.cpp.orig"
   - luarocks make
