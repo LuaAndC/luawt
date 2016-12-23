@@ -2,37 +2,7 @@
 -- Copyright (c) 2015-2016 Pavel Dolgov and Boris Nagaev
 -- See the LICENSE file for terms of use.
 
-local function socketRequest(port)
-    local http_client = require 'socket.http'
-    local data = http_client.request('http://127.0.0.1:' .. port)
-    return data
-end
-
-local function baseConfig()
-    local wt_config = os.tmpname()
-    local file = io.open(wt_config, 'w')
-    local config = [=[
-        <server>
-            <application-settings location="*">
-                <progressive-bootstrap>
-                    true
-                </progressive-bootstrap>
-            </application-settings>
-        </server> ]=]
-    file:write(config)
-    file:close()
-    return wt_config
-end
-
-local function createServer(code, port, wt_config)
-    local luawt = require 'luawt'
-    local server = luawt.WServer({
-        code = code,
-        port = port,
-        wt_config = wt_config,
-    })
-    return server
-end
+local test = require 'luawt.test'
 
 describe("luawt", function()
 
@@ -51,11 +21,11 @@ describe("luawt", function()
             button:clicked():emit()
         ]]
         local port = 56789
-        local wt_config = baseConfig()
-        local server = createServer(code, port, wt_config)
+        local wt_config = test.baseConfig()
+        local server = test.createServer(code, port, wt_config)
         server:start()
         os.execute("sleep 10")
-        local data = socketRequest(port)
+        local data = test.socketRequest(port)
         assert.truthy(data:match('was pressed'))
         os.execute("sleep 10")
         server:stop()
@@ -75,11 +45,11 @@ describe("luawt", function()
             button:setText(text)
         ]]
         local port = 56789
-        local wt_config = baseConfig()
-        local server = createServer(code, port, wt_config)
+        local wt_config = test.baseConfig()
+        local server = test.createServer(code, port, wt_config)
         server:start()
         os.execute("sleep 10")
-        local data = socketRequest(port)
+        local data = test.socketRequest(port)
         assert.truthy(data:match('10'))
         os.execute("sleep 10")
         server:stop()
@@ -92,12 +62,12 @@ describe("luawt", function()
             luawt.Test.unknownException()
         ]]
         local port = 56789
-        local wt_config = baseConfig()
-        local server = createServer(code, port, wt_config)
+        local wt_config = test.baseConfig()
+        local server = test.createServer(code, port, wt_config)
         assert.has_no_error(function()
             server:start()
             os.execute("sleep 10")
-            socketRequest(port)
+            test.socketRequest(port)
             os.execute("sleep 10")
             server:stop(true)
         end)
@@ -106,11 +76,11 @@ describe("luawt", function()
     it("can stop the server #forcibly", function()
         local code = ''
         local port = 56789
-        local wt_config = baseConfig()
-        local server = createServer(code, port, wt_config)
+        local wt_config = test.baseConfig()
+        local server = test.createServer(code, port, wt_config)
         server:start()
         os.execute("sleep 10")
-        socketRequest(port)
+        test.socketRequest(port)
         os.execute("sleep 10")
         server:stop(true)
     end)
@@ -118,12 +88,12 @@ describe("luawt", function()
     it("doesn't throw on bad #syntax in lua code", function()
         local code = "(;(;(;)))))"
         local port = 56789
-        local wt_config = baseConfig()
-        local server = createServer(code, port, wt_config)
+        local wt_config = test.baseConfig()
+        local server = test.createServer(code, port, wt_config)
         assert.has_no_error(function()
             server:start()
             os.execute("sleep 10")
-            socketRequest(port)
+            test.socketRequest(port)
             os.execute("sleep 10")
             server:stop(true)
         end)
@@ -139,11 +109,11 @@ describe("luawt", function()
             button:setText(text)
         ]]
         local port = 56789
-        local wt_config = baseConfig()
-        local server = createServer(code, port, wt_config)
+        local wt_config = test.baseConfig()
+        local server = test.createServer(code, port, wt_config)
         server:start()
         os.execute("sleep 10")
-        local data = socketRequest(port)
+        local data = test.socketRequest(port)
         assert.truthy(data:match('IP:'))
         os.execute("sleep 10")
         server:stop()
