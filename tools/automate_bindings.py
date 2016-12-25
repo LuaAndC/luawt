@@ -716,6 +716,8 @@ def getMatchRange(pattern, content):
                 first = i
             else:
                 last = i
+    if last < first:
+        last = first
     return (first, last)
 
 def getClassNameFromModuleStr(module_str):
