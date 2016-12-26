@@ -726,7 +726,7 @@ def getClassNameFromModuleStr(module_str):
     class_name = class_name.strip()
     return class_name
 
-def addItem(pattern, added_str, content, module_name, Wt):
+def addItem(pattern, added_str, content, module_name, Wt = None):
     first, last = getMatchRange(pattern, content)
     # init.cpp, special condition: base must be before descendant.
     if pattern == r'MODULE\([a-zA-Z]+\),':
@@ -759,7 +759,7 @@ def readFile(filename):
 def writeSourceToFile(module_name, source):
     writeToFile('src/luawt/%s.cpp' % module_name, source)
 
-def addItemToFiles(parameters, module_name, Wt):
+def addItemToFiles(parameters, module_name, Wt = None):
     for parameter in parameters:
         content = readFile(parameter['filename'])
         writeToFile(parameter['filename'], addItem(
