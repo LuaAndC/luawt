@@ -10,7 +10,7 @@ describe("luawt", function()
         require 'luawt'
     end)
 
-    it("supports Wt's #signal/slot system", function()
+    pending("supports Wt's #signal/slot system", function()
         local code = [[
             local app, env = ...
             local luawt = require 'luawt'
@@ -56,7 +56,7 @@ describe("luawt", function()
         os.remove(wt_config)
     end)
 
-    it("uses #wrap with unknown exceptions", function()
+    pending("uses #wrap with unknown exceptions", function()
         local code = [[
             local luawt = require 'luawt'
             luawt.Test.unknownException()
@@ -73,7 +73,7 @@ describe("luawt", function()
         end)
     end)
 
-    it("can stop the server #forcibly", function()
+    pending("can stop the server #forcibly", function()
         local code = ''
         local port = 56789
         local wt_config = test.baseConfig()
@@ -85,7 +85,7 @@ describe("luawt", function()
         server:stop(true)
     end)
 
-    it("doesn't throw on bad #syntax in lua code", function()
+    pending("doesn't throw on bad #syntax in lua code", function()
         local code = "(;(;(;)))))"
         local port = 56789
         local wt_config = test.baseConfig()
