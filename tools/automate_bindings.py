@@ -799,6 +799,23 @@ def getAllModules(path='/usr/include/Wt/*'):
             modules.append(el)
     return modules
 
+TEST_FRAME = r'''
+    it("creates %s", function()
+        test.testWidget("%s")
+    end)
+'''
+
+def addTest(module_name):
+    module_str = '    ' + TEST_FRAME.lstrip() % (module_name, module_name)
+    parameters = [
+        {
+            'filename' : 'spec/widgets_spec.lua',
+            'pattern' : r'-- List of widgets tests',
+            'module_str' : module_str,
+        },
+    ]
+    addItemToFiles(parameters, module_name)
+
 def bind(modules, module_only, blacklist):
     for module in modules:
         try:
@@ -823,6 +840,7 @@ def bind(modules, module_only, blacklist):
             )
             if not module_only:
                 addModuleToLists(module_name, global_namespace.namespace('Wt'))
+            addTest(module_name)
             writeSourceToFile(module_name, source)
         except:
             if len(modules) == 1:

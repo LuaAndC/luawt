@@ -6,6 +6,7 @@ local test = require 'luawt.test'
 
 describe("luawt widgets", function()
 
+    -- List of widgets tests
     it("creates WPushButton", function()
         test.testWidget("WPushButton")
     end)
