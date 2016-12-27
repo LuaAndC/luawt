@@ -8,21 +8,49 @@
 #include <memory>
 
 #include "boost-xtime.hpp"
+#include <boost/bind.hpp>
+#include <boost/function.hpp>
+#include <boost/thread/mutex.hpp>
 #include <Wt/WEnvironment>
 #include <Wt/WServer>
 #include <Wt/WIOService>
 
 #include "globals.hpp"
 
+extern "C" {
+int luaopen_luawt(lua_State* L);
+}
+
 class luawt_AppCreator {
 public:
-    luawt_AppCreator(const std::string& code):
-        code_(code) {
+    luawt_AppCreator(const std::string& code)
+        : code_(code)
+        , states_(new std::vector<lua_State*>) // FIXME memory leak!
+        , states_mutex_(new boost::mutex) // FIXME memory leak!
+    {
+        for (int i = 0; i < 100; i++) {
+            lua_State* l = luaL_newstate();
+            luaL_openlibs(l);
+            luaopen_luawt(l);
+            states_->push_back(l);
+        }
     }
 
     WApplication* operator()(const WEnvironment& env) const {
+        lua_State* l;
+        {
+            boost::mutex::scoped_lock lock(*states_mutex_);
+            if (states_->empty()) {
+                return 0; // TODO(Pavel) what happens in this case?
+            }
+            l = (*states_)[states_->size() - 1];
+            states_->pop_back();
+        }
+        boost::function<void(lua_State*)> give_back = boost::bind(
+            &luawt_AppCreator::giveBack, this, _1
+        );
         std::auto_ptr<luawt_Application> app(
-            new luawt_Application(0, env)
+            new luawt_Application(l, give_back, env)
         );
         int status = luaL_loadstring(app->L(),
                                      code_.c_str());
@@ -36,8 +64,15 @@ public:
         return app.release();
     }
 
+    void giveBack(lua_State* L) const {
+        boost::mutex::scoped_lock lock(*states_mutex_);
+        states_->push_back(L);
+    }
+
 private:
     std::string code_;
+    mutable std::vector<lua_State*>* states_;
+    mutable boost::mutex* states_mutex_;
 };
 
 /** Creates the Wt application server
