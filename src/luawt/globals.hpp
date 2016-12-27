@@ -15,6 +15,7 @@
 #include <typeinfo>
 
 #include <boost/cast.hpp>
+#include <boost/function.hpp>
 #include <boost/shared_ptr.hpp>
 
 #include "boost-xtime.hpp"
@@ -46,9 +47,16 @@ int luaopen_luawt(lua_State* L);
 
 class luawt_Application : public WApplication {
 public:
-    luawt_Application(lua_State* L,
-                    const WEnvironment& env):
-        WApplication(env), L_(L), owns_L_(false) {
+    luawt_Application(
+        lua_State* L,
+        boost::function<void(lua_State*)> give_back,
+        const WEnvironment& env
+    )
+        : WApplication(env)
+        , L_(L)
+        , give_back_(give_back)
+        , owns_L_(false)
+    {
         if (L == 0) {
             owns_L_ = true;
             L_ = luaL_newstate();
@@ -60,8 +68,10 @@ public:
     ~luawt_Application() {
         if (owns_L_) {
             lua_close(L_);
-            L_ = 0;
+        } else {
+            give_back_(L_);
         }
+        L_ = 0;
     }
 
     static luawt_Application* instance() {
@@ -76,6 +86,7 @@ public:
 
 private:
     lua_State* L_;
+    boost::function<void(lua_State*)> give_back_;
     bool owns_L_;
 };
 
