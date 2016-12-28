@@ -14,7 +14,6 @@ description = {
 }
 dependencies = {
     "lua >= 5.1",
-    "lua-llthreads2",
 }
 external_dependencies = {
     WT = {

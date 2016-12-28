@@ -16,13 +16,13 @@
 
 class luawt_AppCreator {
 public:
-    luawt_AppCreator(const std::string& code):
-        code_(code) {
+    luawt_AppCreator(void* shared, const std::string& code):
+        shared_(shared), code_(code) {
     }
 
     WApplication* operator()(const WEnvironment& env) const {
         std::auto_ptr<luawt_Application> app(
-            new luawt_Application(0, env)
+            new luawt_Application(0, shared_, env)
         );
         int status = luaL_loadstring(app->L(),
                                      code_.c_str());
@@ -38,6 +38,7 @@ public:
 
 private:
     std::string code_;
+    void* shared_;
 };
 
 /** Creates the Wt application server
@@ -76,7 +77,10 @@ int luawt_WServer_make(lua_State* L) {
     server->setServerConfiguration(argc, argv);
     server->addEntryPoint(
         Wt::Application,
-        luawt_AppCreator(std::string(code, code_len))
+        luawt_AppCreator(
+            luawt_getShared(L),
+            std::string(code, code_len)
+        )
     );
     luaL_getmetatable(L, "luawt_WServer");
     lua_setmetatable(L, -2);

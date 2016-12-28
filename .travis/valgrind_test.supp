@@ -1,4 +1,13 @@
 {
+   luawt_shared_is_not_deleted
+   Memcheck:Leak
+   match-leak-kinds: definite
+   fun:_Znwm
+   fun:_Z12luawt_SharedP9lua_State
+   fun:luaopen_luawt
+}
+
+{
    wcscmp_boost_filesystem
    Memcheck:Addr8
    fun:wcscmp
