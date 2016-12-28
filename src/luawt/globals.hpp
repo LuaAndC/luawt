@@ -44,15 +44,20 @@ extern "C" {
 int luaopen_luawt(lua_State* L);
 }
 
+void* luawt_getShared(lua_State* L);
+void luawt_setShared(lua_State* L, void* sss);
+
 class luawt_Application : public WApplication {
 public:
     luawt_Application(lua_State* L,
+                    void* shared,
                     const WEnvironment& env):
         WApplication(env), L_(L), owns_L_(false) {
         if (L == 0) {
             owns_L_ = true;
             L_ = luaL_newstate();
             luaL_openlibs(L_);
+            luawt_setShared(L_, shared);
             luaopen_luawt(L_);
         }
     }

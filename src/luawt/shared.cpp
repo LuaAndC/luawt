@@ -16,15 +16,20 @@ typedef std::string Str;
 typedef std::map<Str, Str> Map;
 typedef Map::const_iterator It;
 
-Map shared;
-boost::mutex mtx;
+struct ProtectedMap {
+    Map shared;
+    boost::mutex mtx;
+};
 
 int luawt_Shared_index(lua_State* L) {
-    boost::mutex::scoped_lock lock(mtx);
+    ProtectedMap* pm = reinterpret_cast<ProtectedMap*>(
+        luawt_getShared(L)
+    );
+    boost::mutex::scoped_lock lock(pm->mtx);
     size_t key_len;
     const char* key = luaL_checklstring(L, 2, &key_len);
-    It iterator = shared.find(Str(key, key_len));
-    if (iterator != shared.end()) {
+    It iterator = pm->shared.find(Str(key, key_len));
+    if (iterator != pm->shared.end()) {
         const Str& value = iterator->second;
         lua_pushlstring(L, value.c_str(), value.size());
     } else {
@@ -34,15 +39,18 @@ int luawt_Shared_index(lua_State* L) {
 }
 
 int luawt_Shared_newindex(lua_State* L) {
-    boost::mutex::scoped_lock lock(mtx);
+    ProtectedMap* pm = reinterpret_cast<ProtectedMap*>(
+        luawt_getShared(L)
+    );
+    boost::mutex::scoped_lock lock(pm->mtx);
     size_t key_len, value_len;
     const char* key = luaL_checklstring(L, 2, &key_len);
     const char* value = lua_tolstring(L, 3, &value_len);
     if (value == 0) {
         // remove key
-        shared.erase(Str(key, key_len));
+        pm->shared.erase(Str(key, key_len));
     } else {
-        shared[Str(key, key_len)] = Str(value, value_len);
+        pm->shared[Str(key, key_len)] = Str(value, value_len);
     }
     return 0;
 }
@@ -54,6 +62,12 @@ static const luaL_Reg luawt_shared_functions[] = {
 };
 
 void luawt_Shared(lua_State* L) {
+    lua_getfield(L, LUA_REGISTRYINDEX, "luawt_pm");
+    if (lua_type(L, -1) == LUA_TNIL) {
+        // FIXME memory leak
+        luawt_setShared(L, new ProtectedMap);
+    }
+    lua_pop(L, 1); // registry["luawt_pm"]
     luaL_getmetatable(L, "luawt");
     assert(lua_type(L, -1) == LUA_TTABLE);
     lua_newtable(L); // Shared table
@@ -62,4 +76,19 @@ void luawt_Shared(lua_State* L) {
     lua_setmetatable(L, -2);
     lua_setfield(L, -2, "Shared");
     lua_pop(L, 1); // luawt
+}
+
+void* luawt_getShared(lua_State* L) {
+    lua_getfield(L, LUA_REGISTRYINDEX, "luawt_pm");
+    if (lua_type(L, -1) != LUA_TLIGHTUSERDATA) {
+        luaL_error(L, "registry['luawt_pm'] not initialized");
+    }
+    void* out = lua_touserdata(L, -1);
+    lua_pop(L, 1);
+    return out;
+}
+
+void luawt_setShared(lua_State* L, void* pm) {
+    lua_pushlightuserdata(L, pm);
+    lua_setfield(L, LUA_REGISTRYINDEX, "luawt_pm");
 }
