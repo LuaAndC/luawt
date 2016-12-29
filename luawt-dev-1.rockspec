@@ -30,6 +30,7 @@ build = {
                 "src/luawt/WEnvironment.cpp",
                 "src/luawt/WPushButton.cpp",
                 "src/luawt/WServer.cpp",
+                -- "src/luawt/WTestEnvironment.cpp",
                 "src/luawt/WWidget.cpp",
                 "src/luawt/init.cpp",
                 "src/luawt/shared.cpp",
@@ -38,6 +39,7 @@ build = {
             libraries = {
                 "wt",
                 "wthttp",
+                -- "wttest",
                 "boost_system-mt",
             },
             incdirs = {
@@ -53,6 +55,7 @@ build = {
                     libraries = {
                         "wt",
                         "wthttp",
+                        -- "wttest",
                         "boost_system",
                         "stdc++"
                     },
