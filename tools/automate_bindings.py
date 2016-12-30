@@ -716,6 +716,8 @@ def getMatchRange(pattern, content):
                 first = i
             else:
                 last = i
+    if last < first:
+        last = first
     return (first, last)
 
 def getClassNameFromModuleStr(module_str):
@@ -724,7 +726,7 @@ def getClassNameFromModuleStr(module_str):
     class_name = class_name.strip()
     return class_name
 
-def addItem(pattern, added_str, content, module_name, Wt):
+def addItem(pattern, added_str, content, module_name, Wt = None):
     first, last = getMatchRange(pattern, content)
     # init.cpp, special condition: base must be before descendant.
     if pattern == r'MODULE\([a-zA-Z]+\),':
@@ -757,7 +759,7 @@ def readFile(filename):
 def writeSourceToFile(module_name, source):
     writeToFile('src/luawt/%s.cpp' % module_name, source)
 
-def addItemToFiles(parameters, module_name, Wt):
+def addItemToFiles(parameters, module_name, Wt = None):
     for parameter in parameters:
         content = readFile(parameter['filename'])
         writeToFile(parameter['filename'], addItem(
@@ -783,7 +785,7 @@ def addModuleToLists(module_name, Wt):
         {
             'filename' : 'luawt-dev-1.rockspec',
             'pattern' : r'"src/luawt/[a-zA-Z]+\.cpp",',
-            'module_str' : '                "src/luawt/%s.cpp",\n' % module_name,
+            'module_str' : '        "src/luawt/%s.cpp",\n' % module_name,
         },
     ]
     addItemToFiles(parameters, module_name, Wt)
@@ -796,6 +798,23 @@ def getAllModules(path='/usr/include/Wt/*'):
         if os.path.isfile(el) and extension == '':
             modules.append(el)
     return modules
+
+TEST_FRAME = r'''
+    it("creates %s", function()
+        test.testWidget("%s")
+    end)
+'''
+
+def addTest(module_name):
+    module_str = '    ' + TEST_FRAME.lstrip() % (module_name, module_name)
+    parameters = [
+        {
+            'filename' : 'spec/widgets_spec.lua',
+            'pattern' : r'-- List of widgets tests',
+            'module_str' : module_str,
+        },
+    ]
+    addItemToFiles(parameters, module_name)
 
 def bind(modules, module_only, blacklist):
     for module in modules:
@@ -821,6 +840,7 @@ def bind(modules, module_only, blacklist):
             )
             if not module_only:
                 addModuleToLists(module_name, global_namespace.namespace('Wt'))
+            addTest(module_name)
             writeSourceToFile(module_name, source)
         except:
             if len(modules) == 1:
