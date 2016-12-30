@@ -37,18 +37,21 @@ function test.createServer(code, port, wt_config)
 end
 
 function test.testWidget(name)
+    local luawt = require 'luawt'
     local code = ([[
         local app, env = ...
         local luawt = require 'luawt'
         local widget = luawt.%s(app:root())
+        luawt.Shared.widget_id = widget:id()
     ]]):format(name)
     local port = 56789
     local wt_config = test.baseConfig()
     local server = test.createServer(code, port, wt_config)
     server:start()
     os.execute("sleep 10")
-    local data = socketRequest(port)
-    assert.truthy(data:match(name)) -- name appears in object ID
+    local data = test.socketRequest(port)
+    local bust_assert = require 'busted'.assert
+    bust_assert.truthy(data:match(luawt.Shared.widget_id)) -- ID should be there
     os.execute("sleep 10")
     server:stop()
     os.remove(wt_config)
