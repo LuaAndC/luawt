@@ -2,6 +2,38 @@
 -- Copyright (c) 2015-2016 Pavel Dolgov and Boris Nagaev
 -- See the LICENSE file for terms of use.
 
+local function merge(...)
+    local arrays = {...}
+    local results = {}
+    local z = 1
+    for i = 1, #arrays do
+        for j = 1, #arrays[i] do
+            results[z] = arrays[i][j]
+            z = z + 1
+        end
+    end
+    return results
+end
+
+local common = {
+    sources = {
+        "src/luawt/WApplication.cpp",
+        "src/luawt/WContainerWidget.cpp",
+        "src/luawt/WEnvironment.cpp",
+        "src/luawt/WPushButton.cpp",
+        "src/luawt/WWidget.cpp",
+        "src/luawt/init.cpp",
+        "src/luawt/shared.cpp",
+        "src/luawt/test.cpp",
+    },
+    libraries = {
+        "wt",
+    },
+    incdirs = {
+        "src", -- for boost-xtime.hpp
+    },
+}
+
 package = "luawt"
 version = "dev-1"
 source = {
@@ -24,42 +56,61 @@ build = {
     type = "builtin",
     modules = {
         luawt = {
-            sources = {
-                "src/luawt/WApplication.cpp",
-                "src/luawt/WContainerWidget.cpp",
-                "src/luawt/WEnvironment.cpp",
-                "src/luawt/WPushButton.cpp",
-                "src/luawt/WServer.cpp",
-                -- "src/luawt/WTestEnvironment.cpp",
-                "src/luawt/WWidget.cpp",
-                "src/luawt/init.cpp",
-                "src/luawt/shared.cpp",
-                "src/luawt/test.cpp",
+            sources = merge(
+                common.sources,
+                {"src/luawt/WServer.cpp"}
+            ),
+            libraries = merge(
+                common.libraries,
+                {
+                    "wthttp",
+                    "boost_system-mt",
+                }
+            ),
+            incdirs = common.incdirs,
+        },
+        luawtest = {
+            sources = merge(
+                common.sources,
+                {"src/luawt/WTestEnvironment.cpp"}
+            ),
+            defines = {
+                "LUAWTEST",
             },
-            libraries = {
-                "wt",
-                "wthttp",
-                -- "wttest",
-                "boost_system-mt",
-            },
-            incdirs = {
-                "src", -- for boost-xtime.hpp
-            },
+            libraries = merge(
+                common.libraries,
+                {
+                    "wttest",
+                    "boost_system-mt",
+                }
+            ),
+            incdirs = common.incdirs,
         },
         ['luawt.test'] = "src/luawt/test.lua",
     },
-    platforms = {
-        unix = {
-            modules = {
-                luawt = {
-                    libraries = {
-                        "wt",
+}
+build.platforms = {
+    unix = {
+        modules = {
+            luawt = {
+                libraries = merge(
+                    common.libraries,
+                    {
                         "wthttp",
-                        -- "wttest",
                         "boost_system",
-                        "stdc++"
-                    },
-                },
+                        "stdc++",
+                    }
+                ),
+            },
+            luawtest = {
+                libraries = merge(
+                    common.libraries,
+                    {
+                        "wttest",
+                        "boost_system",
+                        "stdc++",
+                    }
+                ),
             },
         },
     },

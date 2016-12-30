@@ -20,8 +20,11 @@ static const luawt_Reg luawt_modules[] = {
     MODULE(Test),
     MODULE(WApplication),
     MODULE(WEnvironment),
+#ifdef LUAWTEST
+    MODULE(WTestEnvironment),
+#else
     MODULE(WServer),
-    // MODULE(WTestEnvironment),
+#endif
     MODULE(WWidget),
     MODULE(WContainerWidget),
     MODULE(WPushButton),
@@ -31,7 +34,12 @@ static const luawt_Reg luawt_modules[] = {
 
 extern "C" {
 
-int luaopen_luawt(lua_State* L) {
+#ifdef LUAWTEST
+int luaopen_luawtest(lua_State* L)
+#else
+int luaopen_luawt(lua_State* L)
+#endif
+{
     luaL_newmetatable(L, "luawt"); // module luawt
     for (const luawt_Reg* reg = luawt_modules; reg->name; ++reg) {
         int stack_size1 = lua_gettop(L);
