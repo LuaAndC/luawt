@@ -252,8 +252,6 @@ def inBlacklist(member, blacklisted):
 def getMembers(global_namespace, module_name, blacklisted):
     Wt = global_namespace.namespace('Wt')
     main_class = Wt.class_(name=module_name)
-    if main_class.is_abstract:
-        raise Exception('Unable to bind %s, because it\'s abstract' % module_name)
     base_r = None
     for base in main_class.bases:
         if isDescendantOf(base.related_class, 'WWidget', Wt):
@@ -284,6 +282,8 @@ def getMembers(global_namespace, module_name, blacklisted):
 def getConstructors(global_namespace, module_name, blacklisted):
     Wt = global_namespace.namespace('Wt')
     main_class = Wt.class_(name=module_name)
+    if main_class.is_abstract:
+        return []
     custom_matcher = pygccxml.declarations.custom_matcher_t(
         lambda decl: checkWtFunction(True, decl, Wt),
     )
@@ -639,7 +639,7 @@ void luawt_%(module_name)s(lua_State* L) {
     DECLARE_CLASS(
         %(module_name)s,
         L,
-        wrap<luawt_%(module_name)s_make>::func,
+        %(make)s,
         0,
         luawt_%(module_name)s_methods,
         base
@@ -647,15 +647,22 @@ void luawt_%(module_name)s(lua_State* L) {
 }
 '''
 
-def generateModuleFunc(module_name, base):
+def generateModuleFunc(module_name, base, is_not_abstract):
     base = base.name
+    if is_not_abstract:
+        make = 'wrap<luawt_%s_make>::func' % module_name
+    else:
+        make = '0'
     options = {
         'module_name' : module_name,
+        'make' : make,
         'base' : base,
     }
     return MODULE_FUNC_TEMPLATE.lstrip() % options
 
 def generateConstructor(module_name, constructors):
+    if not constructors:
+        return ''
     constructor_name = 'make'
     constructor_return_type = module_name + ' *'
     return implementLuaCFunction(
@@ -705,7 +712,11 @@ def generateModule(module_name, methods, base, constructors, signals):
         ))
     source.append(generateSignals(signals, module_name))
     source.append(generateMethodsArray(module_name, methods + signals))
-    source.append(generateModuleFunc(module_name, base))
+    source.append(generateModuleFunc(
+        module_name,
+        base,
+        is_not_abstract=bool(constructors),
+    ))
     return ''.join(source)
 
 def getMatchRange(pattern, content):
@@ -840,7 +851,9 @@ def bind(modules, module_only, blacklist):
             )
             if not module_only:
                 addModuleToLists(module_name, global_namespace.namespace('Wt'))
-            addTest(module_name)
+            if constructors:
+                # Is not abstract
+                addTest(module_name)
             writeSourceToFile(module_name, source)
         except:
             if len(modules) == 1:
