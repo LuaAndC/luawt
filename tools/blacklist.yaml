@@ -1,3 +1,31 @@
+WAbstractItemView:
+  methods:
+  - clearSelection
+  - column1Fixed
+  - headerWordWrap
+  - horizontalHeaderAlignment
+  - rowHeaderCount
+  - setColumn1Fixed
+  - setHeaderAlignment
+  - setHeaderClickSortEnabled
+  - setHeaderWordWrap
+  - setObjectName
+  - setRowHeaderCount
+  - sortEnabled
+  - verticalHeaderAlignment
+WAbstractMedia:
+  whole class: true
+WAbstractSpinBox:
+  whole class: true
+WAbstractToggleButton:
+  methods:
+  - refresh
+  - setTextFormat
+  - setValueText
+  - setWordWrap
+  - textFormat
+  - valueText
+  - wordWrap
 WAnchor:
   methods:
   - setTextFormat
@@ -108,6 +136,8 @@ WGLWidget:
   - texImage2D(WGLWidget::GLenum,int,WGLWidget::GLenum,WGLWidget::GLenum,WGLWidget::GLenum,WVideo*)
   - texImage2D(WGLWidget::GLenum,int,WGLWidget::GLenum,unsignedint,unsignedint,int,WGLWidget::GLenum)
 WHTML5Audio:
+  whole class: true
+WHTML5Media:
   whole class: true
 WIcon:
   whole class: true
@@ -265,4 +295,26 @@ WTreeView:
   - setRowHeaderCount
 WVideo:
   whole class: true
+WWebWidget:
+  methods:
+  - canReceiveFocus
+  - fixRelativeUrl
+  - hasFocus
+  - hasStyleClass
+  - htmlTagName
+  - isScrollVisible
+  - resolveRelativeUrl
+  - scrollVisibilityEnabled
+  - scrollVisibilityMargin
+  - setCanReceiveFocus
+  - setDeferredToolTip
+  - setFirstFocus
+  - setFocus
+  - setHidden
+  - setHtmlTagName
+  - setScrollVisibilityEnabled
+  - setScrollVisibilityMargin
+  signatures:
+  - setToolTip(WString)
+  - setToolTip(WString,TextFormat)
 
