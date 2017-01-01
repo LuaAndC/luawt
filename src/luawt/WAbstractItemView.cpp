@@ -46,20 +46,6 @@ int luawt_WAbstractItemView_pageCount(lua_State* L) {
     }
 }
 
-int luawt_WAbstractItemView_setRowHeaderCount(lua_State* L) {
-    int argc = lua_gettop(L) - 1;
-
-    WAbstractItemView* self = luawt_checkFromLua<WAbstractItemView>(L, 1);
-        if (argc == 1) {
-    int count = lua_tointeger(L, 2);
-    self->setRowHeaderCount(count);
-    return 0;
-    
-    } else {
-        return luaL_error(L, "Wrong arguments number for WAbstractItemView.setRowHeaderCount: %d", argc);
-    }
-}
-
 int luawt_WAbstractItemView_columnAlignment(lua_State* L) {
     int argc = lua_gettop(L) - 1;
 
@@ -103,34 +89,6 @@ int luawt_WAbstractItemView_isEditing(lua_State* L) {
     }
 }
 
-int luawt_WAbstractItemView_setHeaderClickSortEnabled(lua_State* L) {
-    int argc = lua_gettop(L) - 1;
-
-    WAbstractItemView* self = luawt_checkFromLua<WAbstractItemView>(L, 1);
-        if (argc == 1) {
-    bool enabled = lua_toboolean(L, 2);
-    self->setHeaderClickSortEnabled(enabled);
-    return 0;
-    
-    } else {
-        return luaL_error(L, "Wrong arguments number for WAbstractItemView.setHeaderClickSortEnabled: %d", argc);
-    }
-}
-
-int luawt_WAbstractItemView_column1Fixed(lua_State* L) {
-    int argc = lua_gettop(L) - 1;
-
-    WAbstractItemView* self = luawt_checkFromLua<WAbstractItemView>(L, 1);
-        if (argc == 0) {
-    bool result = self->column1Fixed();
-    lua_pushboolean(L, result);
-    return 1;
-
-    } else {
-        return luaL_error(L, "Wrong arguments number for WAbstractItemView.column1Fixed: %d", argc);
-    }
-}
-
 int luawt_WAbstractItemView_setSelectionBehavior(lua_State* L) {
     int argc = lua_gettop(L) - 1;
 
@@ -142,36 +100,6 @@ int luawt_WAbstractItemView_setSelectionBehavior(lua_State* L) {
     
     } else {
         return luaL_error(L, "Wrong arguments number for WAbstractItemView.setSelectionBehavior: %d", argc);
-    }
-}
-
-int luawt_WAbstractItemView_setHeaderWordWrap(lua_State* L) {
-    int argc = lua_gettop(L) - 1;
-
-    WAbstractItemView* self = luawt_checkFromLua<WAbstractItemView>(L, 1);
-        if (argc == 2) {
-    int column = lua_tointeger(L, 2);
-    bool enabled = lua_toboolean(L, 3);
-    self->setHeaderWordWrap(column, enabled);
-    return 0;
-    
-    } else {
-        return luaL_error(L, "Wrong arguments number for WAbstractItemView.setHeaderWordWrap: %d", argc);
-    }
-}
-
-int luawt_WAbstractItemView_headerWordWrap(lua_State* L) {
-    int argc = lua_gettop(L) - 1;
-
-    WAbstractItemView* self = luawt_checkFromLua<WAbstractItemView>(L, 1);
-        if (argc == 1) {
-    int column = lua_tointeger(L, 2);
-    bool result = self->headerWordWrap(column);
-    lua_pushboolean(L, result);
-    return 1;
-
-    } else {
-        return luaL_error(L, "Wrong arguments number for WAbstractItemView.headerWordWrap: %d", argc);
     }
 }
 
@@ -262,20 +190,6 @@ int luawt_WAbstractItemView_sortOrder(lua_State* L) {
     }
 }
 
-int luawt_WAbstractItemView_rowHeaderCount(lua_State* L) {
-    int argc = lua_gettop(L) - 1;
-
-    WAbstractItemView* self = luawt_checkFromLua<WAbstractItemView>(L, 1);
-        if (argc == 0) {
-    int result = self->rowHeaderCount();
-    lua_pushinteger(L, result);
-    return 1;
-
-    } else {
-        return luaL_error(L, "Wrong arguments number for WAbstractItemView.rowHeaderCount: %d", argc);
-    }
-}
-
 int luawt_WAbstractItemView_setColumnAlignment(lua_State* L) {
     int argc = lua_gettop(L) - 1;
 
@@ -316,21 +230,6 @@ int luawt_WAbstractItemView_showColumn(lua_State* L) {
     
     } else {
         return luaL_error(L, "Wrong arguments number for WAbstractItemView.showColumn: %d", argc);
-    }
-}
-
-int luawt_WAbstractItemView_verticalHeaderAlignment(lua_State* L) {
-    int argc = lua_gettop(L) - 1;
-
-    WAbstractItemView* self = luawt_checkFromLua<WAbstractItemView>(L, 1);
-        if (argc == 1) {
-    int column = lua_tointeger(L, 2);
-    Wt::AlignmentFlag result = self->verticalHeaderAlignment(column);
-    lua_pushinteger(L, result);
-    return 1;
-
-    } else {
-        return luaL_error(L, "Wrong arguments number for WAbstractItemView.verticalHeaderAlignment: %d", argc);
     }
 }
 
@@ -382,20 +281,6 @@ int luawt_WAbstractItemView_closeEditors(lua_State* L) {
     }
 }
 
-int luawt_WAbstractItemView_setColumn1Fixed(lua_State* L) {
-    int argc = lua_gettop(L) - 1;
-
-    WAbstractItemView* self = luawt_checkFromLua<WAbstractItemView>(L, 1);
-        if (argc == 1) {
-    bool enable = lua_toboolean(L, 2);
-    self->setColumn1Fixed(enable);
-    return 0;
-    
-    } else {
-        return luaL_error(L, "Wrong arguments number for WAbstractItemView.setColumn1Fixed: %d", argc);
-    }
-}
-
 int luawt_WAbstractItemView_selectionMode(lua_State* L) {
     int argc = lua_gettop(L) - 1;
 
@@ -421,21 +306,6 @@ int luawt_WAbstractItemView_setCurrentPage(lua_State* L) {
     
     } else {
         return luaL_error(L, "Wrong arguments number for WAbstractItemView.setCurrentPage: %d", argc);
-    }
-}
-
-int luawt_WAbstractItemView_horizontalHeaderAlignment(lua_State* L) {
-    int argc = lua_gettop(L) - 1;
-
-    WAbstractItemView* self = luawt_checkFromLua<WAbstractItemView>(L, 1);
-        if (argc == 1) {
-    int column = lua_tointeger(L, 2);
-    Wt::AlignmentFlag result = self->horizontalHeaderAlignment(column);
-    lua_pushinteger(L, result);
-    return 1;
-
-    } else {
-        return luaL_error(L, "Wrong arguments number for WAbstractItemView.horizontalHeaderAlignment: %d", argc);
     }
 }
 
@@ -502,20 +372,6 @@ int luawt_WAbstractItemView_setSortingEnabled(lua_State* L) {
     }
 }
 
-int luawt_WAbstractItemView_sortEnabled(lua_State* L) {
-    int argc = lua_gettop(L) - 1;
-
-    WAbstractItemView* self = luawt_checkFromLua<WAbstractItemView>(L, 1);
-        if (argc == 0) {
-    bool result = self->sortEnabled();
-    lua_pushboolean(L, result);
-    return 1;
-
-    } else {
-        return luaL_error(L, "Wrong arguments number for WAbstractItemView.sortEnabled: %d", argc);
-    }
-}
-
 int luawt_WAbstractItemView_setDropsEnabled(lua_State* L) {
     int argc = lua_gettop(L) - 1;
 
@@ -577,10 +433,6 @@ static const luaL_Reg luawt_WAbstractItemView_methods[] = {
     METHOD(WAbstractItemView, setColumnAlignment),
     METHOD(WAbstractItemView, columnAlignment),
     METHOD(WAbstractItemView, headerAlignment),
-    METHOD(WAbstractItemView, horizontalHeaderAlignment),
-    METHOD(WAbstractItemView, verticalHeaderAlignment),
-    METHOD(WAbstractItemView, setHeaderWordWrap),
-    METHOD(WAbstractItemView, headerWordWrap),
     METHOD(WAbstractItemView, setAlternatingRowColors),
     METHOD(WAbstractItemView, alternatingRowColors),
     METHOD(WAbstractItemView, sortByColumn),
@@ -609,12 +461,6 @@ static const luaL_Reg luawt_WAbstractItemView_methods[] = {
     METHOD(WAbstractItemView, closeEditors),
     METHOD(WAbstractItemView, validateEditors),
     METHOD(WAbstractItemView, isEditing),
-    METHOD(WAbstractItemView, sortEnabled),
-    METHOD(WAbstractItemView, setHeaderClickSortEnabled),
-    METHOD(WAbstractItemView, setRowHeaderCount),
-    METHOD(WAbstractItemView, rowHeaderCount),
-    METHOD(WAbstractItemView, setColumn1Fixed),
-    METHOD(WAbstractItemView, column1Fixed),
     {NULL, NULL},
 };
 

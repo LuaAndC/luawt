@@ -413,8 +413,6 @@ public:
 void luawt_Shared(lua_State* L);
 void luawt_Test(lua_State* L);
 void luawt_WAbstractItemView(lua_State* L);
-void luawt_WAbstractMedia(lua_State* L);
-void luawt_WAbstractSpinBox(lua_State* L);
 void luawt_WAbstractToggleButton(lua_State* L);
 void luawt_WAnchor(lua_State* L);
 void luawt_WApplication(lua_State* L);
