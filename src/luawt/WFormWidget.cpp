@@ -6,24 +6,6 @@
 
 #include "globals.hpp"
 
-int luawt_WFormWidget_setFocus(lua_State* L) {
-    int argc = lua_gettop(L) - 1;
-
-    WFormWidget* self = luawt_checkFromLua<WFormWidget>(L, 1);
-        if (argc == 0) {
-    self->setFocus();
-    return 0;
-    
-    } else     if (argc == 1) {
-    bool focus = lua_toboolean(L, 2);
-    self->setFocus(focus);
-    return 0;
-    
-    } else {
-        return luaL_error(L, "Wrong arguments number for WFormWidget.setFocus: %d", argc);
-    }
-}
-
 int luawt_WFormWidget_setEnabled(lua_State* L) {
     int argc = lua_gettop(L) - 1;
 
@@ -52,34 +34,6 @@ int luawt_WFormWidget_isReadOnly(lua_State* L) {
     }
 }
 
-int luawt_WFormWidget_setFirstFocus(lua_State* L) {
-    int argc = lua_gettop(L) - 1;
-
-    WFormWidget* self = luawt_checkFromLua<WFormWidget>(L, 1);
-        if (argc == 0) {
-    bool result = self->setFirstFocus();
-    lua_pushboolean(L, result);
-    return 1;
-
-    } else {
-        return luaL_error(L, "Wrong arguments number for WFormWidget.setFirstFocus: %d", argc);
-    }
-}
-
-int luawt_WFormWidget_hasFocus(lua_State* L) {
-    int argc = lua_gettop(L) - 1;
-
-    WFormWidget* self = luawt_checkFromLua<WFormWidget>(L, 1);
-        if (argc == 0) {
-    bool result = self->hasFocus();
-    lua_pushboolean(L, result);
-    return 1;
-
-    } else {
-        return luaL_error(L, "Wrong arguments number for WFormWidget.hasFocus: %d", argc);
-    }
-}
-
 int luawt_WFormWidget_setEmptyText(lua_State* L) {
     int argc = lua_gettop(L) - 1;
 
@@ -92,34 +46,6 @@ int luawt_WFormWidget_setEmptyText(lua_State* L) {
     
     } else {
         return luaL_error(L, "Wrong arguments number for WFormWidget.setEmptyText: %d", argc);
-    }
-}
-
-int luawt_WFormWidget_setPlaceholderText(lua_State* L) {
-    int argc = lua_gettop(L) - 1;
-
-    WFormWidget* self = luawt_checkFromLua<WFormWidget>(L, 1);
-        if (argc == 1) {
-    char const * raw2 = lua_tostring(L, 2);
-    Wt::WString placeholder = Wt::WString(raw2);
-    self->setPlaceholderText(placeholder);
-    return 0;
-    
-    } else {
-        return luaL_error(L, "Wrong arguments number for WFormWidget.setPlaceholderText: %d", argc);
-    }
-}
-
-int luawt_WFormWidget_refresh(lua_State* L) {
-    int argc = lua_gettop(L) - 1;
-
-    WFormWidget* self = luawt_checkFromLua<WFormWidget>(L, 1);
-        if (argc == 0) {
-    self->refresh();
-    return 0;
-    
-    } else {
-        return luaL_error(L, "Wrong arguments number for WFormWidget.refresh: %d", argc);
     }
 }
 
@@ -151,36 +77,6 @@ int luawt_WFormWidget_setReadOnly(lua_State* L) {
     }
 }
 
-int luawt_WFormWidget_setToolTip(lua_State* L) {
-    int argc = lua_gettop(L) - 1;
-
-    WFormWidget* self = luawt_checkFromLua<WFormWidget>(L, 1);
-        if (argc == 2) {
-    char const * raw2 = lua_tostring(L, 2);
-    Wt::WString text = Wt::WString(raw2);
-    Wt::TextFormat textFormat = static_cast<Wt::TextFormat>(lua_tointeger(L, 3));
-    self->setToolTip(text, textFormat);
-    return 0;
-    
-    } else {
-        return luaL_error(L, "Wrong arguments number for WFormWidget.setToolTip: %d", argc);
-    }
-}
-
-int luawt_WFormWidget_placeholderText(lua_State* L) {
-    int argc = lua_gettop(L) - 1;
-
-    WFormWidget* self = luawt_checkFromLua<WFormWidget>(L, 1);
-        if (argc == 0) {
-    Wt::WString const & result = self->placeholderText();
-    lua_pushstring(L, result.toUTF8().c_str());
-    return 1;
-
-    } else {
-        return luaL_error(L, "Wrong arguments number for WFormWidget.placeholderText: %d", argc);
-    }
-}
-
 int luawt_WFormWidget_emptyText(lua_State* L) {
     int argc = lua_gettop(L) - 1;
 
@@ -192,21 +88,6 @@ int luawt_WFormWidget_emptyText(lua_State* L) {
 
     } else {
         return luaL_error(L, "Wrong arguments number for WFormWidget.emptyText: %d", argc);
-    }
-}
-
-int luawt_WFormWidget_setValueText(lua_State* L) {
-    int argc = lua_gettop(L) - 1;
-
-    WFormWidget* self = luawt_checkFromLua<WFormWidget>(L, 1);
-        if (argc == 1) {
-    char const * raw2 = lua_tostring(L, 2);
-    Wt::WString value = Wt::WString(raw2);
-    self->setValueText(value);
-    return 0;
-    
-    } else {
-        return luaL_error(L, "Wrong arguments number for WFormWidget.setValueText: %d", argc);
     }
 }
 
@@ -224,20 +105,6 @@ int luawt_WFormWidget_tabIndex(lua_State* L) {
     }
 }
 
-int luawt_WFormWidget_setTabIndex(lua_State* L) {
-    int argc = lua_gettop(L) - 1;
-
-    WFormWidget* self = luawt_checkFromLua<WFormWidget>(L, 1);
-        if (argc == 1) {
-    int index = lua_tointeger(L, 2);
-    self->setTabIndex(index);
-    return 0;
-    
-    } else {
-        return luaL_error(L, "Wrong arguments number for WFormWidget.setTabIndex: %d", argc);
-    }
-}
-
 int luawt_WFormWidget_validate(lua_State* L) {
     int argc = lua_gettop(L) - 1;
 
@@ -249,20 +116,6 @@ int luawt_WFormWidget_validate(lua_State* L) {
 
     } else {
         return luaL_error(L, "Wrong arguments number for WFormWidget.validate: %d", argc);
-    }
-}
-
-int luawt_WFormWidget_valueText(lua_State* L) {
-    int argc = lua_gettop(L) - 1;
-
-    WFormWidget* self = luawt_checkFromLua<WFormWidget>(L, 1);
-        if (argc == 0) {
-    Wt::WString result = self->valueText();
-    lua_pushstring(L, result.toUTF8().c_str());
-    return 1;
-
-    } else {
-        return luaL_error(L, "Wrong arguments number for WFormWidget.valueText: %d", argc);
     }
 }
 
@@ -293,24 +146,13 @@ ADD_SIGNAL(gestureEnded, WFormWidget, Wt::WGestureEvent)
 
 static const luaL_Reg luawt_WFormWidget_methods[] = {
     METHOD(WFormWidget, label),
-    METHOD(WFormWidget, valueText),
-    METHOD(WFormWidget, setValueText),
     METHOD(WFormWidget, validate),
     METHOD(WFormWidget, setEnabled),
-    METHOD(WFormWidget, setFocus),
-    METHOD(WFormWidget, setFocus),
-    METHOD(WFormWidget, hasFocus),
-    METHOD(WFormWidget, setTabIndex),
     METHOD(WFormWidget, tabIndex),
     METHOD(WFormWidget, setReadOnly),
     METHOD(WFormWidget, isReadOnly),
     METHOD(WFormWidget, setEmptyText),
     METHOD(WFormWidget, emptyText),
-    METHOD(WFormWidget, setPlaceholderText),
-    METHOD(WFormWidget, placeholderText),
-    METHOD(WFormWidget, refresh),
-    METHOD(WFormWidget, setToolTip),
-    METHOD(WFormWidget, setFirstFocus),
     METHOD(WFormWidget, changed),
     METHOD(WFormWidget, selected),
     METHOD(WFormWidget, blurred),

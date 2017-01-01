@@ -83,6 +83,20 @@ WFileDropWidget:
 WFileUpload:
   methods:
   - setFilters
+WFormWidget:
+  methods:
+  - canReceiveFocus
+  - hasFocus
+  - placeholderText
+  - refresh
+  - setFirstFocus
+  - setFocus
+  - setHidden
+  - setPlaceholderText
+  - setTabIndex
+  - setToolTip
+  - setValueText
+  - valueText
 WGLWidget:
   methods:
   - attachShader
