@@ -33,8 +33,14 @@ PROBLEMATIC_TO_BUILTIN_CONVERSIONS = {
 }
 
 XML_CACHE = 'src/luawt/xml'
+INCLUDE_WT = '/usr/include/Wt'
 
 def parse(filename, include_paths=None):
+    # Make sure Wt is installed to correct directory.
+    wconfigh = '%s/WConfig.h' % INCLUDE_WT
+    if not os.path.exists(wconfigh):
+        logging.fatal('Can not find file %s', wconfigh)
+        raise Exception('Can not find file %s' % wconfigh)
     # Find out the c++ parser.
     generator_path, generator_name = pygccxml.utils.find_xml_generator()
     # Configure the xml generator.
@@ -58,7 +64,7 @@ def parse(filename, include_paths=None):
     return global_namespace
 
 def loadAdditionalChunk(module_str):
-    file_str = '/usr/include/Wt/%s' % module_str
+    file_str = '%s/%s' % (INCLUDE_WT, module_str)
     if os.path.isfile(file_str):
         return parse(file_str).namespace('Wt')
     else:
@@ -68,8 +74,9 @@ def isTemplate(method_name, decl_str):
     # Luawt doesn't support C++ templates.
     if pygccxml.declarations.templates.is_instantiation(decl_str):
         logging.warning(
-            'Its impossible to bind method %s because luawt doesn\'t support C++ templates'
-            % method_name
+            "Its impossible to bind method %s because luawt " +
+            "doesn't support C++ templates",
+            method_name,
         )
         return True
     return False
@@ -140,13 +147,15 @@ def checkArgumentType(method_name, arg_type, Wt):
     elif isDescendantOf(clearType(arg_type), 'WWidget', Wt):
         if not pygccxml.declarations.is_pointer(arg_type):
             logging.info(
-                'Argument of method %s has strange type %s'
-                % (method_name, str(arg_type))
+                'Argument of method %s has strange type %s',
+                method_name,
+                arg_type,
             )
         return True
     logging.warning(
-        'Its impossible to bind method %s because its arg has type %s'
-        % (method_name, str(arg_type))
+        'Its impossible to bind method %s: its arg has type %s',
+        method_name,
+        arg_type,
     )
     return False
 
@@ -168,8 +177,9 @@ def checkReturnType(method_name, raw_return_type, Wt):
         elif isConstReference(raw_return_type):
             return True
     logging.warning(
-        'Its impossible to bind method %s because of its return type %s'
-        % (method_name, str(raw_return_type))
+        'Its impossible to bind method %s: of its return type %s',
+        method_name,
+        raw_return_type,
     )
     return False
 
@@ -303,7 +313,7 @@ def getConstructors(global_namespace, module_name, blacklisted):
     raise Exception('Unable to bind any constructors of %s' % module_name)
 
 def isModule(module_str):
-    path = '/usr/include/Wt/%s' % module_str
+    path = '%s/%s' % (INCLUDE_WT, module_str)
     return os.path.isfile(path)
 
 def addIncludeDir(type_o, list_o):
@@ -803,7 +813,7 @@ def addModuleToLists(module_name, Wt):
     ]
     addItemToFiles(parameters, module_name, Wt)
 
-def getAllModules(path='/usr/include/Wt/*'):
+def getAllModules(path='%s/*'%INCLUDE_WT):
     content = glob.glob(path)
     modules = []
     for el in content:
@@ -857,11 +867,11 @@ def bind(modules, module_only, blacklist):
                 # Is not abstract
                 addTest(module_name)
             writeSourceToFile(module_name, source)
-        except:
+        except Exception as e:
             if len(modules) == 1:
                 raise
             else:
-                logging.warning('Unable to bind %s' % module)
+                logging.warning('Unable to bind %s: %s', module, e)
 
 def collectMembers(path):
     if os.path.exists(XML_CACHE):
@@ -890,8 +900,8 @@ def collectMembers(path):
             for member in methods + constructors:
                 t = (module_name, member.name, makeSignature(member))
                 members.append(t)
-        except:
-            logging.warning('Unable to bind %s' % module)
+        except Exception as e:
+            logging.warning('Unable to bind %s: %s', module, e)
     if os.path.exists(XML_CACHE):
         shutil.rmtree(XML_CACHE)
     return set(members)
