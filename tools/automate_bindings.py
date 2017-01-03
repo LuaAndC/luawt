@@ -1,6 +1,8 @@
 #!/usr/bin/python
 
 """ Generate bindings of Wt module(s).
+
+Depends on pygccxml. Install it from PyPI (with pip), not from APT.
 """
 
 import argparse
