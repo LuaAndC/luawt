@@ -389,6 +389,8 @@ def getSelf(module_name):
     return frame % (module_name, module_name)
 
 def findCorrespondingKeyInDict(dictionary, full_key):
+    if full_key in dictionary:
+        return full_key
     for key in dictionary:
         if key in full_key:
             return key
