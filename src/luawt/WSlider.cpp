@@ -69,6 +69,20 @@ int luawt_WSlider_setValue(lua_State* L) {
     }
 }
 
+int luawt_WSlider_setNativeControl(lua_State* L) {
+    int argc = lua_gettop(L) - 1;
+
+    WSlider* self = luawt_checkFromLua<WSlider>(L, 1);
+        if (argc == 1) {
+    bool nativeControl = lua_toboolean(L, 2);
+    self->setNativeControl(nativeControl);
+    return 0;
+    
+    } else {
+        return luaL_error(L, "Wrong arguments number for WSlider.setNativeControl: %d", argc);
+    }
+}
+
 int luawt_WSlider_orientation(lua_State* L) {
     int argc = lua_gettop(L) - 1;
 
@@ -122,6 +136,20 @@ int luawt_WSlider_minimum(lua_State* L) {
 
     } else {
         return luaL_error(L, "Wrong arguments number for WSlider.minimum: %d", argc);
+    }
+}
+
+int luawt_WSlider_nativeControl(lua_State* L) {
+    int argc = lua_gettop(L) - 1;
+
+    WSlider* self = luawt_checkFromLua<WSlider>(L, 1);
+        if (argc == 0) {
+    bool result = self->nativeControl();
+    lua_pushboolean(L, result);
+    return 1;
+
+    } else {
+        return luaL_error(L, "Wrong arguments number for WSlider.nativeControl: %d", argc);
     }
 }
 
@@ -208,6 +236,8 @@ ADD_SIGNAL(gestureChanged, WSlider, Wt::WGestureEvent)
 ADD_SIGNAL(gestureEnded, WSlider, Wt::WGestureEvent)
 
 static const luaL_Reg luawt_WSlider_methods[] = {
+    METHOD(WSlider, setNativeControl),
+    METHOD(WSlider, nativeControl),
     METHOD(WSlider, setOrientation),
     METHOD(WSlider, orientation),
     METHOD(WSlider, setTickInterval),

@@ -19,31 +19,31 @@ int luawt_WSpinBox_make(lua_State* L) {
     }
 }
 
-int luawt_WSpinBox_singleStep(lua_State* L) {
+int luawt_WSpinBox_setMaximum(lua_State* L) {
     int argc = lua_gettop(L) - 1;
 
     WSpinBox* self = luawt_checkFromLua<WSpinBox>(L, 1);
-        if (argc == 0) {
-    int result = self->singleStep();
-    lua_pushinteger(L, result);
-    return 1;
-
+        if (argc == 1) {
+    int maximum = lua_tointeger(L, 2);
+    self->setMaximum(maximum);
+    return 0;
+    
     } else {
-        return luaL_error(L, "Wrong arguments number for WSpinBox.singleStep: %d", argc);
+        return luaL_error(L, "Wrong arguments number for WSpinBox.setMaximum: %d", argc);
     }
 }
 
-int luawt_WSpinBox_minimum(lua_State* L) {
+int luawt_WSpinBox_setValue(lua_State* L) {
     int argc = lua_gettop(L) - 1;
 
     WSpinBox* self = luawt_checkFromLua<WSpinBox>(L, 1);
-        if (argc == 0) {
-    int result = self->minimum();
-    lua_pushinteger(L, result);
-    return 1;
-
+        if (argc == 1) {
+    int value = lua_tointeger(L, 2);
+    self->setValue(value);
+    return 0;
+    
     } else {
-        return luaL_error(L, "Wrong arguments number for WSpinBox.minimum: %d", argc);
+        return luaL_error(L, "Wrong arguments number for WSpinBox.setValue: %d", argc);
     }
 }
 
@@ -75,6 +75,77 @@ int luawt_WSpinBox_value(lua_State* L) {
     }
 }
 
+int luawt_WSpinBox_singleStep(lua_State* L) {
+    int argc = lua_gettop(L) - 1;
+
+    WSpinBox* self = luawt_checkFromLua<WSpinBox>(L, 1);
+        if (argc == 0) {
+    int result = self->singleStep();
+    lua_pushinteger(L, result);
+    return 1;
+
+    } else {
+        return luaL_error(L, "Wrong arguments number for WSpinBox.singleStep: %d", argc);
+    }
+}
+
+int luawt_WSpinBox_minimum(lua_State* L) {
+    int argc = lua_gettop(L) - 1;
+
+    WSpinBox* self = luawt_checkFromLua<WSpinBox>(L, 1);
+        if (argc == 0) {
+    int result = self->minimum();
+    lua_pushinteger(L, result);
+    return 1;
+
+    } else {
+        return luaL_error(L, "Wrong arguments number for WSpinBox.minimum: %d", argc);
+    }
+}
+
+int luawt_WSpinBox_setSingleStep(lua_State* L) {
+    int argc = lua_gettop(L) - 1;
+
+    WSpinBox* self = luawt_checkFromLua<WSpinBox>(L, 1);
+        if (argc == 1) {
+    int step = lua_tointeger(L, 2);
+    self->setSingleStep(step);
+    return 0;
+    
+    } else {
+        return luaL_error(L, "Wrong arguments number for WSpinBox.setSingleStep: %d", argc);
+    }
+}
+
+int luawt_WSpinBox_setMinimum(lua_State* L) {
+    int argc = lua_gettop(L) - 1;
+
+    WSpinBox* self = luawt_checkFromLua<WSpinBox>(L, 1);
+        if (argc == 1) {
+    int minimum = lua_tointeger(L, 2);
+    self->setMinimum(minimum);
+    return 0;
+    
+    } else {
+        return luaL_error(L, "Wrong arguments number for WSpinBox.setMinimum: %d", argc);
+    }
+}
+
+int luawt_WSpinBox_setRange(lua_State* L) {
+    int argc = lua_gettop(L) - 1;
+
+    WSpinBox* self = luawt_checkFromLua<WSpinBox>(L, 1);
+        if (argc == 2) {
+    int minimum = lua_tointeger(L, 2);
+    int maximum = lua_tointeger(L, 3);
+    self->setRange(minimum, maximum);
+    return 0;
+    
+    } else {
+        return luaL_error(L, "Wrong arguments number for WSpinBox.setRange: %d", argc);
+    }
+}
+
 ADD_SIGNAL(changed, WSpinBox, Wt::NoClass)
 ADD_SIGNAL(selected, WSpinBox, Wt::NoClass)
 ADD_SIGNAL(blurred, WSpinBox, Wt::NoClass)
@@ -101,9 +172,14 @@ ADD_SIGNAL(gestureChanged, WSpinBox, Wt::WGestureEvent)
 ADD_SIGNAL(gestureEnded, WSpinBox, Wt::WGestureEvent)
 
 static const luaL_Reg luawt_WSpinBox_methods[] = {
+    METHOD(WSpinBox, setMinimum),
     METHOD(WSpinBox, minimum),
+    METHOD(WSpinBox, setMaximum),
     METHOD(WSpinBox, maximum),
+    METHOD(WSpinBox, setRange),
+    METHOD(WSpinBox, setSingleStep),
     METHOD(WSpinBox, singleStep),
+    METHOD(WSpinBox, setValue),
     METHOD(WSpinBox, value),
     METHOD(WSpinBox, changed),
     METHOD(WSpinBox, selected),

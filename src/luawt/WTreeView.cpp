@@ -120,6 +120,20 @@ int luawt_WTreeView_setRootIsDecorated(lua_State* L) {
     }
 }
 
+int luawt_WTreeView_setRowHeaderCount(lua_State* L) {
+    int argc = lua_gettop(L) - 1;
+
+    WTreeView* self = luawt_checkFromLua<WTreeView>(L, 1);
+        if (argc == 1) {
+    int count = lua_tointeger(L, 2);
+    self->setRowHeaderCount(count);
+    return 0;
+    
+    } else {
+        return luaL_error(L, "Wrong arguments number for WTreeView.setRowHeaderCount: %d", argc);
+    }
+}
+
 int luawt_WTreeView_setColumnHidden(lua_State* L) {
     int argc = lua_gettop(L) - 1;
 
@@ -178,7 +192,6 @@ int luawt_WTreeView_setCurrentPage(lua_State* L) {
     }
 }
 
-ADD_SIGNAL(scrolled, WTreeView, Wt::WScrollEvent)
 
 static const luaL_Reg luawt_WTreeView_methods[] = {
     METHOD(WTreeView, setColumnFormat),
@@ -188,11 +201,11 @@ static const luaL_Reg luawt_WTreeView_methods[] = {
     METHOD(WTreeView, rootIsDecorated),
     METHOD(WTreeView, setAlternatingRowColors),
     METHOD(WTreeView, setColumnHidden),
+    METHOD(WTreeView, setRowHeaderCount),
     METHOD(WTreeView, pageCount),
     METHOD(WTreeView, pageSize),
     METHOD(WTreeView, currentPage),
     METHOD(WTreeView, setCurrentPage),
-    METHOD(WTreeView, scrolled),
     {NULL, NULL},
 };
 

@@ -1,10 +1,11 @@
 #include "boost-xtime.hpp"
 
-#include <Wt/WLineEdit>
 #include <Wt/WPushButton>
 #include <Wt/WInPlaceEdit>
-#include <Wt/WContainerWidget>
 #include <Wt/WString>
+#include <Wt/WLineEdit>
+#include <Wt/WContainerWidget>
+#include <Wt/WText>
 
 #include "globals.hpp"
 
@@ -81,17 +82,17 @@ int luawt_WInPlaceEdit_cancelButton(lua_State* L) {
     }
 }
 
-int luawt_WInPlaceEdit_emptyText(lua_State* L) {
+int luawt_WInPlaceEdit_textWidget(lua_State* L) {
     int argc = lua_gettop(L) - 1;
 
     WInPlaceEdit* self = luawt_checkFromLua<WInPlaceEdit>(L, 1);
         if (argc == 0) {
-    Wt::WString const & result = self->emptyText();
-    lua_pushstring(L, result.toUTF8().c_str());
+    Wt::WText * result = self->textWidget();
+    luawt_toLua(L, result);
     return 1;
 
     } else {
-        return luaL_error(L, "Wrong arguments number for WInPlaceEdit.emptyText: %d", argc);
+        return luaL_error(L, "Wrong arguments number for WInPlaceEdit.textWidget: %d", argc);
     }
 }
 
@@ -123,6 +124,20 @@ int luawt_WInPlaceEdit_lineEdit(lua_State* L) {
     }
 }
 
+int luawt_WInPlaceEdit_emptyText(lua_State* L) {
+    int argc = lua_gettop(L) - 1;
+
+    WInPlaceEdit* self = luawt_checkFromLua<WInPlaceEdit>(L, 1);
+        if (argc == 0) {
+    Wt::WString const & result = self->emptyText();
+    lua_pushstring(L, result.toUTF8().c_str());
+    return 1;
+
+    } else {
+        return luaL_error(L, "Wrong arguments number for WInPlaceEdit.emptyText: %d", argc);
+    }
+}
+
 int luawt_WInPlaceEdit_setEmptyText(lua_State* L) {
     int argc = lua_gettop(L) - 1;
 
@@ -145,6 +160,7 @@ static const luaL_Reg luawt_WInPlaceEdit_methods[] = {
     METHOD(WInPlaceEdit, setEmptyText),
     METHOD(WInPlaceEdit, emptyText),
     METHOD(WInPlaceEdit, lineEdit),
+    METHOD(WInPlaceEdit, textWidget),
     METHOD(WInPlaceEdit, saveButton),
     METHOD(WInPlaceEdit, cancelButton),
     METHOD(WInPlaceEdit, setButtonsEnabled),

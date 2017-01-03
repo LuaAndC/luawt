@@ -49,6 +49,19 @@ int luawt_WFormWidget_setEmptyText(lua_State* L) {
     }
 }
 
+int luawt_WFormWidget_refresh(lua_State* L) {
+    int argc = lua_gettop(L) - 1;
+
+    WFormWidget* self = luawt_checkFromLua<WFormWidget>(L, 1);
+        if (argc == 0) {
+    self->refresh();
+    return 0;
+    
+    } else {
+        return luaL_error(L, "Wrong arguments number for WFormWidget.refresh: %d", argc);
+    }
+}
+
 int luawt_WFormWidget_label(lua_State* L) {
     int argc = lua_gettop(L) - 1;
 
@@ -77,6 +90,20 @@ int luawt_WFormWidget_setReadOnly(lua_State* L) {
     }
 }
 
+int luawt_WFormWidget_validate(lua_State* L) {
+    int argc = lua_gettop(L) - 1;
+
+    WFormWidget* self = luawt_checkFromLua<WFormWidget>(L, 1);
+        if (argc == 0) {
+    Wt::WValidator::State result = self->validate();
+    lua_pushinteger(L, result);
+    return 1;
+
+    } else {
+        return luaL_error(L, "Wrong arguments number for WFormWidget.validate: %d", argc);
+    }
+}
+
 int luawt_WFormWidget_emptyText(lua_State* L) {
     int argc = lua_gettop(L) - 1;
 
@@ -102,20 +129,6 @@ int luawt_WFormWidget_tabIndex(lua_State* L) {
 
     } else {
         return luaL_error(L, "Wrong arguments number for WFormWidget.tabIndex: %d", argc);
-    }
-}
-
-int luawt_WFormWidget_validate(lua_State* L) {
-    int argc = lua_gettop(L) - 1;
-
-    WFormWidget* self = luawt_checkFromLua<WFormWidget>(L, 1);
-        if (argc == 0) {
-    Wt::WValidator::State result = self->validate();
-    lua_pushinteger(L, result);
-    return 1;
-
-    } else {
-        return luaL_error(L, "Wrong arguments number for WFormWidget.validate: %d", argc);
     }
 }
 
@@ -153,6 +166,7 @@ static const luaL_Reg luawt_WFormWidget_methods[] = {
     METHOD(WFormWidget, isReadOnly),
     METHOD(WFormWidget, setEmptyText),
     METHOD(WFormWidget, emptyText),
+    METHOD(WFormWidget, refresh),
     METHOD(WFormWidget, changed),
     METHOD(WFormWidget, selected),
     METHOD(WFormWidget, blurred),

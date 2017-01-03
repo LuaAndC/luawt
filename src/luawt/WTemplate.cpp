@@ -45,6 +45,20 @@ int luawt_WTemplate_setTemplateText(lua_State* L) {
     }
 }
 
+int luawt_WTemplate_hasInternalPathEncoding(lua_State* L) {
+    int argc = lua_gettop(L) - 1;
+
+    WTemplate* self = luawt_checkFromLua<WTemplate>(L, 1);
+        if (argc == 0) {
+    bool result = self->hasInternalPathEncoding();
+    lua_pushboolean(L, result);
+    return 1;
+
+    } else {
+        return luaL_error(L, "Wrong arguments number for WTemplate.hasInternalPathEncoding: %d", argc);
+    }
+}
+
 int luawt_WTemplate_templateText(lua_State* L) {
     int argc = lua_gettop(L) - 1;
 
@@ -103,6 +117,20 @@ int luawt_WTemplate_refresh(lua_State* L) {
     }
 }
 
+int luawt_WTemplate_setInternalPathEncoding(lua_State* L) {
+    int argc = lua_gettop(L) - 1;
+
+    WTemplate* self = luawt_checkFromLua<WTemplate>(L, 1);
+        if (argc == 1) {
+    bool enabled = lua_toboolean(L, 2);
+    self->setInternalPathEncoding(enabled);
+    return 0;
+    
+    } else {
+        return luaL_error(L, "Wrong arguments number for WTemplate.setInternalPathEncoding: %d", argc);
+    }
+}
+
 int luawt_WTemplate_bindInt(lua_State* L) {
     int argc = lua_gettop(L) - 1;
 
@@ -146,6 +174,8 @@ static const luaL_Reg luawt_WTemplate_methods[] = {
     METHOD(WTemplate, bindString),
     METHOD(WTemplate, bindInt),
     METHOD(WTemplate, clear),
+    METHOD(WTemplate, setInternalPathEncoding),
+    METHOD(WTemplate, hasInternalPathEncoding),
     METHOD(WTemplate, refresh),
     METHOD(WTemplate, keyWentDown),
     METHOD(WTemplate, keyPressed),

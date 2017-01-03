@@ -377,6 +377,22 @@ int luawt_WCompositeWidget_setId(lua_State* L) {
     }
 }
 
+int luawt_WCompositeWidget_setToolTip(lua_State* L) {
+    int argc = lua_gettop(L) - 1;
+
+    WCompositeWidget* self = luawt_checkFromLua<WCompositeWidget>(L, 1);
+        if (argc == 2) {
+    char const * raw2 = lua_tostring(L, 2);
+    Wt::WString text = Wt::WString(raw2);
+    Wt::TextFormat textFormat = static_cast<Wt::TextFormat>(lua_tointeger(L, 3));
+    self->setToolTip(text, textFormat);
+    return 0;
+    
+    } else {
+        return luaL_error(L, "Wrong arguments number for WCompositeWidget.setToolTip: %d", argc);
+    }
+}
+
 int luawt_WCompositeWidget_isPopup(lua_State* L) {
     int argc = lua_gettop(L) - 1;
 
@@ -581,6 +597,7 @@ static const luaL_Reg luawt_WCompositeWidget_methods[] = {
     METHOD(WCompositeWidget, removeStyleClass),
     METHOD(WCompositeWidget, verticalAlignment),
     METHOD(WCompositeWidget, webWidget),
+    METHOD(WCompositeWidget, setToolTip),
     METHOD(WCompositeWidget, toolTip),
     METHOD(WCompositeWidget, refresh),
     METHOD(WCompositeWidget, setAttributeValue),

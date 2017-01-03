@@ -1,5 +1,6 @@
 #include "boost-xtime.hpp"
 
+#include <Wt/WStackedWidget>
 #include <Wt/WTabWidget>
 #include <Wt/WContainerWidget>
 #include <Wt/WString>
@@ -62,6 +63,20 @@ int luawt_WTabWidget_setTabText(lua_State* L) {
     
     } else {
         return luaL_error(L, "Wrong arguments number for WTabWidget.setTabText: %d", argc);
+    }
+}
+
+int luawt_WTabWidget_contentsStack(lua_State* L) {
+    int argc = lua_gettop(L) - 1;
+
+    WTabWidget* self = luawt_checkFromLua<WTabWidget>(L, 1);
+        if (argc == 0) {
+    Wt::WStackedWidget * result = self->contentsStack();
+    luawt_toLua(L, result);
+    return 1;
+
+    } else {
+        return luaL_error(L, "Wrong arguments number for WTabWidget.contentsStack: %d", argc);
     }
 }
 
@@ -277,7 +292,7 @@ int luawt_WTabWidget_tabToolTip(lua_State* L) {
     WTabWidget* self = luawt_checkFromLua<WTabWidget>(L, 1);
         if (argc == 1) {
     int index = lua_tointeger(L, 2);
-    Wt::WString result = self->tabToolTip(index);
+    Wt::WString const & result = self->tabToolTip(index);
     lua_pushstring(L, result.toUTF8().c_str());
     return 1;
 
@@ -306,6 +321,7 @@ static const luaL_Reg luawt_WTabWidget_methods[] = {
     METHOD(WTabWidget, setInternalBasePath),
     METHOD(WTabWidget, internalBasePath),
     METHOD(WTabWidget, closeTab),
+    METHOD(WTabWidget, contentsStack),
     {NULL, NULL},
 };
 

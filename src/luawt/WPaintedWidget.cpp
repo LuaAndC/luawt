@@ -9,7 +9,7 @@ int luawt_WPaintedWidget_setPreferredMethod(lua_State* L) {
 
     WPaintedWidget* self = luawt_checkFromLua<WPaintedWidget>(L, 1);
         if (argc == 1) {
-    Wt::WPaintedWidget::Method method = lua_tointeger(L, 2);
+    Wt::WPaintedWidget::Method method = static_cast<Wt::WPaintedWidget::Method>(lua_tointeger(L, 2));
     self->setPreferredMethod(method);
     return 0;
     

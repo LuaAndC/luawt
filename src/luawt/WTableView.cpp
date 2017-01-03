@@ -76,17 +76,17 @@ int luawt_WTableView_setAlternatingRowColors(lua_State* L) {
     }
 }
 
-int luawt_WTableView_setOverflow(lua_State* L) {
+int luawt_WTableView_setRowHeaderCount(lua_State* L) {
     int argc = lua_gettop(L) - 1;
 
     WTableView* self = luawt_checkFromLua<WTableView>(L, 1);
         if (argc == 1) {
-    Wt::WContainerWidget::Overflow overflow = static_cast<Wt::WContainerWidget::Overflow>(lua_tointeger(L, 2));
-    self->setOverflow(overflow);
+    int count = lua_tointeger(L, 2);
+    self->setRowHeaderCount(count);
     return 0;
     
     } else {
-        return luaL_error(L, "Wrong arguments number for WTableView.setOverflow: %d", argc);
+        return luaL_error(L, "Wrong arguments number for WTableView.setRowHeaderCount: %d", argc);
     }
 }
 
@@ -118,17 +118,15 @@ int luawt_WTableView_setCurrentPage(lua_State* L) {
     }
 }
 
-ADD_SIGNAL(scrolled, WTableView, Wt::WScrollEvent)
 
 static const luaL_Reg luawt_WTableView_methods[] = {
     METHOD(WTableView, setAlternatingRowColors),
     METHOD(WTableView, setColumnHidden),
+    METHOD(WTableView, setRowHeaderCount),
     METHOD(WTableView, pageCount),
     METHOD(WTableView, pageSize),
     METHOD(WTableView, currentPage),
     METHOD(WTableView, setCurrentPage),
-    METHOD(WTableView, setOverflow),
-    METHOD(WTableView, scrolled),
     {NULL, NULL},
 };
 

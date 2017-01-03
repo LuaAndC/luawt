@@ -79,20 +79,6 @@ int luawt_WGLWidget_stencilMaskSeparate(lua_State* L) {
     }
 }
 
-int luawt_WGLWidget_isWebGLAvailable(lua_State* L) {
-    int argc = lua_gettop(L) - 1;
-
-    WGLWidget* self = luawt_checkFromLua<WGLWidget>(L, 1);
-        if (argc == 0) {
-    bool result = self->isWebGLAvailable();
-    lua_pushboolean(L, result);
-    return 1;
-
-    } else {
-        return luaL_error(L, "Wrong arguments number for WGLWidget.isWebGLAvailable: %d", argc);
-    }
-}
-
 int luawt_WGLWidget_enable(lua_State* L) {
     int argc = lua_gettop(L) - 1;
 
@@ -348,8 +334,8 @@ int luawt_WGLWidget_texImage2D(lua_State* L) {
     Wt::WGLWidget::GLenum format = static_cast<Wt::WGLWidget::GLenum>(lua_tointeger(L, 5));
     Wt::WGLWidget::GLenum type = static_cast<Wt::WGLWidget::GLenum>(lua_tointeger(L, 6));
     char const * raw7 = lua_tostring(L, 7);
-    std::string filename = std::string(raw7);
-    self->texImage2D(target, level, internalformat, format, type, filename);
+    std::string texture = std::string(raw7);
+    self->texImage2D(target, level, internalformat, format, type, texture);
     return 0;
     
     } else {
@@ -507,20 +493,6 @@ int luawt_WGLWidget_disable(lua_State* L) {
     
     } else {
         return luaL_error(L, "Wrong arguments number for WGLWidget.disable: %d", argc);
-    }
-}
-
-int luawt_WGLWidget_isAlternative(lua_State* L) {
-    int argc = lua_gettop(L) - 1;
-
-    WGLWidget* self = luawt_checkFromLua<WGLWidget>(L, 1);
-        if (argc == 0) {
-    bool result = self->isAlternative();
-    lua_pushboolean(L, result);
-    return 1;
-
-    } else {
-        return luaL_error(L, "Wrong arguments number for WGLWidget.isAlternative: %d", argc);
     }
 }
 
@@ -731,8 +703,6 @@ static const luaL_Reg luawt_WGLWidget_methods[] = {
     METHOD(WGLWidget, texImage2D),
     METHOD(WGLWidget, texParameteri),
     METHOD(WGLWidget, viewport),
-    METHOD(WGLWidget, isAlternative),
-    METHOD(WGLWidget, isWebGLAvailable),
     METHOD(WGLWidget, keyWentDown),
     METHOD(WGLWidget, keyPressed),
     METHOD(WGLWidget, keyWentUp),

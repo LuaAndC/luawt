@@ -18,6 +18,7 @@ end
 local common = {
     sources = {
         "src/luawt/WAbstractItemView.cpp",
+        "src/luawt/WAbstractSpinBox.cpp",
         "src/luawt/WAbstractToggleButton.cpp",
         "src/luawt/WAnchor.cpp",
         "src/luawt/WApplication.cpp",
@@ -28,6 +29,7 @@ local common = {
         "src/luawt/WContainerWidget.cpp",
         "src/luawt/WDatePicker.cpp",
         "src/luawt/WDefaultLoadingIndicator.cpp",
+        "src/luawt/WDoubleSpinBox.cpp",
         "src/luawt/WEnvironment.cpp",
         "src/luawt/WFileUpload.cpp",
         "src/luawt/WFlashObject.cpp",

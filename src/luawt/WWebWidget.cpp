@@ -47,6 +47,20 @@ int luawt_WWebWidget_doJavaScript(lua_State* L) {
     }
 }
 
+int luawt_WWebWidget_setFormObject(lua_State* L) {
+    int argc = lua_gettop(L) - 1;
+
+    WWebWidget* self = luawt_checkFromLua<WWebWidget>(L, 1);
+        if (argc == 1) {
+    bool how = lua_toboolean(L, 2);
+    self->setFormObject(how);
+    return 0;
+    
+    } else {
+        return luaL_error(L, "Wrong arguments number for WWebWidget.setFormObject: %d", argc);
+    }
+}
+
 int luawt_WWebWidget_floatSide(lua_State* L) {
     int argc = lua_gettop(L) - 1;
 
@@ -58,6 +72,22 @@ int luawt_WWebWidget_floatSide(lua_State* L) {
 
     } else {
         return luaL_error(L, "Wrong arguments number for WWebWidget.floatSide: %d", argc);
+    }
+}
+
+int luawt_WWebWidget_resolveRelativeUrl(lua_State* L) {
+    int argc = lua_gettop(L) - 1;
+
+    WWebWidget* self = luawt_checkFromLua<WWebWidget>(L, 1);
+        if (argc == 1) {
+    char const * raw2 = lua_tostring(L, 2);
+    std::string url = std::string(raw2);
+    std::string result = self->resolveRelativeUrl(url);
+    lua_pushstring(L, result.c_str());
+    return 1;
+
+    } else {
+        return luaL_error(L, "Wrong arguments number for WWebWidget.resolveRelativeUrl: %d", argc);
     }
 }
 
@@ -417,17 +447,19 @@ int luawt_WWebWidget_setId(lua_State* L) {
     }
 }
 
-int luawt_WWebWidget_setFormObject(lua_State* L) {
+int luawt_WWebWidget_setToolTip(lua_State* L) {
     int argc = lua_gettop(L) - 1;
 
     WWebWidget* self = luawt_checkFromLua<WWebWidget>(L, 1);
-        if (argc == 1) {
-    bool how = lua_toboolean(L, 2);
-    self->setFormObject(how);
+        if (argc == 2) {
+    char const * raw2 = lua_tostring(L, 2);
+    Wt::WString text = Wt::WString(raw2);
+    Wt::TextFormat textFormat = static_cast<Wt::TextFormat>(lua_tointeger(L, 3));
+    self->setToolTip(text, textFormat);
     return 0;
     
     } else {
-        return luaL_error(L, "Wrong arguments number for WWebWidget.setFormObject: %d", argc);
+        return luaL_error(L, "Wrong arguments number for WWebWidget.setToolTip: %d", argc);
     }
 }
 
@@ -650,6 +682,7 @@ static const luaL_Reg luawt_WWebWidget_methods[] = {
     METHOD(WWebWidget, addStyleClass),
     METHOD(WWebWidget, removeStyleClass),
     METHOD(WWebWidget, verticalAlignment),
+    METHOD(WWebWidget, setToolTip),
     METHOD(WWebWidget, toolTip),
     METHOD(WWebWidget, refresh),
     METHOD(WWebWidget, setAttributeValue),
@@ -661,7 +694,6 @@ static const luaL_Reg luawt_WWebWidget_methods[] = {
     METHOD(WWebWidget, loaded),
     METHOD(WWebWidget, setTabIndex),
     METHOD(WWebWidget, tabIndex),
-    METHOD(WWebWidget, zIndex),
     METHOD(WWebWidget, setId),
     METHOD(WWebWidget, setSelectable),
     METHOD(WWebWidget, doJavaScript),
@@ -669,8 +701,10 @@ static const luaL_Reg luawt_WWebWidget_methods[] = {
     METHOD(WWebWidget, domElementType),
     METHOD(WWebWidget, setLoadLaterWhenInvisible),
     METHOD(WWebWidget, escapeText),
+    METHOD(WWebWidget, resolveRelativeUrl),
     METHOD(WWebWidget, setFormObject),
     METHOD(WWebWidget, canOptimizeUpdates),
+    METHOD(WWebWidget, zIndex),
     METHOD(WWebWidget, setZIndex),
     METHOD(WWebWidget, isRendered),
     {NULL, NULL},

@@ -156,7 +156,7 @@ int luawt_WAnchor_ref(lua_State* L) {
 
     WAnchor* self = luawt_checkFromLua<WAnchor>(L, 1);
         if (argc == 0) {
-    std::string & result = self->ref();
+    std::string const & result = self->ref();
     lua_pushstring(L, result.c_str());
     return 1;
 

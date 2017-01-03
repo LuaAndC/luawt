@@ -39,20 +39,6 @@ int luawt_WText_make(lua_State* L) {
     }
 }
 
-int luawt_WText_setTextAlignment(lua_State* L) {
-    int argc = lua_gettop(L) - 1;
-
-    WText* self = luawt_checkFromLua<WText>(L, 1);
-        if (argc == 1) {
-    Wt::AlignmentFlag textAlignment = static_cast<Wt::AlignmentFlag>(lua_tointeger(L, 2));
-    self->setTextAlignment(textAlignment);
-    return 0;
-    
-    } else {
-        return luaL_error(L, "Wrong arguments number for WText.setTextAlignment: %d", argc);
-    }
-}
-
 int luawt_WText_hasInternalPathEncoding(lua_State* L) {
     int argc = lua_gettop(L) - 1;
 
@@ -107,20 +93,6 @@ int luawt_WText_refresh(lua_State* L) {
     
     } else {
         return luaL_error(L, "Wrong arguments number for WText.refresh: %d", argc);
-    }
-}
-
-int luawt_WText_textAlignment(lua_State* L) {
-    int argc = lua_gettop(L) - 1;
-
-    WText* self = luawt_checkFromLua<WText>(L, 1);
-        if (argc == 0) {
-    Wt::AlignmentFlag result = self->textAlignment();
-    lua_pushinteger(L, result);
-    return 1;
-
-    } else {
-        return luaL_error(L, "Wrong arguments number for WText.textAlignment: %d", argc);
     }
 }
 
@@ -223,8 +195,6 @@ static const luaL_Reg luawt_WText_methods[] = {
     METHOD(WText, textFormat),
     METHOD(WText, setWordWrap),
     METHOD(WText, wordWrap),
-    METHOD(WText, setTextAlignment),
-    METHOD(WText, textAlignment),
     METHOD(WText, setInternalPathEncoding),
     METHOD(WText, hasInternalPathEncoding),
     METHOD(WText, refresh),

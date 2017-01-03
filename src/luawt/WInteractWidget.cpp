@@ -17,20 +17,6 @@ int luawt_WInteractWidget_load(lua_State* L) {
     }
 }
 
-int luawt_WInteractWidget_mouseOverDelay(lua_State* L) {
-    int argc = lua_gettop(L) - 1;
-
-    WInteractWidget* self = luawt_checkFromLua<WInteractWidget>(L, 1);
-        if (argc == 0) {
-    int result = self->mouseOverDelay();
-    lua_pushinteger(L, result);
-    return 1;
-
-    } else {
-        return luaL_error(L, "Wrong arguments number for WInteractWidget.mouseOverDelay: %d", argc);
-    }
-}
-
 int luawt_WInteractWidget_isEnabled(lua_State* L) {
     int argc = lua_gettop(L) - 1;
 
@@ -42,34 +28,6 @@ int luawt_WInteractWidget_isEnabled(lua_State* L) {
 
     } else {
         return luaL_error(L, "Wrong arguments number for WInteractWidget.isEnabled: %d", argc);
-    }
-}
-
-int luawt_WInteractWidget_setMouseOverDelay(lua_State* L) {
-    int argc = lua_gettop(L) - 1;
-
-    WInteractWidget* self = luawt_checkFromLua<WInteractWidget>(L, 1);
-        if (argc == 1) {
-    int delay = lua_tointeger(L, 2);
-    self->setMouseOverDelay(delay);
-    return 0;
-    
-    } else {
-        return luaL_error(L, "Wrong arguments number for WInteractWidget.setMouseOverDelay: %d", argc);
-    }
-}
-
-int luawt_WInteractWidget_setPopup(lua_State* L) {
-    int argc = lua_gettop(L) - 1;
-
-    WInteractWidget* self = luawt_checkFromLua<WInteractWidget>(L, 1);
-        if (argc == 1) {
-    bool popup = lua_toboolean(L, 2);
-    self->setPopup(popup);
-    return 0;
-    
-    } else {
-        return luaL_error(L, "Wrong arguments number for WInteractWidget.setPopup: %d", argc);
     }
 }
 
@@ -95,9 +53,6 @@ ADD_SIGNAL(gestureChanged, WInteractWidget, Wt::WGestureEvent)
 ADD_SIGNAL(gestureEnded, WInteractWidget, Wt::WGestureEvent)
 
 static const luaL_Reg luawt_WInteractWidget_methods[] = {
-    METHOD(WInteractWidget, setMouseOverDelay),
-    METHOD(WInteractWidget, mouseOverDelay),
-    METHOD(WInteractWidget, setPopup),
     METHOD(WInteractWidget, load),
     METHOD(WInteractWidget, isEnabled),
     METHOD(WInteractWidget, keyWentDown),
