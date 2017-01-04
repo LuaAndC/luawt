@@ -36,14 +36,18 @@ function test.createServer(code, port, wt_config)
     return server
 end
 
-function test.testWidget(name)
+function test.testWidget(name, constructor_has_arguments)
     local luawt = require 'luawt'
+    local args_str = ''
+    if constructor_has_arguments then
+        args_str = 'app:root()'
+    end
     local code = ([[
         local app, env = ...
         local luawt = require 'luawt'
-        local widget = luawt.%s(app:root())
+        local widget = luawt.%s(%s)
         luawt.Shared.widget_id = widget:id()
-    ]]):format(name)
+    ]]):format(name, args_str)
     local port = 56789
     local wt_config = test.baseConfig()
     local server = test.createServer(code, port, wt_config)
