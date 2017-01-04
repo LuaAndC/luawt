@@ -48,11 +48,11 @@ function test.testWidget(name)
     local wt_config = test.baseConfig()
     local server = test.createServer(code, port, wt_config)
     server:start()
-    os.execute("sleep 10")
+    os.execute("sleep 1")
     local data = test.socketRequest(port)
     local bust_assert = require 'busted'.assert
     bust_assert.truthy(data:match(luawt.Shared.widget_id)) -- ID should be there
-    os.execute("sleep 10")
+    os.execute("sleep 1")
     server:stop()
     os.remove(wt_config)
 end
