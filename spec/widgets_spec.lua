@@ -8,7 +8,7 @@ describe("luawt widgets", function()
 
     -- List of widgets tests
     it("creates WPushButton", function()
-        test.testWidget("WPushButton")
+        test.testWidget("WPushButton", true)
     end)
 
 end)
