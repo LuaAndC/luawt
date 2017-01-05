@@ -333,7 +333,7 @@ def getConstructors(global_namespace, module_name, blacklisted):
             if not inBlacklist(constructor, blacklisted):
                 result.append(constructor)
     if result:
-        return result
+        return result, getConstructorsType(result)
     raise Exception('Unable to bind any constructors of %s' % module_name)
 
 def isModule(module_str):
@@ -875,7 +875,7 @@ def bind(modules, module_only, blacklist):
                 module_name,
                 blacklist.get(module_name),
             )
-            constructors = getConstructors(
+            constructors, constructors_type = getConstructors(
                 global_namespace,
                 module_name,
                 blacklist.get(module_name),
