@@ -291,6 +291,30 @@ def getMembers(global_namespace, module_name, blacklisted):
     ]
     return methods, signals, base_r
 
+# For widget tests generation.
+# Function returns flag - constructors type:
+# - 0 means error - no constructors supported by luawt.test are available;
+# - 1 - only no-args constructors are available
+# - 2 means that there're constructors with single WContainerWidget arg
+def getConstructorsType(constructors):
+    has_void_args = False
+    has_sing_arg = False
+    for constructor in constructors:
+        args = constructor.arguments
+        req_args = constructor.required_args
+        if len(args) == 1:
+            type_s = str(clearType(getArgType(args[0])))
+            print(type_s)
+            if type_s == 'Wt::WContainerWidget':
+                has_sing_arg = True
+        elif len(req_args) == 0:
+            has_void_args = True
+    if has_sing_arg:
+        return 2
+    if has_void_args:
+        return 1
+    return 0
+
 def getConstructors(global_namespace, module_name, blacklisted):
     Wt = global_namespace.namespace('Wt')
     main_class = Wt.class_(name=module_name)
