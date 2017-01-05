@@ -131,7 +131,7 @@ describe("luawt widgets", function()
         test.testWidget("WTextEdit")
     end)
     it("creates WPushButton", function()
-        test.testWidget("WPushButton")
+        test.testWidget("WPushButton", true)
     end)
 
 end)
