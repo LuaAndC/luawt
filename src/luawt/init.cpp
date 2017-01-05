@@ -26,6 +26,7 @@ static const luawt_Reg luawt_modules[] = {
     MODULE(WServer),
 #endif
     MODULE(WWidget),
+    MODULE(WCompositeWidget),
     MODULE(WCalendar),
     MODULE(WDatePicker),
     MODULE(WAbstractItemView),
