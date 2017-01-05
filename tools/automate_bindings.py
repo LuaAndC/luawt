@@ -849,21 +849,29 @@ def getAllModules(path='%s/*'%INCLUDE_WT):
     return modules
 
 TEST_FRAME = r'''
-    it("creates %s", function()
-        test.testWidget("%s")
+    it("creates %(module_name)s", function()
+        test.testWidget("%(module_name)s", %(has_args)s)
     end)
 '''
 
-def addTest(module_name):
-    module_str = '    ' + TEST_FRAME.lstrip() % (module_name, module_name)
-    parameters = [
-        {
-            'filename' : 'spec/widgets_spec.lua',
-            'pattern' : r'-- List of widgets tests',
-            'module_str' : module_str,
-        },
-    ]
-    addItemToFiles(parameters, module_name)
+def addTest(module_name, constructors_type):
+    if constructors_type == 0:
+        logging.warning("Unable to generate test for %s" % module_name)
+    else:
+        has_args = (constructors_type == 2)
+        options = {
+            'module_name' : module_name,
+            'has_args' : str(has_args).lower(),
+        }
+        module_str = '    ' + TEST_FRAME.lstrip() % options
+        parameters = [
+            {
+                'filename' : 'spec/widgets_spec.lua',
+                'pattern' : r'-- List of widgets tests',
+                'module_str' : module_str,
+            },
+        ]
+        addItemToFiles(parameters, module_name)
 
 def bind(modules, module_only, blacklist):
     for module in modules:
@@ -891,7 +899,7 @@ def bind(modules, module_only, blacklist):
                 addModuleToLists(module_name, global_namespace.namespace('Wt'))
             if constructors:
                 # Is not abstract
-                addTest(module_name)
+                addTest(module_name, constructors_type)
             writeSourceToFile(module_name, source)
         except Exception as e:
             if len(modules) == 1:
