@@ -1,22 +1,20 @@
 WAbstractItemView:
   methods:
   - clearSelection
-  - column1Fixed
   - headerWordWrap
   - horizontalHeaderAlignment
-  - rowHeaderCount
-  - setColumn1Fixed
   - setHeaderAlignment
   - setHeaderClickSortEnabled
   - setHeaderWordWrap
   - setObjectName
-  - setRowHeaderCount
   - sortEnabled
   - verticalHeaderAlignment
 WAbstractMedia:
   whole class: true
 WAbstractSpinBox:
-  whole class: true
+  methods:
+  - refresh
+  - validate
 WAbstractToggleButton:
   methods:
   - refresh
@@ -28,7 +26,10 @@ WAbstractToggleButton:
   - wordWrap
 WAnchor:
   methods:
+  - canReceiveFocus
+  - setFirstFocus
   - setTextFormat
+  - tabIndex
   - textFormat
   signatures:
   - WAnchor(::std::string,WContainerWidget*)
@@ -36,6 +37,10 @@ WAnchor:
   - WAnchor(::std::string,WString,WContainerWidget*)
 WAudio:
   whole class: true
+WCheckBox:
+  methods:
+  - isPartialStateSelectable
+  - setPartialStateSelectable
 WComboBox:
   methods:
   - noSelectionEnabled
@@ -49,40 +54,46 @@ WCompositeWidget:
   - canReceiveFocus
   - hasFocus
   - hasStyleClass
-  - isScrollVisible
   - objectName
   - propagateSetVisible
-  - scrollVisibilityEnabled
-  - scrollVisibilityMargin
   - setCanReceiveFocus
   - setDeferredToolTip
   - setFirstFocus
   - setFocus
-  - setHidden
   - setObjectName
-  - setScrollVisibilityEnabled
-  - setScrollVisibilityMargin
   - zIndex
-  signatures:
-  - setToolTip(WString)
-  - setToolTip(WString,TextFormat)
+WContainerWidget:
+  methods:
+  - isGlobalUnfocussed
+  - scrollLeft
+  - scrollTop
+  - setGlobalUnfocused
 WDateEdit:
   whole class: true
 WDatePicker:
   methods:
   - popupWidget
-  - setHidden
   signatures:
   - WDatePicker(WLineEdit*,WContainerWidget*)
 WDialog:
   whole class: true
 WDoubleSpinBox:
-  whole class: true
-WFileDropWidget:
-  whole class: true
+  methods:
+  - refresh
 WFileUpload:
   methods:
   - setFilters
+WFormWidget:
+  methods:
+  - canReceiveFocus
+  - hasFocus
+  - placeholderText
+  - setFocus
+  - setPlaceholderText
+  - setTabIndex
+  - setToolTip
+  - setValueText
+  - valueText
 WGLWidget:
   methods:
   - attachShader
@@ -133,26 +144,51 @@ WGLWidget:
   - vertexAttribPointer
   - webglNotAvailable
   signatures:
+  - texImage2D(WGLWidget::GLenum,int,WGLWidget::GLenum,WGLWidget::GLenum,WGLWidget::GLenum,WHTML5Video*)
   - texImage2D(WGLWidget::GLenum,int,WGLWidget::GLenum,WGLWidget::GLenum,WGLWidget::GLenum,WVideo*)
   - texImage2D(WGLWidget::GLenum,int,WGLWidget::GLenum,unsignedint,unsignedint,int,WGLWidget::GLenum)
 WHTML5Audio:
   whole class: true
 WHTML5Media:
   whole class: true
+WHTML5Video:
+  whole class: true
 WIcon:
   whole class: true
+WImage:
+  methods:
+  - setAreaCoordsJS
+  - setTargetJS
+  - updateAreasJS
+  signatures:
+  - WImage(::std::string,WContainerWidget*)
+  - WImage(::std::string,WString,WContainerWidget*)
 WInPlaceEdit:
   methods:
   - placeholderText
   - setPlaceholderText
-  - textWidget
   signatures:
   - WInPlaceEdit(WContainerWidget*)
   - WInPlaceEdit(bool,WString,WContainerWidget*)
+WInteractWidget:
+  methods:
+  - mouseOverDelay
+  - setMouseOverDelay
+  - setPopup
+  - unsetDraggable
 WLabel:
   methods:
   - setTextFormat
   - textFormat
+WLineEdit:
+  methods:
+  - autoComplete
+  - displayText
+  - inputMask
+  - setAutoComplete
+  - setSelection
+  - setValueText
+  - valueText
 WMediaPlayer:
   whole class: true
 WMenu:
@@ -167,6 +203,7 @@ WMenu:
   - insertItem
   - insertMenu
   - itemAt
+  - load
   - parentItem
   - removeItem
   signatures:
@@ -190,7 +227,6 @@ WPopupMenu:
   - addSeparator
   - setAutoHide
   - setButton
-  - setHidden
   signatures:
   - WPopupMenu()
   - WPopupMenu(WStackedWidget*)
@@ -215,6 +251,7 @@ WPushButton:
   - setIcon
   - setLinkTarget
   - setMenu
+  - setRefInternalPath
   - setTextFormat
   - setUnChecked
   - setValueText
@@ -225,52 +262,33 @@ WPushButton:
 WSlider:
   methods:
   - handleWidth
-  - nativeControl
   - setDisabled
   - setHandleWidth
-  - setNativeControl
   - setValueText
   - valueText
-WSpinBox:
-  methods:
-  - setWrapAroundEnabled
-  - wrapAroundEnabled
-  signatures:
-  - setMaximum(double)
-  - setMaximum(int)
-  - setMinimum(double)
-  - setMinimum(int)
-  - setRange(double,double)
-  - setRange(int,int)
-  - setSingleStep(double)
-  - setSingleStep(int)
-  - setValue(double)
-  - setValue(int)
 WSplitButton:
   whole class: true
 WSuggestionPopup:
   whole class: true
-WTabWidget:
-  methods:
-  - contentsStack
 WTableCell:
   whole class: true
 WTableView:
   methods:
   - scrollTo
-  - setRowHeaderCount
 WTemplate:
   methods:
   - bindEmpty
   - conditionValue
   - encodeTemplateText
   - getErrorText
-  - hasInternalPathEncoding
   - setCondition
   - setEncodeTemplateText
-  - setInternalPathEncoding
   - setWidgetIdMode
   - widgetIdMode
+WText:
+  methods:
+  - setTextAlignment
+  - textAlignment
 WTextArea:
   methods:
   - setValueText
@@ -288,33 +306,17 @@ WTimePicker:
   whole class: true
 WToolBar:
   whole class: true
-WTreeView:
-  methods:
-  - column1Fixed
-  - setColumn1Fixed
-  - setRowHeaderCount
 WVideo:
   whole class: true
 WWebWidget:
   methods:
   - canReceiveFocus
-  - fixRelativeUrl
   - hasFocus
   - hasStyleClass
   - htmlTagName
-  - isScrollVisible
-  - resolveRelativeUrl
-  - scrollVisibilityEnabled
-  - scrollVisibilityMargin
   - setCanReceiveFocus
   - setDeferredToolTip
   - setFirstFocus
   - setFocus
-  - setHidden
   - setHtmlTagName
-  - setScrollVisibilityEnabled
-  - setScrollVisibilityMargin
-  signatures:
-  - setToolTip(WString)
-  - setToolTip(WString,TextFormat)
 

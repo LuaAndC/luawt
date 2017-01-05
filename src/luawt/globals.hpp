@@ -412,15 +412,63 @@ public:
 /* This functions are called from luaopen() */
 void luawt_Shared(lua_State* L);
 void luawt_Test(lua_State* L);
+void luawt_WAbstractItemView(lua_State* L);
+void luawt_WAbstractSpinBox(lua_State* L);
+void luawt_WAbstractToggleButton(lua_State* L);
+void luawt_WAnchor(lua_State* L);
 void luawt_WApplication(lua_State* L);
+void luawt_WCalendar(lua_State* L);
+void luawt_WCheckBox(lua_State* L);
+void luawt_WComboBox(lua_State* L);
+void luawt_WCompositeWidget(lua_State* L);
 void luawt_WContainerWidget(lua_State* L);
+void luawt_WDatePicker(lua_State* L);
+void luawt_WDefaultLoadingIndicator(lua_State* L);
+void luawt_WDoubleSpinBox(lua_State* L);
 void luawt_WEnvironment(lua_State* L);
+void luawt_WFileUpload(lua_State* L);
+void luawt_WFlashObject(lua_State* L);
+void luawt_WFormWidget(lua_State* L);
+void luawt_WGLWidget(lua_State* L);
+void luawt_WGoogleMap(lua_State* L);
+void luawt_WGroupBox(lua_State* L);
+void luawt_WIconPair(lua_State* L);
+void luawt_WImage(lua_State* L);
+void luawt_WInPlaceEdit(lua_State* L);
+void luawt_WInteractWidget(lua_State* L);
+void luawt_WLabel(lua_State* L);
+void luawt_WLineEdit(lua_State* L);
+void luawt_WMenu(lua_State* L);
+void luawt_WOverlayLoadingIndicator(lua_State* L);
+void luawt_WPaintedWidget(lua_State* L);
+void luawt_WPanel(lua_State* L);
+void luawt_WProgressBar(lua_State* L);
 void luawt_WPushButton(lua_State* L);
+void luawt_WScrollArea(lua_State* L);
+void luawt_WSelectionBox(lua_State* L);
+void luawt_WSlider(lua_State* L);
+void luawt_WSpinBox(lua_State* L);
+void luawt_WStackedWidget(lua_State* L);
+void luawt_WTabWidget(lua_State* L);
+void luawt_WTable(lua_State* L);
+void luawt_WTableView(lua_State* L);
+void luawt_WTemplate(lua_State* L);
 #ifdef LUAWTEST
 void luawt_WTestEnvironment(lua_State* L);
 #else
 void luawt_WServer(lua_State* L);
 #endif
+void luawt_WText(lua_State* L);
+void luawt_WTextArea(lua_State* L);
+void luawt_WTextEdit(lua_State* L);
+void luawt_WTree(lua_State* L);
+void luawt_WTreeNode(lua_State* L);
+void luawt_WTreeTable(lua_State* L);
+void luawt_WTreeTableNode(lua_State* L);
+void luawt_WTreeView(lua_State* L);
+void luawt_WViewWidget(lua_State* L);
+void luawt_WVirtualImage(lua_State* L);
+void luawt_WWebWidget(lua_State* L);
 void luawt_WWidget(lua_State* L);
 
 #endif
