@@ -151,7 +151,8 @@ int luawt_WAnchor_setRef(lua_State* L) {
     }
 }
 
-int luawt_WAnchor_ref(lua_State* L) {
+// TODO: find out what's the problem with ref() method.
+/* int luawt_WAnchor_ref(lua_State* L) {
     int argc = lua_gettop(L) - 1;
 
     WAnchor* self = luawt_checkFromLua<WAnchor>(L, 1);
@@ -163,7 +164,7 @@ int luawt_WAnchor_ref(lua_State* L) {
     } else {
         return luaL_error(L, "Wrong arguments number for WAnchor.ref: %d", argc);
     }
-}
+} */
 
 int luawt_WAnchor_image(lua_State* L) {
     int argc = lua_gettop(L) - 1;
@@ -204,7 +205,7 @@ ADD_SIGNAL(gestureEnded, WAnchor, Wt::WGestureEvent)
 static const luaL_Reg luawt_WAnchor_methods[] = {
     METHOD(WAnchor, setRef),
     METHOD(WAnchor, setRefInternalPath),
-    METHOD(WAnchor, ref),
+    //METHOD(WAnchor, ref),
     METHOD(WAnchor, setText),
     METHOD(WAnchor, text),
     METHOD(WAnchor, setWordWrap),
