@@ -15,6 +15,7 @@
 #include <typeinfo>
 
 #include <boost/cast.hpp>
+#include <boost/format.hpp>
 #include <boost/shared_ptr.hpp>
 
 #include "boost-xtime.hpp"
@@ -452,6 +453,26 @@ inline bool checkArgsGroup(
         }
     }
     return true;
+}
+
+
+/* All overloads and different variants of optional arguments
+   are given in `args_groups`. Function finds group corresponding
+   to the given stack state (L arg).
+*/
+inline int getSuitableArgsGroup(
+    lua_State* L,
+    const std::vector< std::vector<const char*> >& args_groups,
+    const char* func_name
+) {
+    for (int group_n = 0; group_n < args_groups.size(); group_n++) {
+        if (checkArgsGroup(L, args_groups[group_n])) {
+            return group_n;
+        }
+    }
+    boost::format fmter =
+        boost::format("LuaWt: bad arguments for function %1%") % func_name;
+    throw std::invalid_argument(fmter.str());
 }
 
 /* This functions are called from luaopen() */
