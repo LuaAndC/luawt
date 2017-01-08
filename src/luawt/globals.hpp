@@ -436,6 +436,24 @@ inline bool equalTypes(
     return result;
 }
 
+/* Compare stack (L) and args group type by type. */
+inline bool checkArgsGroup(
+    lua_State* L,
+    const std::vector<const char*>& group
+) {
+    int stack_size = lua_gettop(L);
+    if (stack_size != group.size()) {
+        return false;
+    }
+    for (int index = 0; index < stack_size; index++) {
+        const char* expected_type = group[index];
+        if (!equalTypes(L, index + 1, expected_type)) {
+            return false;
+        }
+    }
+    return true;
+}
+
 /* This functions are called from luaopen() */
 void luawt_Shared(lua_State* L);
 void luawt_Test(lua_State* L);
