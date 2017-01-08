@@ -409,6 +409,33 @@ public:
         lua_pop(L, 1); \
     }
 
+inline bool equalTypes(
+    lua_State* L,
+    int index,
+    const char* expected_type
+) {
+    int real_type = lua_type(L, index);
+    bool result = false;
+    if (real_type == LUA_TNUMBER) {
+        bool is_int = (strcmp(expected_type, "int") == 0);
+        bool is_double = (strcmp(expected_type, "double") == 0);
+        result = is_int || is_double;
+    } else if (real_type == LUA_TBOOLEAN) {
+        result = (strcmp(expected_type, "bool") == 0);
+    } else if (real_type == LUA_TSTRING) {
+        result = (strcmp(expected_type, "char const *") == 0);
+    } else if (real_type == LUA_TUSERDATA) {
+        if (lua_getmetatable(L, index)) {
+            lua_getfield(L, -1, "__name");
+            const char* name = lua_tostring(L, -1);
+            result = (strcmp(expected_type, name) == 0);
+            // metatable; name field
+            lua_pop(L, 2);
+        }
+    }
+    return result;
+}
+
 /* This functions are called from luaopen() */
 void luawt_Shared(lua_State* L);
 void luawt_Test(lua_State* L);
