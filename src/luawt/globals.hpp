@@ -447,13 +447,14 @@ inline bool luawt_equalTypes(
     } else if (real_type == LUA_TSTRING) {
         result = (strcmp(expected_type, "char const *") == 0);
     } else if (real_type == LUA_TUSERDATA) {
+        std::string real_name;
         if (lua_getmetatable(L, index)) {
             lua_getfield(L, -1, "__name");
-            const char* name = lua_tostring(L, -1);
-            result = (strcmp(expected_type, name) == 0);
+            real_name = lua_tostring(L, -1);
             // metatable; name field
             lua_pop(L, 2);
         }
+        result = ascendToBase(L, std::string(expected_type), real_name);
     }
     return result;
 }
