@@ -589,13 +589,48 @@ def getBuiltinType(full_type):
     else:
         return builtin_type
 
+ARGS_ARRAY_TEMPLATE = r'''
+static const char* const* const luawt_%(module)s_%(func)s_args[] = {%(body)s};
+'''
+
 def handleEnum(type_o):
     _, detector = BUILTIN_TYPES_CONVERTERS[type_o]
     if detector == 'lua_pushinteger':
         return 'int'
     return type_o
 
+def generateArgsArray(args_groups, module_name, func_name, is_constructor):
+    complex_type_frame = 'luawt_typeToStr<%s>()'
+    args_arrs = ''
+    body = ''
+    for i, args in enumerate(args_groups):
+        name = '%s_%s_args%d' % (module_name, func_name, i)
+        body += name + ', '
+        args_arrs += 'static const char* %s[] = {' % name
+        if not is_constructor:
+            args_arrs += complex_type_frame % module_name
+            args_arrs += ', '
+        for arg in args:
+            arg_type = getArgType(arg)
+            builtin_type = getBuiltinType(str(arg_type))
+            if builtin_type:
+                args_arrs += '"' + handleEnum(builtin_type) + '"'
+            else:
+                complex_type = str(clearType(arg_type))
+                args_arrs += complex_type_frame % complex_type
+            args_arrs += ', '
+        args_arrs += 'NULL};\n'
+    body += 'NULL'
+    options = {
+        'module': module_name,
+        'func': func_name,
+        'body' : body,
+    }
+    return args_arrs + ARGS_ARRAY_TEMPLATE.strip() % options
+
 LUACFUNCTION_TEMPLATE = r'''
+%(args_arr)s
+
 int luawt_%(module)s_%(method)s(lua_State* L) {
     %(body)s
 }
