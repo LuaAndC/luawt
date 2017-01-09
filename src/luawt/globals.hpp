@@ -410,7 +410,7 @@ public:
         lua_pop(L, 1); \
     }
 
-inline bool equalTypes(
+inline bool luawt_equalTypes(
     lua_State* L,
     int index,
     const char* expected_type
@@ -438,7 +438,7 @@ inline bool equalTypes(
 }
 
 /* Compare stack (L) and args group type by type. */
-inline bool checkArgsGroup(
+inline bool luawt_checkArgsGroup(
     lua_State* L,
     const std::vector<const char*>& group
 ) {
@@ -448,7 +448,7 @@ inline bool checkArgsGroup(
     }
     for (int index = 0; index < stack_size; index++) {
         const char* expected_type = group[index];
-        if (!equalTypes(L, index + 1, expected_type)) {
+        if (!luawt_equalTypes(L, index + 1, expected_type)) {
             return false;
         }
     }
@@ -460,13 +460,13 @@ inline bool checkArgsGroup(
    are given in `args_groups`. Function finds group corresponding
    to the given stack state (L arg).
 */
-inline int getSuitableArgsGroup(
+inline int luawt_getSuitableArgsGroup(
     lua_State* L,
     const std::vector< std::vector<const char*> >& args_groups,
     const char* func_name
 ) {
     for (int group_n = 0; group_n < args_groups.size(); group_n++) {
-        if (checkArgsGroup(L, args_groups[group_n])) {
+        if (luawt_checkArgsGroup(L, args_groups[group_n])) {
             return group_n;
         }
     }
