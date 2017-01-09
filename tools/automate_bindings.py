@@ -304,7 +304,6 @@ def getConstructorsType(constructors):
         req_args = constructor.required_args
         if len(args) == 1:
             type_s = str(clearType(getArgType(args[0])))
-            print(type_s)
             if type_s == 'Wt::WContainerWidget':
                 has_sing_arg = True
         elif len(req_args) == 0:
@@ -402,7 +401,7 @@ def elseIndex():
 
 def elseFail(module_name, method_name):
     return r'''{
-        return luaL_error(L, "Wrong arguments for %s.%s: %%d", index);
+        return luaL_error(L, "Wrong arguments for %s.%s");
     }''' % (module_name, method_name)
 
 def getSelf(module_name):
