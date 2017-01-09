@@ -589,6 +589,12 @@ def getBuiltinType(full_type):
     else:
         return builtin_type
 
+def handleEnum(type_o):
+    _, detector = BUILTIN_TYPES_CONVERTERS[type_o]
+    if detector == 'lua_pushinteger':
+        return 'int'
+    return type_o
+
 LUACFUNCTION_TEMPLATE = r'''
 int luawt_%(module)s_%(method)s(lua_State* L) {
     %(body)s
