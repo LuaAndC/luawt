@@ -596,6 +596,16 @@ int luawt_%(module)s_%(method)s(lua_State* L) {
 
 '''
 
+# Add optional arguments.
+def makeArgsOverloads(functions):
+    args_overloads = []
+    for f in functions:
+        args_overloads.append(f.required_args)
+        for opt_arg in f.optional_args:
+            prev = args_overloads[len(args_overloads) - 1]
+            args_overloads.append(prev + [opt_arg])
+    return args_overloads
+
 def implementLuaCFunction(
     is_constructor,
     module_name,
@@ -707,7 +717,7 @@ def generateConstructor(module_name, constructors):
         True,
         module_name,
         constructor_name,
-        [c.arguments for c in constructors],
+        makeArgsOverloads(constructors),
         constructor_return_type,
     )
 
@@ -745,7 +755,7 @@ def generateModule(module_name, methods, base, constructors, signals):
             False,
             module_name,
             method_name,
-            [method.arguments for method in group],
+            makeArgsOverloads(group),
             return_type,
         ))
     source.append(generateSignals(signals, module_name))
