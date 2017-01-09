@@ -409,6 +409,28 @@ public:
         lua_pop(L, 1); \
     }
 
+inline bool ascendToBase(
+    lua_State* L,
+    std::string expected_name,
+    std::string real_name
+) {
+    luaL_getmetatable(L, real_name.c_str());
+    while (real_name.compare(expected_name)) {
+        // go to next base class
+        lua_getfield(L, -1, "__base");
+        lua_remove(L, -2);
+        if (lua_type(L, -1) != LUA_TTABLE) {
+            lua_pop(L, 1); // base mt
+            return false;
+        }
+        lua_getfield(L, -1, "__name");
+        real_name = lua_tostring(L, -1);
+        lua_pop(L, 1); // field name
+    }
+    lua_pop(L, 1); // base mt
+    return true;
+}
+
 inline bool luawt_equalTypes(
     lua_State* L,
     int index,
