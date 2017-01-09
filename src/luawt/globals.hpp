@@ -409,7 +409,7 @@ public:
         lua_pop(L, 1); \
     }
 
-inline bool ascendToBase(
+inline bool luawt_ascendToBase(
     lua_State* L,
     std::string expected_name,
     std::string real_name
@@ -454,7 +454,7 @@ inline bool luawt_equalTypes(
             // metatable; name field
             lua_pop(L, 2);
         }
-        result = ascendToBase(L, std::string(expected_type), real_name);
+        result = luawt_ascendToBase(L, std::string(expected_type), real_name);
     }
     return result;
 }
