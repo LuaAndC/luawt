@@ -439,10 +439,14 @@ inline bool luawt_equalTypes(
 /* Compare stack (L) and args group type by type. */
 inline bool luawt_checkArgsGroup(
     lua_State* L,
-    const std::vector<const char*>& group
+    const char* const group[]
 ) {
     int stack_size = lua_gettop(L);
-    if (stack_size != group.size()) {
+    int group_size = 0;
+    while (group[group_size] != NULL) {
+        group_size++;
+    }
+    if (stack_size != group_size) {
         return false;
     }
     for (int index = 0; index < stack_size; index++) {
@@ -460,13 +464,14 @@ inline bool luawt_checkArgsGroup(
 */
 inline int luawt_getSuitableArgsGroup(
     lua_State* L,
-    const std::vector< std::vector<const char*> >& args_groups,
-    const char* func_name
+    const char* const* const args_groups[]
 ) {
-    for (int group_n = 0; group_n < args_groups.size(); group_n++) {
+    int group_n = 0;
+    while (args_groups[group_n] != NULL) {
         if (luawt_checkArgsGroup(L, args_groups[group_n])) {
             return group_n;
         }
+        group_n++;
     }
     // Error, will be emitted as LuaL_error()
     return -1;
