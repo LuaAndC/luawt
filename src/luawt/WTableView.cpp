@@ -5,9 +5,18 @@
 
 #include "globals.hpp"
 
+static const char* WTableView_make_args0[] = {NULL};
+static const char* WTableView_make_args1[] = {luawt_typeToStr<Wt::WContainerWidget>(), NULL};
+static const char* const* const luawt_WTableView_make_args[] = {WTableView_make_args0, WTableView_make_args1, NULL};
+
 int luawt_WTableView_make(lua_State* L) {
-    int argc = lua_gettop(L);
-    if (argc == 1) {
+    int index = luawt_getSuitableArgsGroup(L, luawt_WTableView_make_args);
+    if (index == 0) {
+    WTableView * result = new WTableView();
+    luawt_toLua(L, result);
+    return 1;
+
+    } else if (index == 1) {
     Wt::WContainerWidget* parent =
         luawt_checkFromLua<Wt::WContainerWidget>(L, 1);
     WTableView * result = new WTableView(parent);
@@ -15,106 +24,120 @@ int luawt_WTableView_make(lua_State* L) {
     return 1;
 
     } else {
-        return luaL_error(L, "Wrong arguments number for WTableView.make: %d", argc);
+        return luaL_error(L, "Wrong arguments for WTableView.make");
     }
 }
 
-int luawt_WTableView_pageSize(lua_State* L) {
-    int argc = lua_gettop(L) - 1;
+static const char* WTableView_pageSize_args0[] = {luawt_typeToStr<WTableView>(), NULL};
+static const char* const* const luawt_WTableView_pageSize_args[] = {WTableView_pageSize_args0, NULL};
 
+int luawt_WTableView_pageSize(lua_State* L) {
+    int index = luawt_getSuitableArgsGroup(L, luawt_WTableView_pageSize_args);
     WTableView* self = luawt_checkFromLua<WTableView>(L, 1);
-        if (argc == 0) {
+    if (index == 0) {
     int result = self->pageSize();
     lua_pushinteger(L, result);
     return 1;
 
     } else {
-        return luaL_error(L, "Wrong arguments number for WTableView.pageSize: %d", argc);
+        return luaL_error(L, "Wrong arguments for WTableView.pageSize");
     }
 }
 
-int luawt_WTableView_pageCount(lua_State* L) {
-    int argc = lua_gettop(L) - 1;
+static const char* WTableView_pageCount_args0[] = {luawt_typeToStr<WTableView>(), NULL};
+static const char* const* const luawt_WTableView_pageCount_args[] = {WTableView_pageCount_args0, NULL};
 
+int luawt_WTableView_pageCount(lua_State* L) {
+    int index = luawt_getSuitableArgsGroup(L, luawt_WTableView_pageCount_args);
     WTableView* self = luawt_checkFromLua<WTableView>(L, 1);
-        if (argc == 0) {
+    if (index == 0) {
     int result = self->pageCount();
     lua_pushinteger(L, result);
     return 1;
 
     } else {
-        return luaL_error(L, "Wrong arguments number for WTableView.pageCount: %d", argc);
+        return luaL_error(L, "Wrong arguments for WTableView.pageCount");
     }
 }
 
-int luawt_WTableView_setColumnHidden(lua_State* L) {
-    int argc = lua_gettop(L) - 1;
+static const char* WTableView_setColumnHidden_args0[] = {luawt_typeToStr<WTableView>(), "int", "bool", NULL};
+static const char* const* const luawt_WTableView_setColumnHidden_args[] = {WTableView_setColumnHidden_args0, NULL};
 
+int luawt_WTableView_setColumnHidden(lua_State* L) {
+    int index = luawt_getSuitableArgsGroup(L, luawt_WTableView_setColumnHidden_args);
     WTableView* self = luawt_checkFromLua<WTableView>(L, 1);
-        if (argc == 2) {
+    if (index == 0) {
     int column = lua_tointeger(L, 2);
     bool hidden = lua_toboolean(L, 3);
     self->setColumnHidden(column, hidden);
     return 0;
     
     } else {
-        return luaL_error(L, "Wrong arguments number for WTableView.setColumnHidden: %d", argc);
+        return luaL_error(L, "Wrong arguments for WTableView.setColumnHidden");
     }
 }
 
-int luawt_WTableView_setAlternatingRowColors(lua_State* L) {
-    int argc = lua_gettop(L) - 1;
+static const char* WTableView_setAlternatingRowColors_args0[] = {luawt_typeToStr<WTableView>(), "bool", NULL};
+static const char* const* const luawt_WTableView_setAlternatingRowColors_args[] = {WTableView_setAlternatingRowColors_args0, NULL};
 
+int luawt_WTableView_setAlternatingRowColors(lua_State* L) {
+    int index = luawt_getSuitableArgsGroup(L, luawt_WTableView_setAlternatingRowColors_args);
     WTableView* self = luawt_checkFromLua<WTableView>(L, 1);
-        if (argc == 1) {
+    if (index == 0) {
     bool enable = lua_toboolean(L, 2);
     self->setAlternatingRowColors(enable);
     return 0;
     
     } else {
-        return luaL_error(L, "Wrong arguments number for WTableView.setAlternatingRowColors: %d", argc);
+        return luaL_error(L, "Wrong arguments for WTableView.setAlternatingRowColors");
     }
 }
 
-int luawt_WTableView_setRowHeaderCount(lua_State* L) {
-    int argc = lua_gettop(L) - 1;
+static const char* WTableView_setRowHeaderCount_args0[] = {luawt_typeToStr<WTableView>(), "int", NULL};
+static const char* const* const luawt_WTableView_setRowHeaderCount_args[] = {WTableView_setRowHeaderCount_args0, NULL};
 
+int luawt_WTableView_setRowHeaderCount(lua_State* L) {
+    int index = luawt_getSuitableArgsGroup(L, luawt_WTableView_setRowHeaderCount_args);
     WTableView* self = luawt_checkFromLua<WTableView>(L, 1);
-        if (argc == 1) {
+    if (index == 0) {
     int count = lua_tointeger(L, 2);
     self->setRowHeaderCount(count);
     return 0;
     
     } else {
-        return luaL_error(L, "Wrong arguments number for WTableView.setRowHeaderCount: %d", argc);
+        return luaL_error(L, "Wrong arguments for WTableView.setRowHeaderCount");
     }
 }
 
-int luawt_WTableView_currentPage(lua_State* L) {
-    int argc = lua_gettop(L) - 1;
+static const char* WTableView_currentPage_args0[] = {luawt_typeToStr<WTableView>(), NULL};
+static const char* const* const luawt_WTableView_currentPage_args[] = {WTableView_currentPage_args0, NULL};
 
+int luawt_WTableView_currentPage(lua_State* L) {
+    int index = luawt_getSuitableArgsGroup(L, luawt_WTableView_currentPage_args);
     WTableView* self = luawt_checkFromLua<WTableView>(L, 1);
-        if (argc == 0) {
+    if (index == 0) {
     int result = self->currentPage();
     lua_pushinteger(L, result);
     return 1;
 
     } else {
-        return luaL_error(L, "Wrong arguments number for WTableView.currentPage: %d", argc);
+        return luaL_error(L, "Wrong arguments for WTableView.currentPage");
     }
 }
 
-int luawt_WTableView_setCurrentPage(lua_State* L) {
-    int argc = lua_gettop(L) - 1;
+static const char* WTableView_setCurrentPage_args0[] = {luawt_typeToStr<WTableView>(), "int", NULL};
+static const char* const* const luawt_WTableView_setCurrentPage_args[] = {WTableView_setCurrentPage_args0, NULL};
 
+int luawt_WTableView_setCurrentPage(lua_State* L) {
+    int index = luawt_getSuitableArgsGroup(L, luawt_WTableView_setCurrentPage_args);
     WTableView* self = luawt_checkFromLua<WTableView>(L, 1);
-        if (argc == 1) {
+    if (index == 0) {
     int page = lua_tointeger(L, 2);
     self->setCurrentPage(page);
     return 0;
     
     } else {
-        return luaL_error(L, "Wrong arguments number for WTableView.setCurrentPage: %d", argc);
+        return luaL_error(L, "Wrong arguments for WTableView.setCurrentPage");
     }
 }
 

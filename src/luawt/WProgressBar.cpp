@@ -6,9 +6,18 @@
 
 #include "globals.hpp"
 
+static const char* WProgressBar_make_args0[] = {NULL};
+static const char* WProgressBar_make_args1[] = {luawt_typeToStr<Wt::WContainerWidget>(), NULL};
+static const char* const* const luawt_WProgressBar_make_args[] = {WProgressBar_make_args0, WProgressBar_make_args1, NULL};
+
 int luawt_WProgressBar_make(lua_State* L) {
-    int argc = lua_gettop(L);
-    if (argc == 1) {
+    int index = luawt_getSuitableArgsGroup(L, luawt_WProgressBar_make_args);
+    if (index == 0) {
+    WProgressBar * result = new WProgressBar();
+    luawt_toLua(L, result);
+    return 1;
+
+    } else if (index == 1) {
     Wt::WContainerWidget* parent =
         luawt_checkFromLua<Wt::WContainerWidget>(L, 1);
     WProgressBar * result = new WProgressBar(parent);
@@ -16,149 +25,169 @@ int luawt_WProgressBar_make(lua_State* L) {
     return 1;
 
     } else {
-        return luaL_error(L, "Wrong arguments number for WProgressBar.make: %d", argc);
+        return luaL_error(L, "Wrong arguments for WProgressBar.make");
     }
 }
 
-int luawt_WProgressBar_setMaximum(lua_State* L) {
-    int argc = lua_gettop(L) - 1;
+static const char* WProgressBar_setMaximum_args0[] = {luawt_typeToStr<WProgressBar>(), "double", NULL};
+static const char* const* const luawt_WProgressBar_setMaximum_args[] = {WProgressBar_setMaximum_args0, NULL};
 
+int luawt_WProgressBar_setMaximum(lua_State* L) {
+    int index = luawt_getSuitableArgsGroup(L, luawt_WProgressBar_setMaximum_args);
     WProgressBar* self = luawt_checkFromLua<WProgressBar>(L, 1);
-        if (argc == 1) {
+    if (index == 0) {
     double maximum = lua_tonumber(L, 2);
     self->setMaximum(maximum);
     return 0;
     
     } else {
-        return luaL_error(L, "Wrong arguments number for WProgressBar.setMaximum: %d", argc);
+        return luaL_error(L, "Wrong arguments for WProgressBar.setMaximum");
     }
 }
 
-int luawt_WProgressBar_setValue(lua_State* L) {
-    int argc = lua_gettop(L) - 1;
+static const char* WProgressBar_setValue_args0[] = {luawt_typeToStr<WProgressBar>(), "double", NULL};
+static const char* const* const luawt_WProgressBar_setValue_args[] = {WProgressBar_setValue_args0, NULL};
 
+int luawt_WProgressBar_setValue(lua_State* L) {
+    int index = luawt_getSuitableArgsGroup(L, luawt_WProgressBar_setValue_args);
     WProgressBar* self = luawt_checkFromLua<WProgressBar>(L, 1);
-        if (argc == 1) {
+    if (index == 0) {
     double value = lua_tonumber(L, 2);
     self->setValue(value);
     return 0;
     
     } else {
-        return luaL_error(L, "Wrong arguments number for WProgressBar.setValue: %d", argc);
+        return luaL_error(L, "Wrong arguments for WProgressBar.setValue");
     }
 }
 
-int luawt_WProgressBar_format(lua_State* L) {
-    int argc = lua_gettop(L) - 1;
+static const char* WProgressBar_format_args0[] = {luawt_typeToStr<WProgressBar>(), NULL};
+static const char* const* const luawt_WProgressBar_format_args[] = {WProgressBar_format_args0, NULL};
 
+int luawt_WProgressBar_format(lua_State* L) {
+    int index = luawt_getSuitableArgsGroup(L, luawt_WProgressBar_format_args);
     WProgressBar* self = luawt_checkFromLua<WProgressBar>(L, 1);
-        if (argc == 0) {
+    if (index == 0) {
     Wt::WString const & result = self->format();
     lua_pushstring(L, result.toUTF8().c_str());
     return 1;
 
     } else {
-        return luaL_error(L, "Wrong arguments number for WProgressBar.format: %d", argc);
+        return luaL_error(L, "Wrong arguments for WProgressBar.format");
     }
 }
 
-int luawt_WProgressBar_setFormat(lua_State* L) {
-    int argc = lua_gettop(L) - 1;
+static const char* WProgressBar_setFormat_args0[] = {luawt_typeToStr<WProgressBar>(), "char const *", NULL};
+static const char* const* const luawt_WProgressBar_setFormat_args[] = {WProgressBar_setFormat_args0, NULL};
 
+int luawt_WProgressBar_setFormat(lua_State* L) {
+    int index = luawt_getSuitableArgsGroup(L, luawt_WProgressBar_setFormat_args);
     WProgressBar* self = luawt_checkFromLua<WProgressBar>(L, 1);
-        if (argc == 1) {
+    if (index == 0) {
     char const * raw2 = lua_tostring(L, 2);
     Wt::WString format = Wt::WString(raw2);
     self->setFormat(format);
     return 0;
     
     } else {
-        return luaL_error(L, "Wrong arguments number for WProgressBar.setFormat: %d", argc);
+        return luaL_error(L, "Wrong arguments for WProgressBar.setFormat");
     }
 }
 
-int luawt_WProgressBar_text(lua_State* L) {
-    int argc = lua_gettop(L) - 1;
+static const char* WProgressBar_text_args0[] = {luawt_typeToStr<WProgressBar>(), NULL};
+static const char* const* const luawt_WProgressBar_text_args[] = {WProgressBar_text_args0, NULL};
 
+int luawt_WProgressBar_text(lua_State* L) {
+    int index = luawt_getSuitableArgsGroup(L, luawt_WProgressBar_text_args);
     WProgressBar* self = luawt_checkFromLua<WProgressBar>(L, 1);
-        if (argc == 0) {
+    if (index == 0) {
     Wt::WString result = self->text();
     lua_pushstring(L, result.toUTF8().c_str());
     return 1;
 
     } else {
-        return luaL_error(L, "Wrong arguments number for WProgressBar.text: %d", argc);
+        return luaL_error(L, "Wrong arguments for WProgressBar.text");
     }
 }
 
-int luawt_WProgressBar_maximum(lua_State* L) {
-    int argc = lua_gettop(L) - 1;
+static const char* WProgressBar_maximum_args0[] = {luawt_typeToStr<WProgressBar>(), NULL};
+static const char* const* const luawt_WProgressBar_maximum_args[] = {WProgressBar_maximum_args0, NULL};
 
+int luawt_WProgressBar_maximum(lua_State* L) {
+    int index = luawt_getSuitableArgsGroup(L, luawt_WProgressBar_maximum_args);
     WProgressBar* self = luawt_checkFromLua<WProgressBar>(L, 1);
-        if (argc == 0) {
+    if (index == 0) {
     double result = self->maximum();
     lua_pushnumber(L, result);
     return 1;
 
     } else {
-        return luaL_error(L, "Wrong arguments number for WProgressBar.maximum: %d", argc);
+        return luaL_error(L, "Wrong arguments for WProgressBar.maximum");
     }
 }
 
-int luawt_WProgressBar_value(lua_State* L) {
-    int argc = lua_gettop(L) - 1;
+static const char* WProgressBar_value_args0[] = {luawt_typeToStr<WProgressBar>(), NULL};
+static const char* const* const luawt_WProgressBar_value_args[] = {WProgressBar_value_args0, NULL};
 
+int luawt_WProgressBar_value(lua_State* L) {
+    int index = luawt_getSuitableArgsGroup(L, luawt_WProgressBar_value_args);
     WProgressBar* self = luawt_checkFromLua<WProgressBar>(L, 1);
-        if (argc == 0) {
+    if (index == 0) {
     double result = self->value();
     lua_pushnumber(L, result);
     return 1;
 
     } else {
-        return luaL_error(L, "Wrong arguments number for WProgressBar.value: %d", argc);
+        return luaL_error(L, "Wrong arguments for WProgressBar.value");
     }
 }
 
-int luawt_WProgressBar_minimum(lua_State* L) {
-    int argc = lua_gettop(L) - 1;
+static const char* WProgressBar_minimum_args0[] = {luawt_typeToStr<WProgressBar>(), NULL};
+static const char* const* const luawt_WProgressBar_minimum_args[] = {WProgressBar_minimum_args0, NULL};
 
+int luawt_WProgressBar_minimum(lua_State* L) {
+    int index = luawt_getSuitableArgsGroup(L, luawt_WProgressBar_minimum_args);
     WProgressBar* self = luawt_checkFromLua<WProgressBar>(L, 1);
-        if (argc == 0) {
+    if (index == 0) {
     double result = self->minimum();
     lua_pushnumber(L, result);
     return 1;
 
     } else {
-        return luaL_error(L, "Wrong arguments number for WProgressBar.minimum: %d", argc);
+        return luaL_error(L, "Wrong arguments for WProgressBar.minimum");
     }
 }
 
-int luawt_WProgressBar_setMinimum(lua_State* L) {
-    int argc = lua_gettop(L) - 1;
+static const char* WProgressBar_setMinimum_args0[] = {luawt_typeToStr<WProgressBar>(), "double", NULL};
+static const char* const* const luawt_WProgressBar_setMinimum_args[] = {WProgressBar_setMinimum_args0, NULL};
 
+int luawt_WProgressBar_setMinimum(lua_State* L) {
+    int index = luawt_getSuitableArgsGroup(L, luawt_WProgressBar_setMinimum_args);
     WProgressBar* self = luawt_checkFromLua<WProgressBar>(L, 1);
-        if (argc == 1) {
+    if (index == 0) {
     double minimum = lua_tonumber(L, 2);
     self->setMinimum(minimum);
     return 0;
     
     } else {
-        return luaL_error(L, "Wrong arguments number for WProgressBar.setMinimum: %d", argc);
+        return luaL_error(L, "Wrong arguments for WProgressBar.setMinimum");
     }
 }
 
-int luawt_WProgressBar_setRange(lua_State* L) {
-    int argc = lua_gettop(L) - 1;
+static const char* WProgressBar_setRange_args0[] = {luawt_typeToStr<WProgressBar>(), "double", "double", NULL};
+static const char* const* const luawt_WProgressBar_setRange_args[] = {WProgressBar_setRange_args0, NULL};
 
+int luawt_WProgressBar_setRange(lua_State* L) {
+    int index = luawt_getSuitableArgsGroup(L, luawt_WProgressBar_setRange_args);
     WProgressBar* self = luawt_checkFromLua<WProgressBar>(L, 1);
-        if (argc == 2) {
+    if (index == 0) {
     double minimum = lua_tonumber(L, 2);
     double maximum = lua_tonumber(L, 3);
     self->setRange(minimum, maximum);
     return 0;
     
     } else {
-        return luaL_error(L, "Wrong arguments number for WProgressBar.setRange: %d", argc);
+        return luaL_error(L, "Wrong arguments for WProgressBar.setRange");
     }
 }
 

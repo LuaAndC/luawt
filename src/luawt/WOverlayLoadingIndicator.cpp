@@ -5,9 +5,36 @@
 
 #include "globals.hpp"
 
+static const char* WOverlayLoadingIndicator_make_args0[] = {NULL};
+static const char* WOverlayLoadingIndicator_make_args1[] = {"char const *", NULL};
+static const char* WOverlayLoadingIndicator_make_args2[] = {"char const *", "char const *", NULL};
+static const char* WOverlayLoadingIndicator_make_args3[] = {"char const *", "char const *", "char const *", NULL};
+static const char* const* const luawt_WOverlayLoadingIndicator_make_args[] = {WOverlayLoadingIndicator_make_args0, WOverlayLoadingIndicator_make_args1, WOverlayLoadingIndicator_make_args2, WOverlayLoadingIndicator_make_args3, NULL};
+
 int luawt_WOverlayLoadingIndicator_make(lua_State* L) {
-    int argc = lua_gettop(L);
-    if (argc == 3) {
+    int index = luawt_getSuitableArgsGroup(L, luawt_WOverlayLoadingIndicator_make_args);
+    if (index == 0) {
+    WOverlayLoadingIndicator * result = new WOverlayLoadingIndicator();
+    luawt_toLua(L, result);
+    return 1;
+
+    } else if (index == 1) {
+    char const * raw1 = lua_tostring(L, 1);
+    Wt::WString styleClass = Wt::WString(raw1);
+    WOverlayLoadingIndicator * result = new WOverlayLoadingIndicator(styleClass);
+    luawt_toLua(L, result);
+    return 1;
+
+    } else if (index == 2) {
+    char const * raw1 = lua_tostring(L, 1);
+    Wt::WString styleClass = Wt::WString(raw1);
+    char const * raw2 = lua_tostring(L, 2);
+    Wt::WString backgroundStyleClass = Wt::WString(raw2);
+    WOverlayLoadingIndicator * result = new WOverlayLoadingIndicator(styleClass, backgroundStyleClass);
+    luawt_toLua(L, result);
+    return 1;
+
+    } else if (index == 3) {
     char const * raw1 = lua_tostring(L, 1);
     Wt::WString styleClass = Wt::WString(raw1);
     char const * raw2 = lua_tostring(L, 2);
@@ -19,22 +46,24 @@ int luawt_WOverlayLoadingIndicator_make(lua_State* L) {
     return 1;
 
     } else {
-        return luaL_error(L, "Wrong arguments number for WOverlayLoadingIndicator.make: %d", argc);
+        return luaL_error(L, "Wrong arguments for WOverlayLoadingIndicator.make");
     }
 }
 
-int luawt_WOverlayLoadingIndicator_setMessage(lua_State* L) {
-    int argc = lua_gettop(L) - 1;
+static const char* WOverlayLoadingIndicator_setMessage_args0[] = {luawt_typeToStr<WOverlayLoadingIndicator>(), "char const *", NULL};
+static const char* const* const luawt_WOverlayLoadingIndicator_setMessage_args[] = {WOverlayLoadingIndicator_setMessage_args0, NULL};
 
+int luawt_WOverlayLoadingIndicator_setMessage(lua_State* L) {
+    int index = luawt_getSuitableArgsGroup(L, luawt_WOverlayLoadingIndicator_setMessage_args);
     WOverlayLoadingIndicator* self = luawt_checkFromLua<WOverlayLoadingIndicator>(L, 1);
-        if (argc == 1) {
+    if (index == 0) {
     char const * raw2 = lua_tostring(L, 2);
     Wt::WString text = Wt::WString(raw2);
     self->setMessage(text);
     return 0;
     
     } else {
-        return luaL_error(L, "Wrong arguments number for WOverlayLoadingIndicator.setMessage: %d", argc);
+        return luaL_error(L, "Wrong arguments for WOverlayLoadingIndicator.setMessage");
     }
 }
 

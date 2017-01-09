@@ -5,9 +5,33 @@
 
 #include "globals.hpp"
 
+static const char* WVirtualImage_make_args0[] = {"int", "int", "int", "int", NULL};
+static const char* WVirtualImage_make_args1[] = {"int", "int", "int", "int", "int", NULL};
+static const char* WVirtualImage_make_args2[] = {"int", "int", "int", "int", "int", luawt_typeToStr<Wt::WContainerWidget>(), NULL};
+static const char* const* const luawt_WVirtualImage_make_args[] = {WVirtualImage_make_args0, WVirtualImage_make_args1, WVirtualImage_make_args2, NULL};
+
 int luawt_WVirtualImage_make(lua_State* L) {
-    int argc = lua_gettop(L);
-    if (argc == 6) {
+    int index = luawt_getSuitableArgsGroup(L, luawt_WVirtualImage_make_args);
+    if (index == 0) {
+    int viewPortWidth = lua_tointeger(L, 1);
+    int viewPortHeight = lua_tointeger(L, 2);
+    int64_t imageWidth = lua_tointeger(L, 3);
+    int64_t imageHeight = lua_tointeger(L, 4);
+    WVirtualImage * result = new WVirtualImage(viewPortWidth, viewPortHeight, imageWidth, imageHeight);
+    luawt_toLua(L, result);
+    return 1;
+
+    } else if (index == 1) {
+    int viewPortWidth = lua_tointeger(L, 1);
+    int viewPortHeight = lua_tointeger(L, 2);
+    int64_t imageWidth = lua_tointeger(L, 3);
+    int64_t imageHeight = lua_tointeger(L, 4);
+    int gridImageSize = lua_tointeger(L, 5);
+    WVirtualImage * result = new WVirtualImage(viewPortWidth, viewPortHeight, imageWidth, imageHeight, gridImageSize);
+    luawt_toLua(L, result);
+    return 1;
+
+    } else if (index == 2) {
     int viewPortWidth = lua_tointeger(L, 1);
     int viewPortHeight = lua_tointeger(L, 2);
     int64_t imageWidth = lua_tointeger(L, 3);
@@ -20,204 +44,232 @@ int luawt_WVirtualImage_make(lua_State* L) {
     return 1;
 
     } else {
-        return luaL_error(L, "Wrong arguments number for WVirtualImage.make: %d", argc);
+        return luaL_error(L, "Wrong arguments for WVirtualImage.make");
     }
 }
 
-int luawt_WVirtualImage_currentBottomRightY(lua_State* L) {
-    int argc = lua_gettop(L) - 1;
+static const char* WVirtualImage_currentBottomRightY_args0[] = {luawt_typeToStr<WVirtualImage>(), NULL};
+static const char* const* const luawt_WVirtualImage_currentBottomRightY_args[] = {WVirtualImage_currentBottomRightY_args0, NULL};
 
+int luawt_WVirtualImage_currentBottomRightY(lua_State* L) {
+    int index = luawt_getSuitableArgsGroup(L, luawt_WVirtualImage_currentBottomRightY_args);
     WVirtualImage* self = luawt_checkFromLua<WVirtualImage>(L, 1);
-        if (argc == 0) {
+    if (index == 0) {
     int64_t result = self->currentBottomRightY();
     lua_pushinteger(L, result);
     return 1;
 
     } else {
-        return luaL_error(L, "Wrong arguments number for WVirtualImage.currentBottomRightY: %d", argc);
+        return luaL_error(L, "Wrong arguments for WVirtualImage.currentBottomRightY");
     }
 }
 
-int luawt_WVirtualImage_currentBottomRightX(lua_State* L) {
-    int argc = lua_gettop(L) - 1;
+static const char* WVirtualImage_currentBottomRightX_args0[] = {luawt_typeToStr<WVirtualImage>(), NULL};
+static const char* const* const luawt_WVirtualImage_currentBottomRightX_args[] = {WVirtualImage_currentBottomRightX_args0, NULL};
 
+int luawt_WVirtualImage_currentBottomRightX(lua_State* L) {
+    int index = luawt_getSuitableArgsGroup(L, luawt_WVirtualImage_currentBottomRightX_args);
     WVirtualImage* self = luawt_checkFromLua<WVirtualImage>(L, 1);
-        if (argc == 0) {
+    if (index == 0) {
     int64_t result = self->currentBottomRightX();
     lua_pushinteger(L, result);
     return 1;
 
     } else {
-        return luaL_error(L, "Wrong arguments number for WVirtualImage.currentBottomRightX: %d", argc);
+        return luaL_error(L, "Wrong arguments for WVirtualImage.currentBottomRightX");
     }
 }
 
-int luawt_WVirtualImage_gridImageSize(lua_State* L) {
-    int argc = lua_gettop(L) - 1;
+static const char* WVirtualImage_gridImageSize_args0[] = {luawt_typeToStr<WVirtualImage>(), NULL};
+static const char* const* const luawt_WVirtualImage_gridImageSize_args[] = {WVirtualImage_gridImageSize_args0, NULL};
 
+int luawt_WVirtualImage_gridImageSize(lua_State* L) {
+    int index = luawt_getSuitableArgsGroup(L, luawt_WVirtualImage_gridImageSize_args);
     WVirtualImage* self = luawt_checkFromLua<WVirtualImage>(L, 1);
-        if (argc == 0) {
+    if (index == 0) {
     int result = self->gridImageSize();
     lua_pushinteger(L, result);
     return 1;
 
     } else {
-        return luaL_error(L, "Wrong arguments number for WVirtualImage.gridImageSize: %d", argc);
+        return luaL_error(L, "Wrong arguments for WVirtualImage.gridImageSize");
     }
 }
 
-int luawt_WVirtualImage_enableDragging(lua_State* L) {
-    int argc = lua_gettop(L) - 1;
+static const char* WVirtualImage_enableDragging_args0[] = {luawt_typeToStr<WVirtualImage>(), NULL};
+static const char* const* const luawt_WVirtualImage_enableDragging_args[] = {WVirtualImage_enableDragging_args0, NULL};
 
+int luawt_WVirtualImage_enableDragging(lua_State* L) {
+    int index = luawt_getSuitableArgsGroup(L, luawt_WVirtualImage_enableDragging_args);
     WVirtualImage* self = luawt_checkFromLua<WVirtualImage>(L, 1);
-        if (argc == 0) {
+    if (index == 0) {
     self->enableDragging();
     return 0;
     
     } else {
-        return luaL_error(L, "Wrong arguments number for WVirtualImage.enableDragging: %d", argc);
+        return luaL_error(L, "Wrong arguments for WVirtualImage.enableDragging");
     }
 }
 
-int luawt_WVirtualImage_viewPortWidth(lua_State* L) {
-    int argc = lua_gettop(L) - 1;
+static const char* WVirtualImage_viewPortWidth_args0[] = {luawt_typeToStr<WVirtualImage>(), NULL};
+static const char* const* const luawt_WVirtualImage_viewPortWidth_args[] = {WVirtualImage_viewPortWidth_args0, NULL};
 
+int luawt_WVirtualImage_viewPortWidth(lua_State* L) {
+    int index = luawt_getSuitableArgsGroup(L, luawt_WVirtualImage_viewPortWidth_args);
     WVirtualImage* self = luawt_checkFromLua<WVirtualImage>(L, 1);
-        if (argc == 0) {
+    if (index == 0) {
     int result = self->viewPortWidth();
     lua_pushinteger(L, result);
     return 1;
 
     } else {
-        return luaL_error(L, "Wrong arguments number for WVirtualImage.viewPortWidth: %d", argc);
+        return luaL_error(L, "Wrong arguments for WVirtualImage.viewPortWidth");
     }
 }
 
-int luawt_WVirtualImage_redrawAll(lua_State* L) {
-    int argc = lua_gettop(L) - 1;
+static const char* WVirtualImage_redrawAll_args0[] = {luawt_typeToStr<WVirtualImage>(), NULL};
+static const char* const* const luawt_WVirtualImage_redrawAll_args[] = {WVirtualImage_redrawAll_args0, NULL};
 
+int luawt_WVirtualImage_redrawAll(lua_State* L) {
+    int index = luawt_getSuitableArgsGroup(L, luawt_WVirtualImage_redrawAll_args);
     WVirtualImage* self = luawt_checkFromLua<WVirtualImage>(L, 1);
-        if (argc == 0) {
+    if (index == 0) {
     self->redrawAll();
     return 0;
     
     } else {
-        return luaL_error(L, "Wrong arguments number for WVirtualImage.redrawAll: %d", argc);
+        return luaL_error(L, "Wrong arguments for WVirtualImage.redrawAll");
     }
 }
 
-int luawt_WVirtualImage_scrollTo(lua_State* L) {
-    int argc = lua_gettop(L) - 1;
+static const char* WVirtualImage_scrollTo_args0[] = {luawt_typeToStr<WVirtualImage>(), "int", "int", NULL};
+static const char* const* const luawt_WVirtualImage_scrollTo_args[] = {WVirtualImage_scrollTo_args0, NULL};
 
+int luawt_WVirtualImage_scrollTo(lua_State* L) {
+    int index = luawt_getSuitableArgsGroup(L, luawt_WVirtualImage_scrollTo_args);
     WVirtualImage* self = luawt_checkFromLua<WVirtualImage>(L, 1);
-        if (argc == 2) {
+    if (index == 0) {
     int64_t x = lua_tointeger(L, 2);
     int64_t y = lua_tointeger(L, 3);
     self->scrollTo(x, y);
     return 0;
     
     } else {
-        return luaL_error(L, "Wrong arguments number for WVirtualImage.scrollTo: %d", argc);
+        return luaL_error(L, "Wrong arguments for WVirtualImage.scrollTo");
     }
 }
 
-int luawt_WVirtualImage_imageHeight(lua_State* L) {
-    int argc = lua_gettop(L) - 1;
+static const char* WVirtualImage_imageHeight_args0[] = {luawt_typeToStr<WVirtualImage>(), NULL};
+static const char* const* const luawt_WVirtualImage_imageHeight_args[] = {WVirtualImage_imageHeight_args0, NULL};
 
+int luawt_WVirtualImage_imageHeight(lua_State* L) {
+    int index = luawt_getSuitableArgsGroup(L, luawt_WVirtualImage_imageHeight_args);
     WVirtualImage* self = luawt_checkFromLua<WVirtualImage>(L, 1);
-        if (argc == 0) {
+    if (index == 0) {
     int64_t result = self->imageHeight();
     lua_pushinteger(L, result);
     return 1;
 
     } else {
-        return luaL_error(L, "Wrong arguments number for WVirtualImage.imageHeight: %d", argc);
+        return luaL_error(L, "Wrong arguments for WVirtualImage.imageHeight");
     }
 }
 
-int luawt_WVirtualImage_imageWidth(lua_State* L) {
-    int argc = lua_gettop(L) - 1;
+static const char* WVirtualImage_imageWidth_args0[] = {luawt_typeToStr<WVirtualImage>(), NULL};
+static const char* const* const luawt_WVirtualImage_imageWidth_args[] = {WVirtualImage_imageWidth_args0, NULL};
 
+int luawt_WVirtualImage_imageWidth(lua_State* L) {
+    int index = luawt_getSuitableArgsGroup(L, luawt_WVirtualImage_imageWidth_args);
     WVirtualImage* self = luawt_checkFromLua<WVirtualImage>(L, 1);
-        if (argc == 0) {
+    if (index == 0) {
     int64_t result = self->imageWidth();
     lua_pushinteger(L, result);
     return 1;
 
     } else {
-        return luaL_error(L, "Wrong arguments number for WVirtualImage.imageWidth: %d", argc);
+        return luaL_error(L, "Wrong arguments for WVirtualImage.imageWidth");
     }
 }
 
-int luawt_WVirtualImage_currentTopLeftX(lua_State* L) {
-    int argc = lua_gettop(L) - 1;
+static const char* WVirtualImage_currentTopLeftX_args0[] = {luawt_typeToStr<WVirtualImage>(), NULL};
+static const char* const* const luawt_WVirtualImage_currentTopLeftX_args[] = {WVirtualImage_currentTopLeftX_args0, NULL};
 
+int luawt_WVirtualImage_currentTopLeftX(lua_State* L) {
+    int index = luawt_getSuitableArgsGroup(L, luawt_WVirtualImage_currentTopLeftX_args);
     WVirtualImage* self = luawt_checkFromLua<WVirtualImage>(L, 1);
-        if (argc == 0) {
+    if (index == 0) {
     int64_t result = self->currentTopLeftX();
     lua_pushinteger(L, result);
     return 1;
 
     } else {
-        return luaL_error(L, "Wrong arguments number for WVirtualImage.currentTopLeftX: %d", argc);
+        return luaL_error(L, "Wrong arguments for WVirtualImage.currentTopLeftX");
     }
 }
 
-int luawt_WVirtualImage_currentTopLeftY(lua_State* L) {
-    int argc = lua_gettop(L) - 1;
+static const char* WVirtualImage_currentTopLeftY_args0[] = {luawt_typeToStr<WVirtualImage>(), NULL};
+static const char* const* const luawt_WVirtualImage_currentTopLeftY_args[] = {WVirtualImage_currentTopLeftY_args0, NULL};
 
+int luawt_WVirtualImage_currentTopLeftY(lua_State* L) {
+    int index = luawt_getSuitableArgsGroup(L, luawt_WVirtualImage_currentTopLeftY_args);
     WVirtualImage* self = luawt_checkFromLua<WVirtualImage>(L, 1);
-        if (argc == 0) {
+    if (index == 0) {
     int64_t result = self->currentTopLeftY();
     lua_pushinteger(L, result);
     return 1;
 
     } else {
-        return luaL_error(L, "Wrong arguments number for WVirtualImage.currentTopLeftY: %d", argc);
+        return luaL_error(L, "Wrong arguments for WVirtualImage.currentTopLeftY");
     }
 }
 
-int luawt_WVirtualImage_resizeImage(lua_State* L) {
-    int argc = lua_gettop(L) - 1;
+static const char* WVirtualImage_resizeImage_args0[] = {luawt_typeToStr<WVirtualImage>(), "int", "int", NULL};
+static const char* const* const luawt_WVirtualImage_resizeImage_args[] = {WVirtualImage_resizeImage_args0, NULL};
 
+int luawt_WVirtualImage_resizeImage(lua_State* L) {
+    int index = luawt_getSuitableArgsGroup(L, luawt_WVirtualImage_resizeImage_args);
     WVirtualImage* self = luawt_checkFromLua<WVirtualImage>(L, 1);
-        if (argc == 2) {
+    if (index == 0) {
     int64_t w = lua_tointeger(L, 2);
     int64_t h = lua_tointeger(L, 3);
     self->resizeImage(w, h);
     return 0;
     
     } else {
-        return luaL_error(L, "Wrong arguments number for WVirtualImage.resizeImage: %d", argc);
+        return luaL_error(L, "Wrong arguments for WVirtualImage.resizeImage");
     }
 }
 
-int luawt_WVirtualImage_scroll(lua_State* L) {
-    int argc = lua_gettop(L) - 1;
+static const char* WVirtualImage_scroll_args0[] = {luawt_typeToStr<WVirtualImage>(), "int", "int", NULL};
+static const char* const* const luawt_WVirtualImage_scroll_args[] = {WVirtualImage_scroll_args0, NULL};
 
+int luawt_WVirtualImage_scroll(lua_State* L) {
+    int index = luawt_getSuitableArgsGroup(L, luawt_WVirtualImage_scroll_args);
     WVirtualImage* self = luawt_checkFromLua<WVirtualImage>(L, 1);
-        if (argc == 2) {
+    if (index == 0) {
     int64_t dx = lua_tointeger(L, 2);
     int64_t dy = lua_tointeger(L, 3);
     self->scroll(dx, dy);
     return 0;
     
     } else {
-        return luaL_error(L, "Wrong arguments number for WVirtualImage.scroll: %d", argc);
+        return luaL_error(L, "Wrong arguments for WVirtualImage.scroll");
     }
 }
 
-int luawt_WVirtualImage_viewPortHeight(lua_State* L) {
-    int argc = lua_gettop(L) - 1;
+static const char* WVirtualImage_viewPortHeight_args0[] = {luawt_typeToStr<WVirtualImage>(), NULL};
+static const char* const* const luawt_WVirtualImage_viewPortHeight_args[] = {WVirtualImage_viewPortHeight_args0, NULL};
 
+int luawt_WVirtualImage_viewPortHeight(lua_State* L) {
+    int index = luawt_getSuitableArgsGroup(L, luawt_WVirtualImage_viewPortHeight_args);
     WVirtualImage* self = luawt_checkFromLua<WVirtualImage>(L, 1);
-        if (argc == 0) {
+    if (index == 0) {
     int result = self->viewPortHeight();
     lua_pushinteger(L, result);
     return 1;
 
     } else {
-        return luaL_error(L, "Wrong arguments number for WVirtualImage.viewPortHeight: %d", argc);
+        return luaL_error(L, "Wrong arguments for WVirtualImage.viewPortHeight");
     }
 }
 

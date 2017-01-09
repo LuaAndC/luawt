@@ -6,16 +6,34 @@
 
 #include "globals.hpp"
 
+static const char* WTextArea_make_args0[] = {NULL};
+static const char* WTextArea_make_args1[] = {luawt_typeToStr<Wt::WContainerWidget>(), NULL};
+static const char* WTextArea_make_args2[] = {"char const *", NULL};
+static const char* WTextArea_make_args3[] = {"char const *", luawt_typeToStr<Wt::WContainerWidget>(), NULL};
+static const char* const* const luawt_WTextArea_make_args[] = {WTextArea_make_args0, WTextArea_make_args1, WTextArea_make_args2, WTextArea_make_args3, NULL};
+
 int luawt_WTextArea_make(lua_State* L) {
-    int argc = lua_gettop(L);
-    if (argc == 1) {
+    int index = luawt_getSuitableArgsGroup(L, luawt_WTextArea_make_args);
+    if (index == 0) {
+    WTextArea * result = new WTextArea();
+    luawt_toLua(L, result);
+    return 1;
+
+    } else if (index == 1) {
     Wt::WContainerWidget* parent =
         luawt_checkFromLua<Wt::WContainerWidget>(L, 1);
     WTextArea * result = new WTextArea(parent);
     luawt_toLua(L, result);
     return 1;
 
-    } else     if (argc == 2) {
+    } else if (index == 2) {
+    char const * raw1 = lua_tostring(L, 1);
+    Wt::WString content = Wt::WString(raw1);
+    WTextArea * result = new WTextArea(content);
+    luawt_toLua(L, result);
+    return 1;
+
+    } else if (index == 3) {
     char const * raw1 = lua_tostring(L, 1);
     Wt::WString content = Wt::WString(raw1);
     Wt::WContainerWidget* parent =
@@ -25,148 +43,168 @@ int luawt_WTextArea_make(lua_State* L) {
     return 1;
 
     } else {
-        return luaL_error(L, "Wrong arguments number for WTextArea.make: %d", argc);
+        return luaL_error(L, "Wrong arguments for WTextArea.make");
     }
 }
 
-int luawt_WTextArea_setRows(lua_State* L) {
-    int argc = lua_gettop(L) - 1;
+static const char* WTextArea_setRows_args0[] = {luawt_typeToStr<WTextArea>(), "int", NULL};
+static const char* const* const luawt_WTextArea_setRows_args[] = {WTextArea_setRows_args0, NULL};
 
+int luawt_WTextArea_setRows(lua_State* L) {
+    int index = luawt_getSuitableArgsGroup(L, luawt_WTextArea_setRows_args);
     WTextArea* self = luawt_checkFromLua<WTextArea>(L, 1);
-        if (argc == 1) {
+    if (index == 0) {
     int rows = lua_tointeger(L, 2);
     self->setRows(rows);
     return 0;
     
     } else {
-        return luaL_error(L, "Wrong arguments number for WTextArea.setRows: %d", argc);
+        return luaL_error(L, "Wrong arguments for WTextArea.setRows");
     }
 }
 
-int luawt_WTextArea_cursorPosition(lua_State* L) {
-    int argc = lua_gettop(L) - 1;
+static const char* WTextArea_cursorPosition_args0[] = {luawt_typeToStr<WTextArea>(), NULL};
+static const char* const* const luawt_WTextArea_cursorPosition_args[] = {WTextArea_cursorPosition_args0, NULL};
 
+int luawt_WTextArea_cursorPosition(lua_State* L) {
+    int index = luawt_getSuitableArgsGroup(L, luawt_WTextArea_cursorPosition_args);
     WTextArea* self = luawt_checkFromLua<WTextArea>(L, 1);
-        if (argc == 0) {
+    if (index == 0) {
     int result = self->cursorPosition();
     lua_pushinteger(L, result);
     return 1;
 
     } else {
-        return luaL_error(L, "Wrong arguments number for WTextArea.cursorPosition: %d", argc);
+        return luaL_error(L, "Wrong arguments for WTextArea.cursorPosition");
     }
 }
 
-int luawt_WTextArea_rows(lua_State* L) {
-    int argc = lua_gettop(L) - 1;
+static const char* WTextArea_rows_args0[] = {luawt_typeToStr<WTextArea>(), NULL};
+static const char* const* const luawt_WTextArea_rows_args[] = {WTextArea_rows_args0, NULL};
 
+int luawt_WTextArea_rows(lua_State* L) {
+    int index = luawt_getSuitableArgsGroup(L, luawt_WTextArea_rows_args);
     WTextArea* self = luawt_checkFromLua<WTextArea>(L, 1);
-        if (argc == 0) {
+    if (index == 0) {
     int result = self->rows();
     lua_pushinteger(L, result);
     return 1;
 
     } else {
-        return luaL_error(L, "Wrong arguments number for WTextArea.rows: %d", argc);
+        return luaL_error(L, "Wrong arguments for WTextArea.rows");
     }
 }
 
-int luawt_WTextArea_text(lua_State* L) {
-    int argc = lua_gettop(L) - 1;
+static const char* WTextArea_text_args0[] = {luawt_typeToStr<WTextArea>(), NULL};
+static const char* const* const luawt_WTextArea_text_args[] = {WTextArea_text_args0, NULL};
 
+int luawt_WTextArea_text(lua_State* L) {
+    int index = luawt_getSuitableArgsGroup(L, luawt_WTextArea_text_args);
     WTextArea* self = luawt_checkFromLua<WTextArea>(L, 1);
-        if (argc == 0) {
+    if (index == 0) {
     Wt::WString const & result = self->text();
     lua_pushstring(L, result.toUTF8().c_str());
     return 1;
 
     } else {
-        return luaL_error(L, "Wrong arguments number for WTextArea.text: %d", argc);
+        return luaL_error(L, "Wrong arguments for WTextArea.text");
     }
 }
 
-int luawt_WTextArea_setText(lua_State* L) {
-    int argc = lua_gettop(L) - 1;
+static const char* WTextArea_setText_args0[] = {luawt_typeToStr<WTextArea>(), "char const *", NULL};
+static const char* const* const luawt_WTextArea_setText_args[] = {WTextArea_setText_args0, NULL};
 
+int luawt_WTextArea_setText(lua_State* L) {
+    int index = luawt_getSuitableArgsGroup(L, luawt_WTextArea_setText_args);
     WTextArea* self = luawt_checkFromLua<WTextArea>(L, 1);
-        if (argc == 1) {
+    if (index == 0) {
     char const * raw2 = lua_tostring(L, 2);
     Wt::WString text = Wt::WString(raw2);
     self->setText(text);
     return 0;
     
     } else {
-        return luaL_error(L, "Wrong arguments number for WTextArea.setText: %d", argc);
+        return luaL_error(L, "Wrong arguments for WTextArea.setText");
     }
 }
 
-int luawt_WTextArea_selectedText(lua_State* L) {
-    int argc = lua_gettop(L) - 1;
+static const char* WTextArea_selectedText_args0[] = {luawt_typeToStr<WTextArea>(), NULL};
+static const char* const* const luawt_WTextArea_selectedText_args[] = {WTextArea_selectedText_args0, NULL};
 
+int luawt_WTextArea_selectedText(lua_State* L) {
+    int index = luawt_getSuitableArgsGroup(L, luawt_WTextArea_selectedText_args);
     WTextArea* self = luawt_checkFromLua<WTextArea>(L, 1);
-        if (argc == 0) {
+    if (index == 0) {
     Wt::WString result = self->selectedText();
     lua_pushstring(L, result.toUTF8().c_str());
     return 1;
 
     } else {
-        return luaL_error(L, "Wrong arguments number for WTextArea.selectedText: %d", argc);
+        return luaL_error(L, "Wrong arguments for WTextArea.selectedText");
     }
 }
 
-int luawt_WTextArea_setColumns(lua_State* L) {
-    int argc = lua_gettop(L) - 1;
+static const char* WTextArea_setColumns_args0[] = {luawt_typeToStr<WTextArea>(), "int", NULL};
+static const char* const* const luawt_WTextArea_setColumns_args[] = {WTextArea_setColumns_args0, NULL};
 
+int luawt_WTextArea_setColumns(lua_State* L) {
+    int index = luawt_getSuitableArgsGroup(L, luawt_WTextArea_setColumns_args);
     WTextArea* self = luawt_checkFromLua<WTextArea>(L, 1);
-        if (argc == 1) {
+    if (index == 0) {
     int cols = lua_tointeger(L, 2);
     self->setColumns(cols);
     return 0;
     
     } else {
-        return luaL_error(L, "Wrong arguments number for WTextArea.setColumns: %d", argc);
+        return luaL_error(L, "Wrong arguments for WTextArea.setColumns");
     }
 }
 
-int luawt_WTextArea_selectionStart(lua_State* L) {
-    int argc = lua_gettop(L) - 1;
+static const char* WTextArea_selectionStart_args0[] = {luawt_typeToStr<WTextArea>(), NULL};
+static const char* const* const luawt_WTextArea_selectionStart_args[] = {WTextArea_selectionStart_args0, NULL};
 
+int luawt_WTextArea_selectionStart(lua_State* L) {
+    int index = luawt_getSuitableArgsGroup(L, luawt_WTextArea_selectionStart_args);
     WTextArea* self = luawt_checkFromLua<WTextArea>(L, 1);
-        if (argc == 0) {
+    if (index == 0) {
     int result = self->selectionStart();
     lua_pushinteger(L, result);
     return 1;
 
     } else {
-        return luaL_error(L, "Wrong arguments number for WTextArea.selectionStart: %d", argc);
+        return luaL_error(L, "Wrong arguments for WTextArea.selectionStart");
     }
 }
 
-int luawt_WTextArea_hasSelectedText(lua_State* L) {
-    int argc = lua_gettop(L) - 1;
+static const char* WTextArea_hasSelectedText_args0[] = {luawt_typeToStr<WTextArea>(), NULL};
+static const char* const* const luawt_WTextArea_hasSelectedText_args[] = {WTextArea_hasSelectedText_args0, NULL};
 
+int luawt_WTextArea_hasSelectedText(lua_State* L) {
+    int index = luawt_getSuitableArgsGroup(L, luawt_WTextArea_hasSelectedText_args);
     WTextArea* self = luawt_checkFromLua<WTextArea>(L, 1);
-        if (argc == 0) {
+    if (index == 0) {
     bool result = self->hasSelectedText();
     lua_pushboolean(L, result);
     return 1;
 
     } else {
-        return luaL_error(L, "Wrong arguments number for WTextArea.hasSelectedText: %d", argc);
+        return luaL_error(L, "Wrong arguments for WTextArea.hasSelectedText");
     }
 }
 
-int luawt_WTextArea_columns(lua_State* L) {
-    int argc = lua_gettop(L) - 1;
+static const char* WTextArea_columns_args0[] = {luawt_typeToStr<WTextArea>(), NULL};
+static const char* const* const luawt_WTextArea_columns_args[] = {WTextArea_columns_args0, NULL};
 
+int luawt_WTextArea_columns(lua_State* L) {
+    int index = luawt_getSuitableArgsGroup(L, luawt_WTextArea_columns_args);
     WTextArea* self = luawt_checkFromLua<WTextArea>(L, 1);
-        if (argc == 0) {
+    if (index == 0) {
     int result = self->columns();
     lua_pushinteger(L, result);
     return 1;
 
     } else {
-        return luaL_error(L, "Wrong arguments number for WTextArea.columns: %d", argc);
+        return luaL_error(L, "Wrong arguments for WTextArea.columns");
     }
 }
 

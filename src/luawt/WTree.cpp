@@ -6,9 +6,18 @@
 
 #include "globals.hpp"
 
+static const char* WTree_make_args0[] = {NULL};
+static const char* WTree_make_args1[] = {luawt_typeToStr<Wt::WContainerWidget>(), NULL};
+static const char* const* const luawt_WTree_make_args[] = {WTree_make_args0, WTree_make_args1, NULL};
+
 int luawt_WTree_make(lua_State* L) {
-    int argc = lua_gettop(L);
-    if (argc == 1) {
+    int index = luawt_getSuitableArgsGroup(L, luawt_WTree_make_args);
+    if (index == 0) {
+    WTree * result = new WTree();
+    luawt_toLua(L, result);
+    return 1;
+
+    } else if (index == 1) {
     Wt::WContainerWidget* parent =
         luawt_checkFromLua<Wt::WContainerWidget>(L, 1);
     WTree * result = new WTree(parent);
@@ -16,71 +25,81 @@ int luawt_WTree_make(lua_State* L) {
     return 1;
 
     } else {
-        return luaL_error(L, "Wrong arguments number for WTree.make: %d", argc);
+        return luaL_error(L, "Wrong arguments for WTree.make");
     }
 }
 
-int luawt_WTree_clearSelection(lua_State* L) {
-    int argc = lua_gettop(L) - 1;
+static const char* WTree_clearSelection_args0[] = {luawt_typeToStr<WTree>(), NULL};
+static const char* const* const luawt_WTree_clearSelection_args[] = {WTree_clearSelection_args0, NULL};
 
+int luawt_WTree_clearSelection(lua_State* L) {
+    int index = luawt_getSuitableArgsGroup(L, luawt_WTree_clearSelection_args);
     WTree* self = luawt_checkFromLua<WTree>(L, 1);
-        if (argc == 0) {
+    if (index == 0) {
     self->clearSelection();
     return 0;
     
     } else {
-        return luaL_error(L, "Wrong arguments number for WTree.clearSelection: %d", argc);
+        return luaL_error(L, "Wrong arguments for WTree.clearSelection");
     }
 }
 
-int luawt_WTree_setSelectionMode(lua_State* L) {
-    int argc = lua_gettop(L) - 1;
+static const char* WTree_setSelectionMode_args0[] = {luawt_typeToStr<WTree>(), "int", NULL};
+static const char* const* const luawt_WTree_setSelectionMode_args[] = {WTree_setSelectionMode_args0, NULL};
 
+int luawt_WTree_setSelectionMode(lua_State* L) {
+    int index = luawt_getSuitableArgsGroup(L, luawt_WTree_setSelectionMode_args);
     WTree* self = luawt_checkFromLua<WTree>(L, 1);
-        if (argc == 1) {
+    if (index == 0) {
     Wt::SelectionMode mode = static_cast<Wt::SelectionMode>(lua_tointeger(L, 2));
     self->setSelectionMode(mode);
     return 0;
     
     } else {
-        return luaL_error(L, "Wrong arguments number for WTree.setSelectionMode: %d", argc);
+        return luaL_error(L, "Wrong arguments for WTree.setSelectionMode");
     }
 }
 
-int luawt_WTree_treeRoot(lua_State* L) {
-    int argc = lua_gettop(L) - 1;
+static const char* WTree_treeRoot_args0[] = {luawt_typeToStr<WTree>(), NULL};
+static const char* const* const luawt_WTree_treeRoot_args[] = {WTree_treeRoot_args0, NULL};
 
+int luawt_WTree_treeRoot(lua_State* L) {
+    int index = luawt_getSuitableArgsGroup(L, luawt_WTree_treeRoot_args);
     WTree* self = luawt_checkFromLua<WTree>(L, 1);
-        if (argc == 0) {
+    if (index == 0) {
     Wt::WTreeNode * result = self->treeRoot();
     luawt_toLua(L, result);
     return 1;
 
     } else {
-        return luaL_error(L, "Wrong arguments number for WTree.treeRoot: %d", argc);
+        return luaL_error(L, "Wrong arguments for WTree.treeRoot");
     }
 }
 
-int luawt_WTree_setTreeRoot(lua_State* L) {
-    int argc = lua_gettop(L) - 1;
+static const char* WTree_setTreeRoot_args0[] = {luawt_typeToStr<WTree>(), luawt_typeToStr<Wt::WTreeNode>(), NULL};
+static const char* const* const luawt_WTree_setTreeRoot_args[] = {WTree_setTreeRoot_args0, NULL};
 
+int luawt_WTree_setTreeRoot(lua_State* L) {
+    int index = luawt_getSuitableArgsGroup(L, luawt_WTree_setTreeRoot_args);
     WTree* self = luawt_checkFromLua<WTree>(L, 1);
-        if (argc == 1) {
+    if (index == 0) {
     Wt::WTreeNode* root =
         luawt_checkFromLua<Wt::WTreeNode>(L, 2);
     self->setTreeRoot(root);
     return 0;
     
     } else {
-        return luaL_error(L, "Wrong arguments number for WTree.setTreeRoot: %d", argc);
+        return luaL_error(L, "Wrong arguments for WTree.setTreeRoot");
     }
 }
 
-int luawt_WTree_isSelected(lua_State* L) {
-    int argc = lua_gettop(L) - 1;
+static const char* WTree_isSelected_args0[] = {luawt_typeToStr<WTree>(), luawt_typeToStr<Wt::WTreeNode>(), NULL};
+static const char* const* const luawt_WTree_isSelected_args[] = {WTree_isSelected_args0, NULL};
 
+int luawt_WTree_isSelected(lua_State* L) {
+    int index = luawt_getSuitableArgsGroup(L, luawt_WTree_isSelected_args);
     WTree* self = luawt_checkFromLua<WTree>(L, 1);
-        if (argc == 1) {
+    if (index == 0) {
     Wt::WTreeNode* node =
         luawt_checkFromLua<Wt::WTreeNode>(L, 2);
     bool result = self->isSelected(node);
@@ -88,29 +107,40 @@ int luawt_WTree_isSelected(lua_State* L) {
     return 1;
 
     } else {
-        return luaL_error(L, "Wrong arguments number for WTree.isSelected: %d", argc);
+        return luaL_error(L, "Wrong arguments for WTree.isSelected");
     }
 }
 
-int luawt_WTree_selectionMode(lua_State* L) {
-    int argc = lua_gettop(L) - 1;
+static const char* WTree_selectionMode_args0[] = {luawt_typeToStr<WTree>(), NULL};
+static const char* const* const luawt_WTree_selectionMode_args[] = {WTree_selectionMode_args0, NULL};
 
+int luawt_WTree_selectionMode(lua_State* L) {
+    int index = luawt_getSuitableArgsGroup(L, luawt_WTree_selectionMode_args);
     WTree* self = luawt_checkFromLua<WTree>(L, 1);
-        if (argc == 0) {
+    if (index == 0) {
     Wt::SelectionMode result = self->selectionMode();
     lua_pushinteger(L, result);
     return 1;
 
     } else {
-        return luaL_error(L, "Wrong arguments number for WTree.selectionMode: %d", argc);
+        return luaL_error(L, "Wrong arguments for WTree.selectionMode");
     }
 }
 
-int luawt_WTree_select(lua_State* L) {
-    int argc = lua_gettop(L) - 1;
+static const char* WTree_select_args0[] = {luawt_typeToStr<WTree>(), luawt_typeToStr<Wt::WTreeNode>(), NULL};
+static const char* WTree_select_args1[] = {luawt_typeToStr<WTree>(), luawt_typeToStr<Wt::WTreeNode>(), "bool", NULL};
+static const char* const* const luawt_WTree_select_args[] = {WTree_select_args0, WTree_select_args1, NULL};
 
+int luawt_WTree_select(lua_State* L) {
+    int index = luawt_getSuitableArgsGroup(L, luawt_WTree_select_args);
     WTree* self = luawt_checkFromLua<WTree>(L, 1);
-        if (argc == 2) {
+    if (index == 0) {
+    Wt::WTreeNode* node =
+        luawt_checkFromLua<Wt::WTreeNode>(L, 2);
+    self->select(node);
+    return 0;
+    
+    } else if (index == 1) {
     Wt::WTreeNode* node =
         luawt_checkFromLua<Wt::WTreeNode>(L, 2);
     bool selected = lua_toboolean(L, 3);
@@ -118,7 +148,7 @@ int luawt_WTree_select(lua_State* L) {
     return 0;
     
     } else {
-        return luaL_error(L, "Wrong arguments number for WTree.select: %d", argc);
+        return luaL_error(L, "Wrong arguments for WTree.select");
     }
 }
 

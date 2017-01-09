@@ -6,9 +6,18 @@
 
 #include "globals.hpp"
 
+static const char* WComboBox_make_args0[] = {NULL};
+static const char* WComboBox_make_args1[] = {luawt_typeToStr<Wt::WContainerWidget>(), NULL};
+static const char* const* const luawt_WComboBox_make_args[] = {WComboBox_make_args0, WComboBox_make_args1, NULL};
+
 int luawt_WComboBox_make(lua_State* L) {
-    int argc = lua_gettop(L);
-    if (argc == 1) {
+    int index = luawt_getSuitableArgsGroup(L, luawt_WComboBox_make_args);
+    if (index == 0) {
+    WComboBox * result = new WComboBox();
+    luawt_toLua(L, result);
+    return 1;
+
+    } else if (index == 1) {
     Wt::WContainerWidget* parent =
         luawt_checkFromLua<Wt::WContainerWidget>(L, 1);
     WComboBox * result = new WComboBox(parent);
@@ -16,44 +25,50 @@ int luawt_WComboBox_make(lua_State* L) {
     return 1;
 
     } else {
-        return luaL_error(L, "Wrong arguments number for WComboBox.make: %d", argc);
+        return luaL_error(L, "Wrong arguments for WComboBox.make");
     }
 }
 
-int luawt_WComboBox_count(lua_State* L) {
-    int argc = lua_gettop(L) - 1;
+static const char* WComboBox_count_args0[] = {luawt_typeToStr<WComboBox>(), NULL};
+static const char* const* const luawt_WComboBox_count_args[] = {WComboBox_count_args0, NULL};
 
+int luawt_WComboBox_count(lua_State* L) {
+    int index = luawt_getSuitableArgsGroup(L, luawt_WComboBox_count_args);
     WComboBox* self = luawt_checkFromLua<WComboBox>(L, 1);
-        if (argc == 0) {
+    if (index == 0) {
     int result = self->count();
     lua_pushinteger(L, result);
     return 1;
 
     } else {
-        return luaL_error(L, "Wrong arguments number for WComboBox.count: %d", argc);
+        return luaL_error(L, "Wrong arguments for WComboBox.count");
     }
 }
 
-int luawt_WComboBox_itemText(lua_State* L) {
-    int argc = lua_gettop(L) - 1;
+static const char* WComboBox_itemText_args0[] = {luawt_typeToStr<WComboBox>(), "int", NULL};
+static const char* const* const luawt_WComboBox_itemText_args[] = {WComboBox_itemText_args0, NULL};
 
+int luawt_WComboBox_itemText(lua_State* L) {
+    int index = luawt_getSuitableArgsGroup(L, luawt_WComboBox_itemText_args);
     WComboBox* self = luawt_checkFromLua<WComboBox>(L, 1);
-        if (argc == 1) {
+    if (index == 0) {
     int index = lua_tointeger(L, 2);
     Wt::WString const result = self->itemText(index);
     lua_pushstring(L, result.toUTF8().c_str());
     return 1;
 
     } else {
-        return luaL_error(L, "Wrong arguments number for WComboBox.itemText: %d", argc);
+        return luaL_error(L, "Wrong arguments for WComboBox.itemText");
     }
 }
 
-int luawt_WComboBox_setItemText(lua_State* L) {
-    int argc = lua_gettop(L) - 1;
+static const char* WComboBox_setItemText_args0[] = {luawt_typeToStr<WComboBox>(), "int", "char const *", NULL};
+static const char* const* const luawt_WComboBox_setItemText_args[] = {WComboBox_setItemText_args0, NULL};
 
+int luawt_WComboBox_setItemText(lua_State* L) {
+    int index = luawt_getSuitableArgsGroup(L, luawt_WComboBox_setItemText_args);
     WComboBox* self = luawt_checkFromLua<WComboBox>(L, 1);
-        if (argc == 2) {
+    if (index == 0) {
     int index = lua_tointeger(L, 2);
     char const * raw3 = lua_tostring(L, 3);
     Wt::WString text = Wt::WString(raw3);
@@ -61,15 +76,17 @@ int luawt_WComboBox_setItemText(lua_State* L) {
     return 0;
     
     } else {
-        return luaL_error(L, "Wrong arguments number for WComboBox.setItemText: %d", argc);
+        return luaL_error(L, "Wrong arguments for WComboBox.setItemText");
     }
 }
 
-int luawt_WComboBox_insertItem(lua_State* L) {
-    int argc = lua_gettop(L) - 1;
+static const char* WComboBox_insertItem_args0[] = {luawt_typeToStr<WComboBox>(), "int", "char const *", NULL};
+static const char* const* const luawt_WComboBox_insertItem_args[] = {WComboBox_insertItem_args0, NULL};
 
+int luawt_WComboBox_insertItem(lua_State* L) {
+    int index = luawt_getSuitableArgsGroup(L, luawt_WComboBox_insertItem_args);
     WComboBox* self = luawt_checkFromLua<WComboBox>(L, 1);
-        if (argc == 2) {
+    if (index == 0) {
     int index = lua_tointeger(L, 2);
     char const * raw3 = lua_tostring(L, 3);
     Wt::WString text = Wt::WString(raw3);
@@ -77,118 +94,134 @@ int luawt_WComboBox_insertItem(lua_State* L) {
     return 0;
     
     } else {
-        return luaL_error(L, "Wrong arguments number for WComboBox.insertItem: %d", argc);
+        return luaL_error(L, "Wrong arguments for WComboBox.insertItem");
     }
 }
 
-int luawt_WComboBox_clear(lua_State* L) {
-    int argc = lua_gettop(L) - 1;
+static const char* WComboBox_clear_args0[] = {luawt_typeToStr<WComboBox>(), NULL};
+static const char* const* const luawt_WComboBox_clear_args[] = {WComboBox_clear_args0, NULL};
 
+int luawt_WComboBox_clear(lua_State* L) {
+    int index = luawt_getSuitableArgsGroup(L, luawt_WComboBox_clear_args);
     WComboBox* self = luawt_checkFromLua<WComboBox>(L, 1);
-        if (argc == 0) {
+    if (index == 0) {
     self->clear();
     return 0;
     
     } else {
-        return luaL_error(L, "Wrong arguments number for WComboBox.clear: %d", argc);
+        return luaL_error(L, "Wrong arguments for WComboBox.clear");
     }
 }
 
-int luawt_WComboBox_addItem(lua_State* L) {
-    int argc = lua_gettop(L) - 1;
+static const char* WComboBox_addItem_args0[] = {luawt_typeToStr<WComboBox>(), "char const *", NULL};
+static const char* const* const luawt_WComboBox_addItem_args[] = {WComboBox_addItem_args0, NULL};
 
+int luawt_WComboBox_addItem(lua_State* L) {
+    int index = luawt_getSuitableArgsGroup(L, luawt_WComboBox_addItem_args);
     WComboBox* self = luawt_checkFromLua<WComboBox>(L, 1);
-        if (argc == 1) {
+    if (index == 0) {
     char const * raw2 = lua_tostring(L, 2);
     Wt::WString text = Wt::WString(raw2);
     self->addItem(text);
     return 0;
     
     } else {
-        return luaL_error(L, "Wrong arguments number for WComboBox.addItem: %d", argc);
+        return luaL_error(L, "Wrong arguments for WComboBox.addItem");
     }
 }
 
-int luawt_WComboBox_refresh(lua_State* L) {
-    int argc = lua_gettop(L) - 1;
+static const char* WComboBox_refresh_args0[] = {luawt_typeToStr<WComboBox>(), NULL};
+static const char* const* const luawt_WComboBox_refresh_args[] = {WComboBox_refresh_args0, NULL};
 
+int luawt_WComboBox_refresh(lua_State* L) {
+    int index = luawt_getSuitableArgsGroup(L, luawt_WComboBox_refresh_args);
     WComboBox* self = luawt_checkFromLua<WComboBox>(L, 1);
-        if (argc == 0) {
+    if (index == 0) {
     self->refresh();
     return 0;
     
     } else {
-        return luaL_error(L, "Wrong arguments number for WComboBox.refresh: %d", argc);
+        return luaL_error(L, "Wrong arguments for WComboBox.refresh");
     }
 }
 
-int luawt_WComboBox_currentText(lua_State* L) {
-    int argc = lua_gettop(L) - 1;
+static const char* WComboBox_currentText_args0[] = {luawt_typeToStr<WComboBox>(), NULL};
+static const char* const* const luawt_WComboBox_currentText_args[] = {WComboBox_currentText_args0, NULL};
 
+int luawt_WComboBox_currentText(lua_State* L) {
+    int index = luawt_getSuitableArgsGroup(L, luawt_WComboBox_currentText_args);
     WComboBox* self = luawt_checkFromLua<WComboBox>(L, 1);
-        if (argc == 0) {
+    if (index == 0) {
     Wt::WString const result = self->currentText();
     lua_pushstring(L, result.toUTF8().c_str());
     return 1;
 
     } else {
-        return luaL_error(L, "Wrong arguments number for WComboBox.currentText: %d", argc);
+        return luaL_error(L, "Wrong arguments for WComboBox.currentText");
     }
 }
 
-int luawt_WComboBox_currentIndex(lua_State* L) {
-    int argc = lua_gettop(L) - 1;
+static const char* WComboBox_currentIndex_args0[] = {luawt_typeToStr<WComboBox>(), NULL};
+static const char* const* const luawt_WComboBox_currentIndex_args[] = {WComboBox_currentIndex_args0, NULL};
 
+int luawt_WComboBox_currentIndex(lua_State* L) {
+    int index = luawt_getSuitableArgsGroup(L, luawt_WComboBox_currentIndex_args);
     WComboBox* self = luawt_checkFromLua<WComboBox>(L, 1);
-        if (argc == 0) {
+    if (index == 0) {
     int result = self->currentIndex();
     lua_pushinteger(L, result);
     return 1;
 
     } else {
-        return luaL_error(L, "Wrong arguments number for WComboBox.currentIndex: %d", argc);
+        return luaL_error(L, "Wrong arguments for WComboBox.currentIndex");
     }
 }
 
-int luawt_WComboBox_setCurrentIndex(lua_State* L) {
-    int argc = lua_gettop(L) - 1;
+static const char* WComboBox_setCurrentIndex_args0[] = {luawt_typeToStr<WComboBox>(), "int", NULL};
+static const char* const* const luawt_WComboBox_setCurrentIndex_args[] = {WComboBox_setCurrentIndex_args0, NULL};
 
+int luawt_WComboBox_setCurrentIndex(lua_State* L) {
+    int index = luawt_getSuitableArgsGroup(L, luawt_WComboBox_setCurrentIndex_args);
     WComboBox* self = luawt_checkFromLua<WComboBox>(L, 1);
-        if (argc == 1) {
+    if (index == 0) {
     int index = lua_tointeger(L, 2);
     self->setCurrentIndex(index);
     return 0;
     
     } else {
-        return luaL_error(L, "Wrong arguments number for WComboBox.setCurrentIndex: %d", argc);
+        return luaL_error(L, "Wrong arguments for WComboBox.setCurrentIndex");
     }
 }
 
-int luawt_WComboBox_removeItem(lua_State* L) {
-    int argc = lua_gettop(L) - 1;
+static const char* WComboBox_removeItem_args0[] = {luawt_typeToStr<WComboBox>(), "int", NULL};
+static const char* const* const luawt_WComboBox_removeItem_args[] = {WComboBox_removeItem_args0, NULL};
 
+int luawt_WComboBox_removeItem(lua_State* L) {
+    int index = luawt_getSuitableArgsGroup(L, luawt_WComboBox_removeItem_args);
     WComboBox* self = luawt_checkFromLua<WComboBox>(L, 1);
-        if (argc == 1) {
+    if (index == 0) {
     int index = lua_tointeger(L, 2);
     self->removeItem(index);
     return 0;
     
     } else {
-        return luaL_error(L, "Wrong arguments number for WComboBox.removeItem: %d", argc);
+        return luaL_error(L, "Wrong arguments for WComboBox.removeItem");
     }
 }
 
-int luawt_WComboBox_setModelColumn(lua_State* L) {
-    int argc = lua_gettop(L) - 1;
+static const char* WComboBox_setModelColumn_args0[] = {luawt_typeToStr<WComboBox>(), "int", NULL};
+static const char* const* const luawt_WComboBox_setModelColumn_args[] = {WComboBox_setModelColumn_args0, NULL};
 
+int luawt_WComboBox_setModelColumn(lua_State* L) {
+    int index = luawt_getSuitableArgsGroup(L, luawt_WComboBox_setModelColumn_args);
     WComboBox* self = luawt_checkFromLua<WComboBox>(L, 1);
-        if (argc == 1) {
+    if (index == 0) {
     int index = lua_tointeger(L, 2);
     self->setModelColumn(index);
     return 0;
     
     } else {
-        return luaL_error(L, "Wrong arguments number for WComboBox.setModelColumn: %d", argc);
+        return luaL_error(L, "Wrong arguments for WComboBox.setModelColumn");
     }
 }
 

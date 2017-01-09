@@ -5,9 +5,18 @@
 
 #include "globals.hpp"
 
+static const char* WScrollArea_make_args0[] = {NULL};
+static const char* WScrollArea_make_args1[] = {luawt_typeToStr<Wt::WContainerWidget>(), NULL};
+static const char* const* const luawt_WScrollArea_make_args[] = {WScrollArea_make_args0, WScrollArea_make_args1, NULL};
+
 int luawt_WScrollArea_make(lua_State* L) {
-    int argc = lua_gettop(L);
-    if (argc == 1) {
+    int index = luawt_getSuitableArgsGroup(L, luawt_WScrollArea_make_args);
+    if (index == 0) {
+    WScrollArea * result = new WScrollArea();
+    luawt_toLua(L, result);
+    return 1;
+
+    } else if (index == 1) {
     Wt::WContainerWidget* parent =
         luawt_checkFromLua<Wt::WContainerWidget>(L, 1);
     WScrollArea * result = new WScrollArea(parent);
@@ -15,77 +24,87 @@ int luawt_WScrollArea_make(lua_State* L) {
     return 1;
 
     } else {
-        return luaL_error(L, "Wrong arguments number for WScrollArea.make: %d", argc);
+        return luaL_error(L, "Wrong arguments for WScrollArea.make");
     }
 }
 
-int luawt_WScrollArea_setVerticalScrollBarPolicy(lua_State* L) {
-    int argc = lua_gettop(L) - 1;
+static const char* WScrollArea_setVerticalScrollBarPolicy_args0[] = {luawt_typeToStr<WScrollArea>(), "int", NULL};
+static const char* const* const luawt_WScrollArea_setVerticalScrollBarPolicy_args[] = {WScrollArea_setVerticalScrollBarPolicy_args0, NULL};
 
+int luawt_WScrollArea_setVerticalScrollBarPolicy(lua_State* L) {
+    int index = luawt_getSuitableArgsGroup(L, luawt_WScrollArea_setVerticalScrollBarPolicy_args);
     WScrollArea* self = luawt_checkFromLua<WScrollArea>(L, 1);
-        if (argc == 1) {
+    if (index == 0) {
     Wt::WScrollArea::ScrollBarPolicy scrollBarPolicy = static_cast<Wt::WScrollArea::ScrollBarPolicy>(lua_tointeger(L, 2));
     self->setVerticalScrollBarPolicy(scrollBarPolicy);
     return 0;
     
     } else {
-        return luaL_error(L, "Wrong arguments number for WScrollArea.setVerticalScrollBarPolicy: %d", argc);
+        return luaL_error(L, "Wrong arguments for WScrollArea.setVerticalScrollBarPolicy");
     }
 }
 
-int luawt_WScrollArea_horizontalScrollBarPolicy(lua_State* L) {
-    int argc = lua_gettop(L) - 1;
+static const char* WScrollArea_horizontalScrollBarPolicy_args0[] = {luawt_typeToStr<WScrollArea>(), NULL};
+static const char* const* const luawt_WScrollArea_horizontalScrollBarPolicy_args[] = {WScrollArea_horizontalScrollBarPolicy_args0, NULL};
 
+int luawt_WScrollArea_horizontalScrollBarPolicy(lua_State* L) {
+    int index = luawt_getSuitableArgsGroup(L, luawt_WScrollArea_horizontalScrollBarPolicy_args);
     WScrollArea* self = luawt_checkFromLua<WScrollArea>(L, 1);
-        if (argc == 0) {
+    if (index == 0) {
     Wt::WScrollArea::ScrollBarPolicy result = self->horizontalScrollBarPolicy();
     lua_pushinteger(L, result);
     return 1;
 
     } else {
-        return luaL_error(L, "Wrong arguments number for WScrollArea.horizontalScrollBarPolicy: %d", argc);
+        return luaL_error(L, "Wrong arguments for WScrollArea.horizontalScrollBarPolicy");
     }
 }
 
-int luawt_WScrollArea_setScrollBarPolicy(lua_State* L) {
-    int argc = lua_gettop(L) - 1;
+static const char* WScrollArea_setScrollBarPolicy_args0[] = {luawt_typeToStr<WScrollArea>(), "int", NULL};
+static const char* const* const luawt_WScrollArea_setScrollBarPolicy_args[] = {WScrollArea_setScrollBarPolicy_args0, NULL};
 
+int luawt_WScrollArea_setScrollBarPolicy(lua_State* L) {
+    int index = luawt_getSuitableArgsGroup(L, luawt_WScrollArea_setScrollBarPolicy_args);
     WScrollArea* self = luawt_checkFromLua<WScrollArea>(L, 1);
-        if (argc == 1) {
+    if (index == 0) {
     Wt::WScrollArea::ScrollBarPolicy scrollBarPolicy = static_cast<Wt::WScrollArea::ScrollBarPolicy>(lua_tointeger(L, 2));
     self->setScrollBarPolicy(scrollBarPolicy);
     return 0;
     
     } else {
-        return luaL_error(L, "Wrong arguments number for WScrollArea.setScrollBarPolicy: %d", argc);
+        return luaL_error(L, "Wrong arguments for WScrollArea.setScrollBarPolicy");
     }
 }
 
-int luawt_WScrollArea_setHorizontalScrollBarPolicy(lua_State* L) {
-    int argc = lua_gettop(L) - 1;
+static const char* WScrollArea_setHorizontalScrollBarPolicy_args0[] = {luawt_typeToStr<WScrollArea>(), "int", NULL};
+static const char* const* const luawt_WScrollArea_setHorizontalScrollBarPolicy_args[] = {WScrollArea_setHorizontalScrollBarPolicy_args0, NULL};
 
+int luawt_WScrollArea_setHorizontalScrollBarPolicy(lua_State* L) {
+    int index = luawt_getSuitableArgsGroup(L, luawt_WScrollArea_setHorizontalScrollBarPolicy_args);
     WScrollArea* self = luawt_checkFromLua<WScrollArea>(L, 1);
-        if (argc == 1) {
+    if (index == 0) {
     Wt::WScrollArea::ScrollBarPolicy scrollBarPolicy = static_cast<Wt::WScrollArea::ScrollBarPolicy>(lua_tointeger(L, 2));
     self->setHorizontalScrollBarPolicy(scrollBarPolicy);
     return 0;
     
     } else {
-        return luaL_error(L, "Wrong arguments number for WScrollArea.setHorizontalScrollBarPolicy: %d", argc);
+        return luaL_error(L, "Wrong arguments for WScrollArea.setHorizontalScrollBarPolicy");
     }
 }
 
-int luawt_WScrollArea_verticalScrollBarPolicy(lua_State* L) {
-    int argc = lua_gettop(L) - 1;
+static const char* WScrollArea_verticalScrollBarPolicy_args0[] = {luawt_typeToStr<WScrollArea>(), NULL};
+static const char* const* const luawt_WScrollArea_verticalScrollBarPolicy_args[] = {WScrollArea_verticalScrollBarPolicy_args0, NULL};
 
+int luawt_WScrollArea_verticalScrollBarPolicy(lua_State* L) {
+    int index = luawt_getSuitableArgsGroup(L, luawt_WScrollArea_verticalScrollBarPolicy_args);
     WScrollArea* self = luawt_checkFromLua<WScrollArea>(L, 1);
-        if (argc == 0) {
+    if (index == 0) {
     Wt::WScrollArea::ScrollBarPolicy result = self->verticalScrollBarPolicy();
     lua_pushinteger(L, result);
     return 1;
 
     } else {
-        return luaL_error(L, "Wrong arguments number for WScrollArea.verticalScrollBarPolicy: %d", argc);
+        return luaL_error(L, "Wrong arguments for WScrollArea.verticalScrollBarPolicy");
     }
 }
 

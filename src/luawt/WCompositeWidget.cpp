@@ -7,9 +7,18 @@
 
 #include "globals.hpp"
 
+static const char* WCompositeWidget_make_args0[] = {NULL};
+static const char* WCompositeWidget_make_args1[] = {luawt_typeToStr<Wt::WContainerWidget>(), NULL};
+static const char* const* const luawt_WCompositeWidget_make_args[] = {WCompositeWidget_make_args0, WCompositeWidget_make_args1, NULL};
+
 int luawt_WCompositeWidget_make(lua_State* L) {
-    int argc = lua_gettop(L);
-    if (argc == 1) {
+    int index = luawt_getSuitableArgsGroup(L, luawt_WCompositeWidget_make_args);
+    if (index == 0) {
+    WCompositeWidget * result = new WCompositeWidget();
+    luawt_toLua(L, result);
+    return 1;
+
+    } else if (index == 1) {
     Wt::WContainerWidget* parent =
         luawt_checkFromLua<Wt::WContainerWidget>(L, 1);
     WCompositeWidget * result = new WCompositeWidget(parent);
@@ -17,268 +26,306 @@ int luawt_WCompositeWidget_make(lua_State* L) {
     return 1;
 
     } else {
-        return luaL_error(L, "Wrong arguments number for WCompositeWidget.make: %d", argc);
+        return luaL_error(L, "Wrong arguments for WCompositeWidget.make");
     }
 }
 
-int luawt_WCompositeWidget_load(lua_State* L) {
-    int argc = lua_gettop(L) - 1;
+static const char* WCompositeWidget_load_args0[] = {luawt_typeToStr<WCompositeWidget>(), NULL};
+static const char* const* const luawt_WCompositeWidget_load_args[] = {WCompositeWidget_load_args0, NULL};
 
+int luawt_WCompositeWidget_load(lua_State* L) {
+    int index = luawt_getSuitableArgsGroup(L, luawt_WCompositeWidget_load_args);
     WCompositeWidget* self = luawt_checkFromLua<WCompositeWidget>(L, 1);
-        if (argc == 0) {
+    if (index == 0) {
     self->load();
     return 0;
     
     } else {
-        return luaL_error(L, "Wrong arguments number for WCompositeWidget.load: %d", argc);
+        return luaL_error(L, "Wrong arguments for WCompositeWidget.load");
     }
 }
 
-int luawt_WCompositeWidget_doJavaScript(lua_State* L) {
-    int argc = lua_gettop(L) - 1;
+static const char* WCompositeWidget_doJavaScript_args0[] = {luawt_typeToStr<WCompositeWidget>(), "char const *", NULL};
+static const char* const* const luawt_WCompositeWidget_doJavaScript_args[] = {WCompositeWidget_doJavaScript_args0, NULL};
 
+int luawt_WCompositeWidget_doJavaScript(lua_State* L) {
+    int index = luawt_getSuitableArgsGroup(L, luawt_WCompositeWidget_doJavaScript_args);
     WCompositeWidget* self = luawt_checkFromLua<WCompositeWidget>(L, 1);
-        if (argc == 1) {
+    if (index == 0) {
     char const * raw2 = lua_tostring(L, 2);
     std::string js = std::string(raw2);
     self->doJavaScript(js);
     return 0;
     
     } else {
-        return luaL_error(L, "Wrong arguments number for WCompositeWidget.doJavaScript: %d", argc);
+        return luaL_error(L, "Wrong arguments for WCompositeWidget.doJavaScript");
     }
 }
 
-int luawt_WCompositeWidget_floatSide(lua_State* L) {
-    int argc = lua_gettop(L) - 1;
+static const char* WCompositeWidget_floatSide_args0[] = {luawt_typeToStr<WCompositeWidget>(), NULL};
+static const char* const* const luawt_WCompositeWidget_floatSide_args[] = {WCompositeWidget_floatSide_args0, NULL};
 
+int luawt_WCompositeWidget_floatSide(lua_State* L) {
+    int index = luawt_getSuitableArgsGroup(L, luawt_WCompositeWidget_floatSide_args);
     WCompositeWidget* self = luawt_checkFromLua<WCompositeWidget>(L, 1);
-        if (argc == 0) {
+    if (index == 0) {
     Wt::Side result = self->floatSide();
     lua_pushinteger(L, result);
     return 1;
 
     } else {
-        return luaL_error(L, "Wrong arguments number for WCompositeWidget.floatSide: %d", argc);
+        return luaL_error(L, "Wrong arguments for WCompositeWidget.floatSide");
     }
 }
 
-int luawt_WCompositeWidget_styleClass(lua_State* L) {
-    int argc = lua_gettop(L) - 1;
+static const char* WCompositeWidget_styleClass_args0[] = {luawt_typeToStr<WCompositeWidget>(), NULL};
+static const char* const* const luawt_WCompositeWidget_styleClass_args[] = {WCompositeWidget_styleClass_args0, NULL};
 
+int luawt_WCompositeWidget_styleClass(lua_State* L) {
+    int index = luawt_getSuitableArgsGroup(L, luawt_WCompositeWidget_styleClass_args);
     WCompositeWidget* self = luawt_checkFromLua<WCompositeWidget>(L, 1);
-        if (argc == 0) {
+    if (index == 0) {
     Wt::WString result = self->styleClass();
     lua_pushstring(L, result.toUTF8().c_str());
     return 1;
 
     } else {
-        return luaL_error(L, "Wrong arguments number for WCompositeWidget.styleClass: %d", argc);
+        return luaL_error(L, "Wrong arguments for WCompositeWidget.styleClass");
     }
 }
 
-int luawt_WCompositeWidget_hiddenKeepsGeometry(lua_State* L) {
-    int argc = lua_gettop(L) - 1;
+static const char* WCompositeWidget_hiddenKeepsGeometry_args0[] = {luawt_typeToStr<WCompositeWidget>(), NULL};
+static const char* const* const luawt_WCompositeWidget_hiddenKeepsGeometry_args[] = {WCompositeWidget_hiddenKeepsGeometry_args0, NULL};
 
+int luawt_WCompositeWidget_hiddenKeepsGeometry(lua_State* L) {
+    int index = luawt_getSuitableArgsGroup(L, luawt_WCompositeWidget_hiddenKeepsGeometry_args);
     WCompositeWidget* self = luawt_checkFromLua<WCompositeWidget>(L, 1);
-        if (argc == 0) {
+    if (index == 0) {
     bool result = self->hiddenKeepsGeometry();
     lua_pushboolean(L, result);
     return 1;
 
     } else {
-        return luaL_error(L, "Wrong arguments number for WCompositeWidget.hiddenKeepsGeometry: %d", argc);
+        return luaL_error(L, "Wrong arguments for WCompositeWidget.hiddenKeepsGeometry");
     }
 }
 
-int luawt_WCompositeWidget_loaded(lua_State* L) {
-    int argc = lua_gettop(L) - 1;
+static const char* WCompositeWidget_loaded_args0[] = {luawt_typeToStr<WCompositeWidget>(), NULL};
+static const char* const* const luawt_WCompositeWidget_loaded_args[] = {WCompositeWidget_loaded_args0, NULL};
 
+int luawt_WCompositeWidget_loaded(lua_State* L) {
+    int index = luawt_getSuitableArgsGroup(L, luawt_WCompositeWidget_loaded_args);
     WCompositeWidget* self = luawt_checkFromLua<WCompositeWidget>(L, 1);
-        if (argc == 0) {
+    if (index == 0) {
     bool result = self->loaded();
     lua_pushboolean(L, result);
     return 1;
 
     } else {
-        return luaL_error(L, "Wrong arguments number for WCompositeWidget.loaded: %d", argc);
+        return luaL_error(L, "Wrong arguments for WCompositeWidget.loaded");
     }
 }
 
-int luawt_WCompositeWidget_id(lua_State* L) {
-    int argc = lua_gettop(L) - 1;
+static const char* WCompositeWidget_id_args0[] = {luawt_typeToStr<WCompositeWidget>(), NULL};
+static const char* const* const luawt_WCompositeWidget_id_args[] = {WCompositeWidget_id_args0, NULL};
 
+int luawt_WCompositeWidget_id(lua_State* L) {
+    int index = luawt_getSuitableArgsGroup(L, luawt_WCompositeWidget_id_args);
     WCompositeWidget* self = luawt_checkFromLua<WCompositeWidget>(L, 1);
-        if (argc == 0) {
+    if (index == 0) {
     std::string const result = self->id();
     lua_pushstring(L, result.c_str());
     return 1;
 
     } else {
-        return luaL_error(L, "Wrong arguments number for WCompositeWidget.id: %d", argc);
+        return luaL_error(L, "Wrong arguments for WCompositeWidget.id");
     }
 }
 
-int luawt_WCompositeWidget_isInline(lua_State* L) {
-    int argc = lua_gettop(L) - 1;
+static const char* WCompositeWidget_isInline_args0[] = {luawt_typeToStr<WCompositeWidget>(), NULL};
+static const char* const* const luawt_WCompositeWidget_isInline_args[] = {WCompositeWidget_isInline_args0, NULL};
 
+int luawt_WCompositeWidget_isInline(lua_State* L) {
+    int index = luawt_getSuitableArgsGroup(L, luawt_WCompositeWidget_isInline_args);
     WCompositeWidget* self = luawt_checkFromLua<WCompositeWidget>(L, 1);
-        if (argc == 0) {
+    if (index == 0) {
     bool result = self->isInline();
     lua_pushboolean(L, result);
     return 1;
 
     } else {
-        return luaL_error(L, "Wrong arguments number for WCompositeWidget.isInline: %d", argc);
+        return luaL_error(L, "Wrong arguments for WCompositeWidget.isInline");
     }
 }
 
-int luawt_WCompositeWidget_setStyleClass(lua_State* L) {
-    int argc = lua_gettop(L) - 1;
+static const char* WCompositeWidget_setStyleClass_args0[] = {luawt_typeToStr<WCompositeWidget>(), "char const *", NULL};
+static const char* const* const luawt_WCompositeWidget_setStyleClass_args[] = {WCompositeWidget_setStyleClass_args0, NULL};
 
+int luawt_WCompositeWidget_setStyleClass(lua_State* L) {
+    int index = luawt_getSuitableArgsGroup(L, luawt_WCompositeWidget_setStyleClass_args);
     WCompositeWidget* self = luawt_checkFromLua<WCompositeWidget>(L, 1);
-        if (argc == 1) {
+    if (index == 0) {
     char const * raw2 = lua_tostring(L, 2);
     Wt::WString styleClass = Wt::WString(raw2);
     self->setStyleClass(styleClass);
     return 0;
     
     } else {
-        return luaL_error(L, "Wrong arguments number for WCompositeWidget.setStyleClass: %d", argc);
+        return luaL_error(L, "Wrong arguments for WCompositeWidget.setStyleClass");
     }
 }
 
-int luawt_WCompositeWidget_isDisabled(lua_State* L) {
-    int argc = lua_gettop(L) - 1;
+static const char* WCompositeWidget_isDisabled_args0[] = {luawt_typeToStr<WCompositeWidget>(), NULL};
+static const char* const* const luawt_WCompositeWidget_isDisabled_args[] = {WCompositeWidget_isDisabled_args0, NULL};
 
+int luawt_WCompositeWidget_isDisabled(lua_State* L) {
+    int index = luawt_getSuitableArgsGroup(L, luawt_WCompositeWidget_isDisabled_args);
     WCompositeWidget* self = luawt_checkFromLua<WCompositeWidget>(L, 1);
-        if (argc == 0) {
+    if (index == 0) {
     bool result = self->isDisabled();
     lua_pushboolean(L, result);
     return 1;
 
     } else {
-        return luaL_error(L, "Wrong arguments number for WCompositeWidget.isDisabled: %d", argc);
+        return luaL_error(L, "Wrong arguments for WCompositeWidget.isDisabled");
     }
 }
 
-int luawt_WCompositeWidget_setPopup(lua_State* L) {
-    int argc = lua_gettop(L) - 1;
+static const char* WCompositeWidget_setPopup_args0[] = {luawt_typeToStr<WCompositeWidget>(), "bool", NULL};
+static const char* const* const luawt_WCompositeWidget_setPopup_args[] = {WCompositeWidget_setPopup_args0, NULL};
 
+int luawt_WCompositeWidget_setPopup(lua_State* L) {
+    int index = luawt_getSuitableArgsGroup(L, luawt_WCompositeWidget_setPopup_args);
     WCompositeWidget* self = luawt_checkFromLua<WCompositeWidget>(L, 1);
-        if (argc == 1) {
+    if (index == 0) {
     bool popup = lua_toboolean(L, 2);
     self->setPopup(popup);
     return 0;
     
     } else {
-        return luaL_error(L, "Wrong arguments number for WCompositeWidget.setPopup: %d", argc);
+        return luaL_error(L, "Wrong arguments for WCompositeWidget.setPopup");
     }
 }
 
-int luawt_WCompositeWidget_setFloatSide(lua_State* L) {
-    int argc = lua_gettop(L) - 1;
+static const char* WCompositeWidget_setFloatSide_args0[] = {luawt_typeToStr<WCompositeWidget>(), "int", NULL};
+static const char* const* const luawt_WCompositeWidget_setFloatSide_args[] = {WCompositeWidget_setFloatSide_args0, NULL};
 
+int luawt_WCompositeWidget_setFloatSide(lua_State* L) {
+    int index = luawt_getSuitableArgsGroup(L, luawt_WCompositeWidget_setFloatSide_args);
     WCompositeWidget* self = luawt_checkFromLua<WCompositeWidget>(L, 1);
-        if (argc == 1) {
+    if (index == 0) {
     Wt::Side s = static_cast<Wt::Side>(lua_tointeger(L, 2));
     self->setFloatSide(s);
     return 0;
     
     } else {
-        return luaL_error(L, "Wrong arguments number for WCompositeWidget.setFloatSide: %d", argc);
+        return luaL_error(L, "Wrong arguments for WCompositeWidget.setFloatSide");
     }
 }
 
-int luawt_WCompositeWidget_propagateSetEnabled(lua_State* L) {
-    int argc = lua_gettop(L) - 1;
+static const char* WCompositeWidget_propagateSetEnabled_args0[] = {luawt_typeToStr<WCompositeWidget>(), "bool", NULL};
+static const char* const* const luawt_WCompositeWidget_propagateSetEnabled_args[] = {WCompositeWidget_propagateSetEnabled_args0, NULL};
 
+int luawt_WCompositeWidget_propagateSetEnabled(lua_State* L) {
+    int index = luawt_getSuitableArgsGroup(L, luawt_WCompositeWidget_propagateSetEnabled_args);
     WCompositeWidget* self = luawt_checkFromLua<WCompositeWidget>(L, 1);
-        if (argc == 1) {
+    if (index == 0) {
     bool enabled = lua_toboolean(L, 2);
     self->propagateSetEnabled(enabled);
     return 0;
     
     } else {
-        return luaL_error(L, "Wrong arguments number for WCompositeWidget.propagateSetEnabled: %d", argc);
+        return luaL_error(L, "Wrong arguments for WCompositeWidget.propagateSetEnabled");
     }
 }
 
-int luawt_WCompositeWidget_verticalAlignment(lua_State* L) {
-    int argc = lua_gettop(L) - 1;
+static const char* WCompositeWidget_verticalAlignment_args0[] = {luawt_typeToStr<WCompositeWidget>(), NULL};
+static const char* const* const luawt_WCompositeWidget_verticalAlignment_args[] = {WCompositeWidget_verticalAlignment_args0, NULL};
 
+int luawt_WCompositeWidget_verticalAlignment(lua_State* L) {
+    int index = luawt_getSuitableArgsGroup(L, luawt_WCompositeWidget_verticalAlignment_args);
     WCompositeWidget* self = luawt_checkFromLua<WCompositeWidget>(L, 1);
-        if (argc == 0) {
+    if (index == 0) {
     Wt::AlignmentFlag result = self->verticalAlignment();
     lua_pushinteger(L, result);
     return 1;
 
     } else {
-        return luaL_error(L, "Wrong arguments number for WCompositeWidget.verticalAlignment: %d", argc);
+        return luaL_error(L, "Wrong arguments for WCompositeWidget.verticalAlignment");
     }
 }
 
-int luawt_WCompositeWidget_positionScheme(lua_State* L) {
-    int argc = lua_gettop(L) - 1;
+static const char* WCompositeWidget_positionScheme_args0[] = {luawt_typeToStr<WCompositeWidget>(), NULL};
+static const char* const* const luawt_WCompositeWidget_positionScheme_args[] = {WCompositeWidget_positionScheme_args0, NULL};
 
+int luawt_WCompositeWidget_positionScheme(lua_State* L) {
+    int index = luawt_getSuitableArgsGroup(L, luawt_WCompositeWidget_positionScheme_args);
     WCompositeWidget* self = luawt_checkFromLua<WCompositeWidget>(L, 1);
-        if (argc == 0) {
+    if (index == 0) {
     Wt::PositionScheme result = self->positionScheme();
     lua_pushinteger(L, result);
     return 1;
 
     } else {
-        return luaL_error(L, "Wrong arguments number for WCompositeWidget.positionScheme: %d", argc);
+        return luaL_error(L, "Wrong arguments for WCompositeWidget.positionScheme");
     }
 }
 
-int luawt_WCompositeWidget_tabIndex(lua_State* L) {
-    int argc = lua_gettop(L) - 1;
+static const char* WCompositeWidget_tabIndex_args0[] = {luawt_typeToStr<WCompositeWidget>(), NULL};
+static const char* const* const luawt_WCompositeWidget_tabIndex_args[] = {WCompositeWidget_tabIndex_args0, NULL};
 
+int luawt_WCompositeWidget_tabIndex(lua_State* L) {
+    int index = luawt_getSuitableArgsGroup(L, luawt_WCompositeWidget_tabIndex_args);
     WCompositeWidget* self = luawt_checkFromLua<WCompositeWidget>(L, 1);
-        if (argc == 0) {
+    if (index == 0) {
     int result = self->tabIndex();
     lua_pushinteger(L, result);
     return 1;
 
     } else {
-        return luaL_error(L, "Wrong arguments number for WCompositeWidget.tabIndex: %d", argc);
+        return luaL_error(L, "Wrong arguments for WCompositeWidget.tabIndex");
     }
 }
 
-int luawt_WCompositeWidget_isHidden(lua_State* L) {
-    int argc = lua_gettop(L) - 1;
+static const char* WCompositeWidget_isHidden_args0[] = {luawt_typeToStr<WCompositeWidget>(), NULL};
+static const char* const* const luawt_WCompositeWidget_isHidden_args[] = {WCompositeWidget_isHidden_args0, NULL};
 
+int luawt_WCompositeWidget_isHidden(lua_State* L) {
+    int index = luawt_getSuitableArgsGroup(L, luawt_WCompositeWidget_isHidden_args);
     WCompositeWidget* self = luawt_checkFromLua<WCompositeWidget>(L, 1);
-        if (argc == 0) {
+    if (index == 0) {
     bool result = self->isHidden();
     lua_pushboolean(L, result);
     return 1;
 
     } else {
-        return luaL_error(L, "Wrong arguments number for WCompositeWidget.isHidden: %d", argc);
+        return luaL_error(L, "Wrong arguments for WCompositeWidget.isHidden");
     }
 }
 
-int luawt_WCompositeWidget_setSelectable(lua_State* L) {
-    int argc = lua_gettop(L) - 1;
+static const char* WCompositeWidget_setSelectable_args0[] = {luawt_typeToStr<WCompositeWidget>(), "bool", NULL};
+static const char* const* const luawt_WCompositeWidget_setSelectable_args[] = {WCompositeWidget_setSelectable_args0, NULL};
 
+int luawt_WCompositeWidget_setSelectable(lua_State* L) {
+    int index = luawt_getSuitableArgsGroup(L, luawt_WCompositeWidget_setSelectable_args);
     WCompositeWidget* self = luawt_checkFromLua<WCompositeWidget>(L, 1);
-        if (argc == 1) {
+    if (index == 0) {
     bool selectable = lua_toboolean(L, 2);
     self->setSelectable(selectable);
     return 0;
     
     } else {
-        return luaL_error(L, "Wrong arguments number for WCompositeWidget.setSelectable: %d", argc);
+        return luaL_error(L, "Wrong arguments for WCompositeWidget.setSelectable");
     }
 }
 
-int luawt_WCompositeWidget_attributeValue(lua_State* L) {
-    int argc = lua_gettop(L) - 1;
+static const char* WCompositeWidget_attributeValue_args0[] = {luawt_typeToStr<WCompositeWidget>(), "char const *", NULL};
+static const char* const* const luawt_WCompositeWidget_attributeValue_args[] = {WCompositeWidget_attributeValue_args0, NULL};
 
+int luawt_WCompositeWidget_attributeValue(lua_State* L) {
+    int index = luawt_getSuitableArgsGroup(L, luawt_WCompositeWidget_attributeValue_args);
     WCompositeWidget* self = luawt_checkFromLua<WCompositeWidget>(L, 1);
-        if (argc == 1) {
+    if (index == 0) {
     char const * raw2 = lua_tostring(L, 2);
     std::string name = std::string(raw2);
     Wt::WString result = self->attributeValue(name);
@@ -286,29 +333,33 @@ int luawt_WCompositeWidget_attributeValue(lua_State* L) {
     return 1;
 
     } else {
-        return luaL_error(L, "Wrong arguments number for WCompositeWidget.attributeValue: %d", argc);
+        return luaL_error(L, "Wrong arguments for WCompositeWidget.attributeValue");
     }
 }
 
-int luawt_WCompositeWidget_setPositionScheme(lua_State* L) {
-    int argc = lua_gettop(L) - 1;
+static const char* WCompositeWidget_setPositionScheme_args0[] = {luawt_typeToStr<WCompositeWidget>(), "int", NULL};
+static const char* const* const luawt_WCompositeWidget_setPositionScheme_args[] = {WCompositeWidget_setPositionScheme_args0, NULL};
 
+int luawt_WCompositeWidget_setPositionScheme(lua_State* L) {
+    int index = luawt_getSuitableArgsGroup(L, luawt_WCompositeWidget_setPositionScheme_args);
     WCompositeWidget* self = luawt_checkFromLua<WCompositeWidget>(L, 1);
-        if (argc == 1) {
+    if (index == 0) {
     Wt::PositionScheme scheme = static_cast<Wt::PositionScheme>(lua_tointeger(L, 2));
     self->setPositionScheme(scheme);
     return 0;
     
     } else {
-        return luaL_error(L, "Wrong arguments number for WCompositeWidget.setPositionScheme: %d", argc);
+        return luaL_error(L, "Wrong arguments for WCompositeWidget.setPositionScheme");
     }
 }
 
-int luawt_WCompositeWidget_javaScriptMember(lua_State* L) {
-    int argc = lua_gettop(L) - 1;
+static const char* WCompositeWidget_javaScriptMember_args0[] = {luawt_typeToStr<WCompositeWidget>(), "char const *", NULL};
+static const char* const* const luawt_WCompositeWidget_javaScriptMember_args[] = {WCompositeWidget_javaScriptMember_args0, NULL};
 
+int luawt_WCompositeWidget_javaScriptMember(lua_State* L) {
+    int index = luawt_getSuitableArgsGroup(L, luawt_WCompositeWidget_javaScriptMember_args);
     WCompositeWidget* self = luawt_checkFromLua<WCompositeWidget>(L, 1);
-        if (argc == 1) {
+    if (index == 0) {
     char const * raw2 = lua_tostring(L, 2);
     std::string name = std::string(raw2);
     std::string result = self->javaScriptMember(name);
@@ -316,72 +367,89 @@ int luawt_WCompositeWidget_javaScriptMember(lua_State* L) {
     return 1;
 
     } else {
-        return luaL_error(L, "Wrong arguments number for WCompositeWidget.javaScriptMember: %d", argc);
+        return luaL_error(L, "Wrong arguments for WCompositeWidget.javaScriptMember");
     }
 }
 
-int luawt_WCompositeWidget_toolTip(lua_State* L) {
-    int argc = lua_gettop(L) - 1;
+static const char* WCompositeWidget_toolTip_args0[] = {luawt_typeToStr<WCompositeWidget>(), NULL};
+static const char* const* const luawt_WCompositeWidget_toolTip_args[] = {WCompositeWidget_toolTip_args0, NULL};
 
+int luawt_WCompositeWidget_toolTip(lua_State* L) {
+    int index = luawt_getSuitableArgsGroup(L, luawt_WCompositeWidget_toolTip_args);
     WCompositeWidget* self = luawt_checkFromLua<WCompositeWidget>(L, 1);
-        if (argc == 0) {
+    if (index == 0) {
     Wt::WString result = self->toolTip();
     lua_pushstring(L, result.toUTF8().c_str());
     return 1;
 
     } else {
-        return luaL_error(L, "Wrong arguments number for WCompositeWidget.toolTip: %d", argc);
+        return luaL_error(L, "Wrong arguments for WCompositeWidget.toolTip");
     }
 }
 
-int luawt_WCompositeWidget_setInline(lua_State* L) {
-    int argc = lua_gettop(L) - 1;
+static const char* WCompositeWidget_setInline_args0[] = {luawt_typeToStr<WCompositeWidget>(), "bool", NULL};
+static const char* const* const luawt_WCompositeWidget_setInline_args[] = {WCompositeWidget_setInline_args0, NULL};
 
+int luawt_WCompositeWidget_setInline(lua_State* L) {
+    int index = luawt_getSuitableArgsGroup(L, luawt_WCompositeWidget_setInline_args);
     WCompositeWidget* self = luawt_checkFromLua<WCompositeWidget>(L, 1);
-        if (argc == 1) {
+    if (index == 0) {
     bool isInline = lua_toboolean(L, 2);
     self->setInline(isInline);
     return 0;
     
     } else {
-        return luaL_error(L, "Wrong arguments number for WCompositeWidget.setInline: %d", argc);
+        return luaL_error(L, "Wrong arguments for WCompositeWidget.setInline");
     }
 }
 
-int luawt_WCompositeWidget_webWidget(lua_State* L) {
-    int argc = lua_gettop(L) - 1;
+static const char* WCompositeWidget_webWidget_args0[] = {luawt_typeToStr<WCompositeWidget>(), NULL};
+static const char* const* const luawt_WCompositeWidget_webWidget_args[] = {WCompositeWidget_webWidget_args0, NULL};
 
+int luawt_WCompositeWidget_webWidget(lua_State* L) {
+    int index = luawt_getSuitableArgsGroup(L, luawt_WCompositeWidget_webWidget_args);
     WCompositeWidget* self = luawt_checkFromLua<WCompositeWidget>(L, 1);
-        if (argc == 0) {
+    if (index == 0) {
     Wt::WWebWidget * result = self->webWidget();
     luawt_toLua(L, result);
     return 1;
 
     } else {
-        return luaL_error(L, "Wrong arguments number for WCompositeWidget.webWidget: %d", argc);
+        return luaL_error(L, "Wrong arguments for WCompositeWidget.webWidget");
     }
 }
 
-int luawt_WCompositeWidget_setId(lua_State* L) {
-    int argc = lua_gettop(L) - 1;
+static const char* WCompositeWidget_setId_args0[] = {luawt_typeToStr<WCompositeWidget>(), "char const *", NULL};
+static const char* const* const luawt_WCompositeWidget_setId_args[] = {WCompositeWidget_setId_args0, NULL};
 
+int luawt_WCompositeWidget_setId(lua_State* L) {
+    int index = luawt_getSuitableArgsGroup(L, luawt_WCompositeWidget_setId_args);
     WCompositeWidget* self = luawt_checkFromLua<WCompositeWidget>(L, 1);
-        if (argc == 1) {
+    if (index == 0) {
     char const * raw2 = lua_tostring(L, 2);
     std::string id = std::string(raw2);
     self->setId(id);
     return 0;
     
     } else {
-        return luaL_error(L, "Wrong arguments number for WCompositeWidget.setId: %d", argc);
+        return luaL_error(L, "Wrong arguments for WCompositeWidget.setId");
     }
 }
 
-int luawt_WCompositeWidget_setToolTip(lua_State* L) {
-    int argc = lua_gettop(L) - 1;
+static const char* WCompositeWidget_setToolTip_args0[] = {luawt_typeToStr<WCompositeWidget>(), "char const *", NULL};
+static const char* WCompositeWidget_setToolTip_args1[] = {luawt_typeToStr<WCompositeWidget>(), "char const *", "int", NULL};
+static const char* const* const luawt_WCompositeWidget_setToolTip_args[] = {WCompositeWidget_setToolTip_args0, WCompositeWidget_setToolTip_args1, NULL};
 
+int luawt_WCompositeWidget_setToolTip(lua_State* L) {
+    int index = luawt_getSuitableArgsGroup(L, luawt_WCompositeWidget_setToolTip_args);
     WCompositeWidget* self = luawt_checkFromLua<WCompositeWidget>(L, 1);
-        if (argc == 2) {
+    if (index == 0) {
+    char const * raw2 = lua_tostring(L, 2);
+    Wt::WString text = Wt::WString(raw2);
+    self->setToolTip(text);
+    return 0;
+    
+    } else if (index == 1) {
     char const * raw2 = lua_tostring(L, 2);
     Wt::WString text = Wt::WString(raw2);
     Wt::TextFormat textFormat = static_cast<Wt::TextFormat>(lua_tointeger(L, 3));
@@ -389,29 +457,40 @@ int luawt_WCompositeWidget_setToolTip(lua_State* L) {
     return 0;
     
     } else {
-        return luaL_error(L, "Wrong arguments number for WCompositeWidget.setToolTip: %d", argc);
+        return luaL_error(L, "Wrong arguments for WCompositeWidget.setToolTip");
     }
 }
 
-int luawt_WCompositeWidget_isPopup(lua_State* L) {
-    int argc = lua_gettop(L) - 1;
+static const char* WCompositeWidget_isPopup_args0[] = {luawt_typeToStr<WCompositeWidget>(), NULL};
+static const char* const* const luawt_WCompositeWidget_isPopup_args[] = {WCompositeWidget_isPopup_args0, NULL};
 
+int luawt_WCompositeWidget_isPopup(lua_State* L) {
+    int index = luawt_getSuitableArgsGroup(L, luawt_WCompositeWidget_isPopup_args);
     WCompositeWidget* self = luawt_checkFromLua<WCompositeWidget>(L, 1);
-        if (argc == 0) {
+    if (index == 0) {
     bool result = self->isPopup();
     lua_pushboolean(L, result);
     return 1;
 
     } else {
-        return luaL_error(L, "Wrong arguments number for WCompositeWidget.isPopup: %d", argc);
+        return luaL_error(L, "Wrong arguments for WCompositeWidget.isPopup");
     }
 }
 
-int luawt_WCompositeWidget_removeStyleClass(lua_State* L) {
-    int argc = lua_gettop(L) - 1;
+static const char* WCompositeWidget_removeStyleClass_args0[] = {luawt_typeToStr<WCompositeWidget>(), "char const *", NULL};
+static const char* WCompositeWidget_removeStyleClass_args1[] = {luawt_typeToStr<WCompositeWidget>(), "char const *", "bool", NULL};
+static const char* const* const luawt_WCompositeWidget_removeStyleClass_args[] = {WCompositeWidget_removeStyleClass_args0, WCompositeWidget_removeStyleClass_args1, NULL};
 
+int luawt_WCompositeWidget_removeStyleClass(lua_State* L) {
+    int index = luawt_getSuitableArgsGroup(L, luawt_WCompositeWidget_removeStyleClass_args);
     WCompositeWidget* self = luawt_checkFromLua<WCompositeWidget>(L, 1);
-        if (argc == 2) {
+    if (index == 0) {
+    char const * raw2 = lua_tostring(L, 2);
+    Wt::WString styleClass = Wt::WString(raw2);
+    self->removeStyleClass(styleClass);
+    return 0;
+    
+    } else if (index == 1) {
     char const * raw2 = lua_tostring(L, 2);
     Wt::WString styleClass = Wt::WString(raw2);
     bool force = lua_toboolean(L, 3);
@@ -419,28 +498,32 @@ int luawt_WCompositeWidget_removeStyleClass(lua_State* L) {
     return 0;
     
     } else {
-        return luaL_error(L, "Wrong arguments number for WCompositeWidget.removeStyleClass: %d", argc);
+        return luaL_error(L, "Wrong arguments for WCompositeWidget.removeStyleClass");
     }
 }
 
-int luawt_WCompositeWidget_refresh(lua_State* L) {
-    int argc = lua_gettop(L) - 1;
+static const char* WCompositeWidget_refresh_args0[] = {luawt_typeToStr<WCompositeWidget>(), NULL};
+static const char* const* const luawt_WCompositeWidget_refresh_args[] = {WCompositeWidget_refresh_args0, NULL};
 
+int luawt_WCompositeWidget_refresh(lua_State* L) {
+    int index = luawt_getSuitableArgsGroup(L, luawt_WCompositeWidget_refresh_args);
     WCompositeWidget* self = luawt_checkFromLua<WCompositeWidget>(L, 1);
-        if (argc == 0) {
+    if (index == 0) {
     self->refresh();
     return 0;
     
     } else {
-        return luaL_error(L, "Wrong arguments number for WCompositeWidget.refresh: %d", argc);
+        return luaL_error(L, "Wrong arguments for WCompositeWidget.refresh");
     }
 }
 
-int luawt_WCompositeWidget_setJavaScriptMember(lua_State* L) {
-    int argc = lua_gettop(L) - 1;
+static const char* WCompositeWidget_setJavaScriptMember_args0[] = {luawt_typeToStr<WCompositeWidget>(), "char const *", "char const *", NULL};
+static const char* const* const luawt_WCompositeWidget_setJavaScriptMember_args[] = {WCompositeWidget_setJavaScriptMember_args0, NULL};
 
+int luawt_WCompositeWidget_setJavaScriptMember(lua_State* L) {
+    int index = luawt_getSuitableArgsGroup(L, luawt_WCompositeWidget_setJavaScriptMember_args);
     WCompositeWidget* self = luawt_checkFromLua<WCompositeWidget>(L, 1);
-        if (argc == 2) {
+    if (index == 0) {
     char const * raw2 = lua_tostring(L, 2);
     std::string name = std::string(raw2);
     char const * raw3 = lua_tostring(L, 3);
@@ -449,57 +532,72 @@ int luawt_WCompositeWidget_setJavaScriptMember(lua_State* L) {
     return 0;
     
     } else {
-        return luaL_error(L, "Wrong arguments number for WCompositeWidget.setJavaScriptMember: %d", argc);
+        return luaL_error(L, "Wrong arguments for WCompositeWidget.setJavaScriptMember");
     }
 }
 
-int luawt_WCompositeWidget_setDisabled(lua_State* L) {
-    int argc = lua_gettop(L) - 1;
+static const char* WCompositeWidget_setDisabled_args0[] = {luawt_typeToStr<WCompositeWidget>(), "bool", NULL};
+static const char* const* const luawt_WCompositeWidget_setDisabled_args[] = {WCompositeWidget_setDisabled_args0, NULL};
 
+int luawt_WCompositeWidget_setDisabled(lua_State* L) {
+    int index = luawt_getSuitableArgsGroup(L, luawt_WCompositeWidget_setDisabled_args);
     WCompositeWidget* self = luawt_checkFromLua<WCompositeWidget>(L, 1);
-        if (argc == 1) {
+    if (index == 0) {
     bool disabled = lua_toboolean(L, 2);
     self->setDisabled(disabled);
     return 0;
     
     } else {
-        return luaL_error(L, "Wrong arguments number for WCompositeWidget.setDisabled: %d", argc);
+        return luaL_error(L, "Wrong arguments for WCompositeWidget.setDisabled");
     }
 }
 
-int luawt_WCompositeWidget_setHiddenKeepsGeometry(lua_State* L) {
-    int argc = lua_gettop(L) - 1;
+static const char* WCompositeWidget_setHiddenKeepsGeometry_args0[] = {luawt_typeToStr<WCompositeWidget>(), "bool", NULL};
+static const char* const* const luawt_WCompositeWidget_setHiddenKeepsGeometry_args[] = {WCompositeWidget_setHiddenKeepsGeometry_args0, NULL};
 
+int luawt_WCompositeWidget_setHiddenKeepsGeometry(lua_State* L) {
+    int index = luawt_getSuitableArgsGroup(L, luawt_WCompositeWidget_setHiddenKeepsGeometry_args);
     WCompositeWidget* self = luawt_checkFromLua<WCompositeWidget>(L, 1);
-        if (argc == 1) {
+    if (index == 0) {
     bool enabled = lua_toboolean(L, 2);
     self->setHiddenKeepsGeometry(enabled);
     return 0;
     
     } else {
-        return luaL_error(L, "Wrong arguments number for WCompositeWidget.setHiddenKeepsGeometry: %d", argc);
+        return luaL_error(L, "Wrong arguments for WCompositeWidget.setHiddenKeepsGeometry");
     }
 }
 
-int luawt_WCompositeWidget_isVisible(lua_State* L) {
-    int argc = lua_gettop(L) - 1;
+static const char* WCompositeWidget_isVisible_args0[] = {luawt_typeToStr<WCompositeWidget>(), NULL};
+static const char* const* const luawt_WCompositeWidget_isVisible_args[] = {WCompositeWidget_isVisible_args0, NULL};
 
+int luawt_WCompositeWidget_isVisible(lua_State* L) {
+    int index = luawt_getSuitableArgsGroup(L, luawt_WCompositeWidget_isVisible_args);
     WCompositeWidget* self = luawt_checkFromLua<WCompositeWidget>(L, 1);
-        if (argc == 0) {
+    if (index == 0) {
     bool result = self->isVisible();
     lua_pushboolean(L, result);
     return 1;
 
     } else {
-        return luaL_error(L, "Wrong arguments number for WCompositeWidget.isVisible: %d", argc);
+        return luaL_error(L, "Wrong arguments for WCompositeWidget.isVisible");
     }
 }
 
-int luawt_WCompositeWidget_addStyleClass(lua_State* L) {
-    int argc = lua_gettop(L) - 1;
+static const char* WCompositeWidget_addStyleClass_args0[] = {luawt_typeToStr<WCompositeWidget>(), "char const *", NULL};
+static const char* WCompositeWidget_addStyleClass_args1[] = {luawt_typeToStr<WCompositeWidget>(), "char const *", "bool", NULL};
+static const char* const* const luawt_WCompositeWidget_addStyleClass_args[] = {WCompositeWidget_addStyleClass_args0, WCompositeWidget_addStyleClass_args1, NULL};
 
+int luawt_WCompositeWidget_addStyleClass(lua_State* L) {
+    int index = luawt_getSuitableArgsGroup(L, luawt_WCompositeWidget_addStyleClass_args);
     WCompositeWidget* self = luawt_checkFromLua<WCompositeWidget>(L, 1);
-        if (argc == 2) {
+    if (index == 0) {
+    char const * raw2 = lua_tostring(L, 2);
+    Wt::WString styleClass = Wt::WString(raw2);
+    self->addStyleClass(styleClass);
+    return 0;
+    
+    } else if (index == 1) {
     char const * raw2 = lua_tostring(L, 2);
     Wt::WString styleClass = Wt::WString(raw2);
     bool force = lua_toboolean(L, 3);
@@ -507,15 +605,17 @@ int luawt_WCompositeWidget_addStyleClass(lua_State* L) {
     return 0;
     
     } else {
-        return luaL_error(L, "Wrong arguments number for WCompositeWidget.addStyleClass: %d", argc);
+        return luaL_error(L, "Wrong arguments for WCompositeWidget.addStyleClass");
     }
 }
 
-int luawt_WCompositeWidget_setAttributeValue(lua_State* L) {
-    int argc = lua_gettop(L) - 1;
+static const char* WCompositeWidget_setAttributeValue_args0[] = {luawt_typeToStr<WCompositeWidget>(), "char const *", "char const *", NULL};
+static const char* const* const luawt_WCompositeWidget_setAttributeValue_args[] = {WCompositeWidget_setAttributeValue_args0, NULL};
 
+int luawt_WCompositeWidget_setAttributeValue(lua_State* L) {
+    int index = luawt_getSuitableArgsGroup(L, luawt_WCompositeWidget_setAttributeValue_args);
     WCompositeWidget* self = luawt_checkFromLua<WCompositeWidget>(L, 1);
-        if (argc == 2) {
+    if (index == 0) {
     char const * raw2 = lua_tostring(L, 2);
     std::string name = std::string(raw2);
     char const * raw3 = lua_tostring(L, 3);
@@ -524,43 +624,49 @@ int luawt_WCompositeWidget_setAttributeValue(lua_State* L) {
     return 0;
     
     } else {
-        return luaL_error(L, "Wrong arguments number for WCompositeWidget.setAttributeValue: %d", argc);
+        return luaL_error(L, "Wrong arguments for WCompositeWidget.setAttributeValue");
     }
 }
 
-int luawt_WCompositeWidget_setTabIndex(lua_State* L) {
-    int argc = lua_gettop(L) - 1;
+static const char* WCompositeWidget_setTabIndex_args0[] = {luawt_typeToStr<WCompositeWidget>(), "int", NULL};
+static const char* const* const luawt_WCompositeWidget_setTabIndex_args[] = {WCompositeWidget_setTabIndex_args0, NULL};
 
+int luawt_WCompositeWidget_setTabIndex(lua_State* L) {
+    int index = luawt_getSuitableArgsGroup(L, luawt_WCompositeWidget_setTabIndex_args);
     WCompositeWidget* self = luawt_checkFromLua<WCompositeWidget>(L, 1);
-        if (argc == 1) {
+    if (index == 0) {
     int index = lua_tointeger(L, 2);
     self->setTabIndex(index);
     return 0;
     
     } else {
-        return luaL_error(L, "Wrong arguments number for WCompositeWidget.setTabIndex: %d", argc);
+        return luaL_error(L, "Wrong arguments for WCompositeWidget.setTabIndex");
     }
 }
 
-int luawt_WCompositeWidget_isEnabled(lua_State* L) {
-    int argc = lua_gettop(L) - 1;
+static const char* WCompositeWidget_isEnabled_args0[] = {luawt_typeToStr<WCompositeWidget>(), NULL};
+static const char* const* const luawt_WCompositeWidget_isEnabled_args[] = {WCompositeWidget_isEnabled_args0, NULL};
 
+int luawt_WCompositeWidget_isEnabled(lua_State* L) {
+    int index = luawt_getSuitableArgsGroup(L, luawt_WCompositeWidget_isEnabled_args);
     WCompositeWidget* self = luawt_checkFromLua<WCompositeWidget>(L, 1);
-        if (argc == 0) {
+    if (index == 0) {
     bool result = self->isEnabled();
     lua_pushboolean(L, result);
     return 1;
 
     } else {
-        return luaL_error(L, "Wrong arguments number for WCompositeWidget.isEnabled: %d", argc);
+        return luaL_error(L, "Wrong arguments for WCompositeWidget.isEnabled");
     }
 }
 
-int luawt_WCompositeWidget_callJavaScriptMember(lua_State* L) {
-    int argc = lua_gettop(L) - 1;
+static const char* WCompositeWidget_callJavaScriptMember_args0[] = {luawt_typeToStr<WCompositeWidget>(), "char const *", "char const *", NULL};
+static const char* const* const luawt_WCompositeWidget_callJavaScriptMember_args[] = {WCompositeWidget_callJavaScriptMember_args0, NULL};
 
+int luawt_WCompositeWidget_callJavaScriptMember(lua_State* L) {
+    int index = luawt_getSuitableArgsGroup(L, luawt_WCompositeWidget_callJavaScriptMember_args);
     WCompositeWidget* self = luawt_checkFromLua<WCompositeWidget>(L, 1);
-        if (argc == 2) {
+    if (index == 0) {
     char const * raw2 = lua_tostring(L, 2);
     std::string name = std::string(raw2);
     char const * raw3 = lua_tostring(L, 3);
@@ -569,7 +675,7 @@ int luawt_WCompositeWidget_callJavaScriptMember(lua_State* L) {
     return 0;
     
     } else {
-        return luaL_error(L, "Wrong arguments number for WCompositeWidget.callJavaScriptMember: %d", argc);
+        return luaL_error(L, "Wrong arguments for WCompositeWidget.callJavaScriptMember");
     }
 }
 

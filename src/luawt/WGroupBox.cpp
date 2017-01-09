@@ -6,16 +6,34 @@
 
 #include "globals.hpp"
 
+static const char* WGroupBox_make_args0[] = {NULL};
+static const char* WGroupBox_make_args1[] = {luawt_typeToStr<Wt::WContainerWidget>(), NULL};
+static const char* WGroupBox_make_args2[] = {"char const *", NULL};
+static const char* WGroupBox_make_args3[] = {"char const *", luawt_typeToStr<Wt::WContainerWidget>(), NULL};
+static const char* const* const luawt_WGroupBox_make_args[] = {WGroupBox_make_args0, WGroupBox_make_args1, WGroupBox_make_args2, WGroupBox_make_args3, NULL};
+
 int luawt_WGroupBox_make(lua_State* L) {
-    int argc = lua_gettop(L);
-    if (argc == 1) {
+    int index = luawt_getSuitableArgsGroup(L, luawt_WGroupBox_make_args);
+    if (index == 0) {
+    WGroupBox * result = new WGroupBox();
+    luawt_toLua(L, result);
+    return 1;
+
+    } else if (index == 1) {
     Wt::WContainerWidget* parent =
         luawt_checkFromLua<Wt::WContainerWidget>(L, 1);
     WGroupBox * result = new WGroupBox(parent);
     luawt_toLua(L, result);
     return 1;
 
-    } else     if (argc == 2) {
+    } else if (index == 2) {
+    char const * raw1 = lua_tostring(L, 1);
+    Wt::WString title = Wt::WString(raw1);
+    WGroupBox * result = new WGroupBox(title);
+    luawt_toLua(L, result);
+    return 1;
+
+    } else if (index == 3) {
     char const * raw1 = lua_tostring(L, 1);
     Wt::WString title = Wt::WString(raw1);
     Wt::WContainerWidget* parent =
@@ -25,49 +43,55 @@ int luawt_WGroupBox_make(lua_State* L) {
     return 1;
 
     } else {
-        return luaL_error(L, "Wrong arguments number for WGroupBox.make: %d", argc);
+        return luaL_error(L, "Wrong arguments for WGroupBox.make");
     }
 }
 
-int luawt_WGroupBox_setTitle(lua_State* L) {
-    int argc = lua_gettop(L) - 1;
+static const char* WGroupBox_setTitle_args0[] = {luawt_typeToStr<WGroupBox>(), "char const *", NULL};
+static const char* const* const luawt_WGroupBox_setTitle_args[] = {WGroupBox_setTitle_args0, NULL};
 
+int luawt_WGroupBox_setTitle(lua_State* L) {
+    int index = luawt_getSuitableArgsGroup(L, luawt_WGroupBox_setTitle_args);
     WGroupBox* self = luawt_checkFromLua<WGroupBox>(L, 1);
-        if (argc == 1) {
+    if (index == 0) {
     char const * raw2 = lua_tostring(L, 2);
     Wt::WString title = Wt::WString(raw2);
     self->setTitle(title);
     return 0;
     
     } else {
-        return luaL_error(L, "Wrong arguments number for WGroupBox.setTitle: %d", argc);
+        return luaL_error(L, "Wrong arguments for WGroupBox.setTitle");
     }
 }
 
-int luawt_WGroupBox_refresh(lua_State* L) {
-    int argc = lua_gettop(L) - 1;
+static const char* WGroupBox_refresh_args0[] = {luawt_typeToStr<WGroupBox>(), NULL};
+static const char* const* const luawt_WGroupBox_refresh_args[] = {WGroupBox_refresh_args0, NULL};
 
+int luawt_WGroupBox_refresh(lua_State* L) {
+    int index = luawt_getSuitableArgsGroup(L, luawt_WGroupBox_refresh_args);
     WGroupBox* self = luawt_checkFromLua<WGroupBox>(L, 1);
-        if (argc == 0) {
+    if (index == 0) {
     self->refresh();
     return 0;
     
     } else {
-        return luaL_error(L, "Wrong arguments number for WGroupBox.refresh: %d", argc);
+        return luaL_error(L, "Wrong arguments for WGroupBox.refresh");
     }
 }
 
-int luawt_WGroupBox_title(lua_State* L) {
-    int argc = lua_gettop(L) - 1;
+static const char* WGroupBox_title_args0[] = {luawt_typeToStr<WGroupBox>(), NULL};
+static const char* const* const luawt_WGroupBox_title_args[] = {WGroupBox_title_args0, NULL};
 
+int luawt_WGroupBox_title(lua_State* L) {
+    int index = luawt_getSuitableArgsGroup(L, luawt_WGroupBox_title_args);
     WGroupBox* self = luawt_checkFromLua<WGroupBox>(L, 1);
-        if (argc == 0) {
+    if (index == 0) {
     Wt::WString const & result = self->title();
     lua_pushstring(L, result.toUTF8().c_str());
     return 1;
 
     } else {
-        return luaL_error(L, "Wrong arguments number for WGroupBox.title: %d", argc);
+        return luaL_error(L, "Wrong arguments for WGroupBox.title");
     }
 }
 

@@ -7,9 +7,18 @@
 
 #include "globals.hpp"
 
+static const char* WAnchor_make_args0[] = {NULL};
+static const char* WAnchor_make_args1[] = {luawt_typeToStr<Wt::WContainerWidget>(), NULL};
+static const char* const* const luawt_WAnchor_make_args[] = {WAnchor_make_args0, WAnchor_make_args1, NULL};
+
 int luawt_WAnchor_make(lua_State* L) {
-    int argc = lua_gettop(L);
-    if (argc == 1) {
+    int index = luawt_getSuitableArgsGroup(L, luawt_WAnchor_make_args);
+    if (index == 0) {
+    WAnchor * result = new WAnchor();
+    luawt_toLua(L, result);
+    return 1;
+
+    } else if (index == 1) {
     Wt::WContainerWidget* parent =
         luawt_checkFromLua<Wt::WContainerWidget>(L, 1);
     WAnchor * result = new WAnchor(parent);
@@ -17,166 +26,187 @@ int luawt_WAnchor_make(lua_State* L) {
     return 1;
 
     } else {
-        return luaL_error(L, "Wrong arguments number for WAnchor.make: %d", argc);
+        return luaL_error(L, "Wrong arguments for WAnchor.make");
     }
 }
 
-int luawt_WAnchor_target(lua_State* L) {
-    int argc = lua_gettop(L) - 1;
+static const char* WAnchor_target_args0[] = {luawt_typeToStr<WAnchor>(), NULL};
+static const char* const* const luawt_WAnchor_target_args[] = {WAnchor_target_args0, NULL};
 
+int luawt_WAnchor_target(lua_State* L) {
+    int index = luawt_getSuitableArgsGroup(L, luawt_WAnchor_target_args);
     WAnchor* self = luawt_checkFromLua<WAnchor>(L, 1);
-        if (argc == 0) {
+    if (index == 0) {
     Wt::AnchorTarget result = self->target();
     lua_pushinteger(L, result);
     return 1;
 
     } else {
-        return luaL_error(L, "Wrong arguments number for WAnchor.target: %d", argc);
+        return luaL_error(L, "Wrong arguments for WAnchor.target");
     }
 }
 
-int luawt_WAnchor_setImage(lua_State* L) {
-    int argc = lua_gettop(L) - 1;
+static const char* WAnchor_setImage_args0[] = {luawt_typeToStr<WAnchor>(), luawt_typeToStr<Wt::WImage>(), NULL};
+static const char* const* const luawt_WAnchor_setImage_args[] = {WAnchor_setImage_args0, NULL};
 
+int luawt_WAnchor_setImage(lua_State* L) {
+    int index = luawt_getSuitableArgsGroup(L, luawt_WAnchor_setImage_args);
     WAnchor* self = luawt_checkFromLua<WAnchor>(L, 1);
-        if (argc == 1) {
+    if (index == 0) {
     Wt::WImage* image =
         luawt_checkFromLua<Wt::WImage>(L, 2);
     self->setImage(image);
     return 0;
     
     } else {
-        return luaL_error(L, "Wrong arguments number for WAnchor.setImage: %d", argc);
+        return luaL_error(L, "Wrong arguments for WAnchor.setImage");
     }
 }
 
-int luawt_WAnchor_text(lua_State* L) {
-    int argc = lua_gettop(L) - 1;
+static const char* WAnchor_text_args0[] = {luawt_typeToStr<WAnchor>(), NULL};
+static const char* const* const luawt_WAnchor_text_args[] = {WAnchor_text_args0, NULL};
 
+int luawt_WAnchor_text(lua_State* L) {
+    int index = luawt_getSuitableArgsGroup(L, luawt_WAnchor_text_args);
     WAnchor* self = luawt_checkFromLua<WAnchor>(L, 1);
-        if (argc == 0) {
+    if (index == 0) {
     Wt::WString const & result = self->text();
     lua_pushstring(L, result.toUTF8().c_str());
     return 1;
 
     } else {
-        return luaL_error(L, "Wrong arguments number for WAnchor.text: %d", argc);
+        return luaL_error(L, "Wrong arguments for WAnchor.text");
     }
 }
 
-int luawt_WAnchor_setText(lua_State* L) {
-    int argc = lua_gettop(L) - 1;
+static const char* WAnchor_setText_args0[] = {luawt_typeToStr<WAnchor>(), "char const *", NULL};
+static const char* const* const luawt_WAnchor_setText_args[] = {WAnchor_setText_args0, NULL};
 
+int luawt_WAnchor_setText(lua_State* L) {
+    int index = luawt_getSuitableArgsGroup(L, luawt_WAnchor_setText_args);
     WAnchor* self = luawt_checkFromLua<WAnchor>(L, 1);
-        if (argc == 1) {
+    if (index == 0) {
     char const * raw2 = lua_tostring(L, 2);
     Wt::WString text = Wt::WString(raw2);
     self->setText(text);
     return 0;
     
     } else {
-        return luaL_error(L, "Wrong arguments number for WAnchor.setText: %d", argc);
+        return luaL_error(L, "Wrong arguments for WAnchor.setText");
     }
 }
 
-int luawt_WAnchor_setRefInternalPath(lua_State* L) {
-    int argc = lua_gettop(L) - 1;
+static const char* WAnchor_setRefInternalPath_args0[] = {luawt_typeToStr<WAnchor>(), "char const *", NULL};
+static const char* const* const luawt_WAnchor_setRefInternalPath_args[] = {WAnchor_setRefInternalPath_args0, NULL};
 
+int luawt_WAnchor_setRefInternalPath(lua_State* L) {
+    int index = luawt_getSuitableArgsGroup(L, luawt_WAnchor_setRefInternalPath_args);
     WAnchor* self = luawt_checkFromLua<WAnchor>(L, 1);
-        if (argc == 1) {
+    if (index == 0) {
     char const * raw2 = lua_tostring(L, 2);
     std::string path = std::string(raw2);
     self->setRefInternalPath(path);
     return 0;
     
     } else {
-        return luaL_error(L, "Wrong arguments number for WAnchor.setRefInternalPath: %d", argc);
+        return luaL_error(L, "Wrong arguments for WAnchor.setRefInternalPath");
     }
 }
 
-int luawt_WAnchor_setTarget(lua_State* L) {
-    int argc = lua_gettop(L) - 1;
+static const char* WAnchor_setTarget_args0[] = {luawt_typeToStr<WAnchor>(), "int", NULL};
+static const char* const* const luawt_WAnchor_setTarget_args[] = {WAnchor_setTarget_args0, NULL};
 
+int luawt_WAnchor_setTarget(lua_State* L) {
+    int index = luawt_getSuitableArgsGroup(L, luawt_WAnchor_setTarget_args);
     WAnchor* self = luawt_checkFromLua<WAnchor>(L, 1);
-        if (argc == 1) {
+    if (index == 0) {
     Wt::AnchorTarget target = static_cast<Wt::AnchorTarget>(lua_tointeger(L, 2));
     self->setTarget(target);
     return 0;
     
     } else {
-        return luaL_error(L, "Wrong arguments number for WAnchor.setTarget: %d", argc);
+        return luaL_error(L, "Wrong arguments for WAnchor.setTarget");
     }
 }
 
-int luawt_WAnchor_wordWrap(lua_State* L) {
-    int argc = lua_gettop(L) - 1;
+static const char* WAnchor_wordWrap_args0[] = {luawt_typeToStr<WAnchor>(), NULL};
+static const char* const* const luawt_WAnchor_wordWrap_args[] = {WAnchor_wordWrap_args0, NULL};
 
+int luawt_WAnchor_wordWrap(lua_State* L) {
+    int index = luawt_getSuitableArgsGroup(L, luawt_WAnchor_wordWrap_args);
     WAnchor* self = luawt_checkFromLua<WAnchor>(L, 1);
-        if (argc == 0) {
+    if (index == 0) {
     bool result = self->wordWrap();
     lua_pushboolean(L, result);
     return 1;
 
     } else {
-        return luaL_error(L, "Wrong arguments number for WAnchor.wordWrap: %d", argc);
+        return luaL_error(L, "Wrong arguments for WAnchor.wordWrap");
     }
 }
 
-int luawt_WAnchor_setWordWrap(lua_State* L) {
-    int argc = lua_gettop(L) - 1;
+static const char* WAnchor_setWordWrap_args0[] = {luawt_typeToStr<WAnchor>(), "bool", NULL};
+static const char* const* const luawt_WAnchor_setWordWrap_args[] = {WAnchor_setWordWrap_args0, NULL};
 
+int luawt_WAnchor_setWordWrap(lua_State* L) {
+    int index = luawt_getSuitableArgsGroup(L, luawt_WAnchor_setWordWrap_args);
     WAnchor* self = luawt_checkFromLua<WAnchor>(L, 1);
-        if (argc == 1) {
+    if (index == 0) {
     bool wordWrap = lua_toboolean(L, 2);
     self->setWordWrap(wordWrap);
     return 0;
     
     } else {
-        return luaL_error(L, "Wrong arguments number for WAnchor.setWordWrap: %d", argc);
+        return luaL_error(L, "Wrong arguments for WAnchor.setWordWrap");
     }
 }
 
-int luawt_WAnchor_setRef(lua_State* L) {
-    int argc = lua_gettop(L) - 1;
+static const char* WAnchor_setRef_args0[] = {luawt_typeToStr<WAnchor>(), "char const *", NULL};
+static const char* const* const luawt_WAnchor_setRef_args[] = {WAnchor_setRef_args0, NULL};
 
+int luawt_WAnchor_setRef(lua_State* L) {
+    int index = luawt_getSuitableArgsGroup(L, luawt_WAnchor_setRef_args);
     WAnchor* self = luawt_checkFromLua<WAnchor>(L, 1);
-        if (argc == 1) {
+    if (index == 0) {
     char const * raw2 = lua_tostring(L, 2);
     std::string url = std::string(raw2);
     self->setRef(url);
     return 0;
     
     } else {
-        return luaL_error(L, "Wrong arguments number for WAnchor.setRef: %d", argc);
+        return luaL_error(L, "Wrong arguments for WAnchor.setRef");
     }
 }
 
-// TODO: find out what's the problem with ref() method.
-/* int luawt_WAnchor_ref(lua_State* L) {
-    int argc = lua_gettop(L) - 1;
+static const char* WAnchor_ref_args0[] = {luawt_typeToStr<WAnchor>(), NULL};
+static const char* const* const luawt_WAnchor_ref_args[] = {WAnchor_ref_args0, NULL};
 
+/* int luawt_WAnchor_ref(lua_State* L) {
+    int index = luawt_getSuitableArgsGroup(L, luawt_WAnchor_ref_args);
     WAnchor* self = luawt_checkFromLua<WAnchor>(L, 1);
-        if (argc == 0) {
+    if (index == 0) {
     std::string const & result = self->ref();
     lua_pushstring(L, result.c_str());
     return 1;
 
     } else {
-        return luaL_error(L, "Wrong arguments number for WAnchor.ref: %d", argc);
+        return luaL_error(L, "Wrong arguments for WAnchor.ref");
     }
 } */
 
-int luawt_WAnchor_image(lua_State* L) {
-    int argc = lua_gettop(L) - 1;
+static const char* WAnchor_image_args0[] = {luawt_typeToStr<WAnchor>(), NULL};
+static const char* const* const luawt_WAnchor_image_args[] = {WAnchor_image_args0, NULL};
 
+int luawt_WAnchor_image(lua_State* L) {
+    int index = luawt_getSuitableArgsGroup(L, luawt_WAnchor_image_args);
     WAnchor* self = luawt_checkFromLua<WAnchor>(L, 1);
-        if (argc == 0) {
+    if (index == 0) {
     Wt::WImage * result = self->image();
     luawt_toLua(L, result);
     return 1;
 
     } else {
-        return luaL_error(L, "Wrong arguments number for WAnchor.image: %d", argc);
+        return luaL_error(L, "Wrong arguments for WAnchor.image");
     }
 }
 

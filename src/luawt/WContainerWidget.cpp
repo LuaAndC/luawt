@@ -4,9 +4,18 @@
 
 #include "globals.hpp"
 
+static const char* WContainerWidget_make_args0[] = {NULL};
+static const char* WContainerWidget_make_args1[] = {luawt_typeToStr<Wt::WContainerWidget>(), NULL};
+static const char* const* const luawt_WContainerWidget_make_args[] = {WContainerWidget_make_args0, WContainerWidget_make_args1, NULL};
+
 int luawt_WContainerWidget_make(lua_State* L) {
-    int argc = lua_gettop(L);
-    if (argc == 1) {
+    int index = luawt_getSuitableArgsGroup(L, luawt_WContainerWidget_make_args);
+    if (index == 0) {
+    WContainerWidget * result = new WContainerWidget();
+    luawt_toLua(L, result);
+    return 1;
+
+    } else if (index == 1) {
     Wt::WContainerWidget* parent =
         luawt_checkFromLua<Wt::WContainerWidget>(L, 1);
     WContainerWidget * result = new WContainerWidget(parent);
@@ -14,91 +23,109 @@ int luawt_WContainerWidget_make(lua_State* L) {
     return 1;
 
     } else {
-        return luaL_error(L, "Wrong arguments number for WContainerWidget.make: %d", argc);
+        return luaL_error(L, "Wrong arguments for WContainerWidget.make");
     }
 }
 
-int luawt_WContainerWidget_count(lua_State* L) {
-    int argc = lua_gettop(L) - 1;
+static const char* WContainerWidget_count_args0[] = {luawt_typeToStr<WContainerWidget>(), NULL};
+static const char* const* const luawt_WContainerWidget_count_args[] = {WContainerWidget_count_args0, NULL};
 
+int luawt_WContainerWidget_count(lua_State* L) {
+    int index = luawt_getSuitableArgsGroup(L, luawt_WContainerWidget_count_args);
     WContainerWidget* self = luawt_checkFromLua<WContainerWidget>(L, 1);
-        if (argc == 0) {
+    if (index == 0) {
     int result = self->count();
     lua_pushinteger(L, result);
     return 1;
 
     } else {
-        return luaL_error(L, "Wrong arguments number for WContainerWidget.count: %d", argc);
+        return luaL_error(L, "Wrong arguments for WContainerWidget.count");
     }
 }
 
-int luawt_WContainerWidget_clear(lua_State* L) {
-    int argc = lua_gettop(L) - 1;
+static const char* WContainerWidget_clear_args0[] = {luawt_typeToStr<WContainerWidget>(), NULL};
+static const char* const* const luawt_WContainerWidget_clear_args[] = {WContainerWidget_clear_args0, NULL};
 
+int luawt_WContainerWidget_clear(lua_State* L) {
+    int index = luawt_getSuitableArgsGroup(L, luawt_WContainerWidget_clear_args);
     WContainerWidget* self = luawt_checkFromLua<WContainerWidget>(L, 1);
-        if (argc == 0) {
+    if (index == 0) {
     self->clear();
     return 0;
     
     } else {
-        return luaL_error(L, "Wrong arguments number for WContainerWidget.clear: %d", argc);
+        return luaL_error(L, "Wrong arguments for WContainerWidget.clear");
     }
 }
 
-int luawt_WContainerWidget_setList(lua_State* L) {
-    int argc = lua_gettop(L) - 1;
+static const char* WContainerWidget_setList_args0[] = {luawt_typeToStr<WContainerWidget>(), "bool", NULL};
+static const char* WContainerWidget_setList_args1[] = {luawt_typeToStr<WContainerWidget>(), "bool", "bool", NULL};
+static const char* const* const luawt_WContainerWidget_setList_args[] = {WContainerWidget_setList_args0, WContainerWidget_setList_args1, NULL};
 
+int luawt_WContainerWidget_setList(lua_State* L) {
+    int index = luawt_getSuitableArgsGroup(L, luawt_WContainerWidget_setList_args);
     WContainerWidget* self = luawt_checkFromLua<WContainerWidget>(L, 1);
-        if (argc == 2) {
+    if (index == 0) {
+    bool list = lua_toboolean(L, 2);
+    self->setList(list);
+    return 0;
+    
+    } else if (index == 1) {
     bool list = lua_toboolean(L, 2);
     bool ordered = lua_toboolean(L, 3);
     self->setList(list, ordered);
     return 0;
     
     } else {
-        return luaL_error(L, "Wrong arguments number for WContainerWidget.setList: %d", argc);
+        return luaL_error(L, "Wrong arguments for WContainerWidget.setList");
     }
 }
 
-int luawt_WContainerWidget_isOrderedList(lua_State* L) {
-    int argc = lua_gettop(L) - 1;
+static const char* WContainerWidget_isOrderedList_args0[] = {luawt_typeToStr<WContainerWidget>(), NULL};
+static const char* const* const luawt_WContainerWidget_isOrderedList_args[] = {WContainerWidget_isOrderedList_args0, NULL};
 
+int luawt_WContainerWidget_isOrderedList(lua_State* L) {
+    int index = luawt_getSuitableArgsGroup(L, luawt_WContainerWidget_isOrderedList_args);
     WContainerWidget* self = luawt_checkFromLua<WContainerWidget>(L, 1);
-        if (argc == 0) {
+    if (index == 0) {
     bool result = self->isOrderedList();
     lua_pushboolean(L, result);
     return 1;
 
     } else {
-        return luaL_error(L, "Wrong arguments number for WContainerWidget.isOrderedList: %d", argc);
+        return luaL_error(L, "Wrong arguments for WContainerWidget.isOrderedList");
     }
 }
 
-int luawt_WContainerWidget_isList(lua_State* L) {
-    int argc = lua_gettop(L) - 1;
+static const char* WContainerWidget_isList_args0[] = {luawt_typeToStr<WContainerWidget>(), NULL};
+static const char* const* const luawt_WContainerWidget_isList_args[] = {WContainerWidget_isList_args0, NULL};
 
+int luawt_WContainerWidget_isList(lua_State* L) {
+    int index = luawt_getSuitableArgsGroup(L, luawt_WContainerWidget_isList_args);
     WContainerWidget* self = luawt_checkFromLua<WContainerWidget>(L, 1);
-        if (argc == 0) {
+    if (index == 0) {
     bool result = self->isList();
     lua_pushboolean(L, result);
     return 1;
 
     } else {
-        return luaL_error(L, "Wrong arguments number for WContainerWidget.isList: %d", argc);
+        return luaL_error(L, "Wrong arguments for WContainerWidget.isList");
     }
 }
 
-int luawt_WContainerWidget_isUnorderedList(lua_State* L) {
-    int argc = lua_gettop(L) - 1;
+static const char* WContainerWidget_isUnorderedList_args0[] = {luawt_typeToStr<WContainerWidget>(), NULL};
+static const char* const* const luawt_WContainerWidget_isUnorderedList_args[] = {WContainerWidget_isUnorderedList_args0, NULL};
 
+int luawt_WContainerWidget_isUnorderedList(lua_State* L) {
+    int index = luawt_getSuitableArgsGroup(L, luawt_WContainerWidget_isUnorderedList_args);
     WContainerWidget* self = luawt_checkFromLua<WContainerWidget>(L, 1);
-        if (argc == 0) {
+    if (index == 0) {
     bool result = self->isUnorderedList();
     lua_pushboolean(L, result);
     return 1;
 
     } else {
-        return luaL_error(L, "Wrong arguments number for WContainerWidget.isUnorderedList: %d", argc);
+        return luaL_error(L, "Wrong arguments for WContainerWidget.isUnorderedList");
     }
 }
 

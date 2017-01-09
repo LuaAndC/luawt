@@ -9,9 +9,18 @@
 
 #include "globals.hpp"
 
+static const char* WTreeTable_make_args0[] = {NULL};
+static const char* WTreeTable_make_args1[] = {luawt_typeToStr<Wt::WContainerWidget>(), NULL};
+static const char* const* const luawt_WTreeTable_make_args[] = {WTreeTable_make_args0, WTreeTable_make_args1, NULL};
+
 int luawt_WTreeTable_make(lua_State* L) {
-    int argc = lua_gettop(L);
-    if (argc == 1) {
+    int index = luawt_getSuitableArgsGroup(L, luawt_WTreeTable_make_args);
+    if (index == 0) {
+    WTreeTable * result = new WTreeTable();
+    luawt_toLua(L, result);
+    return 1;
+
+    } else if (index == 1) {
     Wt::WContainerWidget* parent =
         luawt_checkFromLua<Wt::WContainerWidget>(L, 1);
     WTreeTable * result = new WTreeTable(parent);
@@ -19,43 +28,49 @@ int luawt_WTreeTable_make(lua_State* L) {
     return 1;
 
     } else {
-        return luaL_error(L, "Wrong arguments number for WTreeTable.make: %d", argc);
+        return luaL_error(L, "Wrong arguments for WTreeTable.make");
     }
 }
 
-int luawt_WTreeTable_columnCount(lua_State* L) {
-    int argc = lua_gettop(L) - 1;
+static const char* WTreeTable_columnCount_args0[] = {luawt_typeToStr<WTreeTable>(), NULL};
+static const char* const* const luawt_WTreeTable_columnCount_args[] = {WTreeTable_columnCount_args0, NULL};
 
+int luawt_WTreeTable_columnCount(lua_State* L) {
+    int index = luawt_getSuitableArgsGroup(L, luawt_WTreeTable_columnCount_args);
     WTreeTable* self = luawt_checkFromLua<WTreeTable>(L, 1);
-        if (argc == 0) {
+    if (index == 0) {
     int result = self->columnCount();
     lua_pushinteger(L, result);
     return 1;
 
     } else {
-        return luaL_error(L, "Wrong arguments number for WTreeTable.columnCount: %d", argc);
+        return luaL_error(L, "Wrong arguments for WTreeTable.columnCount");
     }
 }
 
-int luawt_WTreeTable_treeRoot(lua_State* L) {
-    int argc = lua_gettop(L) - 1;
+static const char* WTreeTable_treeRoot_args0[] = {luawt_typeToStr<WTreeTable>(), NULL};
+static const char* const* const luawt_WTreeTable_treeRoot_args[] = {WTreeTable_treeRoot_args0, NULL};
 
+int luawt_WTreeTable_treeRoot(lua_State* L) {
+    int index = luawt_getSuitableArgsGroup(L, luawt_WTreeTable_treeRoot_args);
     WTreeTable* self = luawt_checkFromLua<WTreeTable>(L, 1);
-        if (argc == 0) {
+    if (index == 0) {
     Wt::WTreeTableNode * result = self->treeRoot();
     luawt_toLua(L, result);
     return 1;
 
     } else {
-        return luaL_error(L, "Wrong arguments number for WTreeTable.treeRoot: %d", argc);
+        return luaL_error(L, "Wrong arguments for WTreeTable.treeRoot");
     }
 }
 
-int luawt_WTreeTable_setTreeRoot(lua_State* L) {
-    int argc = lua_gettop(L) - 1;
+static const char* WTreeTable_setTreeRoot_args0[] = {luawt_typeToStr<WTreeTable>(), luawt_typeToStr<Wt::WTreeTableNode>(), "char const *", NULL};
+static const char* const* const luawt_WTreeTable_setTreeRoot_args[] = {WTreeTable_setTreeRoot_args0, NULL};
 
+int luawt_WTreeTable_setTreeRoot(lua_State* L) {
+    int index = luawt_getSuitableArgsGroup(L, luawt_WTreeTable_setTreeRoot_args);
     WTreeTable* self = luawt_checkFromLua<WTreeTable>(L, 1);
-        if (argc == 2) {
+    if (index == 0) {
     Wt::WTreeTableNode* root =
         luawt_checkFromLua<Wt::WTreeTableNode>(L, 2);
     char const * raw3 = lua_tostring(L, 3);
@@ -64,29 +79,33 @@ int luawt_WTreeTable_setTreeRoot(lua_State* L) {
     return 0;
     
     } else {
-        return luaL_error(L, "Wrong arguments number for WTreeTable.setTreeRoot: %d", argc);
+        return luaL_error(L, "Wrong arguments for WTreeTable.setTreeRoot");
     }
 }
 
-int luawt_WTreeTable_tree(lua_State* L) {
-    int argc = lua_gettop(L) - 1;
+static const char* WTreeTable_tree_args0[] = {luawt_typeToStr<WTreeTable>(), NULL};
+static const char* const* const luawt_WTreeTable_tree_args[] = {WTreeTable_tree_args0, NULL};
 
+int luawt_WTreeTable_tree(lua_State* L) {
+    int index = luawt_getSuitableArgsGroup(L, luawt_WTreeTable_tree_args);
     WTreeTable* self = luawt_checkFromLua<WTreeTable>(L, 1);
-        if (argc == 0) {
+    if (index == 0) {
     Wt::WTree * result = self->tree();
     luawt_toLua(L, result);
     return 1;
 
     } else {
-        return luaL_error(L, "Wrong arguments number for WTreeTable.tree: %d", argc);
+        return luaL_error(L, "Wrong arguments for WTreeTable.tree");
     }
 }
 
-int luawt_WTreeTable_setTree(lua_State* L) {
-    int argc = lua_gettop(L) - 1;
+static const char* WTreeTable_setTree_args0[] = {luawt_typeToStr<WTreeTable>(), luawt_typeToStr<Wt::WTree>(), "char const *", NULL};
+static const char* const* const luawt_WTreeTable_setTree_args[] = {WTreeTable_setTree_args0, NULL};
 
+int luawt_WTreeTable_setTree(lua_State* L) {
+    int index = luawt_getSuitableArgsGroup(L, luawt_WTreeTable_setTree_args);
     WTreeTable* self = luawt_checkFromLua<WTreeTable>(L, 1);
-        if (argc == 2) {
+    if (index == 0) {
     Wt::WTree* tree =
         luawt_checkFromLua<Wt::WTree>(L, 2);
     char const * raw3 = lua_tostring(L, 3);
@@ -95,22 +114,24 @@ int luawt_WTreeTable_setTree(lua_State* L) {
     return 0;
     
     } else {
-        return luaL_error(L, "Wrong arguments number for WTreeTable.setTree: %d", argc);
+        return luaL_error(L, "Wrong arguments for WTreeTable.setTree");
     }
 }
 
-int luawt_WTreeTable_header(lua_State* L) {
-    int argc = lua_gettop(L) - 1;
+static const char* WTreeTable_header_args0[] = {luawt_typeToStr<WTreeTable>(), "int", NULL};
+static const char* const* const luawt_WTreeTable_header_args[] = {WTreeTable_header_args0, NULL};
 
+int luawt_WTreeTable_header(lua_State* L) {
+    int index = luawt_getSuitableArgsGroup(L, luawt_WTreeTable_header_args);
     WTreeTable* self = luawt_checkFromLua<WTreeTable>(L, 1);
-        if (argc == 1) {
+    if (index == 0) {
     int column = lua_tointeger(L, 2);
     Wt::WText * result = self->header(column);
     luawt_toLua(L, result);
     return 1;
 
     } else {
-        return luaL_error(L, "Wrong arguments number for WTreeTable.header: %d", argc);
+        return luaL_error(L, "Wrong arguments for WTreeTable.header");
     }
 }
 

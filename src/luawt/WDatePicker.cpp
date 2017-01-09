@@ -9,16 +9,36 @@
 
 #include "globals.hpp"
 
+static const char* WDatePicker_make_args0[] = {NULL};
+static const char* WDatePicker_make_args1[] = {luawt_typeToStr<Wt::WContainerWidget>(), NULL};
+static const char* WDatePicker_make_args2[] = {luawt_typeToStr<Wt::WInteractWidget>(), luawt_typeToStr<Wt::WLineEdit>(), NULL};
+static const char* WDatePicker_make_args3[] = {luawt_typeToStr<Wt::WInteractWidget>(), luawt_typeToStr<Wt::WLineEdit>(), luawt_typeToStr<Wt::WContainerWidget>(), NULL};
+static const char* const* const luawt_WDatePicker_make_args[] = {WDatePicker_make_args0, WDatePicker_make_args1, WDatePicker_make_args2, WDatePicker_make_args3, NULL};
+
 int luawt_WDatePicker_make(lua_State* L) {
-    int argc = lua_gettop(L);
-    if (argc == 1) {
+    int index = luawt_getSuitableArgsGroup(L, luawt_WDatePicker_make_args);
+    if (index == 0) {
+    WDatePicker * result = new WDatePicker();
+    luawt_toLua(L, result);
+    return 1;
+
+    } else if (index == 1) {
     Wt::WContainerWidget* parent =
         luawt_checkFromLua<Wt::WContainerWidget>(L, 1);
     WDatePicker * result = new WDatePicker(parent);
     luawt_toLua(L, result);
     return 1;
 
-    } else     if (argc == 3) {
+    } else if (index == 2) {
+    Wt::WInteractWidget* displayWidget =
+        luawt_checkFromLua<Wt::WInteractWidget>(L, 1);
+    Wt::WLineEdit* forEdit =
+        luawt_checkFromLua<Wt::WLineEdit>(L, 2);
+    WDatePicker * result = new WDatePicker(displayWidget, forEdit);
+    luawt_toLua(L, result);
+    return 1;
+
+    } else if (index == 3) {
     Wt::WInteractWidget* displayWidget =
         luawt_checkFromLua<Wt::WInteractWidget>(L, 1);
     Wt::WLineEdit* forEdit =
@@ -30,134 +50,152 @@ int luawt_WDatePicker_make(lua_State* L) {
     return 1;
 
     } else {
-        return luaL_error(L, "Wrong arguments number for WDatePicker.make: %d", argc);
+        return luaL_error(L, "Wrong arguments for WDatePicker.make");
     }
 }
 
-int luawt_WDatePicker_setEnabled(lua_State* L) {
-    int argc = lua_gettop(L) - 1;
+static const char* WDatePicker_setEnabled_args0[] = {luawt_typeToStr<WDatePicker>(), "bool", NULL};
+static const char* const* const luawt_WDatePicker_setEnabled_args[] = {WDatePicker_setEnabled_args0, NULL};
 
+int luawt_WDatePicker_setEnabled(lua_State* L) {
+    int index = luawt_getSuitableArgsGroup(L, luawt_WDatePicker_setEnabled_args);
     WDatePicker* self = luawt_checkFromLua<WDatePicker>(L, 1);
-        if (argc == 1) {
+    if (index == 0) {
     bool enabled = lua_toboolean(L, 2);
     self->setEnabled(enabled);
     return 0;
     
     } else {
-        return luaL_error(L, "Wrong arguments number for WDatePicker.setEnabled: %d", argc);
+        return luaL_error(L, "Wrong arguments for WDatePicker.setEnabled");
     }
 }
 
-int luawt_WDatePicker_setGlobalPopup(lua_State* L) {
-    int argc = lua_gettop(L) - 1;
+static const char* WDatePicker_setGlobalPopup_args0[] = {luawt_typeToStr<WDatePicker>(), "bool", NULL};
+static const char* const* const luawt_WDatePicker_setGlobalPopup_args[] = {WDatePicker_setGlobalPopup_args0, NULL};
 
+int luawt_WDatePicker_setGlobalPopup(lua_State* L) {
+    int index = luawt_getSuitableArgsGroup(L, luawt_WDatePicker_setGlobalPopup_args);
     WDatePicker* self = luawt_checkFromLua<WDatePicker>(L, 1);
-        if (argc == 1) {
+    if (index == 0) {
     bool global = lua_toboolean(L, 2);
     self->setGlobalPopup(global);
     return 0;
     
     } else {
-        return luaL_error(L, "Wrong arguments number for WDatePicker.setGlobalPopup: %d", argc);
+        return luaL_error(L, "Wrong arguments for WDatePicker.setGlobalPopup");
     }
 }
 
-int luawt_WDatePicker_format(lua_State* L) {
-    int argc = lua_gettop(L) - 1;
+static const char* WDatePicker_format_args0[] = {luawt_typeToStr<WDatePicker>(), NULL};
+static const char* const* const luawt_WDatePicker_format_args[] = {WDatePicker_format_args0, NULL};
 
+int luawt_WDatePicker_format(lua_State* L) {
+    int index = luawt_getSuitableArgsGroup(L, luawt_WDatePicker_format_args);
     WDatePicker* self = luawt_checkFromLua<WDatePicker>(L, 1);
-        if (argc == 0) {
+    if (index == 0) {
     Wt::WString const & result = self->format();
     lua_pushstring(L, result.toUTF8().c_str());
     return 1;
 
     } else {
-        return luaL_error(L, "Wrong arguments number for WDatePicker.format: %d", argc);
+        return luaL_error(L, "Wrong arguments for WDatePicker.format");
     }
 }
 
-int luawt_WDatePicker_setFormat(lua_State* L) {
-    int argc = lua_gettop(L) - 1;
+static const char* WDatePicker_setFormat_args0[] = {luawt_typeToStr<WDatePicker>(), "char const *", NULL};
+static const char* const* const luawt_WDatePicker_setFormat_args[] = {WDatePicker_setFormat_args0, NULL};
 
+int luawt_WDatePicker_setFormat(lua_State* L) {
+    int index = luawt_getSuitableArgsGroup(L, luawt_WDatePicker_setFormat_args);
     WDatePicker* self = luawt_checkFromLua<WDatePicker>(L, 1);
-        if (argc == 1) {
+    if (index == 0) {
     char const * raw2 = lua_tostring(L, 2);
     Wt::WString format = Wt::WString(raw2);
     self->setFormat(format);
     return 0;
     
     } else {
-        return luaL_error(L, "Wrong arguments number for WDatePicker.setFormat: %d", argc);
+        return luaL_error(L, "Wrong arguments for WDatePicker.setFormat");
     }
 }
 
-int luawt_WDatePicker_displayWidget(lua_State* L) {
-    int argc = lua_gettop(L) - 1;
+static const char* WDatePicker_displayWidget_args0[] = {luawt_typeToStr<WDatePicker>(), NULL};
+static const char* const* const luawt_WDatePicker_displayWidget_args[] = {WDatePicker_displayWidget_args0, NULL};
 
+int luawt_WDatePicker_displayWidget(lua_State* L) {
+    int index = luawt_getSuitableArgsGroup(L, luawt_WDatePicker_displayWidget_args);
     WDatePicker* self = luawt_checkFromLua<WDatePicker>(L, 1);
-        if (argc == 0) {
+    if (index == 0) {
     Wt::WInteractWidget * result = self->displayWidget();
     luawt_toLua(L, result);
     return 1;
 
     } else {
-        return luaL_error(L, "Wrong arguments number for WDatePicker.displayWidget: %d", argc);
+        return luaL_error(L, "Wrong arguments for WDatePicker.displayWidget");
     }
 }
 
-int luawt_WDatePicker_setDisabled(lua_State* L) {
-    int argc = lua_gettop(L) - 1;
+static const char* WDatePicker_setDisabled_args0[] = {luawt_typeToStr<WDatePicker>(), "bool", NULL};
+static const char* const* const luawt_WDatePicker_setDisabled_args[] = {WDatePicker_setDisabled_args0, NULL};
 
+int luawt_WDatePicker_setDisabled(lua_State* L) {
+    int index = luawt_getSuitableArgsGroup(L, luawt_WDatePicker_setDisabled_args);
     WDatePicker* self = luawt_checkFromLua<WDatePicker>(L, 1);
-        if (argc == 1) {
+    if (index == 0) {
     bool disabled = lua_toboolean(L, 2);
     self->setDisabled(disabled);
     return 0;
     
     } else {
-        return luaL_error(L, "Wrong arguments number for WDatePicker.setDisabled: %d", argc);
+        return luaL_error(L, "Wrong arguments for WDatePicker.setDisabled");
     }
 }
 
-int luawt_WDatePicker_setPopupVisible(lua_State* L) {
-    int argc = lua_gettop(L) - 1;
+static const char* WDatePicker_setPopupVisible_args0[] = {luawt_typeToStr<WDatePicker>(), "bool", NULL};
+static const char* const* const luawt_WDatePicker_setPopupVisible_args[] = {WDatePicker_setPopupVisible_args0, NULL};
 
+int luawt_WDatePicker_setPopupVisible(lua_State* L) {
+    int index = luawt_getSuitableArgsGroup(L, luawt_WDatePicker_setPopupVisible_args);
     WDatePicker* self = luawt_checkFromLua<WDatePicker>(L, 1);
-        if (argc == 1) {
+    if (index == 0) {
     bool visible = lua_toboolean(L, 2);
     self->setPopupVisible(visible);
     return 0;
     
     } else {
-        return luaL_error(L, "Wrong arguments number for WDatePicker.setPopupVisible: %d", argc);
+        return luaL_error(L, "Wrong arguments for WDatePicker.setPopupVisible");
     }
 }
 
-int luawt_WDatePicker_calendar(lua_State* L) {
-    int argc = lua_gettop(L) - 1;
+static const char* WDatePicker_calendar_args0[] = {luawt_typeToStr<WDatePicker>(), NULL};
+static const char* const* const luawt_WDatePicker_calendar_args[] = {WDatePicker_calendar_args0, NULL};
 
+int luawt_WDatePicker_calendar(lua_State* L) {
+    int index = luawt_getSuitableArgsGroup(L, luawt_WDatePicker_calendar_args);
     WDatePicker* self = luawt_checkFromLua<WDatePicker>(L, 1);
-        if (argc == 0) {
+    if (index == 0) {
     Wt::WCalendar * result = self->calendar();
     luawt_toLua(L, result);
     return 1;
 
     } else {
-        return luaL_error(L, "Wrong arguments number for WDatePicker.calendar: %d", argc);
+        return luaL_error(L, "Wrong arguments for WDatePicker.calendar");
     }
 }
 
-int luawt_WDatePicker_lineEdit(lua_State* L) {
-    int argc = lua_gettop(L) - 1;
+static const char* WDatePicker_lineEdit_args0[] = {luawt_typeToStr<WDatePicker>(), NULL};
+static const char* const* const luawt_WDatePicker_lineEdit_args[] = {WDatePicker_lineEdit_args0, NULL};
 
+int luawt_WDatePicker_lineEdit(lua_State* L) {
+    int index = luawt_getSuitableArgsGroup(L, luawt_WDatePicker_lineEdit_args);
     WDatePicker* self = luawt_checkFromLua<WDatePicker>(L, 1);
-        if (argc == 0) {
+    if (index == 0) {
     Wt::WLineEdit * result = self->lineEdit();
     luawt_toLua(L, result);
     return 1;
 
     } else {
-        return luaL_error(L, "Wrong arguments number for WDatePicker.lineEdit: %d", argc);
+        return luaL_error(L, "Wrong arguments for WDatePicker.lineEdit");
     }
 }
 

@@ -5,9 +5,18 @@
 
 #include "globals.hpp"
 
+static const char* WCalendar_make_args0[] = {NULL};
+static const char* WCalendar_make_args1[] = {luawt_typeToStr<Wt::WContainerWidget>(), NULL};
+static const char* const* const luawt_WCalendar_make_args[] = {WCalendar_make_args0, WCalendar_make_args1, NULL};
+
 int luawt_WCalendar_make(lua_State* L) {
-    int argc = lua_gettop(L);
-    if (argc == 1) {
+    int index = luawt_getSuitableArgsGroup(L, luawt_WCalendar_make_args);
+    if (index == 0) {
+    WCalendar * result = new WCalendar();
+    luawt_toLua(L, result);
+    return 1;
+
+    } else if (index == 1) {
     Wt::WContainerWidget* parent =
         luawt_checkFromLua<Wt::WContainerWidget>(L, 1);
     WCalendar * result = new WCalendar(parent);
@@ -15,198 +24,226 @@ int luawt_WCalendar_make(lua_State* L) {
     return 1;
 
     } else {
-        return luaL_error(L, "Wrong arguments number for WCalendar.make: %d", argc);
+        return luaL_error(L, "Wrong arguments for WCalendar.make");
     }
 }
 
-int luawt_WCalendar_horizontalHeaderFormat(lua_State* L) {
-    int argc = lua_gettop(L) - 1;
+static const char* WCalendar_horizontalHeaderFormat_args0[] = {luawt_typeToStr<WCalendar>(), NULL};
+static const char* const* const luawt_WCalendar_horizontalHeaderFormat_args[] = {WCalendar_horizontalHeaderFormat_args0, NULL};
 
+int luawt_WCalendar_horizontalHeaderFormat(lua_State* L) {
+    int index = luawt_getSuitableArgsGroup(L, luawt_WCalendar_horizontalHeaderFormat_args);
     WCalendar* self = luawt_checkFromLua<WCalendar>(L, 1);
-        if (argc == 0) {
+    if (index == 0) {
     Wt::WCalendar::HorizontalHeaderFormat result = self->horizontalHeaderFormat();
     lua_pushinteger(L, result);
     return 1;
 
     } else {
-        return luaL_error(L, "Wrong arguments number for WCalendar.horizontalHeaderFormat: %d", argc);
+        return luaL_error(L, "Wrong arguments for WCalendar.horizontalHeaderFormat");
     }
 }
 
-int luawt_WCalendar_browseToNextYear(lua_State* L) {
-    int argc = lua_gettop(L) - 1;
+static const char* WCalendar_browseToNextYear_args0[] = {luawt_typeToStr<WCalendar>(), NULL};
+static const char* const* const luawt_WCalendar_browseToNextYear_args[] = {WCalendar_browseToNextYear_args0, NULL};
 
+int luawt_WCalendar_browseToNextYear(lua_State* L) {
+    int index = luawt_getSuitableArgsGroup(L, luawt_WCalendar_browseToNextYear_args);
     WCalendar* self = luawt_checkFromLua<WCalendar>(L, 1);
-        if (argc == 0) {
+    if (index == 0) {
     self->browseToNextYear();
     return 0;
     
     } else {
-        return luaL_error(L, "Wrong arguments number for WCalendar.browseToNextYear: %d", argc);
+        return luaL_error(L, "Wrong arguments for WCalendar.browseToNextYear");
     }
 }
 
-int luawt_WCalendar_setDayOfWeekLength(lua_State* L) {
-    int argc = lua_gettop(L) - 1;
+static const char* WCalendar_setDayOfWeekLength_args0[] = {luawt_typeToStr<WCalendar>(), "int", NULL};
+static const char* const* const luawt_WCalendar_setDayOfWeekLength_args[] = {WCalendar_setDayOfWeekLength_args0, NULL};
 
+int luawt_WCalendar_setDayOfWeekLength(lua_State* L) {
+    int index = luawt_getSuitableArgsGroup(L, luawt_WCalendar_setDayOfWeekLength_args);
     WCalendar* self = luawt_checkFromLua<WCalendar>(L, 1);
-        if (argc == 1) {
+    if (index == 0) {
     int chars = lua_tointeger(L, 2);
     self->setDayOfWeekLength(chars);
     return 0;
     
     } else {
-        return luaL_error(L, "Wrong arguments number for WCalendar.setDayOfWeekLength: %d", argc);
+        return luaL_error(L, "Wrong arguments for WCalendar.setDayOfWeekLength");
     }
 }
 
-int luawt_WCalendar_setSelectionMode(lua_State* L) {
-    int argc = lua_gettop(L) - 1;
+static const char* WCalendar_setSelectionMode_args0[] = {luawt_typeToStr<WCalendar>(), "int", NULL};
+static const char* const* const luawt_WCalendar_setSelectionMode_args[] = {WCalendar_setSelectionMode_args0, NULL};
 
+int luawt_WCalendar_setSelectionMode(lua_State* L) {
+    int index = luawt_getSuitableArgsGroup(L, luawt_WCalendar_setSelectionMode_args);
     WCalendar* self = luawt_checkFromLua<WCalendar>(L, 1);
-        if (argc == 1) {
+    if (index == 0) {
     Wt::SelectionMode mode = static_cast<Wt::SelectionMode>(lua_tointeger(L, 2));
     self->setSelectionMode(mode);
     return 0;
     
     } else {
-        return luaL_error(L, "Wrong arguments number for WCalendar.setSelectionMode: %d", argc);
+        return luaL_error(L, "Wrong arguments for WCalendar.setSelectionMode");
     }
 }
 
-int luawt_WCalendar_clearSelection(lua_State* L) {
-    int argc = lua_gettop(L) - 1;
+static const char* WCalendar_clearSelection_args0[] = {luawt_typeToStr<WCalendar>(), NULL};
+static const char* const* const luawt_WCalendar_clearSelection_args[] = {WCalendar_clearSelection_args0, NULL};
 
+int luawt_WCalendar_clearSelection(lua_State* L) {
+    int index = luawt_getSuitableArgsGroup(L, luawt_WCalendar_clearSelection_args);
     WCalendar* self = luawt_checkFromLua<WCalendar>(L, 1);
-        if (argc == 0) {
+    if (index == 0) {
     self->clearSelection();
     return 0;
     
     } else {
-        return luaL_error(L, "Wrong arguments number for WCalendar.clearSelection: %d", argc);
+        return luaL_error(L, "Wrong arguments for WCalendar.clearSelection");
     }
 }
 
-int luawt_WCalendar_setHorizontalHeaderFormat(lua_State* L) {
-    int argc = lua_gettop(L) - 1;
+static const char* WCalendar_setHorizontalHeaderFormat_args0[] = {luawt_typeToStr<WCalendar>(), "int", NULL};
+static const char* const* const luawt_WCalendar_setHorizontalHeaderFormat_args[] = {WCalendar_setHorizontalHeaderFormat_args0, NULL};
 
+int luawt_WCalendar_setHorizontalHeaderFormat(lua_State* L) {
+    int index = luawt_getSuitableArgsGroup(L, luawt_WCalendar_setHorizontalHeaderFormat_args);
     WCalendar* self = luawt_checkFromLua<WCalendar>(L, 1);
-        if (argc == 1) {
+    if (index == 0) {
     Wt::WCalendar::HorizontalHeaderFormat format = static_cast<Wt::WCalendar::HorizontalHeaderFormat>(lua_tointeger(L, 2));
     self->setHorizontalHeaderFormat(format);
     return 0;
     
     } else {
-        return luaL_error(L, "Wrong arguments number for WCalendar.setHorizontalHeaderFormat: %d", argc);
+        return luaL_error(L, "Wrong arguments for WCalendar.setHorizontalHeaderFormat");
     }
 }
 
-int luawt_WCalendar_currentYear(lua_State* L) {
-    int argc = lua_gettop(L) - 1;
+static const char* WCalendar_currentYear_args0[] = {luawt_typeToStr<WCalendar>(), NULL};
+static const char* const* const luawt_WCalendar_currentYear_args[] = {WCalendar_currentYear_args0, NULL};
 
+int luawt_WCalendar_currentYear(lua_State* L) {
+    int index = luawt_getSuitableArgsGroup(L, luawt_WCalendar_currentYear_args);
     WCalendar* self = luawt_checkFromLua<WCalendar>(L, 1);
-        if (argc == 0) {
+    if (index == 0) {
     int result = self->currentYear();
     lua_pushinteger(L, result);
     return 1;
 
     } else {
-        return luaL_error(L, "Wrong arguments number for WCalendar.currentYear: %d", argc);
+        return luaL_error(L, "Wrong arguments for WCalendar.currentYear");
     }
 }
 
-int luawt_WCalendar_setSingleClickSelect(lua_State* L) {
-    int argc = lua_gettop(L) - 1;
+static const char* WCalendar_setSingleClickSelect_args0[] = {luawt_typeToStr<WCalendar>(), "bool", NULL};
+static const char* const* const luawt_WCalendar_setSingleClickSelect_args[] = {WCalendar_setSingleClickSelect_args0, NULL};
 
+int luawt_WCalendar_setSingleClickSelect(lua_State* L) {
+    int index = luawt_getSuitableArgsGroup(L, luawt_WCalendar_setSingleClickSelect_args);
     WCalendar* self = luawt_checkFromLua<WCalendar>(L, 1);
-        if (argc == 1) {
+    if (index == 0) {
     bool single = lua_toboolean(L, 2);
     self->setSingleClickSelect(single);
     return 0;
     
     } else {
-        return luaL_error(L, "Wrong arguments number for WCalendar.setSingleClickSelect: %d", argc);
+        return luaL_error(L, "Wrong arguments for WCalendar.setSingleClickSelect");
     }
 }
 
-int luawt_WCalendar_browseToPreviousYear(lua_State* L) {
-    int argc = lua_gettop(L) - 1;
+static const char* WCalendar_browseToPreviousYear_args0[] = {luawt_typeToStr<WCalendar>(), NULL};
+static const char* const* const luawt_WCalendar_browseToPreviousYear_args[] = {WCalendar_browseToPreviousYear_args0, NULL};
 
+int luawt_WCalendar_browseToPreviousYear(lua_State* L) {
+    int index = luawt_getSuitableArgsGroup(L, luawt_WCalendar_browseToPreviousYear_args);
     WCalendar* self = luawt_checkFromLua<WCalendar>(L, 1);
-        if (argc == 0) {
+    if (index == 0) {
     self->browseToPreviousYear();
     return 0;
     
     } else {
-        return luaL_error(L, "Wrong arguments number for WCalendar.browseToPreviousYear: %d", argc);
+        return luaL_error(L, "Wrong arguments for WCalendar.browseToPreviousYear");
     }
 }
 
-int luawt_WCalendar_setFirstDayOfWeek(lua_State* L) {
-    int argc = lua_gettop(L) - 1;
+static const char* WCalendar_setFirstDayOfWeek_args0[] = {luawt_typeToStr<WCalendar>(), "int", NULL};
+static const char* const* const luawt_WCalendar_setFirstDayOfWeek_args[] = {WCalendar_setFirstDayOfWeek_args0, NULL};
 
+int luawt_WCalendar_setFirstDayOfWeek(lua_State* L) {
+    int index = luawt_getSuitableArgsGroup(L, luawt_WCalendar_setFirstDayOfWeek_args);
     WCalendar* self = luawt_checkFromLua<WCalendar>(L, 1);
-        if (argc == 1) {
+    if (index == 0) {
     int dayOfWeek = lua_tointeger(L, 2);
     self->setFirstDayOfWeek(dayOfWeek);
     return 0;
     
     } else {
-        return luaL_error(L, "Wrong arguments number for WCalendar.setFirstDayOfWeek: %d", argc);
+        return luaL_error(L, "Wrong arguments for WCalendar.setFirstDayOfWeek");
     }
 }
 
-int luawt_WCalendar_browseToPreviousMonth(lua_State* L) {
-    int argc = lua_gettop(L) - 1;
+static const char* WCalendar_browseToPreviousMonth_args0[] = {luawt_typeToStr<WCalendar>(), NULL};
+static const char* const* const luawt_WCalendar_browseToPreviousMonth_args[] = {WCalendar_browseToPreviousMonth_args0, NULL};
 
+int luawt_WCalendar_browseToPreviousMonth(lua_State* L) {
+    int index = luawt_getSuitableArgsGroup(L, luawt_WCalendar_browseToPreviousMonth_args);
     WCalendar* self = luawt_checkFromLua<WCalendar>(L, 1);
-        if (argc == 0) {
+    if (index == 0) {
     self->browseToPreviousMonth();
     return 0;
     
     } else {
-        return luaL_error(L, "Wrong arguments number for WCalendar.browseToPreviousMonth: %d", argc);
+        return luaL_error(L, "Wrong arguments for WCalendar.browseToPreviousMonth");
     }
 }
 
-int luawt_WCalendar_browseToNextMonth(lua_State* L) {
-    int argc = lua_gettop(L) - 1;
+static const char* WCalendar_browseToNextMonth_args0[] = {luawt_typeToStr<WCalendar>(), NULL};
+static const char* const* const luawt_WCalendar_browseToNextMonth_args[] = {WCalendar_browseToNextMonth_args0, NULL};
 
+int luawt_WCalendar_browseToNextMonth(lua_State* L) {
+    int index = luawt_getSuitableArgsGroup(L, luawt_WCalendar_browseToNextMonth_args);
     WCalendar* self = luawt_checkFromLua<WCalendar>(L, 1);
-        if (argc == 0) {
+    if (index == 0) {
     self->browseToNextMonth();
     return 0;
     
     } else {
-        return luaL_error(L, "Wrong arguments number for WCalendar.browseToNextMonth: %d", argc);
+        return luaL_error(L, "Wrong arguments for WCalendar.browseToNextMonth");
     }
 }
 
-int luawt_WCalendar_currentMonth(lua_State* L) {
-    int argc = lua_gettop(L) - 1;
+static const char* WCalendar_currentMonth_args0[] = {luawt_typeToStr<WCalendar>(), NULL};
+static const char* const* const luawt_WCalendar_currentMonth_args[] = {WCalendar_currentMonth_args0, NULL};
 
+int luawt_WCalendar_currentMonth(lua_State* L) {
+    int index = luawt_getSuitableArgsGroup(L, luawt_WCalendar_currentMonth_args);
     WCalendar* self = luawt_checkFromLua<WCalendar>(L, 1);
-        if (argc == 0) {
+    if (index == 0) {
     int result = self->currentMonth();
     lua_pushinteger(L, result);
     return 1;
 
     } else {
-        return luaL_error(L, "Wrong arguments number for WCalendar.currentMonth: %d", argc);
+        return luaL_error(L, "Wrong arguments for WCalendar.currentMonth");
     }
 }
 
-int luawt_WCalendar_setMultipleSelection(lua_State* L) {
-    int argc = lua_gettop(L) - 1;
+static const char* WCalendar_setMultipleSelection_args0[] = {luawt_typeToStr<WCalendar>(), "bool", NULL};
+static const char* const* const luawt_WCalendar_setMultipleSelection_args[] = {WCalendar_setMultipleSelection_args0, NULL};
 
+int luawt_WCalendar_setMultipleSelection(lua_State* L) {
+    int index = luawt_getSuitableArgsGroup(L, luawt_WCalendar_setMultipleSelection_args);
     WCalendar* self = luawt_checkFromLua<WCalendar>(L, 1);
-        if (argc == 1) {
+    if (index == 0) {
     bool multiple = lua_toboolean(L, 2);
     self->setMultipleSelection(multiple);
     return 0;
     
     } else {
-        return luaL_error(L, "Wrong arguments number for WCalendar.setMultipleSelection: %d", argc);
+        return luaL_error(L, "Wrong arguments for WCalendar.setMultipleSelection");
     }
 }
 
