@@ -15,7 +15,6 @@
 #include <typeinfo>
 
 #include <boost/cast.hpp>
-#include <boost/format.hpp>
 #include <boost/shared_ptr.hpp>
 
 #include "boost-xtime.hpp"
@@ -455,7 +454,6 @@ inline bool luawt_checkArgsGroup(
     return true;
 }
 
-
 /* All overloads and different variants of optional arguments
    are given in `args_groups`. Function finds group corresponding
    to the given stack state (L arg).
@@ -470,9 +468,8 @@ inline int luawt_getSuitableArgsGroup(
             return group_n;
         }
     }
-    boost::format fmter =
-        boost::format("LuaWt: bad arguments for function %1%") % func_name;
-    throw std::invalid_argument(fmter.str());
+    // Error, will be emitted as LuaL_error()
+    return -1;
 }
 
 /* This functions are called from luaopen() */
