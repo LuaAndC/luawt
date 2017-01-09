@@ -384,31 +384,29 @@ def generateIncludes(includes):
         wt_includes.append(include_str)
     return INCLUDES_TEMPLATE.lstrip() % '\n'.join(wt_includes)
 
-def storeArgc(is_constructor):
-    if is_constructor:
-        return "int argc = lua_gettop(L);\n"
-    else:
-        # Do not count self as an argument for argc.
-        return "int argc = lua_gettop(L) - 1;\n"
-
-def ifArgc(argc):
-    # otstup poehal
-    frame = r'''    if (argc == %d) {
+def storeArgsIndex(module_name, func_name):
+    frame = r'''
+    int index = luawt_getSuitableArgsGroup(L, %s);
     '''
-    return frame % argc
+    arr_str = 'luawt_%s_%s_args' % (module_name, func_name)
+    return frame.lstrip() % arr_str
 
-def elseArgc():
+def ifIndex(index):
+    frame = r'''if (index == %d) {
+    '''
+    return frame % index
+
+def elseIndex():
     return r'''
     } else '''
 
 def elseFail(module_name, method_name):
     return r'''{
-        return luaL_error(L, "Wrong arguments number for %s.%s: %%d", argc);
+        return luaL_error(L, "Wrong arguments for %s.%s: %%d", index);
     }''' % (module_name, method_name)
 
 def getSelf(module_name):
-    frame = r'''
-    %s* self = luawt_checkFromLua<%s>(L, 1);
+    frame = r'''%s* self = luawt_checkFromLua<%s>(L, 1);
     '''
     return frame % (module_name, module_name)
 
@@ -654,24 +652,16 @@ def implementLuaCFunction(
     args_overloads,
     return_type,
 ):
-    argc2args = {len(args): args for args in args_overloads}
-    if len(argc2args) != len(args_overloads):
-        logging.warn(
-            "TODO some overloads of %s.%s have the same number of " +
-            "arguments and can't be distinguished.",
-            module_name,
-            method_name,
-        )
     body = []
-    body.append(storeArgc(is_constructor))
+    body.append(storeArgsIndex(module_name, method_name))
     # In Lua indices start with 1.
     arg_index_offset = 1
     if not is_constructor:
         # The first one is object itself, so we have to increse offset.
         arg_index_offset += 1
         body.append(getSelf(module_name))
-    for argc, args in argc2args.items():
-        body.append(ifArgc(argc))
+    for index, args in enumerate(args_overloads):
+        body.append(ifIndex(index))
         for i, arg in enumerate(args):
             arg_field = getArgType(arg)
             options = {
@@ -690,9 +680,16 @@ def implementLuaCFunction(
         else:
             body.append(callWtFunction(str(return_type), args, method_name))
         body.append(returnValue(str(return_type)))
-        body.append(elseArgc())
+        body.append(elseIndex())
     body.append(elseFail(module_name, method_name))
+    args_arr = generateArgsArray(
+        args_overloads,
+        module_name,
+        method_name,
+        is_constructor,
+    )
     return LUACFUNCTION_TEMPLATE.lstrip() % {
+        'args_arr': args_arr,
         'module': module_name,
         'method': method_name,
         'body': ''.join(body).strip(),
