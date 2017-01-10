@@ -5,30 +5,35 @@
 
 #include "globals.hpp"
 
+static const char* WDefaultLoadingIndicator_make_args0[] = {NULL};
+static const char* const* const luawt_WDefaultLoadingIndicator_make_args[] = {WDefaultLoadingIndicator_make_args0, NULL};
+
 int luawt_WDefaultLoadingIndicator_make(lua_State* L) {
-    int argc = lua_gettop(L);
-    if (argc == 0) {
+    int index = luawt_getSuitableArgsGroup(L, luawt_WDefaultLoadingIndicator_make_args);
+    if (index == 0) {
     WDefaultLoadingIndicator * result = new WDefaultLoadingIndicator();
     luawt_toLua(L, result);
     return 1;
 
     } else {
-        return luaL_error(L, "Wrong arguments number for WDefaultLoadingIndicator.make: %d", argc);
+        return luaL_error(L, "Wrong arguments for WDefaultLoadingIndicator.make");
     }
 }
 
-int luawt_WDefaultLoadingIndicator_setMessage(lua_State* L) {
-    int argc = lua_gettop(L) - 1;
+static const char* WDefaultLoadingIndicator_setMessage_args0[] = {luawt_typeToStr<WDefaultLoadingIndicator>(), "char const *", NULL};
+static const char* const* const luawt_WDefaultLoadingIndicator_setMessage_args[] = {WDefaultLoadingIndicator_setMessage_args0, NULL};
 
+int luawt_WDefaultLoadingIndicator_setMessage(lua_State* L) {
+    int index = luawt_getSuitableArgsGroup(L, luawt_WDefaultLoadingIndicator_setMessage_args);
     WDefaultLoadingIndicator* self = luawt_checkFromLua<WDefaultLoadingIndicator>(L, 1);
-        if (argc == 1) {
+    if (index == 0) {
     char const * raw2 = lua_tostring(L, 2);
     Wt::WString text = Wt::WString(raw2);
     self->setMessage(text);
     return 0;
     
     } else {
-        return luaL_error(L, "Wrong arguments number for WDefaultLoadingIndicator.setMessage: %d", argc);
+        return luaL_error(L, "Wrong arguments for WDefaultLoadingIndicator.setMessage");
     }
 }
 

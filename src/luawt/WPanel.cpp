@@ -7,9 +7,18 @@
 
 #include "globals.hpp"
 
+static const char* WPanel_make_args0[] = {NULL};
+static const char* WPanel_make_args1[] = {luawt_typeToStr<Wt::WContainerWidget>(), NULL};
+static const char* const* const luawt_WPanel_make_args[] = {WPanel_make_args0, WPanel_make_args1, NULL};
+
 int luawt_WPanel_make(lua_State* L) {
-    int argc = lua_gettop(L);
-    if (argc == 1) {
+    int index = luawt_getSuitableArgsGroup(L, luawt_WPanel_make_args);
+    if (index == 0) {
+    WPanel * result = new WPanel();
+    luawt_toLua(L, result);
+    return 1;
+
+    } else if (index == 1) {
     Wt::WContainerWidget* parent =
         luawt_checkFromLua<Wt::WContainerWidget>(L, 1);
     WPanel * result = new WPanel(parent);
@@ -17,174 +26,198 @@ int luawt_WPanel_make(lua_State* L) {
     return 1;
 
     } else {
-        return luaL_error(L, "Wrong arguments number for WPanel.make: %d", argc);
+        return luaL_error(L, "Wrong arguments for WPanel.make");
     }
 }
 
-int luawt_WPanel_isCollapsed(lua_State* L) {
-    int argc = lua_gettop(L) - 1;
+static const char* WPanel_isCollapsed_args0[] = {luawt_typeToStr<WPanel>(), NULL};
+static const char* const* const luawt_WPanel_isCollapsed_args[] = {WPanel_isCollapsed_args0, NULL};
 
+int luawt_WPanel_isCollapsed(lua_State* L) {
+    int index = luawt_getSuitableArgsGroup(L, luawt_WPanel_isCollapsed_args);
     WPanel* self = luawt_checkFromLua<WPanel>(L, 1);
-        if (argc == 0) {
+    if (index == 0) {
     bool result = self->isCollapsed();
     lua_pushboolean(L, result);
     return 1;
 
     } else {
-        return luaL_error(L, "Wrong arguments number for WPanel.isCollapsed: %d", argc);
+        return luaL_error(L, "Wrong arguments for WPanel.isCollapsed");
     }
 }
 
-int luawt_WPanel_collapse(lua_State* L) {
-    int argc = lua_gettop(L) - 1;
+static const char* WPanel_collapse_args0[] = {luawt_typeToStr<WPanel>(), NULL};
+static const char* const* const luawt_WPanel_collapse_args[] = {WPanel_collapse_args0, NULL};
 
+int luawt_WPanel_collapse(lua_State* L) {
+    int index = luawt_getSuitableArgsGroup(L, luawt_WPanel_collapse_args);
     WPanel* self = luawt_checkFromLua<WPanel>(L, 1);
-        if (argc == 0) {
+    if (index == 0) {
     self->collapse();
     return 0;
     
     } else {
-        return luaL_error(L, "Wrong arguments number for WPanel.collapse: %d", argc);
+        return luaL_error(L, "Wrong arguments for WPanel.collapse");
     }
 }
 
-int luawt_WPanel_setCollapsible(lua_State* L) {
-    int argc = lua_gettop(L) - 1;
+static const char* WPanel_setCollapsible_args0[] = {luawt_typeToStr<WPanel>(), "bool", NULL};
+static const char* const* const luawt_WPanel_setCollapsible_args[] = {WPanel_setCollapsible_args0, NULL};
 
+int luawt_WPanel_setCollapsible(lua_State* L) {
+    int index = luawt_getSuitableArgsGroup(L, luawt_WPanel_setCollapsible_args);
     WPanel* self = luawt_checkFromLua<WPanel>(L, 1);
-        if (argc == 1) {
+    if (index == 0) {
     bool on = lua_toboolean(L, 2);
     self->setCollapsible(on);
     return 0;
     
     } else {
-        return luaL_error(L, "Wrong arguments number for WPanel.setCollapsible: %d", argc);
+        return luaL_error(L, "Wrong arguments for WPanel.setCollapsible");
     }
 }
 
-int luawt_WPanel_title(lua_State* L) {
-    int argc = lua_gettop(L) - 1;
+static const char* WPanel_title_args0[] = {luawt_typeToStr<WPanel>(), NULL};
+static const char* const* const luawt_WPanel_title_args[] = {WPanel_title_args0, NULL};
 
+int luawt_WPanel_title(lua_State* L) {
+    int index = luawt_getSuitableArgsGroup(L, luawt_WPanel_title_args);
     WPanel* self = luawt_checkFromLua<WPanel>(L, 1);
-        if (argc == 0) {
+    if (index == 0) {
     Wt::WString result = self->title();
     lua_pushstring(L, result.toUTF8().c_str());
     return 1;
 
     } else {
-        return luaL_error(L, "Wrong arguments number for WPanel.title: %d", argc);
+        return luaL_error(L, "Wrong arguments for WPanel.title");
     }
 }
 
-int luawt_WPanel_setTitle(lua_State* L) {
-    int argc = lua_gettop(L) - 1;
+static const char* WPanel_setTitle_args0[] = {luawt_typeToStr<WPanel>(), "char const *", NULL};
+static const char* const* const luawt_WPanel_setTitle_args[] = {WPanel_setTitle_args0, NULL};
 
+int luawt_WPanel_setTitle(lua_State* L) {
+    int index = luawt_getSuitableArgsGroup(L, luawt_WPanel_setTitle_args);
     WPanel* self = luawt_checkFromLua<WPanel>(L, 1);
-        if (argc == 1) {
+    if (index == 0) {
     char const * raw2 = lua_tostring(L, 2);
     Wt::WString title = Wt::WString(raw2);
     self->setTitle(title);
     return 0;
     
     } else {
-        return luaL_error(L, "Wrong arguments number for WPanel.setTitle: %d", argc);
+        return luaL_error(L, "Wrong arguments for WPanel.setTitle");
     }
 }
 
-int luawt_WPanel_collapseIcon(lua_State* L) {
-    int argc = lua_gettop(L) - 1;
+static const char* WPanel_collapseIcon_args0[] = {luawt_typeToStr<WPanel>(), NULL};
+static const char* const* const luawt_WPanel_collapseIcon_args[] = {WPanel_collapseIcon_args0, NULL};
 
+int luawt_WPanel_collapseIcon(lua_State* L) {
+    int index = luawt_getSuitableArgsGroup(L, luawt_WPanel_collapseIcon_args);
     WPanel* self = luawt_checkFromLua<WPanel>(L, 1);
-        if (argc == 0) {
+    if (index == 0) {
     Wt::WIconPair * result = self->collapseIcon();
     luawt_toLua(L, result);
     return 1;
 
     } else {
-        return luaL_error(L, "Wrong arguments number for WPanel.collapseIcon: %d", argc);
+        return luaL_error(L, "Wrong arguments for WPanel.collapseIcon");
     }
 }
 
-int luawt_WPanel_isCollapsible(lua_State* L) {
-    int argc = lua_gettop(L) - 1;
+static const char* WPanel_isCollapsible_args0[] = {luawt_typeToStr<WPanel>(), NULL};
+static const char* const* const luawt_WPanel_isCollapsible_args[] = {WPanel_isCollapsible_args0, NULL};
 
+int luawt_WPanel_isCollapsible(lua_State* L) {
+    int index = luawt_getSuitableArgsGroup(L, luawt_WPanel_isCollapsible_args);
     WPanel* self = luawt_checkFromLua<WPanel>(L, 1);
-        if (argc == 0) {
+    if (index == 0) {
     bool result = self->isCollapsible();
     lua_pushboolean(L, result);
     return 1;
 
     } else {
-        return luaL_error(L, "Wrong arguments number for WPanel.isCollapsible: %d", argc);
+        return luaL_error(L, "Wrong arguments for WPanel.isCollapsible");
     }
 }
 
-int luawt_WPanel_titleBarWidget(lua_State* L) {
-    int argc = lua_gettop(L) - 1;
+static const char* WPanel_titleBarWidget_args0[] = {luawt_typeToStr<WPanel>(), NULL};
+static const char* const* const luawt_WPanel_titleBarWidget_args[] = {WPanel_titleBarWidget_args0, NULL};
 
+int luawt_WPanel_titleBarWidget(lua_State* L) {
+    int index = luawt_getSuitableArgsGroup(L, luawt_WPanel_titleBarWidget_args);
     WPanel* self = luawt_checkFromLua<WPanel>(L, 1);
-        if (argc == 0) {
+    if (index == 0) {
     Wt::WContainerWidget * result = self->titleBarWidget();
     luawt_toLua(L, result);
     return 1;
 
     } else {
-        return luaL_error(L, "Wrong arguments number for WPanel.titleBarWidget: %d", argc);
+        return luaL_error(L, "Wrong arguments for WPanel.titleBarWidget");
     }
 }
 
-int luawt_WPanel_expand(lua_State* L) {
-    int argc = lua_gettop(L) - 1;
+static const char* WPanel_expand_args0[] = {luawt_typeToStr<WPanel>(), NULL};
+static const char* const* const luawt_WPanel_expand_args[] = {WPanel_expand_args0, NULL};
 
+int luawt_WPanel_expand(lua_State* L) {
+    int index = luawt_getSuitableArgsGroup(L, luawt_WPanel_expand_args);
     WPanel* self = luawt_checkFromLua<WPanel>(L, 1);
-        if (argc == 0) {
+    if (index == 0) {
     self->expand();
     return 0;
     
     } else {
-        return luaL_error(L, "Wrong arguments number for WPanel.expand: %d", argc);
+        return luaL_error(L, "Wrong arguments for WPanel.expand");
     }
 }
 
-int luawt_WPanel_setCollapsed(lua_State* L) {
-    int argc = lua_gettop(L) - 1;
+static const char* WPanel_setCollapsed_args0[] = {luawt_typeToStr<WPanel>(), "bool", NULL};
+static const char* const* const luawt_WPanel_setCollapsed_args[] = {WPanel_setCollapsed_args0, NULL};
 
+int luawt_WPanel_setCollapsed(lua_State* L) {
+    int index = luawt_getSuitableArgsGroup(L, luawt_WPanel_setCollapsed_args);
     WPanel* self = luawt_checkFromLua<WPanel>(L, 1);
-        if (argc == 1) {
+    if (index == 0) {
     bool on = lua_toboolean(L, 2);
     self->setCollapsed(on);
     return 0;
     
     } else {
-        return luaL_error(L, "Wrong arguments number for WPanel.setCollapsed: %d", argc);
+        return luaL_error(L, "Wrong arguments for WPanel.setCollapsed");
     }
 }
 
-int luawt_WPanel_titleBar(lua_State* L) {
-    int argc = lua_gettop(L) - 1;
+static const char* WPanel_titleBar_args0[] = {luawt_typeToStr<WPanel>(), NULL};
+static const char* const* const luawt_WPanel_titleBar_args[] = {WPanel_titleBar_args0, NULL};
 
+int luawt_WPanel_titleBar(lua_State* L) {
+    int index = luawt_getSuitableArgsGroup(L, luawt_WPanel_titleBar_args);
     WPanel* self = luawt_checkFromLua<WPanel>(L, 1);
-        if (argc == 0) {
+    if (index == 0) {
     bool result = self->titleBar();
     lua_pushboolean(L, result);
     return 1;
 
     } else {
-        return luaL_error(L, "Wrong arguments number for WPanel.titleBar: %d", argc);
+        return luaL_error(L, "Wrong arguments for WPanel.titleBar");
     }
 }
 
-int luawt_WPanel_setTitleBar(lua_State* L) {
-    int argc = lua_gettop(L) - 1;
+static const char* WPanel_setTitleBar_args0[] = {luawt_typeToStr<WPanel>(), "bool", NULL};
+static const char* const* const luawt_WPanel_setTitleBar_args[] = {WPanel_setTitleBar_args0, NULL};
 
+int luawt_WPanel_setTitleBar(lua_State* L) {
+    int index = luawt_getSuitableArgsGroup(L, luawt_WPanel_setTitleBar_args);
     WPanel* self = luawt_checkFromLua<WPanel>(L, 1);
-        if (argc == 1) {
+    if (index == 0) {
     bool enable = lua_toboolean(L, 2);
     self->setTitleBar(enable);
     return 0;
     
     } else {
-        return luaL_error(L, "Wrong arguments number for WPanel.setTitleBar: %d", argc);
+        return luaL_error(L, "Wrong arguments for WPanel.setTitleBar");
     }
 }
 

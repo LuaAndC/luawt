@@ -409,6 +409,97 @@ public:
         lua_pop(L, 1); \
     }
 
+inline bool luawt_ascendToBase(
+    lua_State* L,
+    std::string expected_name,
+    std::string real_name
+) {
+    luaL_getmetatable(L, real_name.c_str());
+    while (real_name.compare(expected_name)) {
+        // go to next base class
+        lua_getfield(L, -1, "__base");
+        lua_remove(L, -2);
+        if (lua_type(L, -1) != LUA_TTABLE) {
+            lua_pop(L, 1); // base mt
+            return false;
+        }
+        lua_getfield(L, -1, "__name");
+        real_name = lua_tostring(L, -1);
+        lua_pop(L, 1); // field name
+    }
+    lua_pop(L, 1); // base mt
+    return true;
+}
+
+inline bool luawt_equalTypes(
+    lua_State* L,
+    int index,
+    const char* expected_type
+) {
+    int real_type = lua_type(L, index);
+    bool result = false;
+    if (real_type == LUA_TNUMBER) {
+        bool is_int = (strcmp(expected_type, "int") == 0);
+        bool is_double = (strcmp(expected_type, "double") == 0);
+        result = is_int || is_double;
+    } else if (real_type == LUA_TBOOLEAN) {
+        result = (strcmp(expected_type, "bool") == 0);
+    } else if (real_type == LUA_TSTRING) {
+        result = (strcmp(expected_type, "char const *") == 0);
+    } else if (real_type == LUA_TUSERDATA) {
+        std::string real_name;
+        if (lua_getmetatable(L, index)) {
+            lua_getfield(L, -1, "__name");
+            real_name = lua_tostring(L, -1);
+            // metatable; name field
+            lua_pop(L, 2);
+        }
+        result = luawt_ascendToBase(L, std::string(expected_type), real_name);
+    }
+    return result;
+}
+
+/* Compare stack (L) and args group type by type. */
+inline bool luawt_checkArgsGroup(
+    lua_State* L,
+    const char* const group[]
+) {
+    int stack_size = lua_gettop(L);
+    int group_size = 0;
+    while (group[group_size] != NULL) {
+        group_size++;
+    }
+    if (stack_size != group_size) {
+        return false;
+    }
+    for (int index = 0; index < stack_size; index++) {
+        const char* expected_type = group[index];
+        if (!luawt_equalTypes(L, index + 1, expected_type)) {
+            return false;
+        }
+    }
+    return true;
+}
+
+/* All overloads and different variants of optional arguments
+   are given in `args_groups`. Function finds group corresponding
+   to the given stack state (L arg).
+*/
+inline int luawt_getSuitableArgsGroup(
+    lua_State* L,
+    const char* const* const args_groups[]
+) {
+    int group_n = 0;
+    while (args_groups[group_n] != NULL) {
+        if (luawt_checkArgsGroup(L, args_groups[group_n])) {
+            return group_n;
+        }
+        group_n++;
+    }
+    // Error, will be emitted as LuaL_error()
+    return -1;
+}
+
 /* This functions are called from luaopen() */
 void luawt_Shared(lua_State* L);
 void luawt_Test(lua_State* L);

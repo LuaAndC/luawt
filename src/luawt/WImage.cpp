@@ -6,9 +6,18 @@
 
 #include "globals.hpp"
 
+static const char* WImage_make_args0[] = {NULL};
+static const char* WImage_make_args1[] = {luawt_typeToStr<Wt::WContainerWidget>(), NULL};
+static const char* const* const luawt_WImage_make_args[] = {WImage_make_args0, WImage_make_args1, NULL};
+
 int luawt_WImage_make(lua_State* L) {
-    int argc = lua_gettop(L);
-    if (argc == 1) {
+    int index = luawt_getSuitableArgsGroup(L, luawt_WImage_make_args);
+    if (index == 0) {
+    WImage * result = new WImage();
+    luawt_toLua(L, result);
+    return 1;
+
+    } else if (index == 1) {
     Wt::WContainerWidget* parent =
         luawt_checkFromLua<Wt::WContainerWidget>(L, 1);
     WImage * result = new WImage(parent);
@@ -16,65 +25,73 @@ int luawt_WImage_make(lua_State* L) {
     return 1;
 
     } else {
-        return luaL_error(L, "Wrong arguments number for WImage.make: %d", argc);
+        return luaL_error(L, "Wrong arguments for WImage.make");
     }
 }
 
-int luawt_WImage_alternateText(lua_State* L) {
-    int argc = lua_gettop(L) - 1;
+static const char* WImage_alternateText_args0[] = {luawt_typeToStr<WImage>(), NULL};
+static const char* const* const luawt_WImage_alternateText_args[] = {WImage_alternateText_args0, NULL};
 
+int luawt_WImage_alternateText(lua_State* L) {
+    int index = luawt_getSuitableArgsGroup(L, luawt_WImage_alternateText_args);
     WImage* self = luawt_checkFromLua<WImage>(L, 1);
-        if (argc == 0) {
+    if (index == 0) {
     Wt::WString const & result = self->alternateText();
     lua_pushstring(L, result.toUTF8().c_str());
     return 1;
 
     } else {
-        return luaL_error(L, "Wrong arguments number for WImage.alternateText: %d", argc);
+        return luaL_error(L, "Wrong arguments for WImage.alternateText");
     }
 }
 
-int luawt_WImage_setImageRef(lua_State* L) {
-    int argc = lua_gettop(L) - 1;
+static const char* WImage_setImageRef_args0[] = {luawt_typeToStr<WImage>(), "char const *", NULL};
+static const char* const* const luawt_WImage_setImageRef_args[] = {WImage_setImageRef_args0, NULL};
 
+int luawt_WImage_setImageRef(lua_State* L) {
+    int index = luawt_getSuitableArgsGroup(L, luawt_WImage_setImageRef_args);
     WImage* self = luawt_checkFromLua<WImage>(L, 1);
-        if (argc == 1) {
+    if (index == 0) {
     char const * raw2 = lua_tostring(L, 2);
     std::string url = std::string(raw2);
     self->setImageRef(url);
     return 0;
     
     } else {
-        return luaL_error(L, "Wrong arguments number for WImage.setImageRef: %d", argc);
+        return luaL_error(L, "Wrong arguments for WImage.setImageRef");
     }
 }
 
-int luawt_WImage_imageRef(lua_State* L) {
-    int argc = lua_gettop(L) - 1;
+static const char* WImage_imageRef_args0[] = {luawt_typeToStr<WImage>(), NULL};
+static const char* const* const luawt_WImage_imageRef_args[] = {WImage_imageRef_args0, NULL};
 
+int luawt_WImage_imageRef(lua_State* L) {
+    int index = luawt_getSuitableArgsGroup(L, luawt_WImage_imageRef_args);
     WImage* self = luawt_checkFromLua<WImage>(L, 1);
-        if (argc == 0) {
+    if (index == 0) {
     std::string const result = self->imageRef();
     lua_pushstring(L, result.c_str());
     return 1;
 
     } else {
-        return luaL_error(L, "Wrong arguments number for WImage.imageRef: %d", argc);
+        return luaL_error(L, "Wrong arguments for WImage.imageRef");
     }
 }
 
-int luawt_WImage_setAlternateText(lua_State* L) {
-    int argc = lua_gettop(L) - 1;
+static const char* WImage_setAlternateText_args0[] = {luawt_typeToStr<WImage>(), "char const *", NULL};
+static const char* const* const luawt_WImage_setAlternateText_args[] = {WImage_setAlternateText_args0, NULL};
 
+int luawt_WImage_setAlternateText(lua_State* L) {
+    int index = luawt_getSuitableArgsGroup(L, luawt_WImage_setAlternateText_args);
     WImage* self = luawt_checkFromLua<WImage>(L, 1);
-        if (argc == 1) {
+    if (index == 0) {
     char const * raw2 = lua_tostring(L, 2);
     Wt::WString text = Wt::WString(raw2);
     self->setAlternateText(text);
     return 0;
     
     } else {
-        return luaL_error(L, "Wrong arguments number for WImage.setAlternateText: %d", argc);
+        return luaL_error(L, "Wrong arguments for WImage.setAlternateText");
     }
 }
 

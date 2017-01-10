@@ -6,16 +6,36 @@
 
 #include "globals.hpp"
 
+static const char* WText_make_args0[] = {NULL};
+static const char* WText_make_args1[] = {luawt_typeToStr<Wt::WContainerWidget>(), NULL};
+static const char* WText_make_args2[] = {"char const *", NULL};
+static const char* WText_make_args3[] = {"char const *", luawt_typeToStr<Wt::WContainerWidget>(), NULL};
+static const char* WText_make_args4[] = {"char const *", "int", NULL};
+static const char* WText_make_args5[] = {"char const *", "int", luawt_typeToStr<Wt::WContainerWidget>(), NULL};
+static const char* const* const luawt_WText_make_args[] = {WText_make_args0, WText_make_args1, WText_make_args2, WText_make_args3, WText_make_args4, WText_make_args5, NULL};
+
 int luawt_WText_make(lua_State* L) {
-    int argc = lua_gettop(L);
-    if (argc == 1) {
+    int index = luawt_getSuitableArgsGroup(L, luawt_WText_make_args);
+    if (index == 0) {
+    WText * result = new WText();
+    luawt_toLua(L, result);
+    return 1;
+
+    } else if (index == 1) {
     Wt::WContainerWidget* parent =
         luawt_checkFromLua<Wt::WContainerWidget>(L, 1);
     WText * result = new WText(parent);
     luawt_toLua(L, result);
     return 1;
 
-    } else     if (argc == 2) {
+    } else if (index == 2) {
+    char const * raw1 = lua_tostring(L, 1);
+    Wt::WString text = Wt::WString(raw1);
+    WText * result = new WText(text);
+    luawt_toLua(L, result);
+    return 1;
+
+    } else if (index == 3) {
     char const * raw1 = lua_tostring(L, 1);
     Wt::WString text = Wt::WString(raw1);
     Wt::WContainerWidget* parent =
@@ -24,7 +44,15 @@ int luawt_WText_make(lua_State* L) {
     luawt_toLua(L, result);
     return 1;
 
-    } else     if (argc == 3) {
+    } else if (index == 4) {
+    char const * raw1 = lua_tostring(L, 1);
+    Wt::WString text = Wt::WString(raw1);
+    Wt::TextFormat textFormat = static_cast<Wt::TextFormat>(lua_tointeger(L, 2));
+    WText * result = new WText(text, textFormat);
+    luawt_toLua(L, result);
+    return 1;
+
+    } else if (index == 5) {
     char const * raw1 = lua_tostring(L, 1);
     Wt::WString text = Wt::WString(raw1);
     Wt::TextFormat textFormat = static_cast<Wt::TextFormat>(lua_tointeger(L, 2));
@@ -35,43 +63,49 @@ int luawt_WText_make(lua_State* L) {
     return 1;
 
     } else {
-        return luaL_error(L, "Wrong arguments number for WText.make: %d", argc);
+        return luaL_error(L, "Wrong arguments for WText.make");
     }
 }
 
-int luawt_WText_hasInternalPathEncoding(lua_State* L) {
-    int argc = lua_gettop(L) - 1;
+static const char* WText_hasInternalPathEncoding_args0[] = {luawt_typeToStr<WText>(), NULL};
+static const char* const* const luawt_WText_hasInternalPathEncoding_args[] = {WText_hasInternalPathEncoding_args0, NULL};
 
+int luawt_WText_hasInternalPathEncoding(lua_State* L) {
+    int index = luawt_getSuitableArgsGroup(L, luawt_WText_hasInternalPathEncoding_args);
     WText* self = luawt_checkFromLua<WText>(L, 1);
-        if (argc == 0) {
+    if (index == 0) {
     bool result = self->hasInternalPathEncoding();
     lua_pushboolean(L, result);
     return 1;
 
     } else {
-        return luaL_error(L, "Wrong arguments number for WText.hasInternalPathEncoding: %d", argc);
+        return luaL_error(L, "Wrong arguments for WText.hasInternalPathEncoding");
     }
 }
 
-int luawt_WText_text(lua_State* L) {
-    int argc = lua_gettop(L) - 1;
+static const char* WText_text_args0[] = {luawt_typeToStr<WText>(), NULL};
+static const char* const* const luawt_WText_text_args[] = {WText_text_args0, NULL};
 
+int luawt_WText_text(lua_State* L) {
+    int index = luawt_getSuitableArgsGroup(L, luawt_WText_text_args);
     WText* self = luawt_checkFromLua<WText>(L, 1);
-        if (argc == 0) {
+    if (index == 0) {
     Wt::WString const & result = self->text();
     lua_pushstring(L, result.toUTF8().c_str());
     return 1;
 
     } else {
-        return luaL_error(L, "Wrong arguments number for WText.text: %d", argc);
+        return luaL_error(L, "Wrong arguments for WText.text");
     }
 }
 
-int luawt_WText_setText(lua_State* L) {
-    int argc = lua_gettop(L) - 1;
+static const char* WText_setText_args0[] = {luawt_typeToStr<WText>(), "char const *", NULL};
+static const char* const* const luawt_WText_setText_args[] = {WText_setText_args0, NULL};
 
+int luawt_WText_setText(lua_State* L) {
+    int index = luawt_getSuitableArgsGroup(L, luawt_WText_setText_args);
     WText* self = luawt_checkFromLua<WText>(L, 1);
-        if (argc == 1) {
+    if (index == 0) {
     char const * raw2 = lua_tostring(L, 2);
     Wt::WString text = Wt::WString(raw2);
     bool result = self->setText(text);
@@ -79,91 +113,103 @@ int luawt_WText_setText(lua_State* L) {
     return 1;
 
     } else {
-        return luaL_error(L, "Wrong arguments number for WText.setText: %d", argc);
+        return luaL_error(L, "Wrong arguments for WText.setText");
     }
 }
 
-int luawt_WText_refresh(lua_State* L) {
-    int argc = lua_gettop(L) - 1;
+static const char* WText_refresh_args0[] = {luawt_typeToStr<WText>(), NULL};
+static const char* const* const luawt_WText_refresh_args[] = {WText_refresh_args0, NULL};
 
+int luawt_WText_refresh(lua_State* L) {
+    int index = luawt_getSuitableArgsGroup(L, luawt_WText_refresh_args);
     WText* self = luawt_checkFromLua<WText>(L, 1);
-        if (argc == 0) {
+    if (index == 0) {
     self->refresh();
     return 0;
     
     } else {
-        return luaL_error(L, "Wrong arguments number for WText.refresh: %d", argc);
+        return luaL_error(L, "Wrong arguments for WText.refresh");
     }
 }
 
-int luawt_WText_wordWrap(lua_State* L) {
-    int argc = lua_gettop(L) - 1;
+static const char* WText_wordWrap_args0[] = {luawt_typeToStr<WText>(), NULL};
+static const char* const* const luawt_WText_wordWrap_args[] = {WText_wordWrap_args0, NULL};
 
+int luawt_WText_wordWrap(lua_State* L) {
+    int index = luawt_getSuitableArgsGroup(L, luawt_WText_wordWrap_args);
     WText* self = luawt_checkFromLua<WText>(L, 1);
-        if (argc == 0) {
+    if (index == 0) {
     bool result = self->wordWrap();
     lua_pushboolean(L, result);
     return 1;
 
     } else {
-        return luaL_error(L, "Wrong arguments number for WText.wordWrap: %d", argc);
+        return luaL_error(L, "Wrong arguments for WText.wordWrap");
     }
 }
 
-int luawt_WText_setWordWrap(lua_State* L) {
-    int argc = lua_gettop(L) - 1;
+static const char* WText_setWordWrap_args0[] = {luawt_typeToStr<WText>(), "bool", NULL};
+static const char* const* const luawt_WText_setWordWrap_args[] = {WText_setWordWrap_args0, NULL};
 
+int luawt_WText_setWordWrap(lua_State* L) {
+    int index = luawt_getSuitableArgsGroup(L, luawt_WText_setWordWrap_args);
     WText* self = luawt_checkFromLua<WText>(L, 1);
-        if (argc == 1) {
+    if (index == 0) {
     bool wordWrap = lua_toboolean(L, 2);
     self->setWordWrap(wordWrap);
     return 0;
     
     } else {
-        return luaL_error(L, "Wrong arguments number for WText.setWordWrap: %d", argc);
+        return luaL_error(L, "Wrong arguments for WText.setWordWrap");
     }
 }
 
-int luawt_WText_textFormat(lua_State* L) {
-    int argc = lua_gettop(L) - 1;
+static const char* WText_textFormat_args0[] = {luawt_typeToStr<WText>(), NULL};
+static const char* const* const luawt_WText_textFormat_args[] = {WText_textFormat_args0, NULL};
 
+int luawt_WText_textFormat(lua_State* L) {
+    int index = luawt_getSuitableArgsGroup(L, luawt_WText_textFormat_args);
     WText* self = luawt_checkFromLua<WText>(L, 1);
-        if (argc == 0) {
+    if (index == 0) {
     Wt::TextFormat result = self->textFormat();
     lua_pushinteger(L, result);
     return 1;
 
     } else {
-        return luaL_error(L, "Wrong arguments number for WText.textFormat: %d", argc);
+        return luaL_error(L, "Wrong arguments for WText.textFormat");
     }
 }
 
-int luawt_WText_setTextFormat(lua_State* L) {
-    int argc = lua_gettop(L) - 1;
+static const char* WText_setTextFormat_args0[] = {luawt_typeToStr<WText>(), "int", NULL};
+static const char* const* const luawt_WText_setTextFormat_args[] = {WText_setTextFormat_args0, NULL};
 
+int luawt_WText_setTextFormat(lua_State* L) {
+    int index = luawt_getSuitableArgsGroup(L, luawt_WText_setTextFormat_args);
     WText* self = luawt_checkFromLua<WText>(L, 1);
-        if (argc == 1) {
+    if (index == 0) {
     Wt::TextFormat format = static_cast<Wt::TextFormat>(lua_tointeger(L, 2));
     bool result = self->setTextFormat(format);
     lua_pushboolean(L, result);
     return 1;
 
     } else {
-        return luaL_error(L, "Wrong arguments number for WText.setTextFormat: %d", argc);
+        return luaL_error(L, "Wrong arguments for WText.setTextFormat");
     }
 }
 
-int luawt_WText_setInternalPathEncoding(lua_State* L) {
-    int argc = lua_gettop(L) - 1;
+static const char* WText_setInternalPathEncoding_args0[] = {luawt_typeToStr<WText>(), "bool", NULL};
+static const char* const* const luawt_WText_setInternalPathEncoding_args[] = {WText_setInternalPathEncoding_args0, NULL};
 
+int luawt_WText_setInternalPathEncoding(lua_State* L) {
+    int index = luawt_getSuitableArgsGroup(L, luawt_WText_setInternalPathEncoding_args);
     WText* self = luawt_checkFromLua<WText>(L, 1);
-        if (argc == 1) {
+    if (index == 0) {
     bool enabled = lua_toboolean(L, 2);
     self->setInternalPathEncoding(enabled);
     return 0;
     
     } else {
-        return luaL_error(L, "Wrong arguments number for WText.setInternalPathEncoding: %d", argc);
+        return luaL_error(L, "Wrong arguments for WText.setInternalPathEncoding");
     }
 }
 

@@ -6,16 +6,34 @@
 
 #include "globals.hpp"
 
+static const char* WTextEdit_make_args0[] = {NULL};
+static const char* WTextEdit_make_args1[] = {luawt_typeToStr<Wt::WContainerWidget>(), NULL};
+static const char* WTextEdit_make_args2[] = {"char const *", NULL};
+static const char* WTextEdit_make_args3[] = {"char const *", luawt_typeToStr<Wt::WContainerWidget>(), NULL};
+static const char* const* const luawt_WTextEdit_make_args[] = {WTextEdit_make_args0, WTextEdit_make_args1, WTextEdit_make_args2, WTextEdit_make_args3, NULL};
+
 int luawt_WTextEdit_make(lua_State* L) {
-    int argc = lua_gettop(L);
-    if (argc == 1) {
+    int index = luawt_getSuitableArgsGroup(L, luawt_WTextEdit_make_args);
+    if (index == 0) {
+    WTextEdit * result = new WTextEdit();
+    luawt_toLua(L, result);
+    return 1;
+
+    } else if (index == 1) {
     Wt::WContainerWidget* parent =
         luawt_checkFromLua<Wt::WContainerWidget>(L, 1);
     WTextEdit * result = new WTextEdit(parent);
     luawt_toLua(L, result);
     return 1;
 
-    } else     if (argc == 2) {
+    } else if (index == 2) {
+    char const * raw1 = lua_tostring(L, 1);
+    Wt::WString text = Wt::WString(raw1);
+    WTextEdit * result = new WTextEdit(text);
+    luawt_toLua(L, result);
+    return 1;
+
+    } else if (index == 3) {
     char const * raw1 = lua_tostring(L, 1);
     Wt::WString text = Wt::WString(raw1);
     Wt::WContainerWidget* parent =
@@ -25,73 +43,83 @@ int luawt_WTextEdit_make(lua_State* L) {
     return 1;
 
     } else {
-        return luaL_error(L, "Wrong arguments number for WTextEdit.make: %d", argc);
+        return luaL_error(L, "Wrong arguments for WTextEdit.make");
     }
 }
 
-int luawt_WTextEdit_setText(lua_State* L) {
-    int argc = lua_gettop(L) - 1;
+static const char* WTextEdit_setText_args0[] = {luawt_typeToStr<WTextEdit>(), "char const *", NULL};
+static const char* const* const luawt_WTextEdit_setText_args[] = {WTextEdit_setText_args0, NULL};
 
+int luawt_WTextEdit_setText(lua_State* L) {
+    int index = luawt_getSuitableArgsGroup(L, luawt_WTextEdit_setText_args);
     WTextEdit* self = luawt_checkFromLua<WTextEdit>(L, 1);
-        if (argc == 1) {
+    if (index == 0) {
     char const * raw2 = lua_tostring(L, 2);
     Wt::WString text = Wt::WString(raw2);
     self->setText(text);
     return 0;
     
     } else {
-        return luaL_error(L, "Wrong arguments number for WTextEdit.setText: %d", argc);
+        return luaL_error(L, "Wrong arguments for WTextEdit.setText");
     }
 }
 
-int luawt_WTextEdit_setExtraPlugins(lua_State* L) {
-    int argc = lua_gettop(L) - 1;
+static const char* WTextEdit_setExtraPlugins_args0[] = {luawt_typeToStr<WTextEdit>(), "char const *", NULL};
+static const char* const* const luawt_WTextEdit_setExtraPlugins_args[] = {WTextEdit_setExtraPlugins_args0, NULL};
 
+int luawt_WTextEdit_setExtraPlugins(lua_State* L) {
+    int index = luawt_getSuitableArgsGroup(L, luawt_WTextEdit_setExtraPlugins_args);
     WTextEdit* self = luawt_checkFromLua<WTextEdit>(L, 1);
-        if (argc == 1) {
+    if (index == 0) {
     char const * raw2 = lua_tostring(L, 2);
     std::string plugins = std::string(raw2);
     self->setExtraPlugins(plugins);
     return 0;
     
     } else {
-        return luaL_error(L, "Wrong arguments number for WTextEdit.setExtraPlugins: %d", argc);
+        return luaL_error(L, "Wrong arguments for WTextEdit.setExtraPlugins");
     }
 }
 
-int luawt_WTextEdit_extraPlugins(lua_State* L) {
-    int argc = lua_gettop(L) - 1;
+static const char* WTextEdit_extraPlugins_args0[] = {luawt_typeToStr<WTextEdit>(), NULL};
+static const char* const* const luawt_WTextEdit_extraPlugins_args[] = {WTextEdit_extraPlugins_args0, NULL};
 
+int luawt_WTextEdit_extraPlugins(lua_State* L) {
+    int index = luawt_getSuitableArgsGroup(L, luawt_WTextEdit_extraPlugins_args);
     WTextEdit* self = luawt_checkFromLua<WTextEdit>(L, 1);
-        if (argc == 0) {
+    if (index == 0) {
     std::string const result = self->extraPlugins();
     lua_pushstring(L, result.c_str());
     return 1;
 
     } else {
-        return luaL_error(L, "Wrong arguments number for WTextEdit.extraPlugins: %d", argc);
+        return luaL_error(L, "Wrong arguments for WTextEdit.extraPlugins");
     }
 }
 
-int luawt_WTextEdit_styleSheet(lua_State* L) {
-    int argc = lua_gettop(L) - 1;
+static const char* WTextEdit_styleSheet_args0[] = {luawt_typeToStr<WTextEdit>(), NULL};
+static const char* const* const luawt_WTextEdit_styleSheet_args[] = {WTextEdit_styleSheet_args0, NULL};
 
+int luawt_WTextEdit_styleSheet(lua_State* L) {
+    int index = luawt_getSuitableArgsGroup(L, luawt_WTextEdit_styleSheet_args);
     WTextEdit* self = luawt_checkFromLua<WTextEdit>(L, 1);
-        if (argc == 0) {
+    if (index == 0) {
     std::string const result = self->styleSheet();
     lua_pushstring(L, result.c_str());
     return 1;
 
     } else {
-        return luaL_error(L, "Wrong arguments number for WTextEdit.styleSheet: %d", argc);
+        return luaL_error(L, "Wrong arguments for WTextEdit.styleSheet");
     }
 }
 
-int luawt_WTextEdit_setToolBar(lua_State* L) {
-    int argc = lua_gettop(L) - 1;
+static const char* WTextEdit_setToolBar_args0[] = {luawt_typeToStr<WTextEdit>(), "int", "char const *", NULL};
+static const char* const* const luawt_WTextEdit_setToolBar_args[] = {WTextEdit_setToolBar_args0, NULL};
 
+int luawt_WTextEdit_setToolBar(lua_State* L) {
+    int index = luawt_getSuitableArgsGroup(L, luawt_WTextEdit_setToolBar_args);
     WTextEdit* self = luawt_checkFromLua<WTextEdit>(L, 1);
-        if (argc == 2) {
+    if (index == 0) {
     int i = lua_tointeger(L, 2);
     char const * raw3 = lua_tostring(L, 3);
     std::string config = std::string(raw3);
@@ -99,37 +127,41 @@ int luawt_WTextEdit_setToolBar(lua_State* L) {
     return 0;
     
     } else {
-        return luaL_error(L, "Wrong arguments number for WTextEdit.setToolBar: %d", argc);
+        return luaL_error(L, "Wrong arguments for WTextEdit.setToolBar");
     }
 }
 
-int luawt_WTextEdit_setStyleSheet(lua_State* L) {
-    int argc = lua_gettop(L) - 1;
+static const char* WTextEdit_setStyleSheet_args0[] = {luawt_typeToStr<WTextEdit>(), "char const *", NULL};
+static const char* const* const luawt_WTextEdit_setStyleSheet_args[] = {WTextEdit_setStyleSheet_args0, NULL};
 
+int luawt_WTextEdit_setStyleSheet(lua_State* L) {
+    int index = luawt_getSuitableArgsGroup(L, luawt_WTextEdit_setStyleSheet_args);
     WTextEdit* self = luawt_checkFromLua<WTextEdit>(L, 1);
-        if (argc == 1) {
+    if (index == 0) {
     char const * raw2 = lua_tostring(L, 2);
     std::string uri = std::string(raw2);
     self->setStyleSheet(uri);
     return 0;
     
     } else {
-        return luaL_error(L, "Wrong arguments number for WTextEdit.setStyleSheet: %d", argc);
+        return luaL_error(L, "Wrong arguments for WTextEdit.setStyleSheet");
     }
 }
 
-int luawt_WTextEdit_toolBar(lua_State* L) {
-    int argc = lua_gettop(L) - 1;
+static const char* WTextEdit_toolBar_args0[] = {luawt_typeToStr<WTextEdit>(), "int", NULL};
+static const char* const* const luawt_WTextEdit_toolBar_args[] = {WTextEdit_toolBar_args0, NULL};
 
+int luawt_WTextEdit_toolBar(lua_State* L) {
+    int index = luawt_getSuitableArgsGroup(L, luawt_WTextEdit_toolBar_args);
     WTextEdit* self = luawt_checkFromLua<WTextEdit>(L, 1);
-        if (argc == 1) {
+    if (index == 0) {
     int i = lua_tointeger(L, 2);
     std::string const result = self->toolBar(i);
     lua_pushstring(L, result.c_str());
     return 1;
 
     } else {
-        return luaL_error(L, "Wrong arguments number for WTextEdit.toolBar: %d", argc);
+        return luaL_error(L, "Wrong arguments for WTextEdit.toolBar");
     }
 }
 

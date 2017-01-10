@@ -5,9 +5,18 @@
 
 #include "globals.hpp"
 
+static const char* WStackedWidget_make_args0[] = {NULL};
+static const char* WStackedWidget_make_args1[] = {luawt_typeToStr<Wt::WContainerWidget>(), NULL};
+static const char* const* const luawt_WStackedWidget_make_args[] = {WStackedWidget_make_args0, WStackedWidget_make_args1, NULL};
+
 int luawt_WStackedWidget_make(lua_State* L) {
-    int argc = lua_gettop(L);
-    if (argc == 1) {
+    int index = luawt_getSuitableArgsGroup(L, luawt_WStackedWidget_make_args);
+    if (index == 0) {
+    WStackedWidget * result = new WStackedWidget();
+    luawt_toLua(L, result);
+    return 1;
+
+    } else if (index == 1) {
     Wt::WContainerWidget* parent =
         luawt_checkFromLua<Wt::WContainerWidget>(L, 1);
     WStackedWidget * result = new WStackedWidget(parent);
@@ -15,35 +24,39 @@ int luawt_WStackedWidget_make(lua_State* L) {
     return 1;
 
     } else {
-        return luaL_error(L, "Wrong arguments number for WStackedWidget.make: %d", argc);
+        return luaL_error(L, "Wrong arguments for WStackedWidget.make");
     }
 }
 
-int luawt_WStackedWidget_currentIndex(lua_State* L) {
-    int argc = lua_gettop(L) - 1;
+static const char* WStackedWidget_currentIndex_args0[] = {luawt_typeToStr<WStackedWidget>(), NULL};
+static const char* const* const luawt_WStackedWidget_currentIndex_args[] = {WStackedWidget_currentIndex_args0, NULL};
 
+int luawt_WStackedWidget_currentIndex(lua_State* L) {
+    int index = luawt_getSuitableArgsGroup(L, luawt_WStackedWidget_currentIndex_args);
     WStackedWidget* self = luawt_checkFromLua<WStackedWidget>(L, 1);
-        if (argc == 0) {
+    if (index == 0) {
     int result = self->currentIndex();
     lua_pushinteger(L, result);
     return 1;
 
     } else {
-        return luaL_error(L, "Wrong arguments number for WStackedWidget.currentIndex: %d", argc);
+        return luaL_error(L, "Wrong arguments for WStackedWidget.currentIndex");
     }
 }
 
-int luawt_WStackedWidget_setCurrentIndex(lua_State* L) {
-    int argc = lua_gettop(L) - 1;
+static const char* WStackedWidget_setCurrentIndex_args0[] = {luawt_typeToStr<WStackedWidget>(), "int", NULL};
+static const char* const* const luawt_WStackedWidget_setCurrentIndex_args[] = {WStackedWidget_setCurrentIndex_args0, NULL};
 
+int luawt_WStackedWidget_setCurrentIndex(lua_State* L) {
+    int index = luawt_getSuitableArgsGroup(L, luawt_WStackedWidget_setCurrentIndex_args);
     WStackedWidget* self = luawt_checkFromLua<WStackedWidget>(L, 1);
-        if (argc == 1) {
+    if (index == 0) {
     int index = lua_tointeger(L, 2);
     self->setCurrentIndex(index);
     return 0;
     
     } else {
-        return luaL_error(L, "Wrong arguments number for WStackedWidget.setCurrentIndex: %d", argc);
+        return luaL_error(L, "Wrong arguments for WStackedWidget.setCurrentIndex");
     }
 }
 

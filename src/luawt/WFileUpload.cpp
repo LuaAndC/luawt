@@ -7,9 +7,18 @@
 
 #include "globals.hpp"
 
+static const char* WFileUpload_make_args0[] = {NULL};
+static const char* WFileUpload_make_args1[] = {luawt_typeToStr<Wt::WContainerWidget>(), NULL};
+static const char* const* const luawt_WFileUpload_make_args[] = {WFileUpload_make_args0, WFileUpload_make_args1, NULL};
+
 int luawt_WFileUpload_make(lua_State* L) {
-    int argc = lua_gettop(L);
-    if (argc == 1) {
+    int index = luawt_getSuitableArgsGroup(L, luawt_WFileUpload_make_args);
+    if (index == 0) {
+    WFileUpload * result = new WFileUpload();
+    luawt_toLua(L, result);
+    return 1;
+
+    } else if (index == 1) {
     Wt::WContainerWidget* parent =
         luawt_checkFromLua<Wt::WContainerWidget>(L, 1);
     WFileUpload * result = new WFileUpload(parent);
@@ -17,229 +26,261 @@ int luawt_WFileUpload_make(lua_State* L) {
     return 1;
 
     } else {
-        return luaL_error(L, "Wrong arguments number for WFileUpload.make: %d", argc);
+        return luaL_error(L, "Wrong arguments for WFileUpload.make");
     }
 }
 
-int luawt_WFileUpload_clientFileName(lua_State* L) {
-    int argc = lua_gettop(L) - 1;
+static const char* WFileUpload_clientFileName_args0[] = {luawt_typeToStr<WFileUpload>(), NULL};
+static const char* const* const luawt_WFileUpload_clientFileName_args[] = {WFileUpload_clientFileName_args0, NULL};
 
+int luawt_WFileUpload_clientFileName(lua_State* L) {
+    int index = luawt_getSuitableArgsGroup(L, luawt_WFileUpload_clientFileName_args);
     WFileUpload* self = luawt_checkFromLua<WFileUpload>(L, 1);
-        if (argc == 0) {
+    if (index == 0) {
     Wt::WString result = self->clientFileName();
     lua_pushstring(L, result.toUTF8().c_str());
     return 1;
 
     } else {
-        return luaL_error(L, "Wrong arguments number for WFileUpload.clientFileName: %d", argc);
+        return luaL_error(L, "Wrong arguments for WFileUpload.clientFileName");
     }
 }
 
-int luawt_WFileUpload_contentDescription(lua_State* L) {
-    int argc = lua_gettop(L) - 1;
+static const char* WFileUpload_contentDescription_args0[] = {luawt_typeToStr<WFileUpload>(), NULL};
+static const char* const* const luawt_WFileUpload_contentDescription_args[] = {WFileUpload_contentDescription_args0, NULL};
 
+int luawt_WFileUpload_contentDescription(lua_State* L) {
+    int index = luawt_getSuitableArgsGroup(L, luawt_WFileUpload_contentDescription_args);
     WFileUpload* self = luawt_checkFromLua<WFileUpload>(L, 1);
-        if (argc == 0) {
+    if (index == 0) {
     Wt::WString result = self->contentDescription();
     lua_pushstring(L, result.toUTF8().c_str());
     return 1;
 
     } else {
-        return luaL_error(L, "Wrong arguments number for WFileUpload.contentDescription: %d", argc);
+        return luaL_error(L, "Wrong arguments for WFileUpload.contentDescription");
     }
 }
 
-int luawt_WFileUpload_spoolFileName(lua_State* L) {
-    int argc = lua_gettop(L) - 1;
+static const char* WFileUpload_spoolFileName_args0[] = {luawt_typeToStr<WFileUpload>(), NULL};
+static const char* const* const luawt_WFileUpload_spoolFileName_args[] = {WFileUpload_spoolFileName_args0, NULL};
 
+int luawt_WFileUpload_spoolFileName(lua_State* L) {
+    int index = luawt_getSuitableArgsGroup(L, luawt_WFileUpload_spoolFileName_args);
     WFileUpload* self = luawt_checkFromLua<WFileUpload>(L, 1);
-        if (argc == 0) {
+    if (index == 0) {
     std::string result = self->spoolFileName();
     lua_pushstring(L, result.c_str());
     return 1;
 
     } else {
-        return luaL_error(L, "Wrong arguments number for WFileUpload.spoolFileName: %d", argc);
+        return luaL_error(L, "Wrong arguments for WFileUpload.spoolFileName");
     }
 }
 
-int luawt_WFileUpload_multiple(lua_State* L) {
-    int argc = lua_gettop(L) - 1;
+static const char* WFileUpload_multiple_args0[] = {luawt_typeToStr<WFileUpload>(), NULL};
+static const char* const* const luawt_WFileUpload_multiple_args[] = {WFileUpload_multiple_args0, NULL};
 
+int luawt_WFileUpload_multiple(lua_State* L) {
+    int index = luawt_getSuitableArgsGroup(L, luawt_WFileUpload_multiple_args);
     WFileUpload* self = luawt_checkFromLua<WFileUpload>(L, 1);
-        if (argc == 0) {
+    if (index == 0) {
     bool result = self->multiple();
     lua_pushboolean(L, result);
     return 1;
 
     } else {
-        return luaL_error(L, "Wrong arguments number for WFileUpload.multiple: %d", argc);
+        return luaL_error(L, "Wrong arguments for WFileUpload.multiple");
     }
 }
 
-int luawt_WFileUpload_setMultiple(lua_State* L) {
-    int argc = lua_gettop(L) - 1;
+static const char* WFileUpload_setMultiple_args0[] = {luawt_typeToStr<WFileUpload>(), "bool", NULL};
+static const char* const* const luawt_WFileUpload_setMultiple_args[] = {WFileUpload_setMultiple_args0, NULL};
 
+int luawt_WFileUpload_setMultiple(lua_State* L) {
+    int index = luawt_getSuitableArgsGroup(L, luawt_WFileUpload_setMultiple_args);
     WFileUpload* self = luawt_checkFromLua<WFileUpload>(L, 1);
-        if (argc == 1) {
+    if (index == 0) {
     bool multiple = lua_toboolean(L, 2);
     self->setMultiple(multiple);
     return 0;
     
     } else {
-        return luaL_error(L, "Wrong arguments number for WFileUpload.setMultiple: %d", argc);
+        return luaL_error(L, "Wrong arguments for WFileUpload.setMultiple");
     }
 }
 
-int luawt_WFileUpload_fileTextSize(lua_State* L) {
-    int argc = lua_gettop(L) - 1;
+static const char* WFileUpload_fileTextSize_args0[] = {luawt_typeToStr<WFileUpload>(), NULL};
+static const char* const* const luawt_WFileUpload_fileTextSize_args[] = {WFileUpload_fileTextSize_args0, NULL};
 
+int luawt_WFileUpload_fileTextSize(lua_State* L) {
+    int index = luawt_getSuitableArgsGroup(L, luawt_WFileUpload_fileTextSize_args);
     WFileUpload* self = luawt_checkFromLua<WFileUpload>(L, 1);
-        if (argc == 0) {
+    if (index == 0) {
     int result = self->fileTextSize();
     lua_pushinteger(L, result);
     return 1;
 
     } else {
-        return luaL_error(L, "Wrong arguments number for WFileUpload.fileTextSize: %d", argc);
+        return luaL_error(L, "Wrong arguments for WFileUpload.fileTextSize");
     }
 }
 
-int luawt_WFileUpload_setProgressBar(lua_State* L) {
-    int argc = lua_gettop(L) - 1;
+static const char* WFileUpload_setProgressBar_args0[] = {luawt_typeToStr<WFileUpload>(), luawt_typeToStr<Wt::WProgressBar>(), NULL};
+static const char* const* const luawt_WFileUpload_setProgressBar_args[] = {WFileUpload_setProgressBar_args0, NULL};
 
+int luawt_WFileUpload_setProgressBar(lua_State* L) {
+    int index = luawt_getSuitableArgsGroup(L, luawt_WFileUpload_setProgressBar_args);
     WFileUpload* self = luawt_checkFromLua<WFileUpload>(L, 1);
-        if (argc == 1) {
+    if (index == 0) {
     Wt::WProgressBar* progressBar =
         luawt_checkFromLua<Wt::WProgressBar>(L, 2);
     self->setProgressBar(progressBar);
     return 0;
     
     } else {
-        return luaL_error(L, "Wrong arguments number for WFileUpload.setProgressBar: %d", argc);
+        return luaL_error(L, "Wrong arguments for WFileUpload.setProgressBar");
     }
 }
 
-int luawt_WFileUpload_setFileTextSize(lua_State* L) {
-    int argc = lua_gettop(L) - 1;
+static const char* WFileUpload_setFileTextSize_args0[] = {luawt_typeToStr<WFileUpload>(), "int", NULL};
+static const char* const* const luawt_WFileUpload_setFileTextSize_args[] = {WFileUpload_setFileTextSize_args0, NULL};
 
+int luawt_WFileUpload_setFileTextSize(lua_State* L) {
+    int index = luawt_getSuitableArgsGroup(L, luawt_WFileUpload_setFileTextSize_args);
     WFileUpload* self = luawt_checkFromLua<WFileUpload>(L, 1);
-        if (argc == 1) {
+    if (index == 0) {
     int chars = lua_tointeger(L, 2);
     self->setFileTextSize(chars);
     return 0;
     
     } else {
-        return luaL_error(L, "Wrong arguments number for WFileUpload.setFileTextSize: %d", argc);
+        return luaL_error(L, "Wrong arguments for WFileUpload.setFileTextSize");
     }
 }
 
-int luawt_WFileUpload_upload(lua_State* L) {
-    int argc = lua_gettop(L) - 1;
+static const char* WFileUpload_upload_args0[] = {luawt_typeToStr<WFileUpload>(), NULL};
+static const char* const* const luawt_WFileUpload_upload_args[] = {WFileUpload_upload_args0, NULL};
 
+int luawt_WFileUpload_upload(lua_State* L) {
+    int index = luawt_getSuitableArgsGroup(L, luawt_WFileUpload_upload_args);
     WFileUpload* self = luawt_checkFromLua<WFileUpload>(L, 1);
-        if (argc == 0) {
+    if (index == 0) {
     self->upload();
     return 0;
     
     } else {
-        return luaL_error(L, "Wrong arguments number for WFileUpload.upload: %d", argc);
+        return luaL_error(L, "Wrong arguments for WFileUpload.upload");
     }
 }
 
-int luawt_WFileUpload_progressBar(lua_State* L) {
-    int argc = lua_gettop(L) - 1;
+static const char* WFileUpload_progressBar_args0[] = {luawt_typeToStr<WFileUpload>(), NULL};
+static const char* const* const luawt_WFileUpload_progressBar_args[] = {WFileUpload_progressBar_args0, NULL};
 
+int luawt_WFileUpload_progressBar(lua_State* L) {
+    int index = luawt_getSuitableArgsGroup(L, luawt_WFileUpload_progressBar_args);
     WFileUpload* self = luawt_checkFromLua<WFileUpload>(L, 1);
-        if (argc == 0) {
+    if (index == 0) {
     Wt::WProgressBar * result = self->progressBar();
     luawt_toLua(L, result);
     return 1;
 
     } else {
-        return luaL_error(L, "Wrong arguments number for WFileUpload.progressBar: %d", argc);
+        return luaL_error(L, "Wrong arguments for WFileUpload.progressBar");
     }
 }
 
-int luawt_WFileUpload_emptyFileName(lua_State* L) {
-    int argc = lua_gettop(L) - 1;
+static const char* WFileUpload_emptyFileName_args0[] = {luawt_typeToStr<WFileUpload>(), NULL};
+static const char* const* const luawt_WFileUpload_emptyFileName_args[] = {WFileUpload_emptyFileName_args0, NULL};
 
+int luawt_WFileUpload_emptyFileName(lua_State* L) {
+    int index = luawt_getSuitableArgsGroup(L, luawt_WFileUpload_emptyFileName_args);
     WFileUpload* self = luawt_checkFromLua<WFileUpload>(L, 1);
-        if (argc == 0) {
+    if (index == 0) {
     bool result = self->emptyFileName();
     lua_pushboolean(L, result);
     return 1;
 
     } else {
-        return luaL_error(L, "Wrong arguments number for WFileUpload.emptyFileName: %d", argc);
+        return luaL_error(L, "Wrong arguments for WFileUpload.emptyFileName");
     }
 }
 
-int luawt_WFileUpload_stealSpooledFile(lua_State* L) {
-    int argc = lua_gettop(L) - 1;
+static const char* WFileUpload_stealSpooledFile_args0[] = {luawt_typeToStr<WFileUpload>(), NULL};
+static const char* const* const luawt_WFileUpload_stealSpooledFile_args[] = {WFileUpload_stealSpooledFile_args0, NULL};
 
+int luawt_WFileUpload_stealSpooledFile(lua_State* L) {
+    int index = luawt_getSuitableArgsGroup(L, luawt_WFileUpload_stealSpooledFile_args);
     WFileUpload* self = luawt_checkFromLua<WFileUpload>(L, 1);
-        if (argc == 0) {
+    if (index == 0) {
     self->stealSpooledFile();
     return 0;
     
     } else {
-        return luaL_error(L, "Wrong arguments number for WFileUpload.stealSpooledFile: %d", argc);
+        return luaL_error(L, "Wrong arguments for WFileUpload.stealSpooledFile");
     }
 }
 
-int luawt_WFileUpload_canUpload(lua_State* L) {
-    int argc = lua_gettop(L) - 1;
+static const char* WFileUpload_canUpload_args0[] = {luawt_typeToStr<WFileUpload>(), NULL};
+static const char* const* const luawt_WFileUpload_canUpload_args[] = {WFileUpload_canUpload_args0, NULL};
 
+int luawt_WFileUpload_canUpload(lua_State* L) {
+    int index = luawt_getSuitableArgsGroup(L, luawt_WFileUpload_canUpload_args);
     WFileUpload* self = luawt_checkFromLua<WFileUpload>(L, 1);
-        if (argc == 0) {
+    if (index == 0) {
     bool result = self->canUpload();
     lua_pushboolean(L, result);
     return 1;
 
     } else {
-        return luaL_error(L, "Wrong arguments number for WFileUpload.canUpload: %d", argc);
+        return luaL_error(L, "Wrong arguments for WFileUpload.canUpload");
     }
 }
 
-int luawt_WFileUpload_isUploaded(lua_State* L) {
-    int argc = lua_gettop(L) - 1;
+static const char* WFileUpload_isUploaded_args0[] = {luawt_typeToStr<WFileUpload>(), NULL};
+static const char* const* const luawt_WFileUpload_isUploaded_args[] = {WFileUpload_isUploaded_args0, NULL};
 
+int luawt_WFileUpload_isUploaded(lua_State* L) {
+    int index = luawt_getSuitableArgsGroup(L, luawt_WFileUpload_isUploaded_args);
     WFileUpload* self = luawt_checkFromLua<WFileUpload>(L, 1);
-        if (argc == 0) {
+    if (index == 0) {
     bool result = self->isUploaded();
     lua_pushboolean(L, result);
     return 1;
 
     } else {
-        return luaL_error(L, "Wrong arguments number for WFileUpload.isUploaded: %d", argc);
+        return luaL_error(L, "Wrong arguments for WFileUpload.isUploaded");
     }
 }
 
-int luawt_WFileUpload_enableAjax(lua_State* L) {
-    int argc = lua_gettop(L) - 1;
+static const char* WFileUpload_enableAjax_args0[] = {luawt_typeToStr<WFileUpload>(), NULL};
+static const char* const* const luawt_WFileUpload_enableAjax_args[] = {WFileUpload_enableAjax_args0, NULL};
 
+int luawt_WFileUpload_enableAjax(lua_State* L) {
+    int index = luawt_getSuitableArgsGroup(L, luawt_WFileUpload_enableAjax_args);
     WFileUpload* self = luawt_checkFromLua<WFileUpload>(L, 1);
-        if (argc == 0) {
+    if (index == 0) {
     self->enableAjax();
     return 0;
     
     } else {
-        return luaL_error(L, "Wrong arguments number for WFileUpload.enableAjax: %d", argc);
+        return luaL_error(L, "Wrong arguments for WFileUpload.enableAjax");
     }
 }
 
-int luawt_WFileUpload_empty(lua_State* L) {
-    int argc = lua_gettop(L) - 1;
+static const char* WFileUpload_empty_args0[] = {luawt_typeToStr<WFileUpload>(), NULL};
+static const char* const* const luawt_WFileUpload_empty_args[] = {WFileUpload_empty_args0, NULL};
 
+int luawt_WFileUpload_empty(lua_State* L) {
+    int index = luawt_getSuitableArgsGroup(L, luawt_WFileUpload_empty_args);
     WFileUpload* self = luawt_checkFromLua<WFileUpload>(L, 1);
-        if (argc == 0) {
+    if (index == 0) {
     bool result = self->empty();
     lua_pushboolean(L, result);
     return 1;
 
     } else {
-        return luaL_error(L, "Wrong arguments number for WFileUpload.empty: %d", argc);
+        return luaL_error(L, "Wrong arguments for WFileUpload.empty");
     }
 }
 

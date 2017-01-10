@@ -6,9 +6,20 @@
 
 #include "globals.hpp"
 
+static const char* WFlashObject_make_args0[] = {"char const *", NULL};
+static const char* WFlashObject_make_args1[] = {"char const *", luawt_typeToStr<Wt::WContainerWidget>(), NULL};
+static const char* const* const luawt_WFlashObject_make_args[] = {WFlashObject_make_args0, WFlashObject_make_args1, NULL};
+
 int luawt_WFlashObject_make(lua_State* L) {
-    int argc = lua_gettop(L);
-    if (argc == 2) {
+    int index = luawt_getSuitableArgsGroup(L, luawt_WFlashObject_make_args);
+    if (index == 0) {
+    char const * raw1 = lua_tostring(L, 1);
+    std::string url = std::string(raw1);
+    WFlashObject * result = new WFlashObject(url);
+    luawt_toLua(L, result);
+    return 1;
+
+    } else if (index == 1) {
     char const * raw1 = lua_tostring(L, 1);
     std::string url = std::string(raw1);
     Wt::WContainerWidget* parent =
@@ -18,15 +29,17 @@ int luawt_WFlashObject_make(lua_State* L) {
     return 1;
 
     } else {
-        return luaL_error(L, "Wrong arguments number for WFlashObject.make: %d", argc);
+        return luaL_error(L, "Wrong arguments for WFlashObject.make");
     }
 }
 
-int luawt_WFlashObject_setFlashVariable(lua_State* L) {
-    int argc = lua_gettop(L) - 1;
+static const char* WFlashObject_setFlashVariable_args0[] = {luawt_typeToStr<WFlashObject>(), "char const *", "char const *", NULL};
+static const char* const* const luawt_WFlashObject_setFlashVariable_args[] = {WFlashObject_setFlashVariable_args0, NULL};
 
+int luawt_WFlashObject_setFlashVariable(lua_State* L) {
+    int index = luawt_getSuitableArgsGroup(L, luawt_WFlashObject_setFlashVariable_args);
     WFlashObject* self = luawt_checkFromLua<WFlashObject>(L, 1);
-        if (argc == 2) {
+    if (index == 0) {
     char const * raw2 = lua_tostring(L, 2);
     std::string name = std::string(raw2);
     char const * raw3 = lua_tostring(L, 3);
@@ -35,29 +48,33 @@ int luawt_WFlashObject_setFlashVariable(lua_State* L) {
     return 0;
     
     } else {
-        return luaL_error(L, "Wrong arguments number for WFlashObject.setFlashVariable: %d", argc);
+        return luaL_error(L, "Wrong arguments for WFlashObject.setFlashVariable");
     }
 }
 
-int luawt_WFlashObject_jsFlashRef(lua_State* L) {
-    int argc = lua_gettop(L) - 1;
+static const char* WFlashObject_jsFlashRef_args0[] = {luawt_typeToStr<WFlashObject>(), NULL};
+static const char* const* const luawt_WFlashObject_jsFlashRef_args[] = {WFlashObject_jsFlashRef_args0, NULL};
 
+int luawt_WFlashObject_jsFlashRef(lua_State* L) {
+    int index = luawt_getSuitableArgsGroup(L, luawt_WFlashObject_jsFlashRef_args);
     WFlashObject* self = luawt_checkFromLua<WFlashObject>(L, 1);
-        if (argc == 0) {
+    if (index == 0) {
     std::string result = self->jsFlashRef();
     lua_pushstring(L, result.c_str());
     return 1;
 
     } else {
-        return luaL_error(L, "Wrong arguments number for WFlashObject.jsFlashRef: %d", argc);
+        return luaL_error(L, "Wrong arguments for WFlashObject.jsFlashRef");
     }
 }
 
-int luawt_WFlashObject_setFlashParameter(lua_State* L) {
-    int argc = lua_gettop(L) - 1;
+static const char* WFlashObject_setFlashParameter_args0[] = {luawt_typeToStr<WFlashObject>(), "char const *", "char const *", NULL};
+static const char* const* const luawt_WFlashObject_setFlashParameter_args[] = {WFlashObject_setFlashParameter_args0, NULL};
 
+int luawt_WFlashObject_setFlashParameter(lua_State* L) {
+    int index = luawt_getSuitableArgsGroup(L, luawt_WFlashObject_setFlashParameter_args);
     WFlashObject* self = luawt_checkFromLua<WFlashObject>(L, 1);
-        if (argc == 2) {
+    if (index == 0) {
     char const * raw2 = lua_tostring(L, 2);
     std::string name = std::string(raw2);
     char const * raw3 = lua_tostring(L, 3);
@@ -66,7 +83,7 @@ int luawt_WFlashObject_setFlashParameter(lua_State* L) {
     return 0;
     
     } else {
-        return luaL_error(L, "Wrong arguments number for WFlashObject.setFlashParameter: %d", argc);
+        return luaL_error(L, "Wrong arguments for WFlashObject.setFlashParameter");
     }
 }
 
