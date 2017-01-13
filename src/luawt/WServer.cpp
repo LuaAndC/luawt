@@ -108,6 +108,14 @@ int luawt_WServer_stop(lua_State* L) {
     return 0;
 }
 
+int luawt_WServer_waitForShutdown(lua_State* L) {
+    WServer* s = reinterpret_cast<WServer*>(
+        luaL_checkudata(L, 1, "luawt_WServer")
+    );
+    s->waitForShutdown();
+    return 0;
+}
+
 int luawt_WServer_gc(lua_State* L) {
     WServer* s = reinterpret_cast<WServer*>(
         luaL_checkudata(L, 1, "luawt_WServer")
@@ -124,6 +132,7 @@ static const luaL_Reg luawt_WServer_mt[] = {
 static const luaL_Reg luawt_WServer_methods[] = {
     METHOD(WServer, start),
     METHOD(WServer, stop),
+    METHOD(WServer, waitForShutdown),
     {NULL, NULL},
 };
 
