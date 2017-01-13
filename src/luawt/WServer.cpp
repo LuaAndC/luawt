@@ -51,6 +51,9 @@ int luawt_WServer_make(lua_State* L) {
     lua_getfield(L, 1, "code");
     size_t code_len;
     const char* code = luaL_checklstring(L, -1, &code_len);
+    // get IP
+    lua_getfield(L, 1, "ip");
+    const char* ip = luaL_checkstring(L, -1);
     // get port
     lua_getfield(L, 1, "port");
     const char* port = luaL_checkstring(L, -1);
@@ -61,7 +64,8 @@ int luawt_WServer_make(lua_State* L) {
     typedef std::vector<const char*> Options;
     Options opt;
     opt.push_back("luawt");
-    opt.push_back("--http-address=127.0.0.1");
+    opt.push_back("--http-address");
+    opt.push_back(ip);
     opt.push_back("--http-port");
     opt.push_back(port);
     opt.push_back("--docroot=/usr/share/Wt");

@@ -26,10 +26,11 @@ function test.baseConfig()
     return wt_config
 end
 
-function test.createServer(code, port, wt_config)
+function test.createServer(code, ip, port, wt_config)
     local luawt = require 'luawt'
     local server = luawt.WServer({
         code = code,
+        ip = ip,
         port = port,
         wt_config = wt_config,
     })
@@ -48,9 +49,10 @@ function test.testWidget(name, constructor_has_arguments)
         local widget = luawt.%s(%s)
         luawt.Shared.widget_id = widget:id()
     ]]):format(name, args_str)
+    local ip = '127.0.0.1'
     local port = 56789
     local wt_config = test.baseConfig()
-    local server = test.createServer(code, port, wt_config)
+    local server = test.createServer(code, ip, port, wt_config)
     server:start()
     os.execute("sleep 1")
     local data = test.socketRequest(port)
