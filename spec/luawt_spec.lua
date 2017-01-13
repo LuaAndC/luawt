@@ -20,9 +20,10 @@ describe("luawt", function()
             end)
             button:clicked():emit()
         ]]
+        local ip = '127.0.0.1'
         local port = 56789
         local wt_config = test.baseConfig()
-        local server = test.createServer(code, port, wt_config)
+        local server = test.createServer(code, ip, port, wt_config)
         server:start()
         os.execute("sleep 1")
         local data = test.socketRequest(port)
@@ -44,9 +45,10 @@ describe("luawt", function()
             local text = tostring(state1) .. tostring(state2)
             button:setText(text)
         ]]
+        local ip = '127.0.0.1'
         local port = 56789
         local wt_config = test.baseConfig()
-        local server = test.createServer(code, port, wt_config)
+        local server = test.createServer(code, ip, port, wt_config)
         server:start()
         os.execute("sleep 1")
         local data = test.socketRequest(port)
@@ -61,9 +63,10 @@ describe("luawt", function()
             local luawt = require 'luawt'
             luawt.Test.unknownException()
         ]]
+        local ip = '127.0.0.1'
         local port = 56789
         local wt_config = test.baseConfig()
-        local server = test.createServer(code, port, wt_config)
+        local server = test.createServer(code, ip, port, wt_config)
         assert.has_no_error(function()
             server:start()
             os.execute("sleep 1")
@@ -75,9 +78,10 @@ describe("luawt", function()
 
     pending("can stop the server #forcibly", function()
         local code = ''
+        local ip = '127.0.0.1'
         local port = 56789
         local wt_config = test.baseConfig()
-        local server = test.createServer(code, port, wt_config)
+        local server = test.createServer(code, ip, port, wt_config)
         server:start()
         os.execute("sleep 1")
         test.socketRequest(port)
@@ -87,9 +91,10 @@ describe("luawt", function()
 
     pending("doesn't throw on bad #syntax in lua code", function()
         local code = "(;(;(;)))))"
+        local ip = '127.0.0.1'
         local port = 56789
         local wt_config = test.baseConfig()
-        local server = test.createServer(code, port, wt_config)
+        local server = test.createServer(code, ip, port, wt_config)
         assert.has_no_error(function()
             server:start()
             os.execute("sleep 1")
@@ -108,9 +113,10 @@ describe("luawt", function()
             local button = luawt.WPushButton(app:root())
             button:setText(text)
         ]]
+        local ip = '127.0.0.1'
         local port = 56789
         local wt_config = test.baseConfig()
-        local server = test.createServer(code, port, wt_config)
+        local server = test.createServer(code, ip, port, wt_config)
         server:start()
         os.execute("sleep 1")
         local data = test.socketRequest(port)

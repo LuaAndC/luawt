@@ -51,6 +51,9 @@ int luawt_WServer_make(lua_State* L) {
     lua_getfield(L, 1, "code");
     size_t code_len;
     const char* code = luaL_checklstring(L, -1, &code_len);
+    // get IP
+    lua_getfield(L, 1, "ip");
+    const char* ip = luaL_checkstring(L, -1);
     // get port
     lua_getfield(L, 1, "port");
     const char* port = luaL_checkstring(L, -1);
@@ -61,7 +64,8 @@ int luawt_WServer_make(lua_State* L) {
     typedef std::vector<const char*> Options;
     Options opt;
     opt.push_back("luawt");
-    opt.push_back("--http-address=127.0.0.1");
+    opt.push_back("--http-address");
+    opt.push_back(ip);
     opt.push_back("--http-port");
     opt.push_back(port);
     opt.push_back("--docroot=/usr/share/Wt");
@@ -108,6 +112,14 @@ int luawt_WServer_stop(lua_State* L) {
     return 0;
 }
 
+int luawt_WServer_waitForShutdown(lua_State* L) {
+    WServer* s = reinterpret_cast<WServer*>(
+        luaL_checkudata(L, 1, "luawt_WServer")
+    );
+    s->waitForShutdown();
+    return 0;
+}
+
 int luawt_WServer_gc(lua_State* L) {
     WServer* s = reinterpret_cast<WServer*>(
         luaL_checkudata(L, 1, "luawt_WServer")
@@ -124,6 +136,7 @@ static const luaL_Reg luawt_WServer_mt[] = {
 static const luaL_Reg luawt_WServer_methods[] = {
     METHOD(WServer, start),
     METHOD(WServer, stop),
+    METHOD(WServer, waitForShutdown),
     {NULL, NULL},
 };
 
