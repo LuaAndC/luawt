@@ -1,6 +1,7 @@
 #include "boost-xtime.hpp"
 
 #include <Wt/WStackedWidget>
+#include <Wt/WWidget>
 #include <Wt/WContainerWidget>
 
 #include "globals.hpp"
@@ -25,6 +26,41 @@ int luawt_WStackedWidget_make(lua_State* L) {
 
     } else {
         return luaL_error(L, "Wrong arguments for WStackedWidget.make");
+    }
+}
+
+static const char* WStackedWidget_setCurrentWidget_args0[] = {luawt_typeToStr<WStackedWidget>(), luawt_typeToStr<Wt::WWidget>(), NULL};
+static const char* const* const luawt_WStackedWidget_setCurrentWidget_args[] = {WStackedWidget_setCurrentWidget_args0, NULL};
+
+int luawt_WStackedWidget_setCurrentWidget(lua_State* L) {
+    int index = luawt_getSuitableArgsGroup(L, luawt_WStackedWidget_setCurrentWidget_args);
+    WStackedWidget* self = luawt_checkFromLua<WStackedWidget>(L, 1);
+    if (index == 0) {
+    Wt::WWidget* widget =
+        luawt_checkFromLua<Wt::WWidget>(L, 2);
+    self->setCurrentWidget(widget);
+    return 0;
+    
+    } else {
+        return luaL_error(L, "Wrong arguments for WStackedWidget.setCurrentWidget");
+    }
+}
+
+static const char* WStackedWidget_insertWidget_args0[] = {luawt_typeToStr<WStackedWidget>(), "int", luawt_typeToStr<Wt::WWidget>(), NULL};
+static const char* const* const luawt_WStackedWidget_insertWidget_args[] = {WStackedWidget_insertWidget_args0, NULL};
+
+int luawt_WStackedWidget_insertWidget(lua_State* L) {
+    int index = luawt_getSuitableArgsGroup(L, luawt_WStackedWidget_insertWidget_args);
+    WStackedWidget* self = luawt_checkFromLua<WStackedWidget>(L, 1);
+    if (index == 0) {
+    int index = lua_tointeger(L, 2);
+    Wt::WWidget* widget =
+        luawt_checkFromLua<Wt::WWidget>(L, 3);
+    self->insertWidget(index, widget);
+    return 0;
+    
+    } else {
+        return luaL_error(L, "Wrong arguments for WStackedWidget.insertWidget");
     }
 }
 
@@ -60,6 +96,39 @@ int luawt_WStackedWidget_setCurrentIndex(lua_State* L) {
     }
 }
 
+static const char* WStackedWidget_addWidget_args0[] = {luawt_typeToStr<WStackedWidget>(), luawt_typeToStr<Wt::WWidget>(), NULL};
+static const char* const* const luawt_WStackedWidget_addWidget_args[] = {WStackedWidget_addWidget_args0, NULL};
+
+int luawt_WStackedWidget_addWidget(lua_State* L) {
+    int index = luawt_getSuitableArgsGroup(L, luawt_WStackedWidget_addWidget_args);
+    WStackedWidget* self = luawt_checkFromLua<WStackedWidget>(L, 1);
+    if (index == 0) {
+    Wt::WWidget* widget =
+        luawt_checkFromLua<Wt::WWidget>(L, 2);
+    self->addWidget(widget);
+    return 0;
+    
+    } else {
+        return luaL_error(L, "Wrong arguments for WStackedWidget.addWidget");
+    }
+}
+
+static const char* WStackedWidget_currentWidget_args0[] = {luawt_typeToStr<WStackedWidget>(), NULL};
+static const char* const* const luawt_WStackedWidget_currentWidget_args[] = {WStackedWidget_currentWidget_args0, NULL};
+
+int luawt_WStackedWidget_currentWidget(lua_State* L) {
+    int index = luawt_getSuitableArgsGroup(L, luawt_WStackedWidget_currentWidget_args);
+    WStackedWidget* self = luawt_checkFromLua<WStackedWidget>(L, 1);
+    if (index == 0) {
+    Wt::WWidget * result = self->currentWidget();
+    luawt_toLua(L, result);
+    return 1;
+
+    } else {
+        return luaL_error(L, "Wrong arguments for WStackedWidget.currentWidget");
+    }
+}
+
 ADD_SIGNAL(scrolled, WStackedWidget, Wt::WScrollEvent)
 ADD_SIGNAL(keyWentDown, WStackedWidget, Wt::WKeyEvent)
 ADD_SIGNAL(keyPressed, WStackedWidget, Wt::WKeyEvent)
@@ -83,8 +152,12 @@ ADD_SIGNAL(gestureChanged, WStackedWidget, Wt::WGestureEvent)
 ADD_SIGNAL(gestureEnded, WStackedWidget, Wt::WGestureEvent)
 
 static const luaL_Reg luawt_WStackedWidget_methods[] = {
+    METHOD(WStackedWidget, addWidget),
     METHOD(WStackedWidget, currentIndex),
+    METHOD(WStackedWidget, currentWidget),
+    METHOD(WStackedWidget, insertWidget),
     METHOD(WStackedWidget, setCurrentIndex),
+    METHOD(WStackedWidget, setCurrentWidget),
     METHOD(WStackedWidget, scrolled),
     METHOD(WStackedWidget, keyWentDown),
     METHOD(WStackedWidget, keyPressed),

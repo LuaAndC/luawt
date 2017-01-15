@@ -224,19 +224,20 @@ int luawt_WLineEdit_hasSelectedText(lua_State* L) {
     }
 }
 
-static const char* WLineEdit_validate_args0[] = {luawt_typeToStr<WLineEdit>(), NULL};
-static const char* const* const luawt_WLineEdit_validate_args[] = {WLineEdit_validate_args0, NULL};
+static const char* WLineEdit_setValueText_args0[] = {luawt_typeToStr<WLineEdit>(), "char const *", NULL};
+static const char* const* const luawt_WLineEdit_setValueText_args[] = {WLineEdit_setValueText_args0, NULL};
 
-int luawt_WLineEdit_validate(lua_State* L) {
-    int index = luawt_getSuitableArgsGroup(L, luawt_WLineEdit_validate_args);
+int luawt_WLineEdit_setValueText(lua_State* L) {
+    int index = luawt_getSuitableArgsGroup(L, luawt_WLineEdit_setValueText_args);
     WLineEdit* self = luawt_checkFromLua<WLineEdit>(L, 1);
     if (index == 0) {
-    Wt::WValidator::State result = self->validate();
-    lua_pushinteger(L, result);
-    return 1;
-
+    char const * raw2 = lua_tostring(L, 2);
+    Wt::WString value = Wt::WString(raw2);
+    self->setValueText(value);
+    return 0;
+    
     } else {
-        return luaL_error(L, "Wrong arguments for WLineEdit.validate");
+        return luaL_error(L, "Wrong arguments for WLineEdit.setValueText");
     }
 }
 
@@ -253,6 +254,22 @@ int luawt_WLineEdit_cursorPosition(lua_State* L) {
 
     } else {
         return luaL_error(L, "Wrong arguments for WLineEdit.cursorPosition");
+    }
+}
+
+static const char* WLineEdit_valueText_args0[] = {luawt_typeToStr<WLineEdit>(), NULL};
+static const char* const* const luawt_WLineEdit_valueText_args[] = {WLineEdit_valueText_args0, NULL};
+
+int luawt_WLineEdit_valueText(lua_State* L) {
+    int index = luawt_getSuitableArgsGroup(L, luawt_WLineEdit_valueText_args);
+    WLineEdit* self = luawt_checkFromLua<WLineEdit>(L, 1);
+    if (index == 0) {
+    Wt::WString result = self->valueText();
+    lua_pushstring(L, result.toUTF8().c_str());
+    return 1;
+
+    } else {
+        return luaL_error(L, "Wrong arguments for WLineEdit.valueText");
     }
 }
 
@@ -294,7 +311,8 @@ static const luaL_Reg luawt_WLineEdit_methods[] = {
     METHOD(WLineEdit, selectedText),
     METHOD(WLineEdit, hasSelectedText),
     METHOD(WLineEdit, cursorPosition),
-    METHOD(WLineEdit, validate),
+    METHOD(WLineEdit, valueText),
+    METHOD(WLineEdit, setValueText),
     METHOD(WLineEdit, changed),
     METHOD(WLineEdit, selected),
     METHOD(WLineEdit, blurred),

@@ -5,77 +5,121 @@
 
 #include "globals.hpp"
 
-int luawt_WAbstractToggleButton_setUnChecked(lua_State* L) {
-    int argc = lua_gettop(L) - 1;
-
-    WAbstractToggleButton* self = luawt_checkFromLua<WAbstractToggleButton>(L, 1);
-        if (argc == 0) {
-    self->setUnChecked();
-    return 0;
-    
-    } else {
-        return luaL_error(L, "Wrong arguments number for WAbstractToggleButton.setUnChecked: %d", argc);
-    }
-}
+static const char* WAbstractToggleButton_text_args0[] = {luawt_typeToStr<WAbstractToggleButton>(), NULL};
+static const char* const* const luawt_WAbstractToggleButton_text_args[] = {WAbstractToggleButton_text_args0, NULL};
 
 int luawt_WAbstractToggleButton_text(lua_State* L) {
-    int argc = lua_gettop(L) - 1;
-
+    int index = luawt_getSuitableArgsGroup(L, luawt_WAbstractToggleButton_text_args);
     WAbstractToggleButton* self = luawt_checkFromLua<WAbstractToggleButton>(L, 1);
-        if (argc == 0) {
+    if (index == 0) {
     Wt::WString const result = self->text();
     lua_pushstring(L, result.toUTF8().c_str());
     return 1;
 
     } else {
-        return luaL_error(L, "Wrong arguments number for WAbstractToggleButton.text: %d", argc);
+        return luaL_error(L, "Wrong arguments for WAbstractToggleButton.text");
     }
 }
 
-int luawt_WAbstractToggleButton_setText(lua_State* L) {
-    int argc = lua_gettop(L) - 1;
+static const char* WAbstractToggleButton_setText_args0[] = {luawt_typeToStr<WAbstractToggleButton>(), "char const *", NULL};
+static const char* const* const luawt_WAbstractToggleButton_setText_args[] = {WAbstractToggleButton_setText_args0, NULL};
 
+int luawt_WAbstractToggleButton_setText(lua_State* L) {
+    int index = luawt_getSuitableArgsGroup(L, luawt_WAbstractToggleButton_setText_args);
     WAbstractToggleButton* self = luawt_checkFromLua<WAbstractToggleButton>(L, 1);
-        if (argc == 1) {
+    if (index == 0) {
     char const * raw2 = lua_tostring(L, 2);
     Wt::WString text = Wt::WString(raw2);
     self->setText(text);
     return 0;
     
     } else {
-        return luaL_error(L, "Wrong arguments number for WAbstractToggleButton.setText: %d", argc);
+        return luaL_error(L, "Wrong arguments for WAbstractToggleButton.setText");
     }
 }
 
-int luawt_WAbstractToggleButton_isChecked(lua_State* L) {
-    int argc = lua_gettop(L) - 1;
+static const char* WAbstractToggleButton_isChecked_args0[] = {luawt_typeToStr<WAbstractToggleButton>(), NULL};
+static const char* const* const luawt_WAbstractToggleButton_isChecked_args[] = {WAbstractToggleButton_isChecked_args0, NULL};
 
+int luawt_WAbstractToggleButton_isChecked(lua_State* L) {
+    int index = luawt_getSuitableArgsGroup(L, luawt_WAbstractToggleButton_isChecked_args);
     WAbstractToggleButton* self = luawt_checkFromLua<WAbstractToggleButton>(L, 1);
-        if (argc == 0) {
+    if (index == 0) {
     bool result = self->isChecked();
     lua_pushboolean(L, result);
     return 1;
 
     } else {
-        return luaL_error(L, "Wrong arguments number for WAbstractToggleButton.isChecked: %d", argc);
+        return luaL_error(L, "Wrong arguments for WAbstractToggleButton.isChecked");
     }
 }
 
-int luawt_WAbstractToggleButton_setChecked(lua_State* L) {
-    int argc = lua_gettop(L) - 1;
+static const char* WAbstractToggleButton_setChecked_args0[] = {luawt_typeToStr<WAbstractToggleButton>(), "bool", NULL};
+static const char* WAbstractToggleButton_setChecked_args1[] = {luawt_typeToStr<WAbstractToggleButton>(), NULL};
+static const char* const* const luawt_WAbstractToggleButton_setChecked_args[] = {WAbstractToggleButton_setChecked_args0, WAbstractToggleButton_setChecked_args1, NULL};
 
+int luawt_WAbstractToggleButton_setChecked(lua_State* L) {
+    int index = luawt_getSuitableArgsGroup(L, luawt_WAbstractToggleButton_setChecked_args);
     WAbstractToggleButton* self = luawt_checkFromLua<WAbstractToggleButton>(L, 1);
-        if (argc == 0) {
-    self->setChecked();
-    return 0;
-    
-    } else     if (argc == 1) {
+    if (index == 0) {
     bool checked = lua_toboolean(L, 2);
     self->setChecked(checked);
     return 0;
     
+    } else if (index == 1) {
+    self->setChecked();
+    return 0;
+    
     } else {
-        return luaL_error(L, "Wrong arguments number for WAbstractToggleButton.setChecked: %d", argc);
+        return luaL_error(L, "Wrong arguments for WAbstractToggleButton.setChecked");
+    }
+}
+
+static const char* WAbstractToggleButton_setUnChecked_args0[] = {luawt_typeToStr<WAbstractToggleButton>(), NULL};
+static const char* const* const luawt_WAbstractToggleButton_setUnChecked_args[] = {WAbstractToggleButton_setUnChecked_args0, NULL};
+
+int luawt_WAbstractToggleButton_setUnChecked(lua_State* L) {
+    int index = luawt_getSuitableArgsGroup(L, luawt_WAbstractToggleButton_setUnChecked_args);
+    WAbstractToggleButton* self = luawt_checkFromLua<WAbstractToggleButton>(L, 1);
+    if (index == 0) {
+    self->setUnChecked();
+    return 0;
+    
+    } else {
+        return luaL_error(L, "Wrong arguments for WAbstractToggleButton.setUnChecked");
+    }
+}
+
+static const char* WAbstractToggleButton_setValueText_args0[] = {luawt_typeToStr<WAbstractToggleButton>(), "char const *", NULL};
+static const char* const* const luawt_WAbstractToggleButton_setValueText_args[] = {WAbstractToggleButton_setValueText_args0, NULL};
+
+int luawt_WAbstractToggleButton_setValueText(lua_State* L) {
+    int index = luawt_getSuitableArgsGroup(L, luawt_WAbstractToggleButton_setValueText_args);
+    WAbstractToggleButton* self = luawt_checkFromLua<WAbstractToggleButton>(L, 1);
+    if (index == 0) {
+    char const * raw2 = lua_tostring(L, 2);
+    Wt::WString text = Wt::WString(raw2);
+    self->setValueText(text);
+    return 0;
+    
+    } else {
+        return luaL_error(L, "Wrong arguments for WAbstractToggleButton.setValueText");
+    }
+}
+
+static const char* WAbstractToggleButton_valueText_args0[] = {luawt_typeToStr<WAbstractToggleButton>(), NULL};
+static const char* const* const luawt_WAbstractToggleButton_valueText_args[] = {WAbstractToggleButton_valueText_args0, NULL};
+
+int luawt_WAbstractToggleButton_valueText(lua_State* L) {
+    int index = luawt_getSuitableArgsGroup(L, luawt_WAbstractToggleButton_valueText_args);
+    WAbstractToggleButton* self = luawt_checkFromLua<WAbstractToggleButton>(L, 1);
+    if (index == 0) {
+    Wt::WString result = self->valueText();
+    lua_pushstring(L, result.toUTF8().c_str());
+    return 1;
+
+    } else {
+        return luaL_error(L, "Wrong arguments for WAbstractToggleButton.valueText");
     }
 }
 
@@ -113,6 +157,8 @@ static const luaL_Reg luawt_WAbstractToggleButton_methods[] = {
     METHOD(WAbstractToggleButton, setChecked),
     METHOD(WAbstractToggleButton, setChecked),
     METHOD(WAbstractToggleButton, setUnChecked),
+    METHOD(WAbstractToggleButton, valueText),
+    METHOD(WAbstractToggleButton, setValueText),
     METHOD(WAbstractToggleButton, checked),
     METHOD(WAbstractToggleButton, unChecked),
     METHOD(WAbstractToggleButton, changed),

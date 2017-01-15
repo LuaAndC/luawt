@@ -5,104 +5,134 @@
 
 #include "globals.hpp"
 
-int luawt_WAbstractSpinBox_setNativeControl(lua_State* L) {
-    int argc = lua_gettop(L) - 1;
+static const char* WAbstractSpinBox_setNativeControl_args0[] = {luawt_typeToStr<WAbstractSpinBox>(), "bool", NULL};
+static const char* const* const luawt_WAbstractSpinBox_setNativeControl_args[] = {WAbstractSpinBox_setNativeControl_args0, NULL};
 
+int luawt_WAbstractSpinBox_setNativeControl(lua_State* L) {
+    int index = luawt_getSuitableArgsGroup(L, luawt_WAbstractSpinBox_setNativeControl_args);
     WAbstractSpinBox* self = luawt_checkFromLua<WAbstractSpinBox>(L, 1);
-        if (argc == 1) {
+    if (index == 0) {
     bool nativeControl = lua_toboolean(L, 2);
     self->setNativeControl(nativeControl);
     return 0;
     
     } else {
-        return luaL_error(L, "Wrong arguments number for WAbstractSpinBox.setNativeControl: %d", argc);
+        return luaL_error(L, "Wrong arguments for WAbstractSpinBox.setNativeControl");
     }
 }
 
-int luawt_WAbstractSpinBox_suffix(lua_State* L) {
-    int argc = lua_gettop(L) - 1;
+static const char* WAbstractSpinBox_suffix_args0[] = {luawt_typeToStr<WAbstractSpinBox>(), NULL};
+static const char* const* const luawt_WAbstractSpinBox_suffix_args[] = {WAbstractSpinBox_suffix_args0, NULL};
 
+int luawt_WAbstractSpinBox_suffix(lua_State* L) {
+    int index = luawt_getSuitableArgsGroup(L, luawt_WAbstractSpinBox_suffix_args);
     WAbstractSpinBox* self = luawt_checkFromLua<WAbstractSpinBox>(L, 1);
-        if (argc == 0) {
+    if (index == 0) {
     Wt::WString const & result = self->suffix();
     lua_pushstring(L, result.toUTF8().c_str());
     return 1;
 
     } else {
-        return luaL_error(L, "Wrong arguments number for WAbstractSpinBox.suffix: %d", argc);
+        return luaL_error(L, "Wrong arguments for WAbstractSpinBox.suffix");
     }
 }
 
-int luawt_WAbstractSpinBox_setSuffix(lua_State* L) {
-    int argc = lua_gettop(L) - 1;
+static const char* WAbstractSpinBox_setSuffix_args0[] = {luawt_typeToStr<WAbstractSpinBox>(), "char const *", NULL};
+static const char* const* const luawt_WAbstractSpinBox_setSuffix_args[] = {WAbstractSpinBox_setSuffix_args0, NULL};
 
+int luawt_WAbstractSpinBox_setSuffix(lua_State* L) {
+    int index = luawt_getSuitableArgsGroup(L, luawt_WAbstractSpinBox_setSuffix_args);
     WAbstractSpinBox* self = luawt_checkFromLua<WAbstractSpinBox>(L, 1);
-        if (argc == 1) {
+    if (index == 0) {
     char const * raw2 = lua_tostring(L, 2);
     Wt::WString suffix = Wt::WString(raw2);
     self->setSuffix(suffix);
     return 0;
     
     } else {
-        return luaL_error(L, "Wrong arguments number for WAbstractSpinBox.setSuffix: %d", argc);
+        return luaL_error(L, "Wrong arguments for WAbstractSpinBox.setSuffix");
     }
 }
 
-int luawt_WAbstractSpinBox_setText(lua_State* L) {
-    int argc = lua_gettop(L) - 1;
+static const char* WAbstractSpinBox_setText_args0[] = {luawt_typeToStr<WAbstractSpinBox>(), "char const *", NULL};
+static const char* const* const luawt_WAbstractSpinBox_setText_args[] = {WAbstractSpinBox_setText_args0, NULL};
 
+int luawt_WAbstractSpinBox_setText(lua_State* L) {
+    int index = luawt_getSuitableArgsGroup(L, luawt_WAbstractSpinBox_setText_args);
     WAbstractSpinBox* self = luawt_checkFromLua<WAbstractSpinBox>(L, 1);
-        if (argc == 1) {
+    if (index == 0) {
     char const * raw2 = lua_tostring(L, 2);
     Wt::WString text = Wt::WString(raw2);
     self->setText(text);
     return 0;
     
     } else {
-        return luaL_error(L, "Wrong arguments number for WAbstractSpinBox.setText: %d", argc);
+        return luaL_error(L, "Wrong arguments for WAbstractSpinBox.setText");
     }
 }
 
-int luawt_WAbstractSpinBox_prefix(lua_State* L) {
-    int argc = lua_gettop(L) - 1;
+static const char* WAbstractSpinBox_prefix_args0[] = {luawt_typeToStr<WAbstractSpinBox>(), NULL};
+static const char* const* const luawt_WAbstractSpinBox_prefix_args[] = {WAbstractSpinBox_prefix_args0, NULL};
 
+int luawt_WAbstractSpinBox_prefix(lua_State* L) {
+    int index = luawt_getSuitableArgsGroup(L, luawt_WAbstractSpinBox_prefix_args);
     WAbstractSpinBox* self = luawt_checkFromLua<WAbstractSpinBox>(L, 1);
-        if (argc == 0) {
+    if (index == 0) {
     Wt::WString const & result = self->prefix();
     lua_pushstring(L, result.toUTF8().c_str());
     return 1;
 
     } else {
-        return luaL_error(L, "Wrong arguments number for WAbstractSpinBox.prefix: %d", argc);
+        return luaL_error(L, "Wrong arguments for WAbstractSpinBox.prefix");
     }
 }
 
-int luawt_WAbstractSpinBox_nativeControl(lua_State* L) {
-    int argc = lua_gettop(L) - 1;
+static const char* WAbstractSpinBox_nativeControl_args0[] = {luawt_typeToStr<WAbstractSpinBox>(), NULL};
+static const char* const* const luawt_WAbstractSpinBox_nativeControl_args[] = {WAbstractSpinBox_nativeControl_args0, NULL};
 
+int luawt_WAbstractSpinBox_nativeControl(lua_State* L) {
+    int index = luawt_getSuitableArgsGroup(L, luawt_WAbstractSpinBox_nativeControl_args);
     WAbstractSpinBox* self = luawt_checkFromLua<WAbstractSpinBox>(L, 1);
-        if (argc == 0) {
+    if (index == 0) {
     bool result = self->nativeControl();
     lua_pushboolean(L, result);
     return 1;
 
     } else {
-        return luaL_error(L, "Wrong arguments number for WAbstractSpinBox.nativeControl: %d", argc);
+        return luaL_error(L, "Wrong arguments for WAbstractSpinBox.nativeControl");
     }
 }
 
-int luawt_WAbstractSpinBox_setPrefix(lua_State* L) {
-    int argc = lua_gettop(L) - 1;
+static const char* WAbstractSpinBox_validate_args0[] = {luawt_typeToStr<WAbstractSpinBox>(), NULL};
+static const char* const* const luawt_WAbstractSpinBox_validate_args[] = {WAbstractSpinBox_validate_args0, NULL};
 
+int luawt_WAbstractSpinBox_validate(lua_State* L) {
+    int index = luawt_getSuitableArgsGroup(L, luawt_WAbstractSpinBox_validate_args);
     WAbstractSpinBox* self = luawt_checkFromLua<WAbstractSpinBox>(L, 1);
-        if (argc == 1) {
+    if (index == 0) {
+    Wt::WValidator::State result = self->validate();
+    lua_pushinteger(L, result);
+    return 1;
+
+    } else {
+        return luaL_error(L, "Wrong arguments for WAbstractSpinBox.validate");
+    }
+}
+
+static const char* WAbstractSpinBox_setPrefix_args0[] = {luawt_typeToStr<WAbstractSpinBox>(), "char const *", NULL};
+static const char* const* const luawt_WAbstractSpinBox_setPrefix_args[] = {WAbstractSpinBox_setPrefix_args0, NULL};
+
+int luawt_WAbstractSpinBox_setPrefix(lua_State* L) {
+    int index = luawt_getSuitableArgsGroup(L, luawt_WAbstractSpinBox_setPrefix_args);
+    WAbstractSpinBox* self = luawt_checkFromLua<WAbstractSpinBox>(L, 1);
+    if (index == 0) {
     char const * raw2 = lua_tostring(L, 2);
     Wt::WString prefix = Wt::WString(raw2);
     self->setPrefix(prefix);
     return 0;
     
     } else {
-        return luaL_error(L, "Wrong arguments number for WAbstractSpinBox.setPrefix: %d", argc);
+        return luaL_error(L, "Wrong arguments for WAbstractSpinBox.setPrefix");
     }
 }
 
@@ -139,6 +169,7 @@ static const luaL_Reg luawt_WAbstractSpinBox_methods[] = {
     METHOD(WAbstractSpinBox, setSuffix),
     METHOD(WAbstractSpinBox, suffix),
     METHOD(WAbstractSpinBox, setText),
+    METHOD(WAbstractSpinBox, validate),
     METHOD(WAbstractSpinBox, changed),
     METHOD(WAbstractSpinBox, selected),
     METHOD(WAbstractSpinBox, blurred),

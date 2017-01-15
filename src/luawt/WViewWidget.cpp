@@ -4,42 +4,48 @@
 
 #include "globals.hpp"
 
-int luawt_WViewWidget_load(lua_State* L) {
-    int argc = lua_gettop(L) - 1;
+static const char* WViewWidget_load_args0[] = {luawt_typeToStr<WViewWidget>(), NULL};
+static const char* const* const luawt_WViewWidget_load_args[] = {WViewWidget_load_args0, NULL};
 
+int luawt_WViewWidget_load(lua_State* L) {
+    int index = luawt_getSuitableArgsGroup(L, luawt_WViewWidget_load_args);
     WViewWidget* self = luawt_checkFromLua<WViewWidget>(L, 1);
-        if (argc == 0) {
+    if (index == 0) {
     self->load();
     return 0;
     
     } else {
-        return luaL_error(L, "Wrong arguments number for WViewWidget.load: %d", argc);
+        return luaL_error(L, "Wrong arguments for WViewWidget.load");
     }
 }
 
-int luawt_WViewWidget_update(lua_State* L) {
-    int argc = lua_gettop(L) - 1;
+static const char* WViewWidget_update_args0[] = {luawt_typeToStr<WViewWidget>(), NULL};
+static const char* const* const luawt_WViewWidget_update_args[] = {WViewWidget_update_args0, NULL};
 
+int luawt_WViewWidget_update(lua_State* L) {
+    int index = luawt_getSuitableArgsGroup(L, luawt_WViewWidget_update_args);
     WViewWidget* self = luawt_checkFromLua<WViewWidget>(L, 1);
-        if (argc == 0) {
+    if (index == 0) {
     self->update();
     return 0;
     
     } else {
-        return luaL_error(L, "Wrong arguments number for WViewWidget.update: %d", argc);
+        return luaL_error(L, "Wrong arguments for WViewWidget.update");
     }
 }
 
-int luawt_WViewWidget_refresh(lua_State* L) {
-    int argc = lua_gettop(L) - 1;
+static const char* WViewWidget_refresh_args0[] = {luawt_typeToStr<WViewWidget>(), NULL};
+static const char* const* const luawt_WViewWidget_refresh_args[] = {WViewWidget_refresh_args0, NULL};
 
+int luawt_WViewWidget_refresh(lua_State* L) {
+    int index = luawt_getSuitableArgsGroup(L, luawt_WViewWidget_refresh_args);
     WViewWidget* self = luawt_checkFromLua<WViewWidget>(L, 1);
-        if (argc == 0) {
+    if (index == 0) {
     self->refresh();
     return 0;
     
     } else {
-        return luaL_error(L, "Wrong arguments number for WViewWidget.refresh: %d", argc);
+        return luaL_error(L, "Wrong arguments for WViewWidget.refresh");
     }
 }
 

@@ -192,6 +192,23 @@ int luawt_WTextArea_hasSelectedText(lua_State* L) {
     }
 }
 
+static const char* WTextArea_setValueText_args0[] = {luawt_typeToStr<WTextArea>(), "char const *", NULL};
+static const char* const* const luawt_WTextArea_setValueText_args[] = {WTextArea_setValueText_args0, NULL};
+
+int luawt_WTextArea_setValueText(lua_State* L) {
+    int index = luawt_getSuitableArgsGroup(L, luawt_WTextArea_setValueText_args);
+    WTextArea* self = luawt_checkFromLua<WTextArea>(L, 1);
+    if (index == 0) {
+    char const * raw2 = lua_tostring(L, 2);
+    Wt::WString text = Wt::WString(raw2);
+    self->setValueText(text);
+    return 0;
+    
+    } else {
+        return luaL_error(L, "Wrong arguments for WTextArea.setValueText");
+    }
+}
+
 static const char* WTextArea_columns_args0[] = {luawt_typeToStr<WTextArea>(), NULL};
 static const char* const* const luawt_WTextArea_columns_args[] = {WTextArea_columns_args0, NULL};
 
@@ -205,6 +222,22 @@ int luawt_WTextArea_columns(lua_State* L) {
 
     } else {
         return luaL_error(L, "Wrong arguments for WTextArea.columns");
+    }
+}
+
+static const char* WTextArea_valueText_args0[] = {luawt_typeToStr<WTextArea>(), NULL};
+static const char* const* const luawt_WTextArea_valueText_args[] = {WTextArea_valueText_args0, NULL};
+
+int luawt_WTextArea_valueText(lua_State* L) {
+    int index = luawt_getSuitableArgsGroup(L, luawt_WTextArea_valueText_args);
+    WTextArea* self = luawt_checkFromLua<WTextArea>(L, 1);
+    if (index == 0) {
+    Wt::WString result = self->valueText();
+    lua_pushstring(L, result.toUTF8().c_str());
+    return 1;
+
+    } else {
+        return luaL_error(L, "Wrong arguments for WTextArea.valueText");
     }
 }
 
@@ -244,6 +277,8 @@ static const luaL_Reg luawt_WTextArea_methods[] = {
     METHOD(WTextArea, selectedText),
     METHOD(WTextArea, hasSelectedText),
     METHOD(WTextArea, cursorPosition),
+    METHOD(WTextArea, valueText),
+    METHOD(WTextArea, setValueText),
     METHOD(WTextArea, changed),
     METHOD(WTextArea, selected),
     METHOD(WTextArea, blurred),

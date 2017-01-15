@@ -174,6 +174,22 @@ int luawt_WLabel_wordWrap(lua_State* L) {
     }
 }
 
+static const char* WLabel_image_args0[] = {luawt_typeToStr<WLabel>(), NULL};
+static const char* const* const luawt_WLabel_image_args[] = {WLabel_image_args0, NULL};
+
+int luawt_WLabel_image(lua_State* L) {
+    int index = luawt_getSuitableArgsGroup(L, luawt_WLabel_image_args);
+    WLabel* self = luawt_checkFromLua<WLabel>(L, 1);
+    if (index == 0) {
+    Wt::WImage * result = self->image();
+    luawt_toLua(L, result);
+    return 1;
+
+    } else {
+        return luaL_error(L, "Wrong arguments for WLabel.image");
+    }
+}
+
 static const char* WLabel_setWordWrap_args0[] = {luawt_typeToStr<WLabel>(), "bool", NULL};
 static const char* const* const luawt_WLabel_setWordWrap_args[] = {WLabel_setWordWrap_args0, NULL};
 
@@ -190,19 +206,36 @@ int luawt_WLabel_setWordWrap(lua_State* L) {
     }
 }
 
-static const char* WLabel_image_args0[] = {luawt_typeToStr<WLabel>(), NULL};
-static const char* const* const luawt_WLabel_image_args[] = {WLabel_image_args0, NULL};
+static const char* WLabel_textFormat_args0[] = {luawt_typeToStr<WLabel>(), NULL};
+static const char* const* const luawt_WLabel_textFormat_args[] = {WLabel_textFormat_args0, NULL};
 
-int luawt_WLabel_image(lua_State* L) {
-    int index = luawt_getSuitableArgsGroup(L, luawt_WLabel_image_args);
+int luawt_WLabel_textFormat(lua_State* L) {
+    int index = luawt_getSuitableArgsGroup(L, luawt_WLabel_textFormat_args);
     WLabel* self = luawt_checkFromLua<WLabel>(L, 1);
     if (index == 0) {
-    Wt::WImage * result = self->image();
-    luawt_toLua(L, result);
+    Wt::TextFormat result = self->textFormat();
+    lua_pushinteger(L, result);
     return 1;
 
     } else {
-        return luaL_error(L, "Wrong arguments for WLabel.image");
+        return luaL_error(L, "Wrong arguments for WLabel.textFormat");
+    }
+}
+
+static const char* WLabel_setTextFormat_args0[] = {luawt_typeToStr<WLabel>(), "int", NULL};
+static const char* const* const luawt_WLabel_setTextFormat_args[] = {WLabel_setTextFormat_args0, NULL};
+
+int luawt_WLabel_setTextFormat(lua_State* L) {
+    int index = luawt_getSuitableArgsGroup(L, luawt_WLabel_setTextFormat_args);
+    WLabel* self = luawt_checkFromLua<WLabel>(L, 1);
+    if (index == 0) {
+    Wt::TextFormat format = static_cast<Wt::TextFormat>(lua_tointeger(L, 2));
+    bool result = self->setTextFormat(format);
+    lua_pushboolean(L, result);
+    return 1;
+
+    } else {
+        return luaL_error(L, "Wrong arguments for WLabel.setTextFormat");
     }
 }
 
@@ -232,6 +265,8 @@ static const luaL_Reg luawt_WLabel_methods[] = {
     METHOD(WLabel, setBuddy),
     METHOD(WLabel, setText),
     METHOD(WLabel, text),
+    METHOD(WLabel, setTextFormat),
+    METHOD(WLabel, textFormat),
     METHOD(WLabel, setImage),
     METHOD(WLabel, image),
     METHOD(WLabel, setWordWrap),

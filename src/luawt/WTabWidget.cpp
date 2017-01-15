@@ -1,9 +1,11 @@
 #include "boost-xtime.hpp"
 
-#include <Wt/WStackedWidget>
+#include <Wt/WMenuItem>
 #include <Wt/WTabWidget>
-#include <Wt/WContainerWidget>
 #include <Wt/WString>
+#include <Wt/WWidget>
+#include <Wt/WStackedWidget>
+#include <Wt/WContainerWidget>
 
 #include "globals.hpp"
 
@@ -30,105 +32,20 @@ int luawt_WTabWidget_make(lua_State* L) {
     }
 }
 
-static const char* WTabWidget_count_args0[] = {luawt_typeToStr<WTabWidget>(), NULL};
-static const char* const* const luawt_WTabWidget_count_args[] = {WTabWidget_count_args0, NULL};
+static const char* WTabWidget_tabToolTip_args0[] = {luawt_typeToStr<WTabWidget>(), "int", NULL};
+static const char* const* const luawt_WTabWidget_tabToolTip_args[] = {WTabWidget_tabToolTip_args0, NULL};
 
-int luawt_WTabWidget_count(lua_State* L) {
-    int index = luawt_getSuitableArgsGroup(L, luawt_WTabWidget_count_args);
-    WTabWidget* self = luawt_checkFromLua<WTabWidget>(L, 1);
-    if (index == 0) {
-    int result = self->count();
-    lua_pushinteger(L, result);
-    return 1;
-
-    } else {
-        return luaL_error(L, "Wrong arguments for WTabWidget.count");
-    }
-}
-
-static const char* WTabWidget_isTabCloseable_args0[] = {luawt_typeToStr<WTabWidget>(), "int", NULL};
-static const char* const* const luawt_WTabWidget_isTabCloseable_args[] = {WTabWidget_isTabCloseable_args0, NULL};
-
-int luawt_WTabWidget_isTabCloseable(lua_State* L) {
-    int index = luawt_getSuitableArgsGroup(L, luawt_WTabWidget_isTabCloseable_args);
+int luawt_WTabWidget_tabToolTip(lua_State* L) {
+    int index = luawt_getSuitableArgsGroup(L, luawt_WTabWidget_tabToolTip_args);
     WTabWidget* self = luawt_checkFromLua<WTabWidget>(L, 1);
     if (index == 0) {
     int index = lua_tointeger(L, 2);
-    bool result = self->isTabCloseable(index);
-    lua_pushboolean(L, result);
+    Wt::WString const & result = self->tabToolTip(index);
+    lua_pushstring(L, result.toUTF8().c_str());
     return 1;
 
     } else {
-        return luaL_error(L, "Wrong arguments for WTabWidget.isTabCloseable");
-    }
-}
-
-static const char* WTabWidget_setTabText_args0[] = {luawt_typeToStr<WTabWidget>(), "int", "char const *", NULL};
-static const char* const* const luawt_WTabWidget_setTabText_args[] = {WTabWidget_setTabText_args0, NULL};
-
-int luawt_WTabWidget_setTabText(lua_State* L) {
-    int index = luawt_getSuitableArgsGroup(L, luawt_WTabWidget_setTabText_args);
-    WTabWidget* self = luawt_checkFromLua<WTabWidget>(L, 1);
-    if (index == 0) {
-    int index = lua_tointeger(L, 2);
-    char const * raw3 = lua_tostring(L, 3);
-    Wt::WString label = Wt::WString(raw3);
-    self->setTabText(index, label);
-    return 0;
-    
-    } else {
-        return luaL_error(L, "Wrong arguments for WTabWidget.setTabText");
-    }
-}
-
-static const char* WTabWidget_contentsStack_args0[] = {luawt_typeToStr<WTabWidget>(), NULL};
-static const char* const* const luawt_WTabWidget_contentsStack_args[] = {WTabWidget_contentsStack_args0, NULL};
-
-int luawt_WTabWidget_contentsStack(lua_State* L) {
-    int index = luawt_getSuitableArgsGroup(L, luawt_WTabWidget_contentsStack_args);
-    WTabWidget* self = luawt_checkFromLua<WTabWidget>(L, 1);
-    if (index == 0) {
-    Wt::WStackedWidget * result = self->contentsStack();
-    luawt_toLua(L, result);
-    return 1;
-
-    } else {
-        return luaL_error(L, "Wrong arguments for WTabWidget.contentsStack");
-    }
-}
-
-static const char* WTabWidget_isTabHidden_args0[] = {luawt_typeToStr<WTabWidget>(), "int", NULL};
-static const char* const* const luawt_WTabWidget_isTabHidden_args[] = {WTabWidget_isTabHidden_args0, NULL};
-
-int luawt_WTabWidget_isTabHidden(lua_State* L) {
-    int index = luawt_getSuitableArgsGroup(L, luawt_WTabWidget_isTabHidden_args);
-    WTabWidget* self = luawt_checkFromLua<WTabWidget>(L, 1);
-    if (index == 0) {
-    int index = lua_tointeger(L, 2);
-    bool result = self->isTabHidden(index);
-    lua_pushboolean(L, result);
-    return 1;
-
-    } else {
-        return luaL_error(L, "Wrong arguments for WTabWidget.isTabHidden");
-    }
-}
-
-static const char* WTabWidget_setTabToolTip_args0[] = {luawt_typeToStr<WTabWidget>(), "int", "char const *", NULL};
-static const char* const* const luawt_WTabWidget_setTabToolTip_args[] = {WTabWidget_setTabToolTip_args0, NULL};
-
-int luawt_WTabWidget_setTabToolTip(lua_State* L) {
-    int index = luawt_getSuitableArgsGroup(L, luawt_WTabWidget_setTabToolTip_args);
-    WTabWidget* self = luawt_checkFromLua<WTabWidget>(L, 1);
-    if (index == 0) {
-    int index = lua_tointeger(L, 2);
-    char const * raw3 = lua_tostring(L, 3);
-    Wt::WString tip = Wt::WString(raw3);
-    self->setTabToolTip(index, tip);
-    return 0;
-    
-    } else {
-        return luaL_error(L, "Wrong arguments for WTabWidget.setTabToolTip");
+        return luaL_error(L, "Wrong arguments for WTabWidget.tabToolTip");
     }
 }
 
@@ -165,20 +82,52 @@ int luawt_WTabWidget_internalBasePath(lua_State* L) {
     }
 }
 
-static const char* WTabWidget_setInternalBasePath_args0[] = {luawt_typeToStr<WTabWidget>(), "char const *", NULL};
-static const char* const* const luawt_WTabWidget_setInternalBasePath_args[] = {WTabWidget_setInternalBasePath_args0, NULL};
+static const char* WTabWidget_setCurrentIndex_args0[] = {luawt_typeToStr<WTabWidget>(), "int", NULL};
+static const char* const* const luawt_WTabWidget_setCurrentIndex_args[] = {WTabWidget_setCurrentIndex_args0, NULL};
 
-int luawt_WTabWidget_setInternalBasePath(lua_State* L) {
-    int index = luawt_getSuitableArgsGroup(L, luawt_WTabWidget_setInternalBasePath_args);
+int luawt_WTabWidget_setCurrentIndex(lua_State* L) {
+    int index = luawt_getSuitableArgsGroup(L, luawt_WTabWidget_setCurrentIndex_args);
     WTabWidget* self = luawt_checkFromLua<WTabWidget>(L, 1);
     if (index == 0) {
-    char const * raw2 = lua_tostring(L, 2);
-    std::string path = std::string(raw2);
-    self->setInternalBasePath(path);
+    int index = lua_tointeger(L, 2);
+    self->setCurrentIndex(index);
     return 0;
     
     } else {
-        return luaL_error(L, "Wrong arguments for WTabWidget.setInternalBasePath");
+        return luaL_error(L, "Wrong arguments for WTabWidget.setCurrentIndex");
+    }
+}
+
+static const char* WTabWidget_currentWidget_args0[] = {luawt_typeToStr<WTabWidget>(), NULL};
+static const char* const* const luawt_WTabWidget_currentWidget_args[] = {WTabWidget_currentWidget_args0, NULL};
+
+int luawt_WTabWidget_currentWidget(lua_State* L) {
+    int index = luawt_getSuitableArgsGroup(L, luawt_WTabWidget_currentWidget_args);
+    WTabWidget* self = luawt_checkFromLua<WTabWidget>(L, 1);
+    if (index == 0) {
+    Wt::WWidget * result = self->currentWidget();
+    luawt_toLua(L, result);
+    return 1;
+
+    } else {
+        return luaL_error(L, "Wrong arguments for WTabWidget.currentWidget");
+    }
+}
+
+static const char* WTabWidget_setCurrentWidget_args0[] = {luawt_typeToStr<WTabWidget>(), luawt_typeToStr<Wt::WWidget>(), NULL};
+static const char* const* const luawt_WTabWidget_setCurrentWidget_args[] = {WTabWidget_setCurrentWidget_args0, NULL};
+
+int luawt_WTabWidget_setCurrentWidget(lua_State* L) {
+    int index = luawt_getSuitableArgsGroup(L, luawt_WTabWidget_setCurrentWidget_args);
+    WTabWidget* self = luawt_checkFromLua<WTabWidget>(L, 1);
+    if (index == 0) {
+    Wt::WWidget* widget =
+        luawt_checkFromLua<Wt::WWidget>(L, 2);
+    self->setCurrentWidget(widget);
+    return 0;
+    
+    } else {
+        return luaL_error(L, "Wrong arguments for WTabWidget.setCurrentWidget");
     }
 }
 
@@ -201,6 +150,91 @@ int luawt_WTabWidget_setInternalPathEnabled(lua_State* L) {
     
     } else {
         return luaL_error(L, "Wrong arguments for WTabWidget.setInternalPathEnabled");
+    }
+}
+
+static const char* WTabWidget_closeTab_args0[] = {luawt_typeToStr<WTabWidget>(), "int", NULL};
+static const char* const* const luawt_WTabWidget_closeTab_args[] = {WTabWidget_closeTab_args0, NULL};
+
+int luawt_WTabWidget_closeTab(lua_State* L) {
+    int index = luawt_getSuitableArgsGroup(L, luawt_WTabWidget_closeTab_args);
+    WTabWidget* self = luawt_checkFromLua<WTabWidget>(L, 1);
+    if (index == 0) {
+    int index = lua_tointeger(L, 2);
+    self->closeTab(index);
+    return 0;
+    
+    } else {
+        return luaL_error(L, "Wrong arguments for WTabWidget.closeTab");
+    }
+}
+
+static const char* WTabWidget_isTabCloseable_args0[] = {luawt_typeToStr<WTabWidget>(), "int", NULL};
+static const char* const* const luawt_WTabWidget_isTabCloseable_args[] = {WTabWidget_isTabCloseable_args0, NULL};
+
+int luawt_WTabWidget_isTabCloseable(lua_State* L) {
+    int index = luawt_getSuitableArgsGroup(L, luawt_WTabWidget_isTabCloseable_args);
+    WTabWidget* self = luawt_checkFromLua<WTabWidget>(L, 1);
+    if (index == 0) {
+    int index = lua_tointeger(L, 2);
+    bool result = self->isTabCloseable(index);
+    lua_pushboolean(L, result);
+    return 1;
+
+    } else {
+        return luaL_error(L, "Wrong arguments for WTabWidget.isTabCloseable");
+    }
+}
+
+static const char* WTabWidget_widget_args0[] = {luawt_typeToStr<WTabWidget>(), "int", NULL};
+static const char* const* const luawt_WTabWidget_widget_args[] = {WTabWidget_widget_args0, NULL};
+
+int luawt_WTabWidget_widget(lua_State* L) {
+    int index = luawt_getSuitableArgsGroup(L, luawt_WTabWidget_widget_args);
+    WTabWidget* self = luawt_checkFromLua<WTabWidget>(L, 1);
+    if (index == 0) {
+    int index = lua_tointeger(L, 2);
+    Wt::WWidget * result = self->widget(index);
+    luawt_toLua(L, result);
+    return 1;
+
+    } else {
+        return luaL_error(L, "Wrong arguments for WTabWidget.widget");
+    }
+}
+
+static const char* WTabWidget_removeTab_args0[] = {luawt_typeToStr<WTabWidget>(), luawt_typeToStr<Wt::WWidget>(), NULL};
+static const char* const* const luawt_WTabWidget_removeTab_args[] = {WTabWidget_removeTab_args0, NULL};
+
+int luawt_WTabWidget_removeTab(lua_State* L) {
+    int index = luawt_getSuitableArgsGroup(L, luawt_WTabWidget_removeTab_args);
+    WTabWidget* self = luawt_checkFromLua<WTabWidget>(L, 1);
+    if (index == 0) {
+    Wt::WWidget* widget =
+        luawt_checkFromLua<Wt::WWidget>(L, 2);
+    self->removeTab(widget);
+    return 0;
+    
+    } else {
+        return luaL_error(L, "Wrong arguments for WTabWidget.removeTab");
+    }
+}
+
+static const char* WTabWidget_indexOf_args0[] = {luawt_typeToStr<WTabWidget>(), luawt_typeToStr<Wt::WWidget>(), NULL};
+static const char* const* const luawt_WTabWidget_indexOf_args[] = {WTabWidget_indexOf_args0, NULL};
+
+int luawt_WTabWidget_indexOf(lua_State* L) {
+    int index = luawt_getSuitableArgsGroup(L, luawt_WTabWidget_indexOf_args);
+    WTabWidget* self = luawt_checkFromLua<WTabWidget>(L, 1);
+    if (index == 0) {
+    Wt::WWidget* widget =
+        luawt_checkFromLua<Wt::WWidget>(L, 2);
+    int result = self->indexOf(widget);
+    lua_pushinteger(L, result);
+    return 1;
+
+    } else {
+        return luaL_error(L, "Wrong arguments for WTabWidget.indexOf");
     }
 }
 
@@ -237,6 +271,139 @@ int luawt_WTabWidget_tabText(lua_State* L) {
     }
 }
 
+static const char* WTabWidget_addTab_args0[] = {luawt_typeToStr<WTabWidget>(), luawt_typeToStr<Wt::WWidget>(), "char const *", NULL};
+static const char* WTabWidget_addTab_args1[] = {luawt_typeToStr<WTabWidget>(), luawt_typeToStr<Wt::WWidget>(), "char const *", "int", NULL};
+static const char* const* const luawt_WTabWidget_addTab_args[] = {WTabWidget_addTab_args0, WTabWidget_addTab_args1, NULL};
+
+int luawt_WTabWidget_addTab(lua_State* L) {
+    int index = luawt_getSuitableArgsGroup(L, luawt_WTabWidget_addTab_args);
+    WTabWidget* self = luawt_checkFromLua<WTabWidget>(L, 1);
+    if (index == 0) {
+    Wt::WWidget* child =
+        luawt_checkFromLua<Wt::WWidget>(L, 2);
+    char const * raw3 = lua_tostring(L, 3);
+    Wt::WString label = Wt::WString(raw3);
+    Wt::WMenuItem * result = self->addTab(child, label);
+    luawt_toLua(L, result);
+    return 1;
+
+    } else if (index == 1) {
+    Wt::WWidget* child =
+        luawt_checkFromLua<Wt::WWidget>(L, 2);
+    char const * raw3 = lua_tostring(L, 3);
+    Wt::WString label = Wt::WString(raw3);
+    Wt::WTabWidget::LoadPolicy arg2 = static_cast<Wt::WTabWidget::LoadPolicy>(lua_tointeger(L, 4));
+    Wt::WMenuItem * result = self->addTab(child, label, arg2);
+    luawt_toLua(L, result);
+    return 1;
+
+    } else {
+        return luaL_error(L, "Wrong arguments for WTabWidget.addTab");
+    }
+}
+
+static const char* WTabWidget_setTabHidden_args0[] = {luawt_typeToStr<WTabWidget>(), "int", "bool", NULL};
+static const char* const* const luawt_WTabWidget_setTabHidden_args[] = {WTabWidget_setTabHidden_args0, NULL};
+
+int luawt_WTabWidget_setTabHidden(lua_State* L) {
+    int index = luawt_getSuitableArgsGroup(L, luawt_WTabWidget_setTabHidden_args);
+    WTabWidget* self = luawt_checkFromLua<WTabWidget>(L, 1);
+    if (index == 0) {
+    int index = lua_tointeger(L, 2);
+    bool hidden = lua_toboolean(L, 3);
+    self->setTabHidden(index, hidden);
+    return 0;
+    
+    } else {
+        return luaL_error(L, "Wrong arguments for WTabWidget.setTabHidden");
+    }
+}
+
+static const char* WTabWidget_contentsStack_args0[] = {luawt_typeToStr<WTabWidget>(), NULL};
+static const char* const* const luawt_WTabWidget_contentsStack_args[] = {WTabWidget_contentsStack_args0, NULL};
+
+int luawt_WTabWidget_contentsStack(lua_State* L) {
+    int index = luawt_getSuitableArgsGroup(L, luawt_WTabWidget_contentsStack_args);
+    WTabWidget* self = luawt_checkFromLua<WTabWidget>(L, 1);
+    if (index == 0) {
+    Wt::WStackedWidget * result = self->contentsStack();
+    luawt_toLua(L, result);
+    return 1;
+
+    } else {
+        return luaL_error(L, "Wrong arguments for WTabWidget.contentsStack");
+    }
+}
+
+static const char* WTabWidget_count_args0[] = {luawt_typeToStr<WTabWidget>(), NULL};
+static const char* const* const luawt_WTabWidget_count_args[] = {WTabWidget_count_args0, NULL};
+
+int luawt_WTabWidget_count(lua_State* L) {
+    int index = luawt_getSuitableArgsGroup(L, luawt_WTabWidget_count_args);
+    WTabWidget* self = luawt_checkFromLua<WTabWidget>(L, 1);
+    if (index == 0) {
+    int result = self->count();
+    lua_pushinteger(L, result);
+    return 1;
+
+    } else {
+        return luaL_error(L, "Wrong arguments for WTabWidget.count");
+    }
+}
+
+static const char* WTabWidget_setTabText_args0[] = {luawt_typeToStr<WTabWidget>(), "int", "char const *", NULL};
+static const char* const* const luawt_WTabWidget_setTabText_args[] = {WTabWidget_setTabText_args0, NULL};
+
+int luawt_WTabWidget_setTabText(lua_State* L) {
+    int index = luawt_getSuitableArgsGroup(L, luawt_WTabWidget_setTabText_args);
+    WTabWidget* self = luawt_checkFromLua<WTabWidget>(L, 1);
+    if (index == 0) {
+    int index = lua_tointeger(L, 2);
+    char const * raw3 = lua_tostring(L, 3);
+    Wt::WString label = Wt::WString(raw3);
+    self->setTabText(index, label);
+    return 0;
+    
+    } else {
+        return luaL_error(L, "Wrong arguments for WTabWidget.setTabText");
+    }
+}
+
+static const char* WTabWidget_setTabToolTip_args0[] = {luawt_typeToStr<WTabWidget>(), "int", "char const *", NULL};
+static const char* const* const luawt_WTabWidget_setTabToolTip_args[] = {WTabWidget_setTabToolTip_args0, NULL};
+
+int luawt_WTabWidget_setTabToolTip(lua_State* L) {
+    int index = luawt_getSuitableArgsGroup(L, luawt_WTabWidget_setTabToolTip_args);
+    WTabWidget* self = luawt_checkFromLua<WTabWidget>(L, 1);
+    if (index == 0) {
+    int index = lua_tointeger(L, 2);
+    char const * raw3 = lua_tostring(L, 3);
+    Wt::WString tip = Wt::WString(raw3);
+    self->setTabToolTip(index, tip);
+    return 0;
+    
+    } else {
+        return luaL_error(L, "Wrong arguments for WTabWidget.setTabToolTip");
+    }
+}
+
+static const char* WTabWidget_setInternalBasePath_args0[] = {luawt_typeToStr<WTabWidget>(), "char const *", NULL};
+static const char* const* const luawt_WTabWidget_setInternalBasePath_args[] = {WTabWidget_setInternalBasePath_args0, NULL};
+
+int luawt_WTabWidget_setInternalBasePath(lua_State* L) {
+    int index = luawt_getSuitableArgsGroup(L, luawt_WTabWidget_setInternalBasePath_args);
+    WTabWidget* self = luawt_checkFromLua<WTabWidget>(L, 1);
+    if (index == 0) {
+    char const * raw2 = lua_tostring(L, 2);
+    std::string path = std::string(raw2);
+    self->setInternalBasePath(path);
+    return 0;
+    
+    } else {
+        return luaL_error(L, "Wrong arguments for WTabWidget.setInternalBasePath");
+    }
+}
+
 static const char* WTabWidget_setTabEnabled_args0[] = {luawt_typeToStr<WTabWidget>(), "int", "bool", NULL};
 static const char* const* const luawt_WTabWidget_setTabEnabled_args[] = {WTabWidget_setTabEnabled_args0, NULL};
 
@@ -270,35 +437,20 @@ int luawt_WTabWidget_currentIndex(lua_State* L) {
     }
 }
 
-static const char* WTabWidget_setCurrentIndex_args0[] = {luawt_typeToStr<WTabWidget>(), "int", NULL};
-static const char* const* const luawt_WTabWidget_setCurrentIndex_args[] = {WTabWidget_setCurrentIndex_args0, NULL};
+static const char* WTabWidget_isTabHidden_args0[] = {luawt_typeToStr<WTabWidget>(), "int", NULL};
+static const char* const* const luawt_WTabWidget_isTabHidden_args[] = {WTabWidget_isTabHidden_args0, NULL};
 
-int luawt_WTabWidget_setCurrentIndex(lua_State* L) {
-    int index = luawt_getSuitableArgsGroup(L, luawt_WTabWidget_setCurrentIndex_args);
+int luawt_WTabWidget_isTabHidden(lua_State* L) {
+    int index = luawt_getSuitableArgsGroup(L, luawt_WTabWidget_isTabHidden_args);
     WTabWidget* self = luawt_checkFromLua<WTabWidget>(L, 1);
     if (index == 0) {
     int index = lua_tointeger(L, 2);
-    self->setCurrentIndex(index);
-    return 0;
-    
-    } else {
-        return luaL_error(L, "Wrong arguments for WTabWidget.setCurrentIndex");
-    }
-}
+    bool result = self->isTabHidden(index);
+    lua_pushboolean(L, result);
+    return 1;
 
-static const char* WTabWidget_closeTab_args0[] = {luawt_typeToStr<WTabWidget>(), "int", NULL};
-static const char* const* const luawt_WTabWidget_closeTab_args[] = {WTabWidget_closeTab_args0, NULL};
-
-int luawt_WTabWidget_closeTab(lua_State* L) {
-    int index = luawt_getSuitableArgsGroup(L, luawt_WTabWidget_closeTab_args);
-    WTabWidget* self = luawt_checkFromLua<WTabWidget>(L, 1);
-    if (index == 0) {
-    int index = lua_tointeger(L, 2);
-    self->closeTab(index);
-    return 0;
-    
     } else {
-        return luaL_error(L, "Wrong arguments for WTabWidget.closeTab");
+        return luaL_error(L, "Wrong arguments for WTabWidget.isTabHidden");
     }
 }
 
@@ -319,45 +471,17 @@ int luawt_WTabWidget_setTabCloseable(lua_State* L) {
     }
 }
 
-static const char* WTabWidget_setTabHidden_args0[] = {luawt_typeToStr<WTabWidget>(), "int", "bool", NULL};
-static const char* const* const luawt_WTabWidget_setTabHidden_args[] = {WTabWidget_setTabHidden_args0, NULL};
-
-int luawt_WTabWidget_setTabHidden(lua_State* L) {
-    int index = luawt_getSuitableArgsGroup(L, luawt_WTabWidget_setTabHidden_args);
-    WTabWidget* self = luawt_checkFromLua<WTabWidget>(L, 1);
-    if (index == 0) {
-    int index = lua_tointeger(L, 2);
-    bool hidden = lua_toboolean(L, 3);
-    self->setTabHidden(index, hidden);
-    return 0;
-    
-    } else {
-        return luaL_error(L, "Wrong arguments for WTabWidget.setTabHidden");
-    }
-}
-
-static const char* WTabWidget_tabToolTip_args0[] = {luawt_typeToStr<WTabWidget>(), "int", NULL};
-static const char* const* const luawt_WTabWidget_tabToolTip_args[] = {WTabWidget_tabToolTip_args0, NULL};
-
-int luawt_WTabWidget_tabToolTip(lua_State* L) {
-    int index = luawt_getSuitableArgsGroup(L, luawt_WTabWidget_tabToolTip_args);
-    WTabWidget* self = luawt_checkFromLua<WTabWidget>(L, 1);
-    if (index == 0) {
-    int index = lua_tointeger(L, 2);
-    Wt::WString const & result = self->tabToolTip(index);
-    lua_pushstring(L, result.toUTF8().c_str());
-    return 1;
-
-    } else {
-        return luaL_error(L, "Wrong arguments for WTabWidget.tabToolTip");
-    }
-}
-
 
 static const luaL_Reg luawt_WTabWidget_methods[] = {
+    METHOD(WTabWidget, addTab),
+    METHOD(WTabWidget, removeTab),
     METHOD(WTabWidget, count),
+    METHOD(WTabWidget, widget),
+    METHOD(WTabWidget, indexOf),
     METHOD(WTabWidget, setCurrentIndex),
     METHOD(WTabWidget, currentIndex),
+    METHOD(WTabWidget, setCurrentWidget),
+    METHOD(WTabWidget, currentWidget),
     METHOD(WTabWidget, setTabEnabled),
     METHOD(WTabWidget, isTabEnabled),
     METHOD(WTabWidget, setTabHidden),

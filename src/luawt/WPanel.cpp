@@ -1,5 +1,6 @@
 #include "boost-xtime.hpp"
 
+#include <Wt/WWidget>
 #include <Wt/WPanel>
 #include <Wt/WContainerWidget>
 #include <Wt/WIconPair>
@@ -43,6 +44,23 @@ int luawt_WPanel_isCollapsed(lua_State* L) {
 
     } else {
         return luaL_error(L, "Wrong arguments for WPanel.isCollapsed");
+    }
+}
+
+static const char* WPanel_setCentralWidget_args0[] = {luawt_typeToStr<WPanel>(), luawt_typeToStr<Wt::WWidget>(), NULL};
+static const char* const* const luawt_WPanel_setCentralWidget_args[] = {WPanel_setCentralWidget_args0, NULL};
+
+int luawt_WPanel_setCentralWidget(lua_State* L) {
+    int index = luawt_getSuitableArgsGroup(L, luawt_WPanel_setCentralWidget_args);
+    WPanel* self = luawt_checkFromLua<WPanel>(L, 1);
+    if (index == 0) {
+    Wt::WWidget* arg0 =
+        luawt_checkFromLua<Wt::WWidget>(L, 2);
+    self->setCentralWidget(arg0);
+    return 0;
+    
+    } else {
+        return luaL_error(L, "Wrong arguments for WPanel.setCentralWidget");
     }
 }
 
@@ -173,6 +191,22 @@ int luawt_WPanel_expand(lua_State* L) {
     }
 }
 
+static const char* WPanel_centralWidget_args0[] = {luawt_typeToStr<WPanel>(), NULL};
+static const char* const* const luawt_WPanel_centralWidget_args[] = {WPanel_centralWidget_args0, NULL};
+
+int luawt_WPanel_centralWidget(lua_State* L) {
+    int index = luawt_getSuitableArgsGroup(L, luawt_WPanel_centralWidget_args);
+    WPanel* self = luawt_checkFromLua<WPanel>(L, 1);
+    if (index == 0) {
+    Wt::WWidget * result = self->centralWidget();
+    luawt_toLua(L, result);
+    return 1;
+
+    } else {
+        return luaL_error(L, "Wrong arguments for WPanel.centralWidget");
+    }
+}
+
 static const char* WPanel_setCollapsed_args0[] = {luawt_typeToStr<WPanel>(), "bool", NULL};
 static const char* const* const luawt_WPanel_setCollapsed_args[] = {WPanel_setCollapsed_args0, NULL};
 
@@ -234,6 +268,8 @@ static const luaL_Reg luawt_WPanel_methods[] = {
     METHOD(WPanel, isCollapsed),
     METHOD(WPanel, collapse),
     METHOD(WPanel, expand),
+    METHOD(WPanel, setCentralWidget),
+    METHOD(WPanel, centralWidget),
     METHOD(WPanel, collapseIcon),
     {NULL, NULL},
 };

@@ -61,6 +61,23 @@ int luawt_WProgressBar_setValue(lua_State* L) {
     }
 }
 
+static const char* WProgressBar_setValueStyleClass_args0[] = {luawt_typeToStr<WProgressBar>(), "char const *", NULL};
+static const char* const* const luawt_WProgressBar_setValueStyleClass_args[] = {WProgressBar_setValueStyleClass_args0, NULL};
+
+int luawt_WProgressBar_setValueStyleClass(lua_State* L) {
+    int index = luawt_getSuitableArgsGroup(L, luawt_WProgressBar_setValueStyleClass_args);
+    WProgressBar* self = luawt_checkFromLua<WProgressBar>(L, 1);
+    if (index == 0) {
+    char const * raw2 = lua_tostring(L, 2);
+    std::string valueClass = std::string(raw2);
+    self->setValueStyleClass(valueClass);
+    return 0;
+    
+    } else {
+        return luaL_error(L, "Wrong arguments for WProgressBar.setValueStyleClass");
+    }
+}
+
 static const char* WProgressBar_format_args0[] = {luawt_typeToStr<WProgressBar>(), NULL};
 static const char* const* const luawt_WProgressBar_format_args[] = {WProgressBar_format_args0, NULL};
 
@@ -158,6 +175,24 @@ int luawt_WProgressBar_minimum(lua_State* L) {
     }
 }
 
+static const char* WProgressBar_setState_args0[] = {luawt_typeToStr<WProgressBar>(), "double", "double", "double", NULL};
+static const char* const* const luawt_WProgressBar_setState_args[] = {WProgressBar_setState_args0, NULL};
+
+int luawt_WProgressBar_setState(lua_State* L) {
+    int index = luawt_getSuitableArgsGroup(L, luawt_WProgressBar_setState_args);
+    WProgressBar* self = luawt_checkFromLua<WProgressBar>(L, 1);
+    if (index == 0) {
+    double minimum = lua_tonumber(L, 2);
+    double maximum = lua_tonumber(L, 3);
+    double value = lua_tonumber(L, 4);
+    self->setState(minimum, maximum, value);
+    return 0;
+    
+    } else {
+        return luaL_error(L, "Wrong arguments for WProgressBar.setState");
+    }
+}
+
 static const char* WProgressBar_setMinimum_args0[] = {luawt_typeToStr<WProgressBar>(), "double", NULL};
 static const char* const* const luawt_WProgressBar_setMinimum_args[] = {WProgressBar_setMinimum_args0, NULL};
 
@@ -223,6 +258,8 @@ static const luaL_Reg luawt_WProgressBar_methods[] = {
     METHOD(WProgressBar, setFormat),
     METHOD(WProgressBar, format),
     METHOD(WProgressBar, text),
+    METHOD(WProgressBar, setValueStyleClass),
+    METHOD(WProgressBar, setState),
     METHOD(WProgressBar, keyWentDown),
     METHOD(WProgressBar, keyPressed),
     METHOD(WProgressBar, keyWentUp),

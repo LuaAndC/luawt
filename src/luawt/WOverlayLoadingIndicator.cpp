@@ -1,5 +1,6 @@
 #include "boost-xtime.hpp"
 
+#include <Wt/WWidget>
 #include <Wt/WOverlayLoadingIndicator>
 #include <Wt/WString>
 
@@ -50,6 +51,22 @@ int luawt_WOverlayLoadingIndicator_make(lua_State* L) {
     }
 }
 
+static const char* WOverlayLoadingIndicator_widget_args0[] = {luawt_typeToStr<WOverlayLoadingIndicator>(), NULL};
+static const char* const* const luawt_WOverlayLoadingIndicator_widget_args[] = {WOverlayLoadingIndicator_widget_args0, NULL};
+
+int luawt_WOverlayLoadingIndicator_widget(lua_State* L) {
+    int index = luawt_getSuitableArgsGroup(L, luawt_WOverlayLoadingIndicator_widget_args);
+    WOverlayLoadingIndicator* self = luawt_checkFromLua<WOverlayLoadingIndicator>(L, 1);
+    if (index == 0) {
+    Wt::WWidget * result = self->widget();
+    luawt_toLua(L, result);
+    return 1;
+
+    } else {
+        return luaL_error(L, "Wrong arguments for WOverlayLoadingIndicator.widget");
+    }
+}
+
 static const char* WOverlayLoadingIndicator_setMessage_args0[] = {luawt_typeToStr<WOverlayLoadingIndicator>(), "char const *", NULL};
 static const char* const* const luawt_WOverlayLoadingIndicator_setMessage_args[] = {WOverlayLoadingIndicator_setMessage_args0, NULL};
 
@@ -90,6 +107,7 @@ ADD_SIGNAL(gestureChanged, WOverlayLoadingIndicator, Wt::WGestureEvent)
 ADD_SIGNAL(gestureEnded, WOverlayLoadingIndicator, Wt::WGestureEvent)
 
 static const luaL_Reg luawt_WOverlayLoadingIndicator_methods[] = {
+    METHOD(WOverlayLoadingIndicator, widget),
     METHOD(WOverlayLoadingIndicator, setMessage),
     METHOD(WOverlayLoadingIndicator, scrolled),
     METHOD(WOverlayLoadingIndicator, keyWentDown),

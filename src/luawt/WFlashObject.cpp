@@ -1,5 +1,6 @@
 #include "boost-xtime.hpp"
 
+#include <Wt/WWidget>
 #include <Wt/WContainerWidget>
 #include <Wt/WFlashObject>
 #include <Wt/WString>
@@ -30,6 +31,23 @@ int luawt_WFlashObject_make(lua_State* L) {
 
     } else {
         return luaL_error(L, "Wrong arguments for WFlashObject.make");
+    }
+}
+
+static const char* WFlashObject_setAlternativeContent_args0[] = {luawt_typeToStr<WFlashObject>(), luawt_typeToStr<Wt::WWidget>(), NULL};
+static const char* const* const luawt_WFlashObject_setAlternativeContent_args[] = {WFlashObject_setAlternativeContent_args0, NULL};
+
+int luawt_WFlashObject_setAlternativeContent(lua_State* L) {
+    int index = luawt_getSuitableArgsGroup(L, luawt_WFlashObject_setAlternativeContent_args);
+    WFlashObject* self = luawt_checkFromLua<WFlashObject>(L, 1);
+    if (index == 0) {
+    Wt::WWidget* alternative =
+        luawt_checkFromLua<Wt::WWidget>(L, 2);
+    self->setAlternativeContent(alternative);
+    return 0;
+    
+    } else {
+        return luaL_error(L, "Wrong arguments for WFlashObject.setAlternativeContent");
     }
 }
 
@@ -92,6 +110,7 @@ static const luaL_Reg luawt_WFlashObject_methods[] = {
     METHOD(WFlashObject, setFlashParameter),
     METHOD(WFlashObject, setFlashVariable),
     METHOD(WFlashObject, jsFlashRef),
+    METHOD(WFlashObject, setAlternativeContent),
     {NULL, NULL},
 };
 
