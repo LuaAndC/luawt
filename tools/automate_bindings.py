@@ -315,10 +315,8 @@ def getConstructorsType(constructors):
     for constructor in constructors:
         args = constructor.arguments
         req_args = constructor.required_args
-        if len(args) == 1:
-            type_s = str(clearType(getArgType(args[0])))
-            if type_s == 'Wt::WContainerWidget':
-                has_sing_arg = True
+        if (len(args) == 1) and not noParent(args):
+            has_sing_arg = True
         elif len(req_args) == 0:
             has_void_args = True
     if has_sing_arg:
