@@ -296,6 +296,14 @@ def getMembers(global_namespace, module_name, blacklisted):
     ]
     return methods, signals, base_r
 
+def noParent(args):
+    for arg in args:
+        if arg.name == 'parent':
+            type_s = str(clearType(getArgType(arg)))
+            if type_s == 'Wt::WContainerWidget':
+                return False
+    return True
+
 # For widget tests generation.
 # Function returns flag - constructors type:
 # - 0 means error - no constructors supported by luawt.test are available;
