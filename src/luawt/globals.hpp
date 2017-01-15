@@ -20,8 +20,10 @@
 #include "boost-xtime.hpp"
 #include <Wt/WApplication>
 #include <Wt/WContainerWidget>
+#include <Wt/WDefaultLoadingIndicator>
 #include <Wt/WEnvironment>
 #include <Wt/WObject>
+#include <Wt/WOverlayLoadingIndicator>
 #include <Wt/WServer>
 #include <Wt/WText>
 
@@ -215,6 +217,34 @@ inline void luawt_toLua(lua_State* L, T* obj) {
     std::string id = obj->id();
     memcpy(lobj, id.c_str(), id.size() + 1);
     luaL_getmetatable(L, luawt_typeToStr<T>());
+    assert(lua_type(L, -1) == LUA_TTABLE);
+    lua_setmetatable(L, -2);
+}
+
+template<>
+inline void luawt_toLua<WDefaultLoadingIndicator>(
+    lua_State* L,
+    WDefaultLoadingIndicator* obj
+) {
+    size_t lobj_size = 1 + obj->WText::id().size(); // with 0x00
+    void* lobj = lua_newuserdata(L, lobj_size);
+    std::string id = obj->WText::id();
+    memcpy(lobj, id.c_str(), id.size() + 1);
+    luaL_getmetatable(L, luawt_typeToStr<WDefaultLoadingIndicator>());
+    assert(lua_type(L, -1) == LUA_TTABLE);
+    lua_setmetatable(L, -2);
+}
+
+template<>
+inline void luawt_toLua<WOverlayLoadingIndicator>(
+    lua_State* L,
+    WOverlayLoadingIndicator* obj
+) {
+    size_t lobj_size = 1 + obj->WContainerWidget::id().size(); // with 0x00
+    void* lobj = lua_newuserdata(L, lobj_size);
+    std::string id = obj->WContainerWidget::id();
+    memcpy(lobj, id.c_str(), id.size() + 1);
+    luaL_getmetatable(L, luawt_typeToStr<WOverlayLoadingIndicator>());
     assert(lua_type(L, -1) == LUA_TTABLE);
     lua_setmetatable(L, -2);
 }
