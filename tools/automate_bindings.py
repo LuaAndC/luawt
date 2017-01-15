@@ -323,7 +323,7 @@ def getConstructors(global_namespace, module_name, blacklisted):
     Wt = global_namespace.namespace('Wt')
     main_class = Wt.class_(name=module_name)
     if main_class.is_abstract:
-        return []
+        return [], 0
     custom_matcher = pygccxml.declarations.custom_matcher_t(
         lambda decl: checkWtFunction(True, decl, Wt),
     )
@@ -978,7 +978,7 @@ def collectMembers(path):
                 module_name,
                 blacklisted,
             )
-            constructors = getConstructors(
+            constructors, _ = getConstructors(
                 global_namespace,
                 module_name,
                 blacklisted,
