@@ -525,6 +525,17 @@ def getArgsStr(args):
     return ', '.join(arg_e for arg_e in args_list)
 
 
+def addWidgetToContainer(module_name):
+    frame = r'''
+    luawt_Application* app = luawt_Application::instance();
+    if (!app) {
+        delete result;
+        throw std::logic_error("No WApplication when creating %s");
+    }
+    app->root()->addWidget(result);
+    '''
+    return frame % module_name
+
 def callWtConstructor(return_type, args, module_name):
     call_s = 'new %s(' % module_name
     args_s = getArgsStr(args)
@@ -687,6 +698,8 @@ def implementLuaCFunction(
                 body.append(getComplexArgument(options))
         if is_constructor:
             body.append(callWtConstructor(str(return_type), args, module_name))
+            if noParent(args):
+                body.append(addWidgetToContainer(module_name))
         else:
             body.append(callWtFunction(str(return_type), args, method_name))
         body.append(returnValue(str(return_type)))
