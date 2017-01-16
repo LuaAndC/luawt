@@ -19,6 +19,13 @@ int luawt_WMediaPlayer_make(lua_State* L) {
     if (index == 0) {
     Wt::WMediaPlayer::MediaType mediaType = static_cast<Wt::WMediaPlayer::MediaType>(lua_tointeger(L, 1));
     WMediaPlayer * result = new WMediaPlayer(mediaType);
+    luawt_Application* app = luawt_Application::instance();
+    if (!app) {
+        delete result;
+        throw std::logic_error("No WApplication when creating WMediaPlayer");
+    }
+    app->root()->addWidget(result);
+    
     luawt_toLua(L, result);
     return 1;
 

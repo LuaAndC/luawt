@@ -19,6 +19,13 @@ int luawt_WInPlaceEdit_make(lua_State* L) {
     char const * raw1 = lua_tostring(L, 1);
     Wt::WString text = Wt::WString(raw1);
     WInPlaceEdit * result = new WInPlaceEdit(text);
+    luawt_Application* app = luawt_Application::instance();
+    if (!app) {
+        delete result;
+        throw std::logic_error("No WApplication when creating WInPlaceEdit");
+    }
+    app->root()->addWidget(result);
+    
     luawt_toLua(L, result);
     return 1;
 

@@ -16,6 +16,13 @@ int luawt_WSlider_make(lua_State* L) {
     int index = luawt_getSuitableArgsGroup(L, luawt_WSlider_make_args);
     if (index == 0) {
     WSlider * result = new WSlider();
+    luawt_Application* app = luawt_Application::instance();
+    if (!app) {
+        delete result;
+        throw std::logic_error("No WApplication when creating WSlider");
+    }
+    app->root()->addWidget(result);
+    
     luawt_toLua(L, result);
     return 1;
 
@@ -29,6 +36,13 @@ int luawt_WSlider_make(lua_State* L) {
     } else if (index == 2) {
     Wt::Orientation orientation = static_cast<Wt::Orientation>(lua_tointeger(L, 1));
     WSlider * result = new WSlider(orientation);
+    luawt_Application* app = luawt_Application::instance();
+    if (!app) {
+        delete result;
+        throw std::logic_error("No WApplication when creating WSlider");
+    }
+    app->root()->addWidget(result);
+    
     luawt_toLua(L, result);
     return 1;
 

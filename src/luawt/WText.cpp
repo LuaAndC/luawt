@@ -18,6 +18,13 @@ int luawt_WText_make(lua_State* L) {
     int index = luawt_getSuitableArgsGroup(L, luawt_WText_make_args);
     if (index == 0) {
     WText * result = new WText();
+    luawt_Application* app = luawt_Application::instance();
+    if (!app) {
+        delete result;
+        throw std::logic_error("No WApplication when creating WText");
+    }
+    app->root()->addWidget(result);
+    
     luawt_toLua(L, result);
     return 1;
 
@@ -32,6 +39,13 @@ int luawt_WText_make(lua_State* L) {
     char const * raw1 = lua_tostring(L, 1);
     Wt::WString text = Wt::WString(raw1);
     WText * result = new WText(text);
+    luawt_Application* app = luawt_Application::instance();
+    if (!app) {
+        delete result;
+        throw std::logic_error("No WApplication when creating WText");
+    }
+    app->root()->addWidget(result);
+    
     luawt_toLua(L, result);
     return 1;
 
@@ -49,6 +63,13 @@ int luawt_WText_make(lua_State* L) {
     Wt::WString text = Wt::WString(raw1);
     Wt::TextFormat textFormat = static_cast<Wt::TextFormat>(lua_tointeger(L, 2));
     WText * result = new WText(text, textFormat);
+    luawt_Application* app = luawt_Application::instance();
+    if (!app) {
+        delete result;
+        throw std::logic_error("No WApplication when creating WText");
+    }
+    app->root()->addWidget(result);
+    
     luawt_toLua(L, result);
     return 1;
 

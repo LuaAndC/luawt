@@ -15,6 +15,13 @@ int luawt_WDateEdit_make(lua_State* L) {
     int index = luawt_getSuitableArgsGroup(L, luawt_WDateEdit_make_args);
     if (index == 0) {
     WDateEdit * result = new WDateEdit();
+    luawt_Application* app = luawt_Application::instance();
+    if (!app) {
+        delete result;
+        throw std::logic_error("No WApplication when creating WDateEdit");
+    }
+    app->root()->addWidget(result);
+    
     luawt_toLua(L, result);
     return 1;
 

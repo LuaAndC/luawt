@@ -13,6 +13,13 @@ int luawt_WVideo_make(lua_State* L) {
     int index = luawt_getSuitableArgsGroup(L, luawt_WVideo_make_args);
     if (index == 0) {
     WVideo * result = new WVideo();
+    luawt_Application* app = luawt_Application::instance();
+    if (!app) {
+        delete result;
+        throw std::logic_error("No WApplication when creating WVideo");
+    }
+    app->root()->addWidget(result);
+    
     luawt_toLua(L, result);
     return 1;
 

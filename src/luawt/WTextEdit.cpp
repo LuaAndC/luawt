@@ -16,6 +16,13 @@ int luawt_WTextEdit_make(lua_State* L) {
     int index = luawt_getSuitableArgsGroup(L, luawt_WTextEdit_make_args);
     if (index == 0) {
     WTextEdit * result = new WTextEdit();
+    luawt_Application* app = luawt_Application::instance();
+    if (!app) {
+        delete result;
+        throw std::logic_error("No WApplication when creating WTextEdit");
+    }
+    app->root()->addWidget(result);
+    
     luawt_toLua(L, result);
     return 1;
 
@@ -30,6 +37,13 @@ int luawt_WTextEdit_make(lua_State* L) {
     char const * raw1 = lua_tostring(L, 1);
     Wt::WString text = Wt::WString(raw1);
     WTextEdit * result = new WTextEdit(text);
+    luawt_Application* app = luawt_Application::instance();
+    if (!app) {
+        delete result;
+        throw std::logic_error("No WApplication when creating WTextEdit");
+    }
+    app->root()->addWidget(result);
+    
     luawt_toLua(L, result);
     return 1;
 

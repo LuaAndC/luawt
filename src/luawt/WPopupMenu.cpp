@@ -16,6 +16,13 @@ int luawt_WPopupMenu_make(lua_State* L) {
     int index = luawt_getSuitableArgsGroup(L, luawt_WPopupMenu_make_args);
     if (index == 0) {
     WPopupMenu * result = new WPopupMenu();
+    luawt_Application* app = luawt_Application::instance();
+    if (!app) {
+        delete result;
+        throw std::logic_error("No WApplication when creating WPopupMenu");
+    }
+    app->root()->addWidget(result);
+    
     luawt_toLua(L, result);
     return 1;
 
@@ -23,6 +30,13 @@ int luawt_WPopupMenu_make(lua_State* L) {
     Wt::WStackedWidget* contentsStack =
         luawt_checkFromLua<Wt::WStackedWidget>(L, 1);
     WPopupMenu * result = new WPopupMenu(contentsStack);
+    luawt_Application* app = luawt_Application::instance();
+    if (!app) {
+        delete result;
+        throw std::logic_error("No WApplication when creating WPopupMenu");
+    }
+    app->root()->addWidget(result);
+    
     luawt_toLua(L, result);
     return 1;
 

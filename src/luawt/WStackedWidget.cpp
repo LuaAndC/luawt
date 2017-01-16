@@ -14,6 +14,13 @@ int luawt_WStackedWidget_make(lua_State* L) {
     int index = luawt_getSuitableArgsGroup(L, luawt_WStackedWidget_make_args);
     if (index == 0) {
     WStackedWidget * result = new WStackedWidget();
+    luawt_Application* app = luawt_Application::instance();
+    if (!app) {
+        delete result;
+        throw std::logic_error("No WApplication when creating WStackedWidget");
+    }
+    app->root()->addWidget(result);
+    
     luawt_toLua(L, result);
     return 1;
 

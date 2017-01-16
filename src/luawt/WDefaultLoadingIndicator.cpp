@@ -13,6 +13,13 @@ int luawt_WDefaultLoadingIndicator_make(lua_State* L) {
     int index = luawt_getSuitableArgsGroup(L, luawt_WDefaultLoadingIndicator_make_args);
     if (index == 0) {
     WDefaultLoadingIndicator * result = new WDefaultLoadingIndicator();
+    luawt_Application* app = luawt_Application::instance();
+    if (!app) {
+        delete result;
+        throw std::logic_error("No WApplication when creating WDefaultLoadingIndicator");
+    }
+    app->root()->addWidget(result);
+    
     luawt_toLua(L, result);
     return 1;
 

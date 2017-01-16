@@ -16,6 +16,13 @@ int luawt_WTextArea_make(lua_State* L) {
     int index = luawt_getSuitableArgsGroup(L, luawt_WTextArea_make_args);
     if (index == 0) {
     WTextArea * result = new WTextArea();
+    luawt_Application* app = luawt_Application::instance();
+    if (!app) {
+        delete result;
+        throw std::logic_error("No WApplication when creating WTextArea");
+    }
+    app->root()->addWidget(result);
+    
     luawt_toLua(L, result);
     return 1;
 
@@ -30,6 +37,13 @@ int luawt_WTextArea_make(lua_State* L) {
     char const * raw1 = lua_tostring(L, 1);
     Wt::WString content = Wt::WString(raw1);
     WTextArea * result = new WTextArea(content);
+    luawt_Application* app = luawt_Application::instance();
+    if (!app) {
+        delete result;
+        throw std::logic_error("No WApplication when creating WTextArea");
+    }
+    app->root()->addWidget(result);
+    
     luawt_toLua(L, result);
     return 1;
 

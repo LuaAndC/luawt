@@ -15,6 +15,13 @@ int luawt_WAnchor_make(lua_State* L) {
     int index = luawt_getSuitableArgsGroup(L, luawt_WAnchor_make_args);
     if (index == 0) {
     WAnchor * result = new WAnchor();
+    luawt_Application* app = luawt_Application::instance();
+    if (!app) {
+        delete result;
+        throw std::logic_error("No WApplication when creating WAnchor");
+    }
+    app->root()->addWidget(result);
+    
     luawt_toLua(L, result);
     return 1;
 

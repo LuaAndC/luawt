@@ -17,6 +17,13 @@ int luawt_WFlashObject_make(lua_State* L) {
     char const * raw1 = lua_tostring(L, 1);
     std::string url = std::string(raw1);
     WFlashObject * result = new WFlashObject(url);
+    luawt_Application* app = luawt_Application::instance();
+    if (!app) {
+        delete result;
+        throw std::logic_error("No WApplication when creating WFlashObject");
+    }
+    app->root()->addWidget(result);
+    
     luawt_toLua(L, result);
     return 1;
 

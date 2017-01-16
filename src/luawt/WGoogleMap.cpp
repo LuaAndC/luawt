@@ -16,6 +16,13 @@ int luawt_WGoogleMap_make(lua_State* L) {
     if (index == 0) {
     Wt::WGoogleMap::ApiVersion version = static_cast<Wt::WGoogleMap::ApiVersion>(lua_tointeger(L, 1));
     WGoogleMap * result = new WGoogleMap(version);
+    luawt_Application* app = luawt_Application::instance();
+    if (!app) {
+        delete result;
+        throw std::logic_error("No WApplication when creating WGoogleMap");
+    }
+    app->root()->addWidget(result);
+    
     luawt_toLua(L, result);
     return 1;
 
@@ -29,6 +36,13 @@ int luawt_WGoogleMap_make(lua_State* L) {
 
     } else if (index == 2) {
     WGoogleMap * result = new WGoogleMap();
+    luawt_Application* app = luawt_Application::instance();
+    if (!app) {
+        delete result;
+        throw std::logic_error("No WApplication when creating WGoogleMap");
+    }
+    app->root()->addWidget(result);
+    
     luawt_toLua(L, result);
     return 1;
 

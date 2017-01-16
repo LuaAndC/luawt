@@ -13,6 +13,13 @@ int luawt_WContainerWidget_make(lua_State* L) {
     int index = luawt_getSuitableArgsGroup(L, luawt_WContainerWidget_make_args);
     if (index == 0) {
     WContainerWidget * result = new WContainerWidget();
+    luawt_Application* app = luawt_Application::instance();
+    if (!app) {
+        delete result;
+        throw std::logic_error("No WApplication when creating WContainerWidget");
+    }
+    app->root()->addWidget(result);
+    
     luawt_toLua(L, result);
     return 1;
 

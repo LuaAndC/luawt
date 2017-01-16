@@ -16,6 +16,13 @@ int luawt_WCheckBox_make(lua_State* L) {
     int index = luawt_getSuitableArgsGroup(L, luawt_WCheckBox_make_args);
     if (index == 0) {
     WCheckBox * result = new WCheckBox();
+    luawt_Application* app = luawt_Application::instance();
+    if (!app) {
+        delete result;
+        throw std::logic_error("No WApplication when creating WCheckBox");
+    }
+    app->root()->addWidget(result);
+    
     luawt_toLua(L, result);
     return 1;
 
@@ -30,6 +37,13 @@ int luawt_WCheckBox_make(lua_State* L) {
     char const * raw1 = lua_tostring(L, 1);
     Wt::WString text = Wt::WString(raw1);
     WCheckBox * result = new WCheckBox(text);
+    luawt_Application* app = luawt_Application::instance();
+    if (!app) {
+        delete result;
+        throw std::logic_error("No WApplication when creating WCheckBox");
+    }
+    app->root()->addWidget(result);
+    
     luawt_toLua(L, result);
     return 1;
 

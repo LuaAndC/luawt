@@ -22,6 +22,13 @@ int luawt_WMenuItem_make(lua_State* L) {
     char const * raw1 = lua_tostring(L, 1);
     Wt::WString label = Wt::WString(raw1);
     WMenuItem * result = new WMenuItem(label);
+    luawt_Application* app = luawt_Application::instance();
+    if (!app) {
+        delete result;
+        throw std::logic_error("No WApplication when creating WMenuItem");
+    }
+    app->root()->addWidget(result);
+    
     luawt_toLua(L, result);
     return 1;
 
@@ -31,6 +38,13 @@ int luawt_WMenuItem_make(lua_State* L) {
     Wt::WWidget* contents =
         luawt_checkFromLua<Wt::WWidget>(L, 2);
     WMenuItem * result = new WMenuItem(label, contents);
+    luawt_Application* app = luawt_Application::instance();
+    if (!app) {
+        delete result;
+        throw std::logic_error("No WApplication when creating WMenuItem");
+    }
+    app->root()->addWidget(result);
+    
     luawt_toLua(L, result);
     return 1;
 
@@ -41,6 +55,13 @@ int luawt_WMenuItem_make(lua_State* L) {
         luawt_checkFromLua<Wt::WWidget>(L, 2);
     Wt::WMenuItem::LoadPolicy policy = static_cast<Wt::WMenuItem::LoadPolicy>(lua_tointeger(L, 3));
     WMenuItem * result = new WMenuItem(label, contents, policy);
+    luawt_Application* app = luawt_Application::instance();
+    if (!app) {
+        delete result;
+        throw std::logic_error("No WApplication when creating WMenuItem");
+    }
+    app->root()->addWidget(result);
+    
     luawt_toLua(L, result);
     return 1;
 
@@ -50,6 +71,13 @@ int luawt_WMenuItem_make(lua_State* L) {
     char const * raw2 = lua_tostring(L, 2);
     Wt::WString label = Wt::WString(raw2);
     WMenuItem * result = new WMenuItem(iconPath, label);
+    luawt_Application* app = luawt_Application::instance();
+    if (!app) {
+        delete result;
+        throw std::logic_error("No WApplication when creating WMenuItem");
+    }
+    app->root()->addWidget(result);
+    
     luawt_toLua(L, result);
     return 1;
 
@@ -61,6 +89,13 @@ int luawt_WMenuItem_make(lua_State* L) {
     Wt::WWidget* contents =
         luawt_checkFromLua<Wt::WWidget>(L, 3);
     WMenuItem * result = new WMenuItem(iconPath, label, contents);
+    luawt_Application* app = luawt_Application::instance();
+    if (!app) {
+        delete result;
+        throw std::logic_error("No WApplication when creating WMenuItem");
+    }
+    app->root()->addWidget(result);
+    
     luawt_toLua(L, result);
     return 1;
 
@@ -73,6 +108,13 @@ int luawt_WMenuItem_make(lua_State* L) {
         luawt_checkFromLua<Wt::WWidget>(L, 3);
     Wt::WMenuItem::LoadPolicy policy = static_cast<Wt::WMenuItem::LoadPolicy>(lua_tointeger(L, 4));
     WMenuItem * result = new WMenuItem(iconPath, label, contents, policy);
+    luawt_Application* app = luawt_Application::instance();
+    if (!app) {
+        delete result;
+        throw std::logic_error("No WApplication when creating WMenuItem");
+    }
+    app->root()->addWidget(result);
+    
     luawt_toLua(L, result);
     return 1;
 
