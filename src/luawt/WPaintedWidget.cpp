@@ -4,31 +4,35 @@
 
 #include "globals.hpp"
 
-int luawt_WPaintedWidget_setPreferredMethod(lua_State* L) {
-    int argc = lua_gettop(L) - 1;
+static const char* WPaintedWidget_setPreferredMethod_args0[] = {luawt_typeToStr<WPaintedWidget>(), "int", NULL};
+static const char* const* const luawt_WPaintedWidget_setPreferredMethod_args[] = {WPaintedWidget_setPreferredMethod_args0, NULL};
 
+int luawt_WPaintedWidget_setPreferredMethod(lua_State* L) {
+    int index = luawt_getSuitableArgsGroup(L, luawt_WPaintedWidget_setPreferredMethod_args);
     WPaintedWidget* self = luawt_checkFromLua<WPaintedWidget>(L, 1);
-        if (argc == 1) {
+    if (index == 0) {
     Wt::WPaintedWidget::Method method = static_cast<Wt::WPaintedWidget::Method>(lua_tointeger(L, 2));
     self->setPreferredMethod(method);
     return 0;
     
     } else {
-        return luaL_error(L, "Wrong arguments number for WPaintedWidget.setPreferredMethod: %d", argc);
+        return luaL_error(L, "Wrong arguments for WPaintedWidget.setPreferredMethod");
     }
 }
 
-int luawt_WPaintedWidget_preferredMethod(lua_State* L) {
-    int argc = lua_gettop(L) - 1;
+static const char* WPaintedWidget_preferredMethod_args0[] = {luawt_typeToStr<WPaintedWidget>(), NULL};
+static const char* const* const luawt_WPaintedWidget_preferredMethod_args[] = {WPaintedWidget_preferredMethod_args0, NULL};
 
+int luawt_WPaintedWidget_preferredMethod(lua_State* L) {
+    int index = luawt_getSuitableArgsGroup(L, luawt_WPaintedWidget_preferredMethod_args);
     WPaintedWidget* self = luawt_checkFromLua<WPaintedWidget>(L, 1);
-        if (argc == 0) {
+    if (index == 0) {
     Wt::WPaintedWidget::Method result = self->preferredMethod();
     lua_pushinteger(L, result);
     return 1;
 
     } else {
-        return luaL_error(L, "Wrong arguments number for WPaintedWidget.preferredMethod: %d", argc);
+        return luaL_error(L, "Wrong arguments for WPaintedWidget.preferredMethod");
     }
 }
 

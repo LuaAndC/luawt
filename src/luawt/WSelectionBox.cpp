@@ -13,6 +13,13 @@ int luawt_WSelectionBox_make(lua_State* L) {
     int index = luawt_getSuitableArgsGroup(L, luawt_WSelectionBox_make_args);
     if (index == 0) {
     WSelectionBox * result = new WSelectionBox();
+    luawt_Application* app = luawt_Application::instance();
+    if (!app) {
+        delete result;
+        throw std::logic_error("No WApplication when creating WSelectionBox");
+    }
+    app->root()->addWidget(result);
+    
     luawt_toLua(L, result);
     return 1;
 

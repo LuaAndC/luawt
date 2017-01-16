@@ -22,16 +22,8 @@ describe("luawt.Shared", function()
             assert(luawt.Shared.foo == "bar")
             luawt.Shared.bar = "foo"
         ]]
-        local ip = '127.0.0.1'
-        local port = 56789
-        local wt_config = test.baseConfig()
-        local server = test.createServer(code, ip, port, wt_config)
-        server:start()
-        os.execute("sleep 1")
-        local data = test.socketRequest(port)
-        os.execute("sleep 1")
-        server:stop()
-        os.remove(wt_config)
+        local server, wt_config = test.getData(code)
+        test.clear(server, wt_config, false)
         assert(luawt.Shared.bar == "foo")
     end)
 

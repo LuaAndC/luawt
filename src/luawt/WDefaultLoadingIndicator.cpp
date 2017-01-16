@@ -1,5 +1,6 @@
 #include "boost-xtime.hpp"
 
+#include <Wt/WWidget>
 #include <Wt/WDefaultLoadingIndicator>
 #include <Wt/WString>
 
@@ -12,11 +13,34 @@ int luawt_WDefaultLoadingIndicator_make(lua_State* L) {
     int index = luawt_getSuitableArgsGroup(L, luawt_WDefaultLoadingIndicator_make_args);
     if (index == 0) {
     WDefaultLoadingIndicator * result = new WDefaultLoadingIndicator();
+    luawt_Application* app = luawt_Application::instance();
+    if (!app) {
+        delete result;
+        throw std::logic_error("No WApplication when creating WDefaultLoadingIndicator");
+    }
+    app->root()->addWidget(result);
+    
     luawt_toLua(L, result);
     return 1;
 
     } else {
         return luaL_error(L, "Wrong arguments for WDefaultLoadingIndicator.make");
+    }
+}
+
+static const char* WDefaultLoadingIndicator_widget_args0[] = {luawt_typeToStr<WDefaultLoadingIndicator>(), NULL};
+static const char* const* const luawt_WDefaultLoadingIndicator_widget_args[] = {WDefaultLoadingIndicator_widget_args0, NULL};
+
+int luawt_WDefaultLoadingIndicator_widget(lua_State* L) {
+    int index = luawt_getSuitableArgsGroup(L, luawt_WDefaultLoadingIndicator_widget_args);
+    WDefaultLoadingIndicator* self = luawt_checkFromLua<WDefaultLoadingIndicator>(L, 1);
+    if (index == 0) {
+    Wt::WWidget * result = self->widget();
+    luawt_toLua(L, result);
+    return 1;
+
+    } else {
+        return luaL_error(L, "Wrong arguments for WDefaultLoadingIndicator.widget");
     }
 }
 
@@ -59,6 +83,7 @@ ADD_SIGNAL(gestureChanged, WDefaultLoadingIndicator, Wt::WGestureEvent)
 ADD_SIGNAL(gestureEnded, WDefaultLoadingIndicator, Wt::WGestureEvent)
 
 static const luaL_Reg luawt_WDefaultLoadingIndicator_methods[] = {
+    METHOD(WDefaultLoadingIndicator, widget),
     METHOD(WDefaultLoadingIndicator, setMessage),
     METHOD(WDefaultLoadingIndicator, keyWentDown),
     METHOD(WDefaultLoadingIndicator, keyPressed),

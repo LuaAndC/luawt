@@ -1,5 +1,6 @@
 #include "boost-xtime.hpp"
 
+#include <Wt/WWidget>
 #include <Wt/WOverlayLoadingIndicator>
 #include <Wt/WString>
 
@@ -15,6 +16,13 @@ int luawt_WOverlayLoadingIndicator_make(lua_State* L) {
     int index = luawt_getSuitableArgsGroup(L, luawt_WOverlayLoadingIndicator_make_args);
     if (index == 0) {
     WOverlayLoadingIndicator * result = new WOverlayLoadingIndicator();
+    luawt_Application* app = luawt_Application::instance();
+    if (!app) {
+        delete result;
+        throw std::logic_error("No WApplication when creating WOverlayLoadingIndicator");
+    }
+    app->root()->addWidget(result);
+    
     luawt_toLua(L, result);
     return 1;
 
@@ -22,6 +30,13 @@ int luawt_WOverlayLoadingIndicator_make(lua_State* L) {
     char const * raw1 = lua_tostring(L, 1);
     Wt::WString styleClass = Wt::WString(raw1);
     WOverlayLoadingIndicator * result = new WOverlayLoadingIndicator(styleClass);
+    luawt_Application* app = luawt_Application::instance();
+    if (!app) {
+        delete result;
+        throw std::logic_error("No WApplication when creating WOverlayLoadingIndicator");
+    }
+    app->root()->addWidget(result);
+    
     luawt_toLua(L, result);
     return 1;
 
@@ -31,6 +46,13 @@ int luawt_WOverlayLoadingIndicator_make(lua_State* L) {
     char const * raw2 = lua_tostring(L, 2);
     Wt::WString backgroundStyleClass = Wt::WString(raw2);
     WOverlayLoadingIndicator * result = new WOverlayLoadingIndicator(styleClass, backgroundStyleClass);
+    luawt_Application* app = luawt_Application::instance();
+    if (!app) {
+        delete result;
+        throw std::logic_error("No WApplication when creating WOverlayLoadingIndicator");
+    }
+    app->root()->addWidget(result);
+    
     luawt_toLua(L, result);
     return 1;
 
@@ -42,11 +64,34 @@ int luawt_WOverlayLoadingIndicator_make(lua_State* L) {
     char const * raw3 = lua_tostring(L, 3);
     Wt::WString textStyleClass = Wt::WString(raw3);
     WOverlayLoadingIndicator * result = new WOverlayLoadingIndicator(styleClass, backgroundStyleClass, textStyleClass);
+    luawt_Application* app = luawt_Application::instance();
+    if (!app) {
+        delete result;
+        throw std::logic_error("No WApplication when creating WOverlayLoadingIndicator");
+    }
+    app->root()->addWidget(result);
+    
     luawt_toLua(L, result);
     return 1;
 
     } else {
         return luaL_error(L, "Wrong arguments for WOverlayLoadingIndicator.make");
+    }
+}
+
+static const char* WOverlayLoadingIndicator_widget_args0[] = {luawt_typeToStr<WOverlayLoadingIndicator>(), NULL};
+static const char* const* const luawt_WOverlayLoadingIndicator_widget_args[] = {WOverlayLoadingIndicator_widget_args0, NULL};
+
+int luawt_WOverlayLoadingIndicator_widget(lua_State* L) {
+    int index = luawt_getSuitableArgsGroup(L, luawt_WOverlayLoadingIndicator_widget_args);
+    WOverlayLoadingIndicator* self = luawt_checkFromLua<WOverlayLoadingIndicator>(L, 1);
+    if (index == 0) {
+    Wt::WWidget * result = self->widget();
+    luawt_toLua(L, result);
+    return 1;
+
+    } else {
+        return luaL_error(L, "Wrong arguments for WOverlayLoadingIndicator.widget");
     }
 }
 
@@ -90,6 +135,7 @@ ADD_SIGNAL(gestureChanged, WOverlayLoadingIndicator, Wt::WGestureEvent)
 ADD_SIGNAL(gestureEnded, WOverlayLoadingIndicator, Wt::WGestureEvent)
 
 static const luaL_Reg luawt_WOverlayLoadingIndicator_methods[] = {
+    METHOD(WOverlayLoadingIndicator, widget),
     METHOD(WOverlayLoadingIndicator, setMessage),
     METHOD(WOverlayLoadingIndicator, scrolled),
     METHOD(WOverlayLoadingIndicator, keyWentDown),

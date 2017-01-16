@@ -124,6 +124,13 @@ def isDescendantOf(child, base_name, Wt):
         return False
     return isDescendantLogic(child_class, base_name)
 
+def isBaseOrItsDescendant(child, base_name, Wt):
+    if isDescendantOf(child, base_name, Wt):
+        return True
+    elif getClassStr(child) == base_name:
+        return True
+    return False
+
 def checkArgumentType(method_name, arg_type, Wt):
     if isTemplate(method_name, str(arg_type)):
         return False
@@ -144,7 +151,7 @@ def checkArgumentType(method_name, arg_type, Wt):
             if not pygccxml.declarations.is_pointer(arg_type):
                 if not pygccxml.declarations.is_reference(arg_type):
                     return True
-    elif isDescendantOf(clearType(arg_type), 'WWidget', Wt):
+    elif isBaseOrItsDescendant(clearType(arg_type), 'WWidget', Wt):
         if not pygccxml.declarations.is_pointer(arg_type):
             logging.info(
                 'Argument of method %s has strange type %s',
@@ -171,7 +178,7 @@ def checkReturnType(method_name, raw_return_type, Wt):
             return True
         elif not pygccxml.declarations.is_pointer(raw_return_type):
             return True
-    elif isDescendantOf(clearType(raw_return_type), 'WWidget', Wt):
+    elif isBaseOrItsDescendant(clearType(raw_return_type), 'WWidget', Wt):
         if pygccxml.declarations.is_pointer(raw_return_type):
             return True
         elif isConstReference(raw_return_type):
@@ -266,9 +273,7 @@ def getMembers(global_namespace, module_name, blacklisted):
     main_class = Wt.class_(name=module_name)
     base_r = None
     for base in main_class.bases:
-        if isDescendantOf(base.related_class, 'WWidget', Wt):
-            base_r = base.related_class
-        elif base.related_class.name == 'WWidget':
+        if isBaseOrItsDescendant(base.related_class, "WWidget", Wt):
             base_r = base.related_class
     if not base_r:
         raise Exception('Unable to bind %s, because it isnt descendant of WWidget' % module_name)
@@ -291,6 +296,14 @@ def getMembers(global_namespace, module_name, blacklisted):
     ]
     return methods, signals, base_r
 
+def noParent(args):
+    for arg in args:
+        if arg.name == 'parent':
+            type_s = str(clearType(getArgType(arg)))
+            if type_s == 'Wt::WContainerWidget':
+                return False
+    return True
+
 # For widget tests generation.
 # Function returns flag - constructors type:
 # - 0 means error - no constructors supported by luawt.test are available;
@@ -302,10 +315,8 @@ def getConstructorsType(constructors):
     for constructor in constructors:
         args = constructor.arguments
         req_args = constructor.required_args
-        if len(args) == 1:
-            type_s = str(clearType(getArgType(args[0])))
-            if type_s == 'Wt::WContainerWidget':
-                has_sing_arg = True
+        if (len(args) == 1) and not noParent(args):
+            has_sing_arg = True
         elif len(req_args) == 0:
             has_void_args = True
     if has_sing_arg:
@@ -318,7 +329,7 @@ def getConstructors(global_namespace, module_name, blacklisted):
     Wt = global_namespace.namespace('Wt')
     main_class = Wt.class_(name=module_name)
     if main_class.is_abstract:
-        return []
+        return [], 0
     custom_matcher = pygccxml.declarations.custom_matcher_t(
         lambda decl: checkWtFunction(True, decl, Wt),
     )
@@ -514,6 +525,17 @@ def getArgsStr(args):
     return ', '.join(arg_e for arg_e in args_list)
 
 
+def addWidgetToContainer(module_name):
+    frame = r'''
+    luawt_Application* app = luawt_Application::instance();
+    if (!app) {
+        delete result;
+        throw std::logic_error("No WApplication when creating %s");
+    }
+    app->root()->addWidget(result);
+    '''
+    return frame % module_name
+
 def callWtConstructor(return_type, args, module_name):
     call_s = 'new %s(' % module_name
     args_s = getArgsStr(args)
@@ -676,6 +698,8 @@ def implementLuaCFunction(
                 body.append(getComplexArgument(options))
         if is_constructor:
             body.append(callWtConstructor(str(return_type), args, module_name))
+            if noParent(args):
+                body.append(addWidgetToContainer(module_name))
         else:
             body.append(callWtFunction(str(return_type), args, method_name))
         body.append(returnValue(str(return_type)))
@@ -973,7 +997,7 @@ def collectMembers(path):
                 module_name,
                 blacklisted,
             )
-            constructors = getConstructors(
+            constructors, _ = getConstructors(
                 global_namespace,
                 module_name,
                 blacklisted,

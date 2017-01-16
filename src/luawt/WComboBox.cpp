@@ -14,6 +14,13 @@ int luawt_WComboBox_make(lua_State* L) {
     int index = luawt_getSuitableArgsGroup(L, luawt_WComboBox_make_args);
     if (index == 0) {
     WComboBox * result = new WComboBox();
+    luawt_Application* app = luawt_Application::instance();
+    if (!app) {
+        delete result;
+        throw std::logic_error("No WApplication when creating WComboBox");
+    }
+    app->root()->addWidget(result);
+    
     luawt_toLua(L, result);
     return 1;
 
@@ -209,6 +216,23 @@ int luawt_WComboBox_removeItem(lua_State* L) {
     }
 }
 
+static const char* WComboBox_setValueText_args0[] = {luawt_typeToStr<WComboBox>(), "char const *", NULL};
+static const char* const* const luawt_WComboBox_setValueText_args[] = {WComboBox_setValueText_args0, NULL};
+
+int luawt_WComboBox_setValueText(lua_State* L) {
+    int index = luawt_getSuitableArgsGroup(L, luawt_WComboBox_setValueText_args);
+    WComboBox* self = luawt_checkFromLua<WComboBox>(L, 1);
+    if (index == 0) {
+    char const * raw2 = lua_tostring(L, 2);
+    Wt::WString value = Wt::WString(raw2);
+    self->setValueText(value);
+    return 0;
+    
+    } else {
+        return luaL_error(L, "Wrong arguments for WComboBox.setValueText");
+    }
+}
+
 static const char* WComboBox_setModelColumn_args0[] = {luawt_typeToStr<WComboBox>(), "int", NULL};
 static const char* const* const luawt_WComboBox_setModelColumn_args[] = {WComboBox_setModelColumn_args0, NULL};
 
@@ -222,6 +246,22 @@ int luawt_WComboBox_setModelColumn(lua_State* L) {
     
     } else {
         return luaL_error(L, "Wrong arguments for WComboBox.setModelColumn");
+    }
+}
+
+static const char* WComboBox_valueText_args0[] = {luawt_typeToStr<WComboBox>(), NULL};
+static const char* const* const luawt_WComboBox_valueText_args[] = {WComboBox_valueText_args0, NULL};
+
+int luawt_WComboBox_valueText(lua_State* L) {
+    int index = luawt_getSuitableArgsGroup(L, luawt_WComboBox_valueText_args);
+    WComboBox* self = luawt_checkFromLua<WComboBox>(L, 1);
+    if (index == 0) {
+    Wt::WString result = self->valueText();
+    lua_pushstring(L, result.toUTF8().c_str());
+    return 1;
+
+    } else {
+        return luaL_error(L, "Wrong arguments for WComboBox.valueText");
     }
 }
 
@@ -261,6 +301,8 @@ static const luaL_Reg luawt_WComboBox_methods[] = {
     METHOD(WComboBox, currentText),
     METHOD(WComboBox, itemText),
     METHOD(WComboBox, setModelColumn),
+    METHOD(WComboBox, valueText),
+    METHOD(WComboBox, setValueText),
     METHOD(WComboBox, refresh),
     METHOD(WComboBox, clear),
     METHOD(WComboBox, changed),

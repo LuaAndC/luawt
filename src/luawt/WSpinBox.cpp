@@ -13,6 +13,13 @@ int luawt_WSpinBox_make(lua_State* L) {
     int index = luawt_getSuitableArgsGroup(L, luawt_WSpinBox_make_args);
     if (index == 0) {
     WSpinBox * result = new WSpinBox();
+    luawt_Application* app = luawt_Application::instance();
+    if (!app) {
+        delete result;
+        throw std::logic_error("No WApplication when creating WSpinBox");
+    }
+    app->root()->addWidget(result);
+    
     luawt_toLua(L, result);
     return 1;
 

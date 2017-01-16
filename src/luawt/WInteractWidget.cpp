@@ -4,30 +4,66 @@
 
 #include "globals.hpp"
 
-int luawt_WInteractWidget_load(lua_State* L) {
-    int argc = lua_gettop(L) - 1;
+static const char* WInteractWidget_load_args0[] = {luawt_typeToStr<WInteractWidget>(), NULL};
+static const char* const* const luawt_WInteractWidget_load_args[] = {WInteractWidget_load_args0, NULL};
 
+int luawt_WInteractWidget_load(lua_State* L) {
+    int index = luawt_getSuitableArgsGroup(L, luawt_WInteractWidget_load_args);
     WInteractWidget* self = luawt_checkFromLua<WInteractWidget>(L, 1);
-        if (argc == 0) {
+    if (index == 0) {
     self->load();
     return 0;
     
     } else {
-        return luaL_error(L, "Wrong arguments number for WInteractWidget.load: %d", argc);
+        return luaL_error(L, "Wrong arguments for WInteractWidget.load");
     }
 }
 
-int luawt_WInteractWidget_isEnabled(lua_State* L) {
-    int argc = lua_gettop(L) - 1;
+static const char* WInteractWidget_mouseOverDelay_args0[] = {luawt_typeToStr<WInteractWidget>(), NULL};
+static const char* const* const luawt_WInteractWidget_mouseOverDelay_args[] = {WInteractWidget_mouseOverDelay_args0, NULL};
 
+int luawt_WInteractWidget_mouseOverDelay(lua_State* L) {
+    int index = luawt_getSuitableArgsGroup(L, luawt_WInteractWidget_mouseOverDelay_args);
     WInteractWidget* self = luawt_checkFromLua<WInteractWidget>(L, 1);
-        if (argc == 0) {
+    if (index == 0) {
+    int result = self->mouseOverDelay();
+    lua_pushinteger(L, result);
+    return 1;
+
+    } else {
+        return luaL_error(L, "Wrong arguments for WInteractWidget.mouseOverDelay");
+    }
+}
+
+static const char* WInteractWidget_isEnabled_args0[] = {luawt_typeToStr<WInteractWidget>(), NULL};
+static const char* const* const luawt_WInteractWidget_isEnabled_args[] = {WInteractWidget_isEnabled_args0, NULL};
+
+int luawt_WInteractWidget_isEnabled(lua_State* L) {
+    int index = luawt_getSuitableArgsGroup(L, luawt_WInteractWidget_isEnabled_args);
+    WInteractWidget* self = luawt_checkFromLua<WInteractWidget>(L, 1);
+    if (index == 0) {
     bool result = self->isEnabled();
     lua_pushboolean(L, result);
     return 1;
 
     } else {
-        return luaL_error(L, "Wrong arguments number for WInteractWidget.isEnabled: %d", argc);
+        return luaL_error(L, "Wrong arguments for WInteractWidget.isEnabled");
+    }
+}
+
+static const char* WInteractWidget_setMouseOverDelay_args0[] = {luawt_typeToStr<WInteractWidget>(), "int", NULL};
+static const char* const* const luawt_WInteractWidget_setMouseOverDelay_args[] = {WInteractWidget_setMouseOverDelay_args0, NULL};
+
+int luawt_WInteractWidget_setMouseOverDelay(lua_State* L) {
+    int index = luawt_getSuitableArgsGroup(L, luawt_WInteractWidget_setMouseOverDelay_args);
+    WInteractWidget* self = luawt_checkFromLua<WInteractWidget>(L, 1);
+    if (index == 0) {
+    int delay = lua_tointeger(L, 2);
+    self->setMouseOverDelay(delay);
+    return 0;
+    
+    } else {
+        return luaL_error(L, "Wrong arguments for WInteractWidget.setMouseOverDelay");
     }
 }
 
@@ -53,6 +89,8 @@ ADD_SIGNAL(gestureChanged, WInteractWidget, Wt::WGestureEvent)
 ADD_SIGNAL(gestureEnded, WInteractWidget, Wt::WGestureEvent)
 
 static const luaL_Reg luawt_WInteractWidget_methods[] = {
+    METHOD(WInteractWidget, setMouseOverDelay),
+    METHOD(WInteractWidget, mouseOverDelay),
     METHOD(WInteractWidget, load),
     METHOD(WInteractWidget, isEnabled),
     METHOD(WInteractWidget, keyWentDown),

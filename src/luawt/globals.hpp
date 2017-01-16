@@ -20,8 +20,10 @@
 #include "boost-xtime.hpp"
 #include <Wt/WApplication>
 #include <Wt/WContainerWidget>
+#include <Wt/WDefaultLoadingIndicator>
 #include <Wt/WEnvironment>
 #include <Wt/WObject>
+#include <Wt/WOverlayLoadingIndicator>
 #include <Wt/WServer>
 #include <Wt/WText>
 
@@ -215,6 +217,34 @@ inline void luawt_toLua(lua_State* L, T* obj) {
     std::string id = obj->id();
     memcpy(lobj, id.c_str(), id.size() + 1);
     luaL_getmetatable(L, luawt_typeToStr<T>());
+    assert(lua_type(L, -1) == LUA_TTABLE);
+    lua_setmetatable(L, -2);
+}
+
+template<>
+inline void luawt_toLua<WDefaultLoadingIndicator>(
+    lua_State* L,
+    WDefaultLoadingIndicator* obj
+) {
+    size_t lobj_size = 1 + obj->WText::id().size(); // with 0x00
+    void* lobj = lua_newuserdata(L, lobj_size);
+    std::string id = obj->WText::id();
+    memcpy(lobj, id.c_str(), id.size() + 1);
+    luaL_getmetatable(L, luawt_typeToStr<WDefaultLoadingIndicator>());
+    assert(lua_type(L, -1) == LUA_TTABLE);
+    lua_setmetatable(L, -2);
+}
+
+template<>
+inline void luawt_toLua<WOverlayLoadingIndicator>(
+    lua_State* L,
+    WOverlayLoadingIndicator* obj
+) {
+    size_t lobj_size = 1 + obj->WContainerWidget::id().size(); // with 0x00
+    void* lobj = lua_newuserdata(L, lobj_size);
+    std::string id = obj->WContainerWidget::id();
+    memcpy(lobj, id.c_str(), id.size() + 1);
+    luaL_getmetatable(L, luawt_typeToStr<WOverlayLoadingIndicator>());
     assert(lua_type(L, -1) == LUA_TTABLE);
     lua_setmetatable(L, -2);
 }
@@ -504,15 +534,18 @@ inline int luawt_getSuitableArgsGroup(
 void luawt_Shared(lua_State* L);
 void luawt_Test(lua_State* L);
 void luawt_WAbstractItemView(lua_State* L);
+void luawt_WAbstractMedia(lua_State* L);
 void luawt_WAbstractSpinBox(lua_State* L);
 void luawt_WAbstractToggleButton(lua_State* L);
 void luawt_WAnchor(lua_State* L);
 void luawt_WApplication(lua_State* L);
+void luawt_WAudio(lua_State* L);
 void luawt_WCalendar(lua_State* L);
 void luawt_WCheckBox(lua_State* L);
 void luawt_WComboBox(lua_State* L);
 void luawt_WCompositeWidget(lua_State* L);
 void luawt_WContainerWidget(lua_State* L);
+void luawt_WDateEdit(lua_State* L);
 void luawt_WDatePicker(lua_State* L);
 void luawt_WDefaultLoadingIndicator(lua_State* L);
 void luawt_WDoubleSpinBox(lua_State* L);
@@ -529,16 +562,21 @@ void luawt_WInPlaceEdit(lua_State* L);
 void luawt_WInteractWidget(lua_State* L);
 void luawt_WLabel(lua_State* L);
 void luawt_WLineEdit(lua_State* L);
+void luawt_WMediaPlayer(lua_State* L);
 void luawt_WMenu(lua_State* L);
+void luawt_WMenuItem(lua_State* L);
+void luawt_WNavigationBar(lua_State* L);
 void luawt_WOverlayLoadingIndicator(lua_State* L);
 void luawt_WPaintedWidget(lua_State* L);
 void luawt_WPanel(lua_State* L);
+void luawt_WPopupMenu(lua_State* L);
 void luawt_WProgressBar(lua_State* L);
 void luawt_WPushButton(lua_State* L);
 void luawt_WScrollArea(lua_State* L);
 void luawt_WSelectionBox(lua_State* L);
 void luawt_WSlider(lua_State* L);
 void luawt_WSpinBox(lua_State* L);
+void luawt_WSplitButton(lua_State* L);
 void luawt_WStackedWidget(lua_State* L);
 void luawt_WTabWidget(lua_State* L);
 void luawt_WTable(lua_State* L);
@@ -552,11 +590,14 @@ void luawt_WServer(lua_State* L);
 void luawt_WText(lua_State* L);
 void luawt_WTextArea(lua_State* L);
 void luawt_WTextEdit(lua_State* L);
+void luawt_WToolBar(lua_State* L);
 void luawt_WTree(lua_State* L);
 void luawt_WTreeNode(lua_State* L);
 void luawt_WTreeTable(lua_State* L);
 void luawt_WTreeTableNode(lua_State* L);
 void luawt_WTreeView(lua_State* L);
+void luawt_WValidationStatus(lua_State* L);
+void luawt_WVideo(lua_State* L);
 void luawt_WViewWidget(lua_State* L);
 void luawt_WVirtualImage(lua_State* L);
 void luawt_WWebWidget(lua_State* L);

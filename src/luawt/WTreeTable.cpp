@@ -1,6 +1,7 @@
 #include "boost-xtime.hpp"
 
 #include <Wt/WString>
+#include <Wt/WWidget>
 #include <Wt/WTree>
 #include <Wt/WTreeTable>
 #include <Wt/WTreeTableNode>
@@ -17,6 +18,13 @@ int luawt_WTreeTable_make(lua_State* L) {
     int index = luawt_getSuitableArgsGroup(L, luawt_WTreeTable_make_args);
     if (index == 0) {
     WTreeTable * result = new WTreeTable();
+    luawt_Application* app = luawt_Application::instance();
+    if (!app) {
+        delete result;
+        throw std::logic_error("No WApplication when creating WTreeTable");
+    }
+    app->root()->addWidget(result);
+    
     luawt_toLua(L, result);
     return 1;
 
@@ -135,6 +143,22 @@ int luawt_WTreeTable_header(lua_State* L) {
     }
 }
 
+static const char* WTreeTable_headerWidget_args0[] = {luawt_typeToStr<WTreeTable>(), NULL};
+static const char* const* const luawt_WTreeTable_headerWidget_args[] = {WTreeTable_headerWidget_args0, NULL};
+
+int luawt_WTreeTable_headerWidget(lua_State* L) {
+    int index = luawt_getSuitableArgsGroup(L, luawt_WTreeTable_headerWidget_args);
+    WTreeTable* self = luawt_checkFromLua<WTreeTable>(L, 1);
+    if (index == 0) {
+    Wt::WWidget * result = self->headerWidget();
+    luawt_toLua(L, result);
+    return 1;
+
+    } else {
+        return luaL_error(L, "Wrong arguments for WTreeTable.headerWidget");
+    }
+}
+
 
 static const luaL_Reg luawt_WTreeTable_methods[] = {
     METHOD(WTreeTable, columnCount),
@@ -143,6 +167,7 @@ static const luaL_Reg luawt_WTreeTable_methods[] = {
     METHOD(WTreeTable, setTree),
     METHOD(WTreeTable, tree),
     METHOD(WTreeTable, header),
+    METHOD(WTreeTable, headerWidget),
     {NULL, NULL},
 };
 

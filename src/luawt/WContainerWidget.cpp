@@ -1,5 +1,6 @@
 #include "boost-xtime.hpp"
 
+#include <Wt/WWidget>
 #include <Wt/WContainerWidget>
 
 #include "globals.hpp"
@@ -12,6 +13,13 @@ int luawt_WContainerWidget_make(lua_State* L) {
     int index = luawt_getSuitableArgsGroup(L, luawt_WContainerWidget_make_args);
     if (index == 0) {
     WContainerWidget * result = new WContainerWidget();
+    luawt_Application* app = luawt_Application::instance();
+    if (!app) {
+        delete result;
+        throw std::logic_error("No WApplication when creating WContainerWidget");
+    }
+    app->root()->addWidget(result);
+    
     luawt_toLua(L, result);
     return 1;
 
@@ -43,6 +51,60 @@ int luawt_WContainerWidget_count(lua_State* L) {
     }
 }
 
+static const char* WContainerWidget_widget_args0[] = {luawt_typeToStr<WContainerWidget>(), "int", NULL};
+static const char* const* const luawt_WContainerWidget_widget_args[] = {WContainerWidget_widget_args0, NULL};
+
+int luawt_WContainerWidget_widget(lua_State* L) {
+    int index = luawt_getSuitableArgsGroup(L, luawt_WContainerWidget_widget_args);
+    WContainerWidget* self = luawt_checkFromLua<WContainerWidget>(L, 1);
+    if (index == 0) {
+    int index = lua_tointeger(L, 2);
+    Wt::WWidget * result = self->widget(index);
+    luawt_toLua(L, result);
+    return 1;
+
+    } else {
+        return luaL_error(L, "Wrong arguments for WContainerWidget.widget");
+    }
+}
+
+static const char* WContainerWidget_insertBefore_args0[] = {luawt_typeToStr<WContainerWidget>(), luawt_typeToStr<Wt::WWidget>(), luawt_typeToStr<Wt::WWidget>(), NULL};
+static const char* const* const luawt_WContainerWidget_insertBefore_args[] = {WContainerWidget_insertBefore_args0, NULL};
+
+int luawt_WContainerWidget_insertBefore(lua_State* L) {
+    int index = luawt_getSuitableArgsGroup(L, luawt_WContainerWidget_insertBefore_args);
+    WContainerWidget* self = luawt_checkFromLua<WContainerWidget>(L, 1);
+    if (index == 0) {
+    Wt::WWidget* widget =
+        luawt_checkFromLua<Wt::WWidget>(L, 2);
+    Wt::WWidget* before =
+        luawt_checkFromLua<Wt::WWidget>(L, 3);
+    self->insertBefore(widget, before);
+    return 0;
+    
+    } else {
+        return luaL_error(L, "Wrong arguments for WContainerWidget.insertBefore");
+    }
+}
+
+static const char* WContainerWidget_indexOf_args0[] = {luawt_typeToStr<WContainerWidget>(), luawt_typeToStr<Wt::WWidget>(), NULL};
+static const char* const* const luawt_WContainerWidget_indexOf_args[] = {WContainerWidget_indexOf_args0, NULL};
+
+int luawt_WContainerWidget_indexOf(lua_State* L) {
+    int index = luawt_getSuitableArgsGroup(L, luawt_WContainerWidget_indexOf_args);
+    WContainerWidget* self = luawt_checkFromLua<WContainerWidget>(L, 1);
+    if (index == 0) {
+    Wt::WWidget* widget =
+        luawt_checkFromLua<Wt::WWidget>(L, 2);
+    int result = self->indexOf(widget);
+    lua_pushinteger(L, result);
+    return 1;
+
+    } else {
+        return luaL_error(L, "Wrong arguments for WContainerWidget.indexOf");
+    }
+}
+
 static const char* WContainerWidget_clear_args0[] = {luawt_typeToStr<WContainerWidget>(), NULL};
 static const char* const* const luawt_WContainerWidget_clear_args[] = {WContainerWidget_clear_args0, NULL};
 
@@ -55,6 +117,24 @@ int luawt_WContainerWidget_clear(lua_State* L) {
     
     } else {
         return luaL_error(L, "Wrong arguments for WContainerWidget.clear");
+    }
+}
+
+static const char* WContainerWidget_insertWidget_args0[] = {luawt_typeToStr<WContainerWidget>(), "int", luawt_typeToStr<Wt::WWidget>(), NULL};
+static const char* const* const luawt_WContainerWidget_insertWidget_args[] = {WContainerWidget_insertWidget_args0, NULL};
+
+int luawt_WContainerWidget_insertWidget(lua_State* L) {
+    int index = luawt_getSuitableArgsGroup(L, luawt_WContainerWidget_insertWidget_args);
+    WContainerWidget* self = luawt_checkFromLua<WContainerWidget>(L, 1);
+    if (index == 0) {
+    int index = lua_tointeger(L, 2);
+    Wt::WWidget* widget =
+        luawt_checkFromLua<Wt::WWidget>(L, 3);
+    self->insertWidget(index, widget);
+    return 0;
+    
+    } else {
+        return luaL_error(L, "Wrong arguments for WContainerWidget.insertWidget");
     }
 }
 
@@ -78,6 +158,23 @@ int luawt_WContainerWidget_setList(lua_State* L) {
     
     } else {
         return luaL_error(L, "Wrong arguments for WContainerWidget.setList");
+    }
+}
+
+static const char* WContainerWidget_removeWidget_args0[] = {luawt_typeToStr<WContainerWidget>(), luawt_typeToStr<Wt::WWidget>(), NULL};
+static const char* const* const luawt_WContainerWidget_removeWidget_args[] = {WContainerWidget_removeWidget_args0, NULL};
+
+int luawt_WContainerWidget_removeWidget(lua_State* L) {
+    int index = luawt_getSuitableArgsGroup(L, luawt_WContainerWidget_removeWidget_args);
+    WContainerWidget* self = luawt_checkFromLua<WContainerWidget>(L, 1);
+    if (index == 0) {
+    Wt::WWidget* widget =
+        luawt_checkFromLua<Wt::WWidget>(L, 2);
+    self->removeWidget(widget);
+    return 0;
+    
+    } else {
+        return luaL_error(L, "Wrong arguments for WContainerWidget.removeWidget");
     }
 }
 
@@ -110,6 +207,23 @@ int luawt_WContainerWidget_isList(lua_State* L) {
 
     } else {
         return luaL_error(L, "Wrong arguments for WContainerWidget.isList");
+    }
+}
+
+static const char* WContainerWidget_addWidget_args0[] = {luawt_typeToStr<WContainerWidget>(), luawt_typeToStr<Wt::WWidget>(), NULL};
+static const char* const* const luawt_WContainerWidget_addWidget_args[] = {WContainerWidget_addWidget_args0, NULL};
+
+int luawt_WContainerWidget_addWidget(lua_State* L) {
+    int index = luawt_getSuitableArgsGroup(L, luawt_WContainerWidget_addWidget_args);
+    WContainerWidget* self = luawt_checkFromLua<WContainerWidget>(L, 1);
+    if (index == 0) {
+    Wt::WWidget* widget =
+        luawt_checkFromLua<Wt::WWidget>(L, 2);
+    self->addWidget(widget);
+    return 0;
+    
+    } else {
+        return luaL_error(L, "Wrong arguments for WContainerWidget.addWidget");
     }
 }
 
@@ -152,7 +266,13 @@ ADD_SIGNAL(gestureChanged, WContainerWidget, Wt::WGestureEvent)
 ADD_SIGNAL(gestureEnded, WContainerWidget, Wt::WGestureEvent)
 
 static const luaL_Reg luawt_WContainerWidget_methods[] = {
+    METHOD(WContainerWidget, addWidget),
+    METHOD(WContainerWidget, insertBefore),
+    METHOD(WContainerWidget, insertWidget),
+    METHOD(WContainerWidget, removeWidget),
     METHOD(WContainerWidget, clear),
+    METHOD(WContainerWidget, indexOf),
+    METHOD(WContainerWidget, widget),
     METHOD(WContainerWidget, count),
     METHOD(WContainerWidget, setList),
     METHOD(WContainerWidget, isList),

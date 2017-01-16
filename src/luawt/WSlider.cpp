@@ -2,6 +2,7 @@
 
 #include <Wt/WSlider>
 #include <Wt/WContainerWidget>
+#include <Wt/WString>
 
 #include "globals.hpp"
 
@@ -15,6 +16,13 @@ int luawt_WSlider_make(lua_State* L) {
     int index = luawt_getSuitableArgsGroup(L, luawt_WSlider_make_args);
     if (index == 0) {
     WSlider * result = new WSlider();
+    luawt_Application* app = luawt_Application::instance();
+    if (!app) {
+        delete result;
+        throw std::logic_error("No WApplication when creating WSlider");
+    }
+    app->root()->addWidget(result);
+    
     luawt_toLua(L, result);
     return 1;
 
@@ -28,6 +36,13 @@ int luawt_WSlider_make(lua_State* L) {
     } else if (index == 2) {
     Wt::Orientation orientation = static_cast<Wt::Orientation>(lua_tointeger(L, 1));
     WSlider * result = new WSlider(orientation);
+    luawt_Application* app = luawt_Application::instance();
+    if (!app) {
+        delete result;
+        throw std::logic_error("No WApplication when creating WSlider");
+    }
+    app->root()->addWidget(result);
+    
     luawt_toLua(L, result);
     return 1;
 
@@ -124,6 +139,22 @@ int luawt_WSlider_orientation(lua_State* L) {
     }
 }
 
+static const char* WSlider_valueText_args0[] = {luawt_typeToStr<WSlider>(), NULL};
+static const char* const* const luawt_WSlider_valueText_args[] = {WSlider_valueText_args0, NULL};
+
+int luawt_WSlider_valueText(lua_State* L) {
+    int index = luawt_getSuitableArgsGroup(L, luawt_WSlider_valueText_args);
+    WSlider* self = luawt_checkFromLua<WSlider>(L, 1);
+    if (index == 0) {
+    Wt::WString result = self->valueText();
+    lua_pushstring(L, result.toUTF8().c_str());
+    return 1;
+
+    } else {
+        return luaL_error(L, "Wrong arguments for WSlider.valueText");
+    }
+}
+
 static const char* WSlider_maximum_args0[] = {luawt_typeToStr<WSlider>(), NULL};
 static const char* const* const luawt_WSlider_maximum_args[] = {WSlider_maximum_args0, NULL};
 
@@ -172,6 +203,38 @@ int luawt_WSlider_minimum(lua_State* L) {
     }
 }
 
+static const char* WSlider_setDisabled_args0[] = {luawt_typeToStr<WSlider>(), "bool", NULL};
+static const char* const* const luawt_WSlider_setDisabled_args[] = {WSlider_setDisabled_args0, NULL};
+
+int luawt_WSlider_setDisabled(lua_State* L) {
+    int index = luawt_getSuitableArgsGroup(L, luawt_WSlider_setDisabled_args);
+    WSlider* self = luawt_checkFromLua<WSlider>(L, 1);
+    if (index == 0) {
+    bool disabled = lua_toboolean(L, 2);
+    self->setDisabled(disabled);
+    return 0;
+    
+    } else {
+        return luaL_error(L, "Wrong arguments for WSlider.setDisabled");
+    }
+}
+
+static const char* WSlider_setHandleWidth_args0[] = {luawt_typeToStr<WSlider>(), "int", NULL};
+static const char* const* const luawt_WSlider_setHandleWidth_args[] = {WSlider_setHandleWidth_args0, NULL};
+
+int luawt_WSlider_setHandleWidth(lua_State* L) {
+    int index = luawt_getSuitableArgsGroup(L, luawt_WSlider_setHandleWidth_args);
+    WSlider* self = luawt_checkFromLua<WSlider>(L, 1);
+    if (index == 0) {
+    int width = lua_tointeger(L, 2);
+    self->setHandleWidth(width);
+    return 0;
+    
+    } else {
+        return luaL_error(L, "Wrong arguments for WSlider.setHandleWidth");
+    }
+}
+
 static const char* WSlider_nativeControl_args0[] = {luawt_typeToStr<WSlider>(), NULL};
 static const char* const* const luawt_WSlider_nativeControl_args[] = {WSlider_nativeControl_args0, NULL};
 
@@ -185,6 +248,23 @@ int luawt_WSlider_nativeControl(lua_State* L) {
 
     } else {
         return luaL_error(L, "Wrong arguments for WSlider.nativeControl");
+    }
+}
+
+static const char* WSlider_setValueText_args0[] = {luawt_typeToStr<WSlider>(), "char const *", NULL};
+static const char* const* const luawt_WSlider_setValueText_args[] = {WSlider_setValueText_args0, NULL};
+
+int luawt_WSlider_setValueText(lua_State* L) {
+    int index = luawt_getSuitableArgsGroup(L, luawt_WSlider_setValueText_args);
+    WSlider* self = luawt_checkFromLua<WSlider>(L, 1);
+    if (index == 0) {
+    char const * raw2 = lua_tostring(L, 2);
+    Wt::WString value = Wt::WString(raw2);
+    self->setValueText(value);
+    return 0;
+    
+    } else {
+        return luaL_error(L, "Wrong arguments for WSlider.setValueText");
     }
 }
 
@@ -218,6 +298,22 @@ int luawt_WSlider_tickInterval(lua_State* L) {
 
     } else {
         return luaL_error(L, "Wrong arguments for WSlider.tickInterval");
+    }
+}
+
+static const char* WSlider_handleWidth_args0[] = {luawt_typeToStr<WSlider>(), NULL};
+static const char* const* const luawt_WSlider_handleWidth_args[] = {WSlider_handleWidth_args0, NULL};
+
+int luawt_WSlider_handleWidth(lua_State* L) {
+    int index = luawt_getSuitableArgsGroup(L, luawt_WSlider_handleWidth_args);
+    WSlider* self = luawt_checkFromLua<WSlider>(L, 1);
+    if (index == 0) {
+    int result = self->handleWidth();
+    lua_pushinteger(L, result);
+    return 1;
+
+    } else {
+        return luaL_error(L, "Wrong arguments for WSlider.handleWidth");
     }
 }
 
@@ -292,6 +388,11 @@ static const luaL_Reg luawt_WSlider_methods[] = {
     METHOD(WSlider, setMinimum),
     METHOD(WSlider, minimum),
     METHOD(WSlider, setRange),
+    METHOD(WSlider, setHandleWidth),
+    METHOD(WSlider, handleWidth),
+    METHOD(WSlider, setDisabled),
+    METHOD(WSlider, valueText),
+    METHOD(WSlider, setValueText),
     METHOD(WSlider, changed),
     METHOD(WSlider, selected),
     METHOD(WSlider, blurred),

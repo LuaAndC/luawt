@@ -15,6 +15,13 @@ int luawt_WAnchor_make(lua_State* L) {
     int index = luawt_getSuitableArgsGroup(L, luawt_WAnchor_make_args);
     if (index == 0) {
     WAnchor * result = new WAnchor();
+    luawt_Application* app = luawt_Application::instance();
+    if (!app) {
+        delete result;
+        throw std::logic_error("No WApplication when creating WAnchor");
+    }
+    app->root()->addWidget(result);
+    
     luawt_toLua(L, result);
     return 1;
 
@@ -145,6 +152,22 @@ int luawt_WAnchor_wordWrap(lua_State* L) {
     }
 }
 
+static const char* WAnchor_image_args0[] = {luawt_typeToStr<WAnchor>(), NULL};
+static const char* const* const luawt_WAnchor_image_args[] = {WAnchor_image_args0, NULL};
+
+int luawt_WAnchor_image(lua_State* L) {
+    int index = luawt_getSuitableArgsGroup(L, luawt_WAnchor_image_args);
+    WAnchor* self = luawt_checkFromLua<WAnchor>(L, 1);
+    if (index == 0) {
+    Wt::WImage * result = self->image();
+    luawt_toLua(L, result);
+    return 1;
+
+    } else {
+        return luaL_error(L, "Wrong arguments for WAnchor.image");
+    }
+}
+
 static const char* WAnchor_setWordWrap_args0[] = {luawt_typeToStr<WAnchor>(), "bool", NULL};
 static const char* const* const luawt_WAnchor_setWordWrap_args[] = {WAnchor_setWordWrap_args0, NULL};
 
@@ -178,35 +201,35 @@ int luawt_WAnchor_setRef(lua_State* L) {
     }
 }
 
-static const char* WAnchor_ref_args0[] = {luawt_typeToStr<WAnchor>(), NULL};
-static const char* const* const luawt_WAnchor_ref_args[] = {WAnchor_ref_args0, NULL};
+static const char* WAnchor_textFormat_args0[] = {luawt_typeToStr<WAnchor>(), NULL};
+static const char* const* const luawt_WAnchor_textFormat_args[] = {WAnchor_textFormat_args0, NULL};
 
-/* int luawt_WAnchor_ref(lua_State* L) {
-    int index = luawt_getSuitableArgsGroup(L, luawt_WAnchor_ref_args);
+int luawt_WAnchor_textFormat(lua_State* L) {
+    int index = luawt_getSuitableArgsGroup(L, luawt_WAnchor_textFormat_args);
     WAnchor* self = luawt_checkFromLua<WAnchor>(L, 1);
     if (index == 0) {
-    std::string const & result = self->ref();
-    lua_pushstring(L, result.c_str());
+    Wt::TextFormat result = self->textFormat();
+    lua_pushinteger(L, result);
     return 1;
 
     } else {
-        return luaL_error(L, "Wrong arguments for WAnchor.ref");
+        return luaL_error(L, "Wrong arguments for WAnchor.textFormat");
     }
-} */
+}
 
-static const char* WAnchor_image_args0[] = {luawt_typeToStr<WAnchor>(), NULL};
-static const char* const* const luawt_WAnchor_image_args[] = {WAnchor_image_args0, NULL};
+static const char* WAnchor_setTextFormat_args0[] = {luawt_typeToStr<WAnchor>(), "int", NULL};
+static const char* const* const luawt_WAnchor_setTextFormat_args[] = {WAnchor_setTextFormat_args0, NULL};
 
-int luawt_WAnchor_image(lua_State* L) {
-    int index = luawt_getSuitableArgsGroup(L, luawt_WAnchor_image_args);
+int luawt_WAnchor_setTextFormat(lua_State* L) {
+    int index = luawt_getSuitableArgsGroup(L, luawt_WAnchor_setTextFormat_args);
     WAnchor* self = luawt_checkFromLua<WAnchor>(L, 1);
     if (index == 0) {
-    Wt::WImage * result = self->image();
-    luawt_toLua(L, result);
-    return 1;
-
+    Wt::TextFormat format = static_cast<Wt::TextFormat>(lua_tointeger(L, 2));
+    self->setTextFormat(format);
+    return 0;
+    
     } else {
-        return luaL_error(L, "Wrong arguments for WAnchor.image");
+        return luaL_error(L, "Wrong arguments for WAnchor.setTextFormat");
     }
 }
 
@@ -239,6 +262,8 @@ static const luaL_Reg luawt_WAnchor_methods[] = {
     METHOD(WAnchor, setText),
     METHOD(WAnchor, text),
     METHOD(WAnchor, setWordWrap),
+    METHOD(WAnchor, setTextFormat),
+    METHOD(WAnchor, textFormat),
     METHOD(WAnchor, wordWrap),
     METHOD(WAnchor, setImage),
     METHOD(WAnchor, image),

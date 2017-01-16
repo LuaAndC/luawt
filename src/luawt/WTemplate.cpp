@@ -1,6 +1,7 @@
 #include "boost-xtime.hpp"
 
 #include <Wt/WTemplate>
+#include <Wt/WWidget>
 #include <Wt/WContainerWidget>
 #include <Wt/WString>
 
@@ -16,6 +17,13 @@ int luawt_WTemplate_make(lua_State* L) {
     int index = luawt_getSuitableArgsGroup(L, luawt_WTemplate_make_args);
     if (index == 0) {
     WTemplate * result = new WTemplate();
+    luawt_Application* app = luawt_Application::instance();
+    if (!app) {
+        delete result;
+        throw std::logic_error("No WApplication when creating WTemplate");
+    }
+    app->root()->addWidget(result);
+    
     luawt_toLua(L, result);
     return 1;
 
@@ -30,6 +38,13 @@ int luawt_WTemplate_make(lua_State* L) {
     char const * raw1 = lua_tostring(L, 1);
     Wt::WString text = Wt::WString(raw1);
     WTemplate * result = new WTemplate(text);
+    luawt_Application* app = luawt_Application::instance();
+    if (!app) {
+        delete result;
+        throw std::logic_error("No WApplication when creating WTemplate");
+    }
+    app->root()->addWidget(result);
+    
     luawt_toLua(L, result);
     return 1;
 
@@ -44,6 +59,42 @@ int luawt_WTemplate_make(lua_State* L) {
 
     } else {
         return luaL_error(L, "Wrong arguments for WTemplate.make");
+    }
+}
+
+static const char* WTemplate_conditionValue_args0[] = {luawt_typeToStr<WTemplate>(), "char const *", NULL};
+static const char* const* const luawt_WTemplate_conditionValue_args[] = {WTemplate_conditionValue_args0, NULL};
+
+int luawt_WTemplate_conditionValue(lua_State* L) {
+    int index = luawt_getSuitableArgsGroup(L, luawt_WTemplate_conditionValue_args);
+    WTemplate* self = luawt_checkFromLua<WTemplate>(L, 1);
+    if (index == 0) {
+    char const * raw2 = lua_tostring(L, 2);
+    std::string name = std::string(raw2);
+    bool result = self->conditionValue(name);
+    lua_pushboolean(L, result);
+    return 1;
+
+    } else {
+        return luaL_error(L, "Wrong arguments for WTemplate.conditionValue");
+    }
+}
+
+static const char* WTemplate_setCondition_args0[] = {luawt_typeToStr<WTemplate>(), "char const *", "bool", NULL};
+static const char* const* const luawt_WTemplate_setCondition_args[] = {WTemplate_setCondition_args0, NULL};
+
+int luawt_WTemplate_setCondition(lua_State* L) {
+    int index = luawt_getSuitableArgsGroup(L, luawt_WTemplate_setCondition_args);
+    WTemplate* self = luawt_checkFromLua<WTemplate>(L, 1);
+    if (index == 0) {
+    char const * raw2 = lua_tostring(L, 2);
+    std::string name = std::string(raw2);
+    bool value = lua_toboolean(L, 3);
+    self->setCondition(name, value);
+    return 0;
+    
+    } else {
+        return luaL_error(L, "Wrong arguments for WTemplate.setCondition");
     }
 }
 
@@ -69,6 +120,23 @@ int luawt_WTemplate_setTemplateText(lua_State* L) {
     
     } else {
         return luaL_error(L, "Wrong arguments for WTemplate.setTemplateText");
+    }
+}
+
+static const char* WTemplate_bindEmpty_args0[] = {luawt_typeToStr<WTemplate>(), "char const *", NULL};
+static const char* const* const luawt_WTemplate_bindEmpty_args[] = {WTemplate_bindEmpty_args0, NULL};
+
+int luawt_WTemplate_bindEmpty(lua_State* L) {
+    int index = luawt_getSuitableArgsGroup(L, luawt_WTemplate_bindEmpty_args);
+    WTemplate* self = luawt_checkFromLua<WTemplate>(L, 1);
+    if (index == 0) {
+    char const * raw2 = lua_tostring(L, 2);
+    std::string varName = std::string(raw2);
+    self->bindEmpty(varName);
+    return 0;
+    
+    } else {
+        return luaL_error(L, "Wrong arguments for WTemplate.bindEmpty");
     }
 }
 
@@ -163,6 +231,61 @@ int luawt_WTemplate_refresh(lua_State* L) {
     }
 }
 
+static const char* WTemplate_bindWidget_args0[] = {luawt_typeToStr<WTemplate>(), "char const *", luawt_typeToStr<Wt::WWidget>(), NULL};
+static const char* const* const luawt_WTemplate_bindWidget_args[] = {WTemplate_bindWidget_args0, NULL};
+
+int luawt_WTemplate_bindWidget(lua_State* L) {
+    int index = luawt_getSuitableArgsGroup(L, luawt_WTemplate_bindWidget_args);
+    WTemplate* self = luawt_checkFromLua<WTemplate>(L, 1);
+    if (index == 0) {
+    char const * raw2 = lua_tostring(L, 2);
+    std::string varName = std::string(raw2);
+    Wt::WWidget* widget =
+        luawt_checkFromLua<Wt::WWidget>(L, 3);
+    self->bindWidget(varName, widget);
+    return 0;
+    
+    } else {
+        return luaL_error(L, "Wrong arguments for WTemplate.bindWidget");
+    }
+}
+
+static const char* WTemplate_takeWidget_args0[] = {luawt_typeToStr<WTemplate>(), "char const *", NULL};
+static const char* const* const luawt_WTemplate_takeWidget_args[] = {WTemplate_takeWidget_args0, NULL};
+
+int luawt_WTemplate_takeWidget(lua_State* L) {
+    int index = luawt_getSuitableArgsGroup(L, luawt_WTemplate_takeWidget_args);
+    WTemplate* self = luawt_checkFromLua<WTemplate>(L, 1);
+    if (index == 0) {
+    char const * raw2 = lua_tostring(L, 2);
+    std::string varName = std::string(raw2);
+    Wt::WWidget * result = self->takeWidget(varName);
+    luawt_toLua(L, result);
+    return 1;
+
+    } else {
+        return luaL_error(L, "Wrong arguments for WTemplate.takeWidget");
+    }
+}
+
+static const char* WTemplate_resolveWidget_args0[] = {luawt_typeToStr<WTemplate>(), "char const *", NULL};
+static const char* const* const luawt_WTemplate_resolveWidget_args[] = {WTemplate_resolveWidget_args0, NULL};
+
+int luawt_WTemplate_resolveWidget(lua_State* L) {
+    int index = luawt_getSuitableArgsGroup(L, luawt_WTemplate_resolveWidget_args);
+    WTemplate* self = luawt_checkFromLua<WTemplate>(L, 1);
+    if (index == 0) {
+    char const * raw2 = lua_tostring(L, 2);
+    std::string varName = std::string(raw2);
+    Wt::WWidget * result = self->resolveWidget(varName);
+    luawt_toLua(L, result);
+    return 1;
+
+    } else {
+        return luaL_error(L, "Wrong arguments for WTemplate.resolveWidget");
+    }
+}
+
 static const char* WTemplate_setInternalPathEncoding_args0[] = {luawt_typeToStr<WTemplate>(), "bool", NULL};
 static const char* const* const luawt_WTemplate_setInternalPathEncoding_args[] = {WTemplate_setInternalPathEncoding_args0, NULL};
 
@@ -223,6 +346,12 @@ static const luaL_Reg luawt_WTemplate_methods[] = {
     METHOD(WTemplate, setTemplateText),
     METHOD(WTemplate, bindString),
     METHOD(WTemplate, bindInt),
+    METHOD(WTemplate, bindWidget),
+    METHOD(WTemplate, takeWidget),
+    METHOD(WTemplate, bindEmpty),
+    METHOD(WTemplate, setCondition),
+    METHOD(WTemplate, conditionValue),
+    METHOD(WTemplate, resolveWidget),
     METHOD(WTemplate, clear),
     METHOD(WTemplate, setInternalPathEncoding),
     METHOD(WTemplate, hasInternalPathEncoding),

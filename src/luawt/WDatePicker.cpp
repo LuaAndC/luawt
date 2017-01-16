@@ -11,14 +11,23 @@
 
 static const char* WDatePicker_make_args0[] = {NULL};
 static const char* WDatePicker_make_args1[] = {luawt_typeToStr<Wt::WContainerWidget>(), NULL};
-static const char* WDatePicker_make_args2[] = {luawt_typeToStr<Wt::WInteractWidget>(), luawt_typeToStr<Wt::WLineEdit>(), NULL};
-static const char* WDatePicker_make_args3[] = {luawt_typeToStr<Wt::WInteractWidget>(), luawt_typeToStr<Wt::WLineEdit>(), luawt_typeToStr<Wt::WContainerWidget>(), NULL};
-static const char* const* const luawt_WDatePicker_make_args[] = {WDatePicker_make_args0, WDatePicker_make_args1, WDatePicker_make_args2, WDatePicker_make_args3, NULL};
+static const char* WDatePicker_make_args2[] = {luawt_typeToStr<Wt::WLineEdit>(), NULL};
+static const char* WDatePicker_make_args3[] = {luawt_typeToStr<Wt::WLineEdit>(), luawt_typeToStr<Wt::WContainerWidget>(), NULL};
+static const char* WDatePicker_make_args4[] = {luawt_typeToStr<Wt::WInteractWidget>(), luawt_typeToStr<Wt::WLineEdit>(), NULL};
+static const char* WDatePicker_make_args5[] = {luawt_typeToStr<Wt::WInteractWidget>(), luawt_typeToStr<Wt::WLineEdit>(), luawt_typeToStr<Wt::WContainerWidget>(), NULL};
+static const char* const* const luawt_WDatePicker_make_args[] = {WDatePicker_make_args0, WDatePicker_make_args1, WDatePicker_make_args2, WDatePicker_make_args3, WDatePicker_make_args4, WDatePicker_make_args5, NULL};
 
 int luawt_WDatePicker_make(lua_State* L) {
     int index = luawt_getSuitableArgsGroup(L, luawt_WDatePicker_make_args);
     if (index == 0) {
     WDatePicker * result = new WDatePicker();
+    luawt_Application* app = luawt_Application::instance();
+    if (!app) {
+        delete result;
+        throw std::logic_error("No WApplication when creating WDatePicker");
+    }
+    app->root()->addWidget(result);
+    
     luawt_toLua(L, result);
     return 1;
 
@@ -30,15 +39,45 @@ int luawt_WDatePicker_make(lua_State* L) {
     return 1;
 
     } else if (index == 2) {
+    Wt::WLineEdit* forEdit =
+        luawt_checkFromLua<Wt::WLineEdit>(L, 1);
+    WDatePicker * result = new WDatePicker(forEdit);
+    luawt_Application* app = luawt_Application::instance();
+    if (!app) {
+        delete result;
+        throw std::logic_error("No WApplication when creating WDatePicker");
+    }
+    app->root()->addWidget(result);
+    
+    luawt_toLua(L, result);
+    return 1;
+
+    } else if (index == 3) {
+    Wt::WLineEdit* forEdit =
+        luawt_checkFromLua<Wt::WLineEdit>(L, 1);
+    Wt::WContainerWidget* parent =
+        luawt_checkFromLua<Wt::WContainerWidget>(L, 2);
+    WDatePicker * result = new WDatePicker(forEdit, parent);
+    luawt_toLua(L, result);
+    return 1;
+
+    } else if (index == 4) {
     Wt::WInteractWidget* displayWidget =
         luawt_checkFromLua<Wt::WInteractWidget>(L, 1);
     Wt::WLineEdit* forEdit =
         luawt_checkFromLua<Wt::WLineEdit>(L, 2);
     WDatePicker * result = new WDatePicker(displayWidget, forEdit);
+    luawt_Application* app = luawt_Application::instance();
+    if (!app) {
+        delete result;
+        throw std::logic_error("No WApplication when creating WDatePicker");
+    }
+    app->root()->addWidget(result);
+    
     luawt_toLua(L, result);
     return 1;
 
-    } else if (index == 3) {
+    } else if (index == 5) {
     Wt::WInteractWidget* displayWidget =
         luawt_checkFromLua<Wt::WInteractWidget>(L, 1);
     Wt::WLineEdit* forEdit =

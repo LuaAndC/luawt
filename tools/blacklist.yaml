@@ -1,42 +1,24 @@
 WAbstractItemView:
   methods:
   - clearSelection
-  - headerWordWrap
-  - horizontalHeaderAlignment
-  - setHeaderAlignment
   - setHeaderClickSortEnabled
-  - setHeaderWordWrap
   - setObjectName
   - sortEnabled
-  - verticalHeaderAlignment
-WAbstractMedia:
-  whole class: true
 WAbstractSpinBox:
   methods:
   - refresh
-  - validate
 WAbstractToggleButton:
   methods:
   - refresh
   - setTextFormat
-  - setValueText
   - setWordWrap
   - textFormat
-  - valueText
   - wordWrap
 WAnchor:
   methods:
   - canReceiveFocus
   - setFirstFocus
-  - setTextFormat
   - tabIndex
-  - textFormat
-  signatures:
-  - WAnchor(::std::string,WContainerWidget*)
-  - WAnchor(::std::string,WImage*,WContainerWidget*)
-  - WAnchor(::std::string,WString,WContainerWidget*)
-WAudio:
-  whole class: true
 WCheckBox:
   methods:
   - isPartialStateSelectable
@@ -46,14 +28,10 @@ WComboBox:
   - noSelectionEnabled
   - selectionMode
   - setNoSelectionEnabled
-  - setValueText
-  - validate
-  - valueText
 WCompositeWidget:
   methods:
   - canReceiveFocus
   - hasFocus
-  - hasStyleClass
   - objectName
   - propagateSetVisible
   - setCanReceiveFocus
@@ -62,66 +40,53 @@ WCompositeWidget:
   - setFocus
   - setObjectName
   - zIndex
-WContainerWidget:
-  methods:
-  - isGlobalUnfocussed
-  - scrollLeft
-  - scrollTop
-  - setGlobalUnfocused
 WDateEdit:
-  whole class: true
+  methods:
+  - load
 WDatePicker:
   methods:
   - popupWidget
-  signatures:
-  - WDatePicker(WLineEdit*,WContainerWidget*)
-WDialog:
-  whole class: true
 WDoubleSpinBox:
   methods:
   - refresh
 WFileUpload:
   methods:
   - setFilters
-WFormWidget:
-  methods:
-  - canReceiveFocus
-  - hasFocus
-  - placeholderText
-  - setFocus
-  - setPlaceholderText
-  - setTabIndex
-  - setToolTip
-  - setValueText
-  - valueText
 WGLWidget:
   methods:
   - attachShader
   - bindAttribLocation
   - bindBuffer
+  - bindFramebuffer
+  - bindRenderbuffer
   - bindTexture
-  - bufferData
+  - bufferSubData
   - clearBinaryResources
   - compileShader
+  - createAndLoadArrayBuffer
   - createBuffer
+  - createFramebuffer
   - createProgram
+  - createRenderbuffer
   - createShader
   - createTexture
   - createTextureAndLoad
   - deleteBuffer
+  - deleteFramebuffer
   - deleteProgram
+  - deleteRenderbuffer
   - deleteShader
   - deleteTexture
   - detachShader
-  - enableClientErrorChecks
+  - disableVertexAttribArray
   - enableVertexAttribArray
+  - framebufferRenderbuffer
+  - framebufferTexture2D
   - getAttribLocation
   - getUniformLocation
   - initializeGL
-  - injectJS
   - linkProgram
   - paintGL
-  - renderbufferStorage
   - resizeGL
   - restoringContext
   - setClientSideMouseHandler
@@ -144,25 +109,10 @@ WGLWidget:
   - vertexAttribPointer
   - webglNotAvailable
   signatures:
-  - texImage2D(WGLWidget::GLenum,int,WGLWidget::GLenum,WGLWidget::GLenum,WGLWidget::GLenum,WHTML5Video*)
-  - texImage2D(WGLWidget::GLenum,int,WGLWidget::GLenum,WGLWidget::GLenum,WGLWidget::GLenum,WVideo*)
-  - texImage2D(WGLWidget::GLenum,int,WGLWidget::GLenum,unsignedint,unsignedint,int,WGLWidget::GLenum)
-WHTML5Audio:
-  whole class: true
-WHTML5Media:
-  whole class: true
-WHTML5Video:
-  whole class: true
+  - bufferData(WGLWidget::GLenum,::std::string,WGLWidget::GLenum)
+  - bufferData(WGLWidget::GLenum,::std::string,unsignedint,unsignedint,WGLWidget::GLenum)
 WIcon:
   whole class: true
-WImage:
-  methods:
-  - setAreaCoordsJS
-  - setTargetJS
-  - updateAreasJS
-  signatures:
-  - WImage(::std::string,WContainerWidget*)
-  - WImage(::std::string,WString,WContainerWidget*)
 WInPlaceEdit:
   methods:
   - placeholderText
@@ -170,106 +120,9 @@ WInPlaceEdit:
   signatures:
   - WInPlaceEdit(WContainerWidget*)
   - WInPlaceEdit(bool,WString,WContainerWidget*)
-WInteractWidget:
-  methods:
-  - mouseOverDelay
-  - setMouseOverDelay
-  - setPopup
-  - unsetDraggable
-WLabel:
-  methods:
-  - setTextFormat
-  - textFormat
-WLineEdit:
-  methods:
-  - autoComplete
-  - displayText
-  - inputMask
-  - setAutoComplete
-  - setSelection
-  - setValueText
-  - valueText
 WMediaPlayer:
-  whole class: true
-WMenu:
   methods:
-  - addItem
-  - addMenu
-  - addSectionHeader
-  - addSeparator
-  - count
-  - currentItem
-  - indexOf
-  - insertItem
-  - insertMenu
-  - itemAt
-  - load
-  - parentItem
-  - removeItem
-  signatures:
-  - WMenu(WContainerWidget*)
-  - WMenu(WStackedWidget*,WContainerWidget*)
-  - close(WMenuItem*)
-  - isItemDisabled(WMenuItem*)
-  - isItemHidden(WMenuItem*)
-  - select(WMenuItem*)
-  - setItemDisabled(WMenuItem*,bool)
-  - setItemHidden(WMenuItem*,bool)
-WMessageBox:
-  whole class: true
-WNavigationBar:
-  whole class: true
-WPopupMenu:
-  methods:
-  - add
-  - addItem
-  - addMenu
-  - addSeparator
-  - setAutoHide
-  - setButton
-  signatures:
-  - WPopupMenu()
-  - WPopupMenu(WStackedWidget*)
-WPopupMenuItem:
-  whole class: true
-WProgressBar:
-  methods:
-  - setState
-  - setValueStyleClass
-WPushButton:
-  methods:
-  - icon
-  - isCheckable
-  - isChecked
-  - isDefault
-  - linkTarget
-  - menu
-  - setCheckable
-  - setChecked
-  - setDefault
-  - setFirstFocus
-  - setIcon
-  - setLinkTarget
-  - setMenu
-  - setRefInternalPath
-  - setTextFormat
-  - setUnChecked
-  - setValueText
-  - textFormat
-  - valueText
-  signatures:
-  - WPushButton(WString,TextFormat,WContainerWidget*)
-WSlider:
-  methods:
-  - handleWidth
-  - setDisabled
-  - setHandleWidth
-  - setValueText
-  - valueText
-WSplitButton:
-  whole class: true
-WSuggestionPopup:
-  whole class: true
+  - refresh
 WTableCell:
   whole class: true
 WTableView:
@@ -277,23 +130,16 @@ WTableView:
   - scrollTo
 WTemplate:
   methods:
-  - bindEmpty
-  - conditionValue
   - encodeTemplateText
   - getErrorText
-  - setCondition
   - setEncodeTemplateText
   - setWidgetIdMode
+  - varName
   - widgetIdMode
 WText:
   methods:
   - setTextAlignment
   - textAlignment
-WTextArea:
-  methods:
-  - setValueText
-  - validate
-  - valueText
 WTextEdit:
   methods:
   - propagateSetEnabled
@@ -305,18 +151,13 @@ WTimeEdit:
 WTimePicker:
   whole class: true
 WToolBar:
-  whole class: true
-WVideo:
-  whole class: true
-WWebWidget:
   methods:
-  - canReceiveFocus
-  - hasFocus
-  - hasStyleClass
-  - htmlTagName
-  - setCanReceiveFocus
-  - setDeferredToolTip
-  - setFirstFocus
-  - setFocus
-  - setHtmlTagName
+  - addWidget
+  - removeWidget
+  - setOrientation
+  signatures:
+  - addButton(WPushButton*)
+  - addButton(WPushButton*,AlignmentFlag)
+  - addButton(WSplitButton*)
+  - addButton(WSplitButton*,AlignmentFlag)
 
