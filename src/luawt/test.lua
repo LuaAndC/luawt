@@ -37,18 +37,7 @@ function test.createServer(code, ip, port, wt_config)
     return server
 end
 
-function test.testWidget(name, constructor_has_arguments)
-    local luawt = require 'luawt'
-    local args_str = ''
-    if constructor_has_arguments then
-        args_str = 'app:root()'
-    end
-    local code = ([[
-        local app, env = ...
-        local luawt = require 'luawt'
-        local widget = luawt.%s(%s)
-        luawt.Shared.widget_id = widget:id()
-    ]]):format(name, args_str)
+function test.getData(code)
     local ip = '127.0.0.1'
     local port = 56789
     local wt_config = test.baseConfig()
@@ -56,11 +45,34 @@ function test.testWidget(name, constructor_has_arguments)
     server:start()
     os.execute("sleep 1")
     local data = test.socketRequest(port)
+    return server, wt_config, data
+end
+
+function test.clear(server, wt_config, force)
+    os.execute("sleep 1")
+    server:stop(force)
+    os.remove(wt_config)
+end
+
+function test.baseTest(code)
+    local luawt = require 'luawt'
+    local server, wt_config, data = test.getData(code)
     local bust_assert = require 'busted'.assert
     bust_assert.truthy(data:match(luawt.Shared.widget_id)) -- ID should be there
-    os.execute("sleep 1")
-    server:stop()
-    os.remove(wt_config)
+    test.clear(server, wt_config)
+end
+
+function test.testWidget(name, constructor_has_arguments)
+    local code = [[
+        local app, env = ...
+        local luawt = require 'luawt'
+        local widget = luawt.%s(%s)
+        luawt.Shared.widget_id = widget:id()
+    ]]
+    test.baseTest(code:format(name, ''))
+    if constructor_has_arguments then
+        test.baseTest(code:format(name, 'app:root()'))
+    end
 end
 
 return test

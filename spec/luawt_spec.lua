@@ -20,17 +20,9 @@ describe("luawt", function()
             end)
             button:clicked():emit()
         ]]
-        local ip = '127.0.0.1'
-        local port = 56789
-        local wt_config = test.baseConfig()
-        local server = test.createServer(code, ip, port, wt_config)
-        server:start()
-        os.execute("sleep 1")
-        local data = test.socketRequest(port)
+        local server, wt_config, data = test.getData(code)
         assert.truthy(data:match('was pressed'))
-        os.execute("sleep 1")
-        server:stop()
-        os.remove(wt_config)
+        test.clear(server, wt_config, false)
     end)
 
     it("#works fine with #WPushButton's set/isDefault", function()
@@ -45,17 +37,9 @@ describe("luawt", function()
             local text = tostring(state1) .. tostring(state2)
             button:setText(text)
         ]]
-        local ip = '127.0.0.1'
-        local port = 56789
-        local wt_config = test.baseConfig()
-        local server = test.createServer(code, ip, port, wt_config)
-        server:start()
-        os.execute("sleep 1")
-        local data = test.socketRequest(port)
+        local server, wt_config, data = test.getData(code)
         assert.truthy(data:match('10'))
-        os.execute("sleep 1")
-        server:stop()
-        os.remove(wt_config)
+        test.clear(server, wt_config, false)
     end)
 
     pending("uses #wrap with unknown exceptions", function()
@@ -74,19 +58,13 @@ describe("luawt", function()
             os.execute("sleep 1")
             server:stop(true)
         end)
+        os.remove(wt_config)
     end)
 
     pending("can stop the server #forcibly", function()
         local code = ''
-        local ip = '127.0.0.1'
-        local port = 56789
-        local wt_config = test.baseConfig()
-        local server = test.createServer(code, ip, port, wt_config)
-        server:start()
-        os.execute("sleep 1")
-        test.socketRequest(port)
-        os.execute("sleep 1")
-        server:stop(true)
+        local server, wt_config = test.getData(code)
+        test.clear(server, wt_config, true)
     end)
 
     pending("doesn't throw on bad #syntax in lua code", function()
@@ -113,17 +91,9 @@ describe("luawt", function()
             local button = luawt.WPushButton(app:root())
             button:setText(text)
         ]]
-        local ip = '127.0.0.1'
-        local port = 56789
-        local wt_config = test.baseConfig()
-        local server = test.createServer(code, ip, port, wt_config)
-        server:start()
-        os.execute("sleep 1")
-        local data = test.socketRequest(port)
+        local server, wt_config, data = test.getData(code)
         assert.truthy(data:match('IP:'))
-        os.execute("sleep 1")
-        server:stop()
-        os.remove(wt_config)
+        test.clear(server, wt_config, false)
     end)
 
 end)
