@@ -96,7 +96,7 @@ local common = {
 package = "luawt"
 version = "dev-1"
 source = {
-    url = "git@github.com:LuaAndC/luawt.git",
+    url = "git+https://github.com/LuaAndC/luawt.git",
 }
 description = {
     summary = "Lua bindings for Wt",
