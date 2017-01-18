@@ -24,13 +24,42 @@
   * setRefInternalPath
   * setTarget
   * setText
+  * setTextFormat
   * setWordWrap
   * target
   * text
+  * textFormat
   * touchEnded
   * touchMoved
   * touchStarted
   * wordWrap
+ * [WAudio](https://www.webtoolkit.eu/wt/doc/reference/html/classWt_1_1WAudio.html)
+  * clicked
+  * doubleClicked
+  * ended
+  * enterPressed
+  * escapePressed
+  * gestureChanged
+  * gestureEnded
+  * gestureStarted
+  * jsAudioRef
+  * keyPressed
+  * keyWentDown
+  * keyWentUp
+  * mouseDragged
+  * mouseMoved
+  * mouseWentDown
+  * mouseWentOut
+  * mouseWentOver
+  * mouseWentUp
+  * mouseWheel
+  * playbackPaused
+  * playbackStarted
+  * timeUpdated
+  * touchEnded
+  * touchMoved
+  * touchStarted
+  * volumeChanged
  * [WCalendar](https://www.webtoolkit.eu/wt/doc/reference/html/classWt_1_1WCalendar.html)
   * browseToNextMonth
   * browseToNextYear
@@ -111,15 +140,20 @@
   * setCurrentIndex
   * setItemText
   * setModelColumn
+  * setValueText
   * touchEnded
   * touchMoved
   * touchStarted
+  * valueText
  * [WCompositeWidget](https://www.webtoolkit.eu/wt/doc/reference/html/classWt_1_1WCompositeWidget.html)
   * addStyleClass
   * attributeValue
   * callJavaScriptMember
   * doJavaScript
+  * find
+  * findById
   * floatSide
+  * hasStyleClass
   * hiddenKeepsGeometry
   * id
   * isDisabled
@@ -154,6 +188,7 @@
   * verticalAlignment
   * webWidget
  * [WContainerWidget](https://www.webtoolkit.eu/wt/doc/reference/html/classWt_1_1WContainerWidget.html)
+  * addWidget
   * clear
   * clicked
   * count
@@ -163,6 +198,9 @@
   * gestureChanged
   * gestureEnded
   * gestureStarted
+  * indexOf
+  * insertBefore
+  * insertWidget
   * isList
   * isOrderedList
   * isUnorderedList
@@ -176,8 +214,38 @@
   * mouseWentOver
   * mouseWentUp
   * mouseWheel
+  * removeWidget
   * scrolled
   * setList
+  * touchEnded
+  * touchMoved
+  * touchStarted
+  * widget
+ * [WDateEdit](https://www.webtoolkit.eu/wt/doc/reference/html/classWt_1_1WDateEdit.html)
+  * blurred
+  * calendar
+  * changed
+  * clicked
+  * doubleClicked
+  * enterPressed
+  * escapePressed
+  * focussed
+  * format
+  * gestureChanged
+  * gestureEnded
+  * gestureStarted
+  * keyPressed
+  * keyWentDown
+  * keyWentUp
+  * mouseDragged
+  * mouseMoved
+  * mouseWentDown
+  * mouseWentOut
+  * mouseWentOver
+  * mouseWentUp
+  * mouseWheel
+  * selected
+  * setFormat
   * touchEnded
   * touchMoved
   * touchStarted
@@ -213,6 +281,7 @@
   * touchEnded
   * touchMoved
   * touchStarted
+  * widget
  * [WDoubleSpinBox](https://www.webtoolkit.eu/wt/doc/reference/html/classWt_1_1WDoubleSpinBox.html)
   * blurred
   * changed
@@ -270,6 +339,7 @@
   * uploaded
  * [WFlashObject](https://www.webtoolkit.eu/wt/doc/reference/html/classWt_1_1WFlashObject.html)
   * jsFlashRef
+  * setAlternativeContent
   * setFlashParameter
   * setFlashVariable
  * [WGLWidget](https://www.webtoolkit.eu/wt/doc/reference/html/classWt_1_1WGLWidget.html)
@@ -279,6 +349,7 @@
   * blendEquationSeparate
   * blendFunc
   * blendFuncSeparate
+  * bufferData
   * clearColor
   * clearDepth
   * clearStencil
@@ -296,6 +367,7 @@
   * drawArrays
   * drawElements
   * enable
+  * enableClientErrorChecks
   * enterPressed
   * escapePressed
   * finish
@@ -306,6 +378,7 @@
   * gestureEnded
   * gestureStarted
   * hint
+  * injectJS
   * keyPressed
   * keyWentDown
   * keyWentUp
@@ -319,8 +392,10 @@
   * mouseWheel
   * pixelStorei
   * polygonOffset
+  * renderbufferStorage
   * sampleCoverage
   * scissor
+  * setAlternativeContent
   * stencilFunc
   * stencilFuncSeparate
   * stencilMask
@@ -444,8 +519,10 @@
   * setBuddy
   * setImage
   * setText
+  * setTextFormat
   * setWordWrap
   * text
+  * textFormat
   * touchEnded
   * touchMoved
   * touchStarted
@@ -482,12 +559,41 @@
   * setMaxLength
   * setText
   * setTextSize
+  * setValueText
   * text
   * textSize
   * touchEnded
   * touchMoved
   * touchStarted
-  * validate
+  * valueText
+ * [WMediaPlayer](https://www.webtoolkit.eu/wt/doc/reference/html/classWt_1_1WMediaPlayer.html)
+  * button
+  * clearSources
+  * controlsWidget
+  * currentTime
+  * duration
+  * jsPlayerRef
+  * mute
+  * pause
+  * play
+  * playbackRate
+  * playing
+  * progressBar
+  * readyState
+  * seek
+  * setButton
+  * setControlsWidget
+  * setPlaybackRate
+  * setProgressBar
+  * setText
+  * setTitle
+  * setVideoSize
+  * setVolume
+  * stop
+  * text
+  * videoHeight
+  * videoWidth
+  * volume
  * [WMenu](https://www.webtoolkit.eu/wt/doc/reference/html/classWt_1_1WMenu.html)
   * close
   * contentsStack
@@ -504,6 +610,85 @@
   * setItemDisabled
   * setItemHidden
   * setRenderAsList
+ * [WMenuItem](https://www.webtoolkit.eu/wt/doc/reference/html/classWt_1_1WMenuItem.html)
+  * checkBox
+  * clicked
+  * close
+  * contents
+  * doubleClicked
+  * enableAjax
+  * enterPressed
+  * escapePressed
+  * gestureChanged
+  * gestureEnded
+  * gestureStarted
+  * icon
+  * isCheckable
+  * isChecked
+  * isCloseable
+  * isSectionHeader
+  * isSelectable
+  * isSeparator
+  * itemWidget
+  * keyPressed
+  * keyWentDown
+  * keyWentUp
+  * linkTarget
+  * menu
+  * mouseDragged
+  * mouseMoved
+  * mouseWentDown
+  * mouseWentOut
+  * mouseWentOver
+  * mouseWentUp
+  * mouseWheel
+  * parentMenu
+  * pathComponent
+  * renderSelected
+  * scrolled
+  * select
+  * setCheckable
+  * setChecked
+  * setCloseable
+  * setFromInternalPath
+  * setIcon
+  * setLinkTarget
+  * setMenu
+  * setPathComponent
+  * setSelectable
+  * setSubMenu
+  * setText
+  * takeContents
+  * text
+  * touchEnded
+  * touchMoved
+  * touchStarted
+ * [WNavigationBar](https://www.webtoolkit.eu/wt/doc/reference/html/classWt_1_1WNavigationBar.html)
+  * addFormField
+  * addMenu
+  * addSearch
+  * addWidget
+  * clicked
+  * doubleClicked
+  * enterPressed
+  * escapePressed
+  * gestureChanged
+  * gestureEnded
+  * gestureStarted
+  * keyPressed
+  * keyWentDown
+  * keyWentUp
+  * mouseDragged
+  * mouseMoved
+  * mouseWentDown
+  * mouseWentOut
+  * mouseWentOver
+  * mouseWentUp
+  * mouseWheel
+  * setResponsive
+  * touchEnded
+  * touchMoved
+  * touchStarted
  * [WOverlayLoadingIndicator](https://www.webtoolkit.eu/wt/doc/reference/html/classWt_1_1WOverlayLoadingIndicator.html)
   * clicked
   * doubleClicked
@@ -527,12 +712,15 @@
   * touchEnded
   * touchMoved
   * touchStarted
+  * widget
  * [WPanel](https://www.webtoolkit.eu/wt/doc/reference/html/classWt_1_1WPanel.html)
+  * centralWidget
   * collapse
   * collapseIcon
   * expand
   * isCollapsed
   * isCollapsible
+  * setCentralWidget
   * setCollapsed
   * setCollapsible
   * setTitle
@@ -540,6 +728,12 @@
   * title
   * titleBar
   * titleBarWidget
+ * [WPopupMenu](https://www.webtoolkit.eu/wt/doc/reference/html/classWt_1_1WPopupMenu.html)
+  * exec
+  * popup
+  * result
+  * setAutoHide
+  * setButton
  * [WProgressBar](https://www.webtoolkit.eu/wt/doc/reference/html/classWt_1_1WProgressBar.html)
   * clicked
   * doubleClicked
@@ -565,23 +759,70 @@
   * setMaximum
   * setMinimum
   * setRange
+  * setState
   * setValue
+  * setValueStyleClass
   * text
   * touchEnded
   * touchMoved
   * touchStarted
   * value
  * [WPushButton](https://www.webtoolkit.eu/wt/doc/reference/html/classWt_1_1WPushButton.html)
+  * blurred
+  * changed
+  * checked
   * clicked
+  * doubleClicked
+  * enterPressed
+  * escapePressed
+  * focussed
+  * gestureChanged
+  * gestureEnded
+  * gestureStarted
+  * isCheckable
+  * isChecked
   * isDefault
+  * keyPressed
+  * keyWentDown
+  * keyWentUp
+  * linkTarget
+  * menu
+  * mouseDragged
+  * mouseMoved
+  * mouseWentDown
+  * mouseWentOut
+  * mouseWentOver
+  * mouseWentUp
+  * mouseWheel
+  * ref
+  * refresh
+  * selected
+  * setCheckable
+  * setChecked
   * setDefault
+  * setLinkTarget
+  * setMenu
+  * setRef
   * setText
+  * setTextFormat
+  * setUnChecked
+  * setValueText
+  * text
+  * textFormat
+  * touchEnded
+  * touchMoved
+  * touchStarted
+  * unChecked
+  * valueText
  * [WScrollArea](https://www.webtoolkit.eu/wt/doc/reference/html/classWt_1_1WScrollArea.html)
   * horizontalScrollBarPolicy
   * setHorizontalScrollBarPolicy
   * setScrollBarPolicy
   * setVerticalScrollBarPolicy
+  * setWidget
+  * takeWidget
   * verticalScrollBarPolicy
+  * widget
  * [WSelectionBox](https://www.webtoolkit.eu/wt/doc/reference/html/classWt_1_1WSelectionBox.html)
   * blurred
   * changed
@@ -624,6 +865,7 @@
   * gestureChanged
   * gestureEnded
   * gestureStarted
+  * handleWidth
   * keyPressed
   * keyWentDown
   * keyWentUp
@@ -639,6 +881,8 @@
   * nativeControl
   * orientation
   * selected
+  * setDisabled
+  * setHandleWidth
   * setMaximum
   * setMinimum
   * setNativeControl
@@ -646,11 +890,13 @@
   * setRange
   * setTickInterval
   * setValue
+  * setValueText
   * tickInterval
   * touchEnded
   * touchMoved
   * touchStarted
   * value
+  * valueText
  * [WSpinBox](https://www.webtoolkit.eu/wt/doc/reference/html/classWt_1_1WSpinBox.html)
   * blurred
   * changed
@@ -685,15 +931,23 @@
   * touchMoved
   * touchStarted
   * value
+ * [WSplitButton](https://www.webtoolkit.eu/wt/doc/reference/html/classWt_1_1WSplitButton.html)
+  * actionButton
+  * dropDownButton
+  * menu
+  * setMenu
  * [WStackedWidget](https://www.webtoolkit.eu/wt/doc/reference/html/classWt_1_1WStackedWidget.html)
+  * addWidget
   * clicked
   * currentIndex
+  * currentWidget
   * doubleClicked
   * enterPressed
   * escapePressed
   * gestureChanged
   * gestureEnded
   * gestureStarted
+  * insertWidget
   * keyPressed
   * keyWentDown
   * keyWentUp
@@ -706,20 +960,26 @@
   * mouseWheel
   * scrolled
   * setCurrentIndex
+  * setCurrentWidget
   * touchEnded
   * touchMoved
   * touchStarted
  * [WTabWidget](https://www.webtoolkit.eu/wt/doc/reference/html/classWt_1_1WTabWidget.html)
+  * addTab
   * closeTab
   * contentsStack
   * count
   * currentIndex
+  * currentWidget
+  * indexOf
   * internalBasePath
   * internalPathEnabled
   * isTabCloseable
   * isTabEnabled
   * isTabHidden
+  * removeTab
   * setCurrentIndex
+  * setCurrentWidget
   * setInternalBasePath
   * setInternalPathEnabled
   * setTabCloseable
@@ -729,6 +989,7 @@
   * setTabToolTip
   * tabText
   * tabToolTip
+  * widget
  * [WTable](https://www.webtoolkit.eu/wt/doc/reference/html/classWt_1_1WTable.html)
   * clear
   * clicked
@@ -770,10 +1031,13 @@
   * setCurrentPage
   * setRowHeaderCount
  * [WTemplate](https://www.webtoolkit.eu/wt/doc/reference/html/classWt_1_1WTemplate.html)
+  * bindEmpty
   * bindInt
   * bindString
+  * bindWidget
   * clear
   * clicked
+  * conditionValue
   * doubleClicked
   * enterPressed
   * escapePressed
@@ -792,8 +1056,11 @@
   * mouseWentUp
   * mouseWheel
   * refresh
+  * resolveWidget
+  * setCondition
   * setInternalPathEncoding
   * setTemplateText
+  * takeWidget
   * templateText
   * touchEnded
   * touchMoved
@@ -859,10 +1126,12 @@
   * setColumns
   * setRows
   * setText
+  * setValueText
   * text
   * touchEnded
   * touchMoved
   * touchStarted
+  * valueText
  * [WTextEdit](https://www.webtoolkit.eu/wt/doc/reference/html/classWt_1_1WTextEdit.html)
   * blurred
   * changed
@@ -895,6 +1164,12 @@
   * touchEnded
   * touchMoved
   * touchStarted
+ * [WToolBar](https://www.webtoolkit.eu/wt/doc/reference/html/classWt_1_1WToolBar.html)
+  * addSeparator
+  * count
+  * isCompact
+  * setCompact
+  * widget
  * [WTree](https://www.webtoolkit.eu/wt/doc/reference/html/classWt_1_1WTree.html)
   * clearSelection
   * isSelected
@@ -931,14 +1206,17 @@
  * [WTreeTable](https://www.webtoolkit.eu/wt/doc/reference/html/classWt_1_1WTreeTable.html)
   * columnCount
   * header
+  * headerWidget
   * setTree
   * setTreeRoot
   * tree
   * treeRoot
  * [WTreeTableNode](https://www.webtoolkit.eu/wt/doc/reference/html/classWt_1_1WTreeTableNode.html)
   * collapsed
+  * columnWidget
   * expanded
   * insertChildNode
+  * setColumnWidget
   * table
  * [WTreeView](https://www.webtoolkit.eu/wt/doc/reference/html/classWt_1_1WTreeView.html)
   * columnFormat
@@ -953,6 +1231,36 @@
   * setCurrentPage
   * setRootIsDecorated
   * setRowHeaderCount
+ * [WValidationStatus](https://www.webtoolkit.eu/wt/doc/reference/html/classWt_1_1WValidationStatus.html)
+  * valid
+ * [WVideo](https://www.webtoolkit.eu/wt/doc/reference/html/classWt_1_1WVideo.html)
+  * clicked
+  * doubleClicked
+  * ended
+  * enterPressed
+  * escapePressed
+  * gestureChanged
+  * gestureEnded
+  * gestureStarted
+  * jsVideoRef
+  * keyPressed
+  * keyWentDown
+  * keyWentUp
+  * mouseDragged
+  * mouseMoved
+  * mouseWentDown
+  * mouseWentOut
+  * mouseWentOver
+  * mouseWentUp
+  * mouseWheel
+  * playbackPaused
+  * playbackStarted
+  * setPoster
+  * timeUpdated
+  * touchEnded
+  * touchMoved
+  * touchStarted
+  * volumeChanged
  * [WVirtualImage](https://www.webtoolkit.eu/wt/doc/reference/html/classWt_1_1WVirtualImage.html)
   * currentBottomRightX
   * currentBottomRightY
