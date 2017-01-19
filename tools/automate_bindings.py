@@ -273,8 +273,10 @@ def getMembers(global_namespace, module_name, blacklisted):
     main_class = Wt.class_(name=module_name)
     base_r = None
     for base in main_class.bases:
-        if isBaseOrItsDescendant(base.related_class, "WWidget", Wt):
+        if isBaseOrItsDescendant(base.related_class, 'WWidget', Wt):
             base_r = base.related_class
+    if module_name == 'WWidget' or module_name == 'WApplication':
+        base_r = '0'
     if not base_r:
         raise Exception('Unable to bind %s, because it isnt descendant of WWidget' % module_name)
     custom_matcher = pygccxml.declarations.custom_matcher_t(
@@ -743,21 +745,29 @@ def generateMethodsArray(module_name, methods):
 
 MODULE_FUNC_TEMPLATE = r'''
 void luawt_%(module_name)s(lua_State* L) {
-    const char* base = luawt_typeToStr<%(base)s>();
-    assert(base);
+    %(get_base_str)s
     DECLARE_CLASS(
         %(module_name)s,
         L,
         %(make)s,
         0,
         luawt_%(module_name)s_methods,
-        base
+        %(base)s
     );
 }
 '''
 
 def generateModuleFunc(module_name, base, is_not_abstract):
-    base = base.name
+    base_frame = '''
+    const char* base = luawt_typeToStr<%s>();
+    assert(base);
+    '''
+    if base == '0':
+        # WApplication or WWidget
+        get_base = ''
+    else:
+        get_base = base_frame.strip() % base.name
+        base = 'base'
     if is_not_abstract:
         make = 'wrap<luawt_%s_make>::func' % module_name
     else:
@@ -766,6 +776,7 @@ def generateModuleFunc(module_name, base, is_not_abstract):
         'module_name' : module_name,
         'make' : make,
         'base' : base,
+        'get_base_str' : get_base,
     }
     return MODULE_FUNC_TEMPLATE.lstrip() % options
 
