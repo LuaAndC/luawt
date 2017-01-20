@@ -330,7 +330,7 @@ def getConstructorsType(constructors):
 def getConstructors(global_namespace, module_name, blacklisted):
     Wt = global_namespace.namespace('Wt')
     main_class = Wt.class_(name=module_name)
-    if main_class.is_abstract:
+    if main_class.is_abstract or module_name == 'WApplication':
         return [], 0
     custom_matcher = pygccxml.declarations.custom_matcher_t(
         lambda decl: checkWtFunction(True, decl, Wt),
