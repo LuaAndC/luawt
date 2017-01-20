@@ -368,6 +368,8 @@ def getModulesFromFuncSig(func):
     return class_strs
 
 def getIncludes(module_name, methods, constructors):
+    if module_name == 'MyApplication':
+        module_name = 'WApplication'
     includes = []
     includes.append(module_name)
     for method in methods:
@@ -529,7 +531,7 @@ def getArgsStr(args):
 
 def addWidgetToContainer(module_name):
     frame = r'''
-    luawt_Application* app = luawt_Application::instance();
+    MyApplication* app = MyApplication::instance();
     if (!app) {
         delete result;
         throw std::logic_error("No WApplication when creating %s");
@@ -970,6 +972,8 @@ def bind(modules, module_only, blacklist):
                 module_name,
                 blacklist.get(module_name),
             )
+            if module_name == 'WApplication':
+                module_name = 'MyApplication'
             source = generateModule(
                 module_name,
                 methods,
