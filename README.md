@@ -9,7 +9,14 @@ Lua bindings for Wt.
 
 ## Install
 
-`$ luarocks make --local`
+Install [Wt][wt] and [luarocks][luarocks].
+
+Clone the repo and do
+`$ luarocks make`
+
+or
+
+`$ luarocks install luawt`
 
 ## Check
 
@@ -81,3 +88,5 @@ The tool [gen docs][gen-docs] is used to generate
 [reference]: https://github.com/LuaAndC/luawt/blob/master/docs/reference.md
 [automate_bindings]: https://github.com/LuaAndC/luawt/blob/master/tools/automate_bindings.py
 [gen-docs]: https://github.com/LuaAndC/luawt/blob/master/tools/gen-docs.lua
+[wt]: https://www.webtoolkit.eu/
+[luarocks]: https://luarocks.org/
