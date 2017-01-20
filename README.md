@@ -58,8 +58,11 @@ server:start()
 server:waitForShutdown()
 ```
 
-See [examples][examples] and
-[the list of Wt classes bound to luawt][reference].
+See [the list of Wt classes bound to luawt][reference].
+
+See [examples][examples]:
+ * hello [source][hello-source], [demo][hello-demo],
+ * luacheck [source][luacheck-source], [demo][luacheck-demo].
 
 ## How to bind new class
 
@@ -90,3 +93,7 @@ The tool [gen docs][gen-docs] is used to generate
 [gen-docs]: https://github.com/LuaAndC/luawt/blob/master/tools/gen-docs.lua
 [wt]: https://www.webtoolkit.eu/
 [luarocks]: https://luarocks.org/
+[hello-source]: https://github.com/LuaAndC/luawt/tree/master/examples/hello
+[hello-demo]: http://hello.locksat.tk/
+[luacheck-source]: https://github.com/LuaAndC/luawt/tree/master/examples/luacheck
+[luacheck-demo]: http://luawt.locksat.tk/
