@@ -53,12 +53,17 @@ int luaopen_luawt(lua_State* L);
 void* luawt_getShared(lua_State* L);
 void luawt_setShared(lua_State* L, void* sss);
 
-class luawt_Application : public WApplication {
+class MyApplication : public WApplication {
 public:
-    luawt_Application(lua_State* L,
-                    void* shared,
-                    const WEnvironment& env):
-        WApplication(env), L_(L), owns_L_(false) {
+    MyApplication(
+        lua_State* L,
+        void* shared,
+        const WEnvironment& env
+    )
+        : WApplication(env)
+        , L_(L)
+        , owns_L_(false)
+    {
         if (L == 0) {
             owns_L_ = true;
             L_ = luaL_newstate();
@@ -72,17 +77,17 @@ public:
         }
     }
 
-    ~luawt_Application() {
+    ~MyApplication() {
         if (owns_L_) {
             lua_close(L_);
             L_ = 0;
         }
     }
 
-    static luawt_Application* instance() {
+    static MyApplication* instance() {
         WApplication* wapp = WApplication::instance();
         return wapp ? boost::polymorphic_downcast
-            <luawt_Application*>(wapp) : 0;
+            <MyApplication*>(wapp) : 0;
     }
 
     lua_State* L() const {
@@ -102,7 +107,7 @@ inline void checkPcallStatus(lua_State* L, int status) {
 }
 
 inline lua_State* getLuaState() {
-    luawt_Application* app = luawt_Application::instance();
+    MyApplication* app = MyApplication::instance();
     return app ? app->L() : 0;
 }
 
@@ -124,14 +129,14 @@ const char* luawt_typeToStr() {
 */
 
 template<typename T>
-inline T* luawt_parseId(luawt_Application* app, const char* id) {
+inline T* luawt_parseId(MyApplication* app, const char* id) {
     WWidget* widget = app->root()->findById(id);
     return boost::polymorphic_downcast<T*>(widget);
 }
 
 template<>
 inline WEnvironment* luawt_parseId<WEnvironment>(
-    luawt_Application* app, const char* id) {
+    MyApplication* app, const char* id) {
     const char* wanted = luawt_typeToStr<WEnvironment>();
     if (strcmp(id, wanted) == 0) {
         return const_cast<WEnvironment*>(&app->environment());
@@ -141,9 +146,9 @@ inline WEnvironment* luawt_parseId<WEnvironment>(
 }
 
 template<>
-inline luawt_Application* luawt_parseId<luawt_Application>(
-    luawt_Application* app, const char* id) {
-    const char* wanted = luawt_typeToStr<luawt_Application>();
+inline MyApplication* luawt_parseId<MyApplication>(
+    MyApplication* app, const char* id) {
+    const char* wanted = luawt_typeToStr<MyApplication>();
     if (strcmp(id, wanted) == 0) {
         return app;
     } else {
@@ -173,8 +178,8 @@ T* luawt_fromLua(lua_State* L, int index) {
             lua_pop(L, 2); // mt of T, mt of object
             void* raw_obj = lua_touserdata(L, index);
             char* id = reinterpret_cast<char*>(raw_obj);
-            luawt_Application* app =
-                luawt_Application::instance();
+            MyApplication* app =
+                MyApplication::instance();
             if (!app) {
                 return 0;
             } else {
@@ -250,8 +255,10 @@ inline void luawt_toLua<WOverlayLoadingIndicator>(
 }
 
 template<>
-inline void luawt_toLua<WEnvironment>(lua_State* L,
-                                      WEnvironment* obj) {
+inline void luawt_toLua<WEnvironment>(
+    lua_State* L,
+    WEnvironment* obj
+) {
     const char* id = luawt_typeToStr<WEnvironment>();
     size_t id_len = strlen(id) + 1;
     void* lobj = lua_newuserdata(L, id_len);
@@ -262,13 +269,15 @@ inline void luawt_toLua<WEnvironment>(lua_State* L,
 }
 
 template<>
-inline void luawt_toLua<luawt_Application>(lua_State* L,
-                                         luawt_Application* obj) {
-    const char* id = luawt_typeToStr<luawt_Application>();
+inline void luawt_toLua<MyApplication>(
+    lua_State* L,
+    MyApplication* obj
+) {
+    const char* id = luawt_typeToStr<MyApplication>();
     size_t id_len = strlen(id) + 1;
     void* lobj = lua_newuserdata(L, id_len);
     memcpy(lobj, id, id_len);
-    luaL_getmetatable(L, luawt_typeToStr<luawt_Application>());
+    luaL_getmetatable(L, luawt_typeToStr<MyApplication>());
     assert(lua_type(L, -1) == LUA_TTABLE);
     lua_setmetatable(L, -2);
 }
@@ -290,7 +299,7 @@ struct wrap {
 struct SlotWrapper {
     /* Slot func must be at the top of the stack. */
     SlotWrapper():
-        app_(luawt_Application::instance())
+        app_(MyApplication::instance())
     {
         func_id_ = luaL_ref(app_->L(), LUA_REGISTRYINDEX);
     }
@@ -305,7 +314,7 @@ struct SlotWrapper {
     /* Use app_ member to access L. We can't keep L itself here
        because lua_close() is triggered first in some cases.
     */
-    luawt_Application* app_;
+    MyApplication* app_;
 };
 
 class SlotWrapperPtr {
@@ -388,10 +397,12 @@ private:
 template<typename T>
 class luawt_DeclareType {
 public:
-    static void declare(lua_State* L,
-                        const luaL_Reg* mt,
-                        const luaL_Reg* methods,
-                        const char* base) {
+    static void declare(
+        lua_State* L,
+        const luaL_Reg* mt,
+        const luaL_Reg* methods,
+        const char* base
+    ) {
         luaL_newmetatable(L, luawt_typeToStr<T>());
         // name
         lua_pushstring(L, luawt_typeToStr<T>());

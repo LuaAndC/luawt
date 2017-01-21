@@ -15,7 +15,7 @@ describe("luawtest", function()
     it("builds test application without a server", function()
         local luawtest = require 'luawtest'
         local env = luawtest.WTestEnvironment()
-        local app = luawtest.luawt_Application(env)
+        local app = luawtest.MyApplication(env)
         local button = luawtest.WPushButton(app:root())
         button:setText("кнопка")
     end)
