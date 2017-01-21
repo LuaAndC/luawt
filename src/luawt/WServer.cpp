@@ -58,8 +58,11 @@ int luawt_WServer_make(lua_State* L) {
     lua_getfield(L, 1, "port");
     const char* port = luaL_checkstring(L, -1);
     // get config
+    const char* config = 0;
     lua_getfield(L, 1, "wt_config");
-    const char* config = luaL_checkstring(L, -1);
+    if (!lua_isnil(L, -1)) {
+        config = luaL_checkstring(L, -1);
+    }
     // make argc, argv
     typedef std::vector<const char*> Options;
     Options opt;
@@ -69,8 +72,10 @@ int luawt_WServer_make(lua_State* L) {
     opt.push_back("--http-port");
     opt.push_back(port);
     opt.push_back("--docroot=/usr/share/Wt");
-    opt.push_back("--config");
-    opt.push_back(config);
+    if (config) {
+        opt.push_back("--config");
+        opt.push_back(config);
+    }
     opt.push_back(0);
     WServer* server = reinterpret_cast<WServer*>(
         lua_newuserdata(L, sizeof(WServer))
