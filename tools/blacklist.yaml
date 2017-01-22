@@ -19,6 +19,12 @@ WAnchor:
   - canReceiveFocus
   - setFirstFocus
   - tabIndex
+WApplication:
+  methods:
+  - setConnectionMonitor
+  - waitForEvent
+  signatures:
+  - quit(WString)
 WCheckBox:
   methods:
   - isPartialStateSelectable
@@ -160,4 +166,15 @@ WToolBar:
   - addButton(WPushButton*,AlignmentFlag)
   - addButton(WSplitButton*)
   - addButton(WSplitButton*,AlignmentFlag)
+WWidget:
+  methods:
+  - canReceiveFocus
+  - hasFocus
+  - isExposed
+  - setCanReceiveFocus
+  - setDeferredToolTip
+  - setFirstFocus
+  - setFocus
+  - setObjectName
+  - zIndex
 
