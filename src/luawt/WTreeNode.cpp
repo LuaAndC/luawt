@@ -19,7 +19,7 @@ int luawt_WTreeNode_make(lua_State* L) {
     char const * raw1 = lua_tostring(L, 1);
     Wt::WString labelText = Wt::WString(raw1);
     WTreeNode * result = new WTreeNode(labelText);
-    luawt_Application* app = luawt_Application::instance();
+    MyApplication* app = MyApplication::instance();
     if (!app) {
         delete result;
         throw std::logic_error("No WApplication when creating WTreeNode");
@@ -35,7 +35,7 @@ int luawt_WTreeNode_make(lua_State* L) {
     Wt::WIconPair* labelIcon =
         luawt_checkFromLua<Wt::WIconPair>(L, 2);
     WTreeNode * result = new WTreeNode(labelText, labelIcon);
-    luawt_Application* app = luawt_Application::instance();
+    MyApplication* app = MyApplication::instance();
     if (!app) {
         delete result;
         throw std::logic_error("No WApplication when creating WTreeNode");
@@ -53,7 +53,7 @@ int luawt_WTreeNode_make(lua_State* L) {
     Wt::WTreeNode* parentNode =
         luawt_checkFromLua<Wt::WTreeNode>(L, 3);
     WTreeNode * result = new WTreeNode(labelText, labelIcon, parentNode);
-    luawt_Application* app = luawt_Application::instance();
+    MyApplication* app = MyApplication::instance();
     if (!app) {
         delete result;
         throw std::logic_error("No WApplication when creating WTreeNode");

@@ -19,7 +19,7 @@ int luawt_WIconPair_make(lua_State* L) {
     char const * raw2 = lua_tostring(L, 2);
     std::string icon2URL = std::string(raw2);
     WIconPair * result = new WIconPair(icon1URL, icon2URL);
-    luawt_Application* app = luawt_Application::instance();
+    MyApplication* app = MyApplication::instance();
     if (!app) {
         delete result;
         throw std::logic_error("No WApplication when creating WIconPair");
@@ -36,7 +36,7 @@ int luawt_WIconPair_make(lua_State* L) {
     std::string icon2URL = std::string(raw2);
     bool clickIsSwitch = lua_toboolean(L, 3);
     WIconPair * result = new WIconPair(icon1URL, icon2URL, clickIsSwitch);
-    luawt_Application* app = luawt_Application::instance();
+    MyApplication* app = MyApplication::instance();
     if (!app) {
         delete result;
         throw std::logic_error("No WApplication when creating WIconPair");

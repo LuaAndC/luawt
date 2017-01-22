@@ -15,7 +15,7 @@ int luawt_WFileUpload_make(lua_State* L) {
     int index = luawt_getSuitableArgsGroup(L, luawt_WFileUpload_make_args);
     if (index == 0) {
     WFileUpload * result = new WFileUpload();
-    luawt_Application* app = luawt_Application::instance();
+    MyApplication* app = MyApplication::instance();
     if (!app) {
         delete result;
         throw std::logic_error("No WApplication when creating WFileUpload");

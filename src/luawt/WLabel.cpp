@@ -20,7 +20,7 @@ int luawt_WLabel_make(lua_State* L) {
     int index = luawt_getSuitableArgsGroup(L, luawt_WLabel_make_args);
     if (index == 0) {
     WLabel * result = new WLabel();
-    luawt_Application* app = luawt_Application::instance();
+    MyApplication* app = MyApplication::instance();
     if (!app) {
         delete result;
         throw std::logic_error("No WApplication when creating WLabel");
@@ -41,7 +41,7 @@ int luawt_WLabel_make(lua_State* L) {
     char const * raw1 = lua_tostring(L, 1);
     Wt::WString text = Wt::WString(raw1);
     WLabel * result = new WLabel(text);
-    luawt_Application* app = luawt_Application::instance();
+    MyApplication* app = MyApplication::instance();
     if (!app) {
         delete result;
         throw std::logic_error("No WApplication when creating WLabel");
@@ -64,7 +64,7 @@ int luawt_WLabel_make(lua_State* L) {
     Wt::WImage* image =
         luawt_checkFromLua<Wt::WImage>(L, 1);
     WLabel * result = new WLabel(image);
-    luawt_Application* app = luawt_Application::instance();
+    MyApplication* app = MyApplication::instance();
     if (!app) {
         delete result;
         throw std::logic_error("No WApplication when creating WLabel");

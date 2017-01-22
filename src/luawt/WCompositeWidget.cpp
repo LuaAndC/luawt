@@ -17,7 +17,7 @@ int luawt_WCompositeWidget_make(lua_State* L) {
     int index = luawt_getSuitableArgsGroup(L, luawt_WCompositeWidget_make_args);
     if (index == 0) {
     WCompositeWidget * result = new WCompositeWidget();
-    luawt_Application* app = luawt_Application::instance();
+    MyApplication* app = MyApplication::instance();
     if (!app) {
         delete result;
         throw std::logic_error("No WApplication when creating WCompositeWidget");

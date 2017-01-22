@@ -18,7 +18,7 @@ int luawt_WVirtualImage_make(lua_State* L) {
     int64_t imageWidth = lua_tointeger(L, 3);
     int64_t imageHeight = lua_tointeger(L, 4);
     WVirtualImage * result = new WVirtualImage(viewPortWidth, viewPortHeight, imageWidth, imageHeight);
-    luawt_Application* app = luawt_Application::instance();
+    MyApplication* app = MyApplication::instance();
     if (!app) {
         delete result;
         throw std::logic_error("No WApplication when creating WVirtualImage");
@@ -35,7 +35,7 @@ int luawt_WVirtualImage_make(lua_State* L) {
     int64_t imageHeight = lua_tointeger(L, 4);
     int gridImageSize = lua_tointeger(L, 5);
     WVirtualImage * result = new WVirtualImage(viewPortWidth, viewPortHeight, imageWidth, imageHeight, gridImageSize);
-    luawt_Application* app = luawt_Application::instance();
+    MyApplication* app = MyApplication::instance();
     if (!app) {
         delete result;
         throw std::logic_error("No WApplication when creating WVirtualImage");

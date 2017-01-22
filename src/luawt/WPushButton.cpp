@@ -17,7 +17,7 @@ int luawt_WPushButton_make(lua_State* L) {
     int index = luawt_getSuitableArgsGroup(L, luawt_WPushButton_make_args);
     if (index == 0) {
     WPushButton * result = new WPushButton();
-    luawt_Application* app = luawt_Application::instance();
+    MyApplication* app = MyApplication::instance();
     if (!app) {
         delete result;
         throw std::logic_error("No WApplication when creating WPushButton");
@@ -38,7 +38,7 @@ int luawt_WPushButton_make(lua_State* L) {
     char const * raw1 = lua_tostring(L, 1);
     Wt::WString text = Wt::WString(raw1);
     WPushButton * result = new WPushButton(text);
-    luawt_Application* app = luawt_Application::instance();
+    MyApplication* app = MyApplication::instance();
     if (!app) {
         delete result;
         throw std::logic_error("No WApplication when creating WPushButton");
