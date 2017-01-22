@@ -4,7 +4,7 @@ local luawt = require 'luawt'
 
 local classes = {}
 for k in pairs(luawt) do
-    if k:sub(1, 1) == 'W' then
+    if k:sub(1, 1) == 'W' or k == 'MyApplication' then
         table.insert(classes, k)
     end
 end
