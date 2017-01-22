@@ -94,7 +94,7 @@ local common = {
 }
 
 package = "luawt"
-version = "dev-1"
+version = "0.0-1"
 source = {
     url = "git+https://github.com/LuaAndC/luawt.git",
 }
