@@ -1003,6 +1003,8 @@ def collectMembers(path):
         try:
             include_paths = [
                 path + '/src/',
+                path + '/src/Wt',
+                path + '/src/http',
                 path + '/src/web/', # DomElement.h
             ]
             global_namespace = parse(module, include_paths)
