@@ -9,7 +9,7 @@ Lua bindings for Wt.
 
 ## Install
 
-Install [Wt][wt] and [luarocks][luarocks].
+Install [Wt][wt] `>=` 3.3.0 and [luarocks][luarocks].
 
 Clone the repo and do
 `$ luarocks make`
