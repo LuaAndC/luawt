@@ -2,9 +2,17 @@
 
 local luawt = require 'luawt'
 
-local classes = {}
+local non_abstract = {}
 for k in pairs(luawt) do
     if k:sub(1, 1) == 'W' or k == 'MyApplication' then
+        non_abstract[k] = true
+    end
+end
+
+local reg = debug.getregistry()
+local classes = {}
+for k in reg do
+    if k:match('2Wt%d') then
         table.insert(classes, k)
     end
 end
@@ -17,7 +25,11 @@ for _, c in ipairs(classes) do
     local url = (
         "https://www.webtoolkit.eu/wt/doc/reference/html/classWt_1_1%s.html"
     ):format(c)
-    print((' * [%s](%s)'):format(c, url))
+    local typ = ''
+    if not non_abstract[c] then
+        typ = ' (abstract)'
+    end
+    print((' * [%s](%s)%s'):format(c, url, typ))
     local mangled = ('2Wt%d%sE'):format(#c, c)
     local mt = debug.getregistry()[mangled]
     if mt ~= nil then
