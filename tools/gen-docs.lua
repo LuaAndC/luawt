@@ -11,12 +11,14 @@ end
 
 local reg = debug.getregistry()
 local classes = {}
-for k in reg do
-    if k:match('2Wt%d') then
-        table.insert(classes, k)
+for k in pairs(reg) do
+    local demangled = k:match('^2Wt%d+(.+)E$')
+    if demangled then
+        table.insert(classes, demangled)
     end
 end
-
+table.insert(classes, 'luawt_WServer')
+table.insert(classes, 'MyApplication')
 table.sort(classes)
 
 print('# List of Wt classes bound to luawt')
@@ -31,7 +33,12 @@ for _, c in ipairs(classes) do
     end
     print((' * [%s](%s)%s'):format(c, url, typ))
     local mangled = ('2Wt%d%sE'):format(#c, c)
-    local mt = debug.getregistry()[mangled]
+    if c == 'luawt_WServer' then
+        mangled = 'luawt_WServer'
+    elseif c == 'MyApplication' then
+        mangled = '3MyApplication'
+    end
+    local mt = reg[mangled]
     if mt ~= nil then
         local methods = {}
         for m in pairs(mt.__index) do
