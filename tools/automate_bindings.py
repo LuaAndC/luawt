@@ -916,7 +916,7 @@ def addModuleToLists(module_name, Wt):
             'module_str' : '    MODULE(%s),\n' % module_name,
         },
         {
-            'filename' : 'luawt-dev-1.rockspec',
+            'filename' : 'luawt-0.0-1.rockspec',
             'pattern' : r'"src/luawt/[a-zA-Z]+\.cpp",',
             'module_str' : '        "src/luawt/%s.cpp",\n' % module_name,
         },
