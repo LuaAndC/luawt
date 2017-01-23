@@ -24,9 +24,15 @@ table.sort(classes)
 print('# List of Wt classes bound to luawt')
 
 for _, c in ipairs(classes) do
+    local module_name = c
+    if c == 'luawt_WServer' then
+        module_name = 'WServer'
+    elseif c == 'MyApplication' then
+        module_name = 'WApplication'
+    end
     local url = (
         "https://www.webtoolkit.eu/wt/doc/reference/html/classWt_1_1%s.html"
-    ):format(c)
+    ):format(module_name)
     local typ = ''
     if not non_abstract[c] then
         typ = ' (abstract)'
