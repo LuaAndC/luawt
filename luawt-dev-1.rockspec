@@ -17,12 +17,12 @@ end
 
 local common = {
     sources = {
+        "src/luawt/MyApplication.cpp",
         "src/luawt/WAbstractItemView.cpp",
         "src/luawt/WAbstractMedia.cpp",
         "src/luawt/WAbstractSpinBox.cpp",
         "src/luawt/WAbstractToggleButton.cpp",
         "src/luawt/WAnchor.cpp",
-        "src/luawt/WApplication.cpp",
         "src/luawt/WAudio.cpp",
         "src/luawt/WCalendar.cpp",
         "src/luawt/WCheckBox.cpp",

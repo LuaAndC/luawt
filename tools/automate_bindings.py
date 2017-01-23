@@ -273,8 +273,10 @@ def getMembers(global_namespace, module_name, blacklisted):
     main_class = Wt.class_(name=module_name)
     base_r = None
     for base in main_class.bases:
-        if isBaseOrItsDescendant(base.related_class, "WWidget", Wt):
+        if isBaseOrItsDescendant(base.related_class, 'WWidget', Wt):
             base_r = base.related_class
+    if module_name == 'WWidget' or module_name == 'WApplication':
+        base_r = '0'
     if not base_r:
         raise Exception('Unable to bind %s, because it isnt descendant of WWidget' % module_name)
     custom_matcher = pygccxml.declarations.custom_matcher_t(
@@ -328,7 +330,7 @@ def getConstructorsType(constructors):
 def getConstructors(global_namespace, module_name, blacklisted):
     Wt = global_namespace.namespace('Wt')
     main_class = Wt.class_(name=module_name)
-    if main_class.is_abstract:
+    if main_class.is_abstract or module_name == 'WApplication':
         return [], 0
     custom_matcher = pygccxml.declarations.custom_matcher_t(
         lambda decl: checkWtFunction(True, decl, Wt),
@@ -366,6 +368,8 @@ def getModulesFromFuncSig(func):
     return class_strs
 
 def getIncludes(module_name, methods, constructors):
+    if module_name == 'MyApplication':
+        module_name = 'WApplication'
     includes = []
     includes.append(module_name)
     for method in methods:
@@ -527,7 +531,7 @@ def getArgsStr(args):
 
 def addWidgetToContainer(module_name):
     frame = r'''
-    luawt_Application* app = luawt_Application::instance();
+    MyApplication* app = MyApplication::instance();
     if (!app) {
         delete result;
         throw std::logic_error("No WApplication when creating %s");
@@ -743,21 +747,29 @@ def generateMethodsArray(module_name, methods):
 
 MODULE_FUNC_TEMPLATE = r'''
 void luawt_%(module_name)s(lua_State* L) {
-    const char* base = luawt_typeToStr<%(base)s>();
-    assert(base);
+    %(get_base_str)s
     DECLARE_CLASS(
         %(module_name)s,
         L,
         %(make)s,
         0,
         luawt_%(module_name)s_methods,
-        base
+        %(base)s
     );
 }
 '''
 
 def generateModuleFunc(module_name, base, is_not_abstract):
-    base = base.name
+    base_frame = '''
+    const char* base = luawt_typeToStr<%s>();
+    assert(base);
+    '''
+    if base == '0':
+        # WApplication or WWidget
+        get_base = ''
+    else:
+        get_base = base_frame.strip() % base.name
+        base = 'base'
     if is_not_abstract:
         make = 'wrap<luawt_%s_make>::func' % module_name
     else:
@@ -766,6 +778,7 @@ def generateModuleFunc(module_name, base, is_not_abstract):
         'module_name' : module_name,
         'make' : make,
         'base' : base,
+        'get_base_str' : get_base,
     }
     return MODULE_FUNC_TEMPLATE.lstrip() % options
 
@@ -959,6 +972,8 @@ def bind(modules, module_only, blacklist):
                 module_name,
                 blacklist.get(module_name),
             )
+            if module_name == 'WApplication':
+                module_name = 'MyApplication'
             source = generateModule(
                 module_name,
                 methods,
@@ -988,6 +1003,8 @@ def collectMembers(path):
         try:
             include_paths = [
                 path + '/src/',
+                path + '/src/Wt',
+                path + '/src/http',
                 path + '/src/web/', # DomElement.h
             ]
             global_namespace = parse(module, include_paths)

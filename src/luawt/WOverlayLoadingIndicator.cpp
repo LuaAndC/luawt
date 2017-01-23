@@ -16,7 +16,7 @@ int luawt_WOverlayLoadingIndicator_make(lua_State* L) {
     int index = luawt_getSuitableArgsGroup(L, luawt_WOverlayLoadingIndicator_make_args);
     if (index == 0) {
     WOverlayLoadingIndicator * result = new WOverlayLoadingIndicator();
-    luawt_Application* app = luawt_Application::instance();
+    MyApplication* app = MyApplication::instance();
     if (!app) {
         delete result;
         throw std::logic_error("No WApplication when creating WOverlayLoadingIndicator");
@@ -30,7 +30,7 @@ int luawt_WOverlayLoadingIndicator_make(lua_State* L) {
     char const * raw1 = lua_tostring(L, 1);
     Wt::WString styleClass = Wt::WString(raw1);
     WOverlayLoadingIndicator * result = new WOverlayLoadingIndicator(styleClass);
-    luawt_Application* app = luawt_Application::instance();
+    MyApplication* app = MyApplication::instance();
     if (!app) {
         delete result;
         throw std::logic_error("No WApplication when creating WOverlayLoadingIndicator");
@@ -46,7 +46,7 @@ int luawt_WOverlayLoadingIndicator_make(lua_State* L) {
     char const * raw2 = lua_tostring(L, 2);
     Wt::WString backgroundStyleClass = Wt::WString(raw2);
     WOverlayLoadingIndicator * result = new WOverlayLoadingIndicator(styleClass, backgroundStyleClass);
-    luawt_Application* app = luawt_Application::instance();
+    MyApplication* app = MyApplication::instance();
     if (!app) {
         delete result;
         throw std::logic_error("No WApplication when creating WOverlayLoadingIndicator");
@@ -64,7 +64,7 @@ int luawt_WOverlayLoadingIndicator_make(lua_State* L) {
     char const * raw3 = lua_tostring(L, 3);
     Wt::WString textStyleClass = Wt::WString(raw3);
     WOverlayLoadingIndicator * result = new WOverlayLoadingIndicator(styleClass, backgroundStyleClass, textStyleClass);
-    luawt_Application* app = luawt_Application::instance();
+    MyApplication* app = MyApplication::instance();
     if (!app) {
         delete result;
         throw std::logic_error("No WApplication when creating WOverlayLoadingIndicator");

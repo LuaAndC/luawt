@@ -1,5 +1,5 @@
 # List of Wt classes bound to luawt
- * [MyApplication](https://www.webtoolkit.eu/wt/doc/reference/html/classWt_1_1MyApplication.html)
+ * [MyApplication](https://www.webtoolkit.eu/wt/doc/reference/html/classWt_1_1WApplication.html)
   * addAutoJavaScript
   * addGlobalWidget
   * addMetaHeader
@@ -1698,7 +1698,7 @@
   * toolTip
   * tr
   * verticalAlignment
- * [luawt_WServer](https://www.webtoolkit.eu/wt/doc/reference/html/classWt_1_1luawt_WServer.html) (abstract)
+ * [luawt_WServer](https://www.webtoolkit.eu/wt/doc/reference/html/classWt_1_1WServer.html) (abstract)
   * start
   * stop
   * waitForShutdown

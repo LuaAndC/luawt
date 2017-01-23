@@ -14,7 +14,7 @@ int luawt_WImage_make(lua_State* L) {
     int index = luawt_getSuitableArgsGroup(L, luawt_WImage_make_args);
     if (index == 0) {
     WImage * result = new WImage();
-    luawt_Application* app = luawt_Application::instance();
+    MyApplication* app = MyApplication::instance();
     if (!app) {
         delete result;
         throw std::logic_error("No WApplication when creating WImage");

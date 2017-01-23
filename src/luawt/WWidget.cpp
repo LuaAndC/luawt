@@ -1,11 +1,7 @@
-/* luawt, Lua bindings for Wt
- * Copyright (c) 2015-2016 Pavel Dolgov and Boris Nagaev
- *
- * See the LICENSE file for terms of use.
- */
-
 #include "boost-xtime.hpp"
+
 #include <Wt/WWidget>
+#include <Wt/WString>
 
 #include "globals.hpp"
 
@@ -16,12 +12,994 @@ int luawt_WWidget_id(lua_State* L) {
     return 1;
 }
 
+static const char* WWidget_load_args0[] = {luawt_typeToStr<WWidget>(), NULL};
+static const char* const* const luawt_WWidget_load_args[] = {WWidget_load_args0, NULL};
+
+int luawt_WWidget_load(lua_State* L) {
+    int index = luawt_getSuitableArgsGroup(L, luawt_WWidget_load_args);
+    WWidget* self = luawt_checkFromLua<WWidget>(L, 1);
+    if (index == 0) {
+    self->load();
+    return 0;
+    
+    } else {
+        return luaL_error(L, "Wrong arguments for WWidget.load");
+    }
+}
+
+static const char* WWidget_doJavaScript_args0[] = {luawt_typeToStr<WWidget>(), "char const *", NULL};
+static const char* const* const luawt_WWidget_doJavaScript_args[] = {WWidget_doJavaScript_args0, NULL};
+
+int luawt_WWidget_doJavaScript(lua_State* L) {
+    int index = luawt_getSuitableArgsGroup(L, luawt_WWidget_doJavaScript_args);
+    WWidget* self = luawt_checkFromLua<WWidget>(L, 1);
+    if (index == 0) {
+    char const * raw2 = lua_tostring(L, 2);
+    std::string js = std::string(raw2);
+    self->doJavaScript(js);
+    return 0;
+    
+    } else {
+        return luaL_error(L, "Wrong arguments for WWidget.doJavaScript");
+    }
+}
+
+static const char* WWidget_show_args0[] = {luawt_typeToStr<WWidget>(), NULL};
+static const char* const* const luawt_WWidget_show_args[] = {WWidget_show_args0, NULL};
+
+int luawt_WWidget_show(lua_State* L) {
+    int index = luawt_getSuitableArgsGroup(L, luawt_WWidget_show_args);
+    WWidget* self = luawt_checkFromLua<WWidget>(L, 1);
+    if (index == 0) {
+    self->show();
+    return 0;
+    
+    } else {
+        return luaL_error(L, "Wrong arguments for WWidget.show");
+    }
+}
+
+static const char* WWidget_positionAt_args0[] = {luawt_typeToStr<WWidget>(), luawt_typeToStr<Wt::WWidget>(), NULL};
+static const char* WWidget_positionAt_args1[] = {luawt_typeToStr<WWidget>(), luawt_typeToStr<Wt::WWidget>(), "int", NULL};
+static const char* const* const luawt_WWidget_positionAt_args[] = {WWidget_positionAt_args0, WWidget_positionAt_args1, NULL};
+
+int luawt_WWidget_positionAt(lua_State* L) {
+    int index = luawt_getSuitableArgsGroup(L, luawt_WWidget_positionAt_args);
+    WWidget* self = luawt_checkFromLua<WWidget>(L, 1);
+    if (index == 0) {
+    Wt::WWidget* widget =
+        luawt_checkFromLua<Wt::WWidget>(L, 2);
+    self->positionAt(widget);
+    return 0;
+    
+    } else if (index == 1) {
+    Wt::WWidget* widget =
+        luawt_checkFromLua<Wt::WWidget>(L, 2);
+    Wt::Orientation orientation = static_cast<Wt::Orientation>(lua_tointeger(L, 3));
+    self->positionAt(widget, orientation);
+    return 0;
+    
+    } else {
+        return luaL_error(L, "Wrong arguments for WWidget.positionAt");
+    }
+}
+
+static const char* WWidget_floatSide_args0[] = {luawt_typeToStr<WWidget>(), NULL};
+static const char* const* const luawt_WWidget_floatSide_args[] = {WWidget_floatSide_args0, NULL};
+
+int luawt_WWidget_floatSide(lua_State* L) {
+    int index = luawt_getSuitableArgsGroup(L, luawt_WWidget_floatSide_args);
+    WWidget* self = luawt_checkFromLua<WWidget>(L, 1);
+    if (index == 0) {
+    Wt::Side result = self->floatSide();
+    lua_pushinteger(L, result);
+    return 1;
+
+    } else {
+        return luaL_error(L, "Wrong arguments for WWidget.floatSide");
+    }
+}
+
+static const char* WWidget_jsRef_args0[] = {luawt_typeToStr<WWidget>(), NULL};
+static const char* const* const luawt_WWidget_jsRef_args[] = {WWidget_jsRef_args0, NULL};
+
+int luawt_WWidget_jsRef(lua_State* L) {
+    int index = luawt_getSuitableArgsGroup(L, luawt_WWidget_jsRef_args);
+    WWidget* self = luawt_checkFromLua<WWidget>(L, 1);
+    if (index == 0) {
+    std::string result = self->jsRef();
+    lua_pushstring(L, result.c_str());
+    return 1;
+
+    } else {
+        return luaL_error(L, "Wrong arguments for WWidget.jsRef");
+    }
+}
+
+static const char* WWidget_styleClass_args0[] = {luawt_typeToStr<WWidget>(), NULL};
+static const char* const* const luawt_WWidget_styleClass_args[] = {WWidget_styleClass_args0, NULL};
+
+int luawt_WWidget_styleClass(lua_State* L) {
+    int index = luawt_getSuitableArgsGroup(L, luawt_WWidget_styleClass_args);
+    WWidget* self = luawt_checkFromLua<WWidget>(L, 1);
+    if (index == 0) {
+    Wt::WString result = self->styleClass();
+    lua_pushstring(L, result.toUTF8().c_str());
+    return 1;
+
+    } else {
+        return luaL_error(L, "Wrong arguments for WWidget.styleClass");
+    }
+}
+
+static const char* WWidget_hiddenKeepsGeometry_args0[] = {luawt_typeToStr<WWidget>(), NULL};
+static const char* const* const luawt_WWidget_hiddenKeepsGeometry_args[] = {WWidget_hiddenKeepsGeometry_args0, NULL};
+
+int luawt_WWidget_hiddenKeepsGeometry(lua_State* L) {
+    int index = luawt_getSuitableArgsGroup(L, luawt_WWidget_hiddenKeepsGeometry_args);
+    WWidget* self = luawt_checkFromLua<WWidget>(L, 1);
+    if (index == 0) {
+    bool result = self->hiddenKeepsGeometry();
+    lua_pushboolean(L, result);
+    return 1;
+
+    } else {
+        return luaL_error(L, "Wrong arguments for WWidget.hiddenKeepsGeometry");
+    }
+}
+
+static const char* WWidget_enable_args0[] = {luawt_typeToStr<WWidget>(), NULL};
+static const char* const* const luawt_WWidget_enable_args[] = {WWidget_enable_args0, NULL};
+
+int luawt_WWidget_enable(lua_State* L) {
+    int index = luawt_getSuitableArgsGroup(L, luawt_WWidget_enable_args);
+    WWidget* self = luawt_checkFromLua<WWidget>(L, 1);
+    if (index == 0) {
+    self->enable();
+    return 0;
+    
+    } else {
+        return luaL_error(L, "Wrong arguments for WWidget.enable");
+    }
+}
+
+static const char* WWidget_loaded_args0[] = {luawt_typeToStr<WWidget>(), NULL};
+static const char* const* const luawt_WWidget_loaded_args[] = {WWidget_loaded_args0, NULL};
+
+int luawt_WWidget_loaded(lua_State* L) {
+    int index = luawt_getSuitableArgsGroup(L, luawt_WWidget_loaded_args);
+    WWidget* self = luawt_checkFromLua<WWidget>(L, 1);
+    if (index == 0) {
+    bool result = self->loaded();
+    lua_pushboolean(L, result);
+    return 1;
+
+    } else {
+        return luaL_error(L, "Wrong arguments for WWidget.loaded");
+    }
+}
+
+static const char* WWidget_find_args0[] = {luawt_typeToStr<WWidget>(), "char const *", NULL};
+static const char* const* const luawt_WWidget_find_args[] = {WWidget_find_args0, NULL};
+
+int luawt_WWidget_find(lua_State* L) {
+    int index = luawt_getSuitableArgsGroup(L, luawt_WWidget_find_args);
+    WWidget* self = luawt_checkFromLua<WWidget>(L, 1);
+    if (index == 0) {
+    char const * raw2 = lua_tostring(L, 2);
+    std::string name = std::string(raw2);
+    Wt::WWidget * result = self->find(name);
+    luawt_toLua(L, result);
+    return 1;
+
+    } else {
+        return luaL_error(L, "Wrong arguments for WWidget.find");
+    }
+}
+
+static const char* WWidget_isInline_args0[] = {luawt_typeToStr<WWidget>(), NULL};
+static const char* const* const luawt_WWidget_isInline_args[] = {WWidget_isInline_args0, NULL};
+
+int luawt_WWidget_isInline(lua_State* L) {
+    int index = luawt_getSuitableArgsGroup(L, luawt_WWidget_isInline_args);
+    WWidget* self = luawt_checkFromLua<WWidget>(L, 1);
+    if (index == 0) {
+    bool result = self->isInline();
+    lua_pushboolean(L, result);
+    return 1;
+
+    } else {
+        return luaL_error(L, "Wrong arguments for WWidget.isInline");
+    }
+}
+
+static const char* WWidget_layoutSizeAware_args0[] = {luawt_typeToStr<WWidget>(), NULL};
+static const char* const* const luawt_WWidget_layoutSizeAware_args[] = {WWidget_layoutSizeAware_args0, NULL};
+
+int luawt_WWidget_layoutSizeAware(lua_State* L) {
+    int index = luawt_getSuitableArgsGroup(L, luawt_WWidget_layoutSizeAware_args);
+    WWidget* self = luawt_checkFromLua<WWidget>(L, 1);
+    if (index == 0) {
+    bool result = self->layoutSizeAware();
+    lua_pushboolean(L, result);
+    return 1;
+
+    } else {
+        return luaL_error(L, "Wrong arguments for WWidget.layoutSizeAware");
+    }
+}
+
+static const char* WWidget_hide_args0[] = {luawt_typeToStr<WWidget>(), NULL};
+static const char* const* const luawt_WWidget_hide_args[] = {WWidget_hide_args0, NULL};
+
+int luawt_WWidget_hide(lua_State* L) {
+    int index = luawt_getSuitableArgsGroup(L, luawt_WWidget_hide_args);
+    WWidget* self = luawt_checkFromLua<WWidget>(L, 1);
+    if (index == 0) {
+    self->hide();
+    return 0;
+    
+    } else {
+        return luaL_error(L, "Wrong arguments for WWidget.hide");
+    }
+}
+
+static const char* WWidget_setStyleClass_args0[] = {luawt_typeToStr<WWidget>(), "char const *", NULL};
+static const char* const* const luawt_WWidget_setStyleClass_args[] = {WWidget_setStyleClass_args0, NULL};
+
+int luawt_WWidget_setStyleClass(lua_State* L) {
+    int index = luawt_getSuitableArgsGroup(L, luawt_WWidget_setStyleClass_args);
+    WWidget* self = luawt_checkFromLua<WWidget>(L, 1);
+    if (index == 0) {
+    char const * raw2 = lua_tostring(L, 2);
+    Wt::WString styleClass = Wt::WString(raw2);
+    self->setStyleClass(styleClass);
+    return 0;
+    
+    } else {
+        return luaL_error(L, "Wrong arguments for WWidget.setStyleClass");
+    }
+}
+
+static const char* WWidget_isRendered_args0[] = {luawt_typeToStr<WWidget>(), NULL};
+static const char* const* const luawt_WWidget_isRendered_args[] = {WWidget_isRendered_args0, NULL};
+
+int luawt_WWidget_isRendered(lua_State* L) {
+    int index = luawt_getSuitableArgsGroup(L, luawt_WWidget_isRendered_args);
+    WWidget* self = luawt_checkFromLua<WWidget>(L, 1);
+    if (index == 0) {
+    bool result = self->isRendered();
+    lua_pushboolean(L, result);
+    return 1;
+
+    } else {
+        return luaL_error(L, "Wrong arguments for WWidget.isRendered");
+    }
+}
+
+static const char* WWidget_isDisabled_args0[] = {luawt_typeToStr<WWidget>(), NULL};
+static const char* const* const luawt_WWidget_isDisabled_args[] = {WWidget_isDisabled_args0, NULL};
+
+int luawt_WWidget_isDisabled(lua_State* L) {
+    int index = luawt_getSuitableArgsGroup(L, luawt_WWidget_isDisabled_args);
+    WWidget* self = luawt_checkFromLua<WWidget>(L, 1);
+    if (index == 0) {
+    bool result = self->isDisabled();
+    lua_pushboolean(L, result);
+    return 1;
+
+    } else {
+        return luaL_error(L, "Wrong arguments for WWidget.isDisabled");
+    }
+}
+
+static const char* WWidget_tr_args0[] = {luawt_typeToStr<WWidget>(), "char const *", NULL};
+static const char* const* const luawt_WWidget_tr_args[] = {WWidget_tr_args0, NULL};
+
+int luawt_WWidget_tr(lua_State* L) {
+    int index = luawt_getSuitableArgsGroup(L, luawt_WWidget_tr_args);
+    WWidget* self = luawt_checkFromLua<WWidget>(L, 1);
+    if (index == 0) {
+    char const * raw2 = lua_tostring(L, 2);
+    std::string key = std::string(raw2);
+    Wt::WString result = self->tr(key);
+    lua_pushstring(L, result.toUTF8().c_str());
+    return 1;
+
+    } else {
+        return luaL_error(L, "Wrong arguments for WWidget.tr");
+    }
+}
+
+static const char* WWidget_setPopup_args0[] = {luawt_typeToStr<WWidget>(), "bool", NULL};
+static const char* const* const luawt_WWidget_setPopup_args[] = {WWidget_setPopup_args0, NULL};
+
+int luawt_WWidget_setPopup(lua_State* L) {
+    int index = luawt_getSuitableArgsGroup(L, luawt_WWidget_setPopup_args);
+    WWidget* self = luawt_checkFromLua<WWidget>(L, 1);
+    if (index == 0) {
+    bool popup = lua_toboolean(L, 2);
+    self->setPopup(popup);
+    return 0;
+    
+    } else {
+        return luaL_error(L, "Wrong arguments for WWidget.setPopup");
+    }
+}
+
+static const char* WWidget_setFloatSide_args0[] = {luawt_typeToStr<WWidget>(), "int", NULL};
+static const char* const* const luawt_WWidget_setFloatSide_args[] = {WWidget_setFloatSide_args0, NULL};
+
+int luawt_WWidget_setFloatSide(lua_State* L) {
+    int index = luawt_getSuitableArgsGroup(L, luawt_WWidget_setFloatSide_args);
+    WWidget* self = luawt_checkFromLua<WWidget>(L, 1);
+    if (index == 0) {
+    Wt::Side s = static_cast<Wt::Side>(lua_tointeger(L, 2));
+    self->setFloatSide(s);
+    return 0;
+    
+    } else {
+        return luaL_error(L, "Wrong arguments for WWidget.setFloatSide");
+    }
+}
+
+static const char* WWidget_inlineCssStyle_args0[] = {luawt_typeToStr<WWidget>(), NULL};
+static const char* const* const luawt_WWidget_inlineCssStyle_args[] = {WWidget_inlineCssStyle_args0, NULL};
+
+int luawt_WWidget_inlineCssStyle(lua_State* L) {
+    int index = luawt_getSuitableArgsGroup(L, luawt_WWidget_inlineCssStyle_args);
+    WWidget* self = luawt_checkFromLua<WWidget>(L, 1);
+    if (index == 0) {
+    std::string result = self->inlineCssStyle();
+    lua_pushstring(L, result.c_str());
+    return 1;
+
+    } else {
+        return luaL_error(L, "Wrong arguments for WWidget.inlineCssStyle");
+    }
+}
+
+static const char* WWidget_verticalAlignment_args0[] = {luawt_typeToStr<WWidget>(), NULL};
+static const char* const* const luawt_WWidget_verticalAlignment_args[] = {WWidget_verticalAlignment_args0, NULL};
+
+int luawt_WWidget_verticalAlignment(lua_State* L) {
+    int index = luawt_getSuitableArgsGroup(L, luawt_WWidget_verticalAlignment_args);
+    WWidget* self = luawt_checkFromLua<WWidget>(L, 1);
+    if (index == 0) {
+    Wt::AlignmentFlag result = self->verticalAlignment();
+    lua_pushinteger(L, result);
+    return 1;
+
+    } else {
+        return luaL_error(L, "Wrong arguments for WWidget.verticalAlignment");
+    }
+}
+
+static const char* WWidget_positionScheme_args0[] = {luawt_typeToStr<WWidget>(), NULL};
+static const char* const* const luawt_WWidget_positionScheme_args[] = {WWidget_positionScheme_args0, NULL};
+
+int luawt_WWidget_positionScheme(lua_State* L) {
+    int index = luawt_getSuitableArgsGroup(L, luawt_WWidget_positionScheme_args);
+    WWidget* self = luawt_checkFromLua<WWidget>(L, 1);
+    if (index == 0) {
+    Wt::PositionScheme result = self->positionScheme();
+    lua_pushinteger(L, result);
+    return 1;
+
+    } else {
+        return luaL_error(L, "Wrong arguments for WWidget.positionScheme");
+    }
+}
+
+static const char* WWidget_tabIndex_args0[] = {luawt_typeToStr<WWidget>(), NULL};
+static const char* const* const luawt_WWidget_tabIndex_args[] = {WWidget_tabIndex_args0, NULL};
+
+int luawt_WWidget_tabIndex(lua_State* L) {
+    int index = luawt_getSuitableArgsGroup(L, luawt_WWidget_tabIndex_args);
+    WWidget* self = luawt_checkFromLua<WWidget>(L, 1);
+    if (index == 0) {
+    int result = self->tabIndex();
+    lua_pushinteger(L, result);
+    return 1;
+
+    } else {
+        return luaL_error(L, "Wrong arguments for WWidget.tabIndex");
+    }
+}
+
+static const char* WWidget_isHidden_args0[] = {luawt_typeToStr<WWidget>(), NULL};
+static const char* const* const luawt_WWidget_isHidden_args[] = {WWidget_isHidden_args0, NULL};
+
+int luawt_WWidget_isHidden(lua_State* L) {
+    int index = luawt_getSuitableArgsGroup(L, luawt_WWidget_isHidden_args);
+    WWidget* self = luawt_checkFromLua<WWidget>(L, 1);
+    if (index == 0) {
+    bool result = self->isHidden();
+    lua_pushboolean(L, result);
+    return 1;
+
+    } else {
+        return luaL_error(L, "Wrong arguments for WWidget.isHidden");
+    }
+}
+
+static const char* WWidget_setSelectable_args0[] = {luawt_typeToStr<WWidget>(), "bool", NULL};
+static const char* const* const luawt_WWidget_setSelectable_args[] = {WWidget_setSelectable_args0, NULL};
+
+int luawt_WWidget_setSelectable(lua_State* L) {
+    int index = luawt_getSuitableArgsGroup(L, luawt_WWidget_setSelectable_args);
+    WWidget* self = luawt_checkFromLua<WWidget>(L, 1);
+    if (index == 0) {
+    bool selectable = lua_toboolean(L, 2);
+    self->setSelectable(selectable);
+    return 0;
+    
+    } else {
+        return luaL_error(L, "Wrong arguments for WWidget.setSelectable");
+    }
+}
+
+static const char* WWidget_stopAcceptDrops_args0[] = {luawt_typeToStr<WWidget>(), "char const *", NULL};
+static const char* const* const luawt_WWidget_stopAcceptDrops_args[] = {WWidget_stopAcceptDrops_args0, NULL};
+
+int luawt_WWidget_stopAcceptDrops(lua_State* L) {
+    int index = luawt_getSuitableArgsGroup(L, luawt_WWidget_stopAcceptDrops_args);
+    WWidget* self = luawt_checkFromLua<WWidget>(L, 1);
+    if (index == 0) {
+    char const * raw2 = lua_tostring(L, 2);
+    std::string mimeType = std::string(raw2);
+    self->stopAcceptDrops(mimeType);
+    return 0;
+    
+    } else {
+        return luaL_error(L, "Wrong arguments for WWidget.stopAcceptDrops");
+    }
+}
+
+static const char* WWidget_javaScriptMember_args0[] = {luawt_typeToStr<WWidget>(), "char const *", NULL};
+static const char* const* const luawt_WWidget_javaScriptMember_args[] = {WWidget_javaScriptMember_args0, NULL};
+
+int luawt_WWidget_javaScriptMember(lua_State* L) {
+    int index = luawt_getSuitableArgsGroup(L, luawt_WWidget_javaScriptMember_args);
+    WWidget* self = luawt_checkFromLua<WWidget>(L, 1);
+    if (index == 0) {
+    char const * raw2 = lua_tostring(L, 2);
+    std::string name = std::string(raw2);
+    std::string result = self->javaScriptMember(name);
+    lua_pushstring(L, result.c_str());
+    return 1;
+
+    } else {
+        return luaL_error(L, "Wrong arguments for WWidget.javaScriptMember");
+    }
+}
+
+static const char* WWidget_attributeValue_args0[] = {luawt_typeToStr<WWidget>(), "char const *", NULL};
+static const char* const* const luawt_WWidget_attributeValue_args[] = {WWidget_attributeValue_args0, NULL};
+
+int luawt_WWidget_attributeValue(lua_State* L) {
+    int index = luawt_getSuitableArgsGroup(L, luawt_WWidget_attributeValue_args);
+    WWidget* self = luawt_checkFromLua<WWidget>(L, 1);
+    if (index == 0) {
+    char const * raw2 = lua_tostring(L, 2);
+    std::string name = std::string(raw2);
+    Wt::WString result = self->attributeValue(name);
+    lua_pushstring(L, result.toUTF8().c_str());
+    return 1;
+
+    } else {
+        return luaL_error(L, "Wrong arguments for WWidget.attributeValue");
+    }
+}
+
+static const char* WWidget_parent_args0[] = {luawt_typeToStr<WWidget>(), NULL};
+static const char* const* const luawt_WWidget_parent_args[] = {WWidget_parent_args0, NULL};
+
+int luawt_WWidget_parent(lua_State* L) {
+    int index = luawt_getSuitableArgsGroup(L, luawt_WWidget_parent_args);
+    WWidget* self = luawt_checkFromLua<WWidget>(L, 1);
+    if (index == 0) {
+    Wt::WWidget * result = self->parent();
+    luawt_toLua(L, result);
+    return 1;
+
+    } else {
+        return luaL_error(L, "Wrong arguments for WWidget.parent");
+    }
+}
+
+static const char* WWidget_setPositionScheme_args0[] = {luawt_typeToStr<WWidget>(), "int", NULL};
+static const char* const* const luawt_WWidget_setPositionScheme_args[] = {WWidget_setPositionScheme_args0, NULL};
+
+int luawt_WWidget_setPositionScheme(lua_State* L) {
+    int index = luawt_getSuitableArgsGroup(L, luawt_WWidget_setPositionScheme_args);
+    WWidget* self = luawt_checkFromLua<WWidget>(L, 1);
+    if (index == 0) {
+    Wt::PositionScheme scheme = static_cast<Wt::PositionScheme>(lua_tointeger(L, 2));
+    self->setPositionScheme(scheme);
+    return 0;
+    
+    } else {
+        return luaL_error(L, "Wrong arguments for WWidget.setPositionScheme");
+    }
+}
+
+static const char* WWidget_isVisible_args0[] = {luawt_typeToStr<WWidget>(), NULL};
+static const char* const* const luawt_WWidget_isVisible_args[] = {WWidget_isVisible_args0, NULL};
+
+int luawt_WWidget_isVisible(lua_State* L) {
+    int index = luawt_getSuitableArgsGroup(L, luawt_WWidget_isVisible_args);
+    WWidget* self = luawt_checkFromLua<WWidget>(L, 1);
+    if (index == 0) {
+    bool result = self->isVisible();
+    lua_pushboolean(L, result);
+    return 1;
+
+    } else {
+        return luaL_error(L, "Wrong arguments for WWidget.isVisible");
+    }
+}
+
+static const char* WWidget_acceptDrops_args0[] = {luawt_typeToStr<WWidget>(), "char const *", NULL};
+static const char* WWidget_acceptDrops_args1[] = {luawt_typeToStr<WWidget>(), "char const *", "char const *", NULL};
+static const char* const* const luawt_WWidget_acceptDrops_args[] = {WWidget_acceptDrops_args0, WWidget_acceptDrops_args1, NULL};
+
+int luawt_WWidget_acceptDrops(lua_State* L) {
+    int index = luawt_getSuitableArgsGroup(L, luawt_WWidget_acceptDrops_args);
+    WWidget* self = luawt_checkFromLua<WWidget>(L, 1);
+    if (index == 0) {
+    char const * raw2 = lua_tostring(L, 2);
+    std::string mimeType = std::string(raw2);
+    self->acceptDrops(mimeType);
+    return 0;
+    
+    } else if (index == 1) {
+    char const * raw2 = lua_tostring(L, 2);
+    std::string mimeType = std::string(raw2);
+    char const * raw3 = lua_tostring(L, 3);
+    Wt::WString hoverStyleClass = Wt::WString(raw3);
+    self->acceptDrops(mimeType, hoverStyleClass);
+    return 0;
+    
+    } else {
+        return luaL_error(L, "Wrong arguments for WWidget.acceptDrops");
+    }
+}
+
+static const char* WWidget_toolTip_args0[] = {luawt_typeToStr<WWidget>(), NULL};
+static const char* const* const luawt_WWidget_toolTip_args[] = {WWidget_toolTip_args0, NULL};
+
+int luawt_WWidget_toolTip(lua_State* L) {
+    int index = luawt_getSuitableArgsGroup(L, luawt_WWidget_toolTip_args);
+    WWidget* self = luawt_checkFromLua<WWidget>(L, 1);
+    if (index == 0) {
+    Wt::WString const & result = self->toolTip();
+    lua_pushstring(L, result.toUTF8().c_str());
+    return 1;
+
+    } else {
+        return luaL_error(L, "Wrong arguments for WWidget.toolTip");
+    }
+}
+
+static const char* WWidget_disable_args0[] = {luawt_typeToStr<WWidget>(), NULL};
+static const char* const* const luawt_WWidget_disable_args[] = {WWidget_disable_args0, NULL};
+
+int luawt_WWidget_disable(lua_State* L) {
+    int index = luawt_getSuitableArgsGroup(L, luawt_WWidget_disable_args);
+    WWidget* self = luawt_checkFromLua<WWidget>(L, 1);
+    if (index == 0) {
+    self->disable();
+    return 0;
+    
+    } else {
+        return luaL_error(L, "Wrong arguments for WWidget.disable");
+    }
+}
+
+static const char* WWidget_setInline_args0[] = {luawt_typeToStr<WWidget>(), "bool", NULL};
+static const char* const* const luawt_WWidget_setInline_args[] = {WWidget_setInline_args0, NULL};
+
+int luawt_WWidget_setInline(lua_State* L) {
+    int index = luawt_getSuitableArgsGroup(L, luawt_WWidget_setInline_args);
+    WWidget* self = luawt_checkFromLua<WWidget>(L, 1);
+    if (index == 0) {
+    bool inlined = lua_toboolean(L, 2);
+    self->setInline(inlined);
+    return 0;
+    
+    } else {
+        return luaL_error(L, "Wrong arguments for WWidget.setInline");
+    }
+}
+
+static const char* WWidget_setId_args0[] = {luawt_typeToStr<WWidget>(), "char const *", NULL};
+static const char* const* const luawt_WWidget_setId_args[] = {WWidget_setId_args0, NULL};
+
+int luawt_WWidget_setId(lua_State* L) {
+    int index = luawt_getSuitableArgsGroup(L, luawt_WWidget_setId_args);
+    WWidget* self = luawt_checkFromLua<WWidget>(L, 1);
+    if (index == 0) {
+    char const * raw2 = lua_tostring(L, 2);
+    std::string id = std::string(raw2);
+    self->setId(id);
+    return 0;
+    
+    } else {
+        return luaL_error(L, "Wrong arguments for WWidget.setId");
+    }
+}
+
+static const char* WWidget_hasStyleClass_args0[] = {luawt_typeToStr<WWidget>(), "char const *", NULL};
+static const char* const* const luawt_WWidget_hasStyleClass_args[] = {WWidget_hasStyleClass_args0, NULL};
+
+int luawt_WWidget_hasStyleClass(lua_State* L) {
+    int index = luawt_getSuitableArgsGroup(L, luawt_WWidget_hasStyleClass_args);
+    WWidget* self = luawt_checkFromLua<WWidget>(L, 1);
+    if (index == 0) {
+    char const * raw2 = lua_tostring(L, 2);
+    Wt::WString styleClass = Wt::WString(raw2);
+    bool result = self->hasStyleClass(styleClass);
+    lua_pushboolean(L, result);
+    return 1;
+
+    } else {
+        return luaL_error(L, "Wrong arguments for WWidget.hasStyleClass");
+    }
+}
+
+static const char* WWidget_findById_args0[] = {luawt_typeToStr<WWidget>(), "char const *", NULL};
+static const char* const* const luawt_WWidget_findById_args[] = {WWidget_findById_args0, NULL};
+
+int luawt_WWidget_findById(lua_State* L) {
+    int index = luawt_getSuitableArgsGroup(L, luawt_WWidget_findById_args);
+    WWidget* self = luawt_checkFromLua<WWidget>(L, 1);
+    if (index == 0) {
+    char const * raw2 = lua_tostring(L, 2);
+    std::string id = std::string(raw2);
+    Wt::WWidget * result = self->findById(id);
+    luawt_toLua(L, result);
+    return 1;
+
+    } else {
+        return luaL_error(L, "Wrong arguments for WWidget.findById");
+    }
+}
+
+static const char* WWidget_setToolTip_args0[] = {luawt_typeToStr<WWidget>(), "char const *", NULL};
+static const char* WWidget_setToolTip_args1[] = {luawt_typeToStr<WWidget>(), "char const *", "int", NULL};
+static const char* const* const luawt_WWidget_setToolTip_args[] = {WWidget_setToolTip_args0, WWidget_setToolTip_args1, NULL};
+
+int luawt_WWidget_setToolTip(lua_State* L) {
+    int index = luawt_getSuitableArgsGroup(L, luawt_WWidget_setToolTip_args);
+    WWidget* self = luawt_checkFromLua<WWidget>(L, 1);
+    if (index == 0) {
+    char const * raw2 = lua_tostring(L, 2);
+    Wt::WString text = Wt::WString(raw2);
+    self->setToolTip(text);
+    return 0;
+    
+    } else if (index == 1) {
+    char const * raw2 = lua_tostring(L, 2);
+    Wt::WString text = Wt::WString(raw2);
+    Wt::TextFormat textFormat = static_cast<Wt::TextFormat>(lua_tointeger(L, 3));
+    self->setToolTip(text, textFormat);
+    return 0;
+    
+    } else {
+        return luaL_error(L, "Wrong arguments for WWidget.setToolTip");
+    }
+}
+
+static const char* WWidget_isPopup_args0[] = {luawt_typeToStr<WWidget>(), NULL};
+static const char* const* const luawt_WWidget_isPopup_args[] = {WWidget_isPopup_args0, NULL};
+
+int luawt_WWidget_isPopup(lua_State* L) {
+    int index = luawt_getSuitableArgsGroup(L, luawt_WWidget_isPopup_args);
+    WWidget* self = luawt_checkFromLua<WWidget>(L, 1);
+    if (index == 0) {
+    bool result = self->isPopup();
+    lua_pushboolean(L, result);
+    return 1;
+
+    } else {
+        return luaL_error(L, "Wrong arguments for WWidget.isPopup");
+    }
+}
+
+static const char* WWidget_removeStyleClass_args0[] = {luawt_typeToStr<WWidget>(), "char const *", NULL};
+static const char* WWidget_removeStyleClass_args1[] = {luawt_typeToStr<WWidget>(), "char const *", "bool", NULL};
+static const char* const* const luawt_WWidget_removeStyleClass_args[] = {WWidget_removeStyleClass_args0, WWidget_removeStyleClass_args1, NULL};
+
+int luawt_WWidget_removeStyleClass(lua_State* L) {
+    int index = luawt_getSuitableArgsGroup(L, luawt_WWidget_removeStyleClass_args);
+    WWidget* self = luawt_checkFromLua<WWidget>(L, 1);
+    if (index == 0) {
+    char const * raw2 = lua_tostring(L, 2);
+    Wt::WString styleClass = Wt::WString(raw2);
+    self->removeStyleClass(styleClass);
+    return 0;
+    
+    } else if (index == 1) {
+    char const * raw2 = lua_tostring(L, 2);
+    Wt::WString styleClass = Wt::WString(raw2);
+    bool force = lua_toboolean(L, 3);
+    self->removeStyleClass(styleClass, force);
+    return 0;
+    
+    } else {
+        return luaL_error(L, "Wrong arguments for WWidget.removeStyleClass");
+    }
+}
+
+static const char* WWidget_refresh_args0[] = {luawt_typeToStr<WWidget>(), NULL};
+static const char* const* const luawt_WWidget_refresh_args[] = {WWidget_refresh_args0, NULL};
+
+int luawt_WWidget_refresh(lua_State* L) {
+    int index = luawt_getSuitableArgsGroup(L, luawt_WWidget_refresh_args);
+    WWidget* self = luawt_checkFromLua<WWidget>(L, 1);
+    if (index == 0) {
+    self->refresh();
+    return 0;
+    
+    } else {
+        return luaL_error(L, "Wrong arguments for WWidget.refresh");
+    }
+}
+
+static const char* WWidget_setTabOrder_args0[] = {luawt_typeToStr<WWidget>(), luawt_typeToStr<Wt::WWidget>(), luawt_typeToStr<Wt::WWidget>(), NULL};
+static const char* const* const luawt_WWidget_setTabOrder_args[] = {WWidget_setTabOrder_args0, NULL};
+
+int luawt_WWidget_setTabOrder(lua_State* L) {
+    int index = luawt_getSuitableArgsGroup(L, luawt_WWidget_setTabOrder_args);
+    WWidget* self = luawt_checkFromLua<WWidget>(L, 1);
+    if (index == 0) {
+    Wt::WWidget* first =
+        luawt_checkFromLua<Wt::WWidget>(L, 2);
+    Wt::WWidget* second =
+        luawt_checkFromLua<Wt::WWidget>(L, 3);
+    self->setTabOrder(first, second);
+    return 0;
+    
+    } else {
+        return luaL_error(L, "Wrong arguments for WWidget.setTabOrder");
+    }
+}
+
+static const char* WWidget_setJavaScriptMember_args0[] = {luawt_typeToStr<WWidget>(), "char const *", "char const *", NULL};
+static const char* const* const luawt_WWidget_setJavaScriptMember_args[] = {WWidget_setJavaScriptMember_args0, NULL};
+
+int luawt_WWidget_setJavaScriptMember(lua_State* L) {
+    int index = luawt_getSuitableArgsGroup(L, luawt_WWidget_setJavaScriptMember_args);
+    WWidget* self = luawt_checkFromLua<WWidget>(L, 1);
+    if (index == 0) {
+    char const * raw2 = lua_tostring(L, 2);
+    std::string name = std::string(raw2);
+    char const * raw3 = lua_tostring(L, 3);
+    std::string value = std::string(raw3);
+    self->setJavaScriptMember(name, value);
+    return 0;
+    
+    } else {
+        return luaL_error(L, "Wrong arguments for WWidget.setJavaScriptMember");
+    }
+}
+
+static const char* WWidget_setDisabled_args0[] = {luawt_typeToStr<WWidget>(), "bool", NULL};
+static const char* const* const luawt_WWidget_setDisabled_args[] = {WWidget_setDisabled_args0, NULL};
+
+int luawt_WWidget_setDisabled(lua_State* L) {
+    int index = luawt_getSuitableArgsGroup(L, luawt_WWidget_setDisabled_args);
+    WWidget* self = luawt_checkFromLua<WWidget>(L, 1);
+    if (index == 0) {
+    bool disabled = lua_toboolean(L, 2);
+    self->setDisabled(disabled);
+    return 0;
+    
+    } else {
+        return luaL_error(L, "Wrong arguments for WWidget.setDisabled");
+    }
+}
+
+static const char* WWidget_setHiddenKeepsGeometry_args0[] = {luawt_typeToStr<WWidget>(), "bool", NULL};
+static const char* const* const luawt_WWidget_setHiddenKeepsGeometry_args[] = {WWidget_setHiddenKeepsGeometry_args0, NULL};
+
+int luawt_WWidget_setHiddenKeepsGeometry(lua_State* L) {
+    int index = luawt_getSuitableArgsGroup(L, luawt_WWidget_setHiddenKeepsGeometry_args);
+    WWidget* self = luawt_checkFromLua<WWidget>(L, 1);
+    if (index == 0) {
+    bool enabled = lua_toboolean(L, 2);
+    self->setHiddenKeepsGeometry(enabled);
+    return 0;
+    
+    } else {
+        return luaL_error(L, "Wrong arguments for WWidget.setHiddenKeepsGeometry");
+    }
+}
+
+static const char* WWidget_toggleStyleClass_args0[] = {luawt_typeToStr<WWidget>(), "char const *", "bool", NULL};
+static const char* WWidget_toggleStyleClass_args1[] = {luawt_typeToStr<WWidget>(), "char const *", "bool", "bool", NULL};
+static const char* const* const luawt_WWidget_toggleStyleClass_args[] = {WWidget_toggleStyleClass_args0, WWidget_toggleStyleClass_args1, NULL};
+
+int luawt_WWidget_toggleStyleClass(lua_State* L) {
+    int index = luawt_getSuitableArgsGroup(L, luawt_WWidget_toggleStyleClass_args);
+    WWidget* self = luawt_checkFromLua<WWidget>(L, 1);
+    if (index == 0) {
+    char const * raw2 = lua_tostring(L, 2);
+    Wt::WString styleClass = Wt::WString(raw2);
+    bool add = lua_toboolean(L, 3);
+    self->toggleStyleClass(styleClass, add);
+    return 0;
+    
+    } else if (index == 1) {
+    char const * raw2 = lua_tostring(L, 2);
+    Wt::WString styleClass = Wt::WString(raw2);
+    bool add = lua_toboolean(L, 3);
+    bool force = lua_toboolean(L, 4);
+    self->toggleStyleClass(styleClass, add, force);
+    return 0;
+    
+    } else {
+        return luaL_error(L, "Wrong arguments for WWidget.toggleStyleClass");
+    }
+}
+
+static const char* WWidget_addStyleClass_args0[] = {luawt_typeToStr<WWidget>(), "char const *", NULL};
+static const char* WWidget_addStyleClass_args1[] = {luawt_typeToStr<WWidget>(), "char const *", "bool", NULL};
+static const char* const* const luawt_WWidget_addStyleClass_args[] = {WWidget_addStyleClass_args0, WWidget_addStyleClass_args1, NULL};
+
+int luawt_WWidget_addStyleClass(lua_State* L) {
+    int index = luawt_getSuitableArgsGroup(L, luawt_WWidget_addStyleClass_args);
+    WWidget* self = luawt_checkFromLua<WWidget>(L, 1);
+    if (index == 0) {
+    char const * raw2 = lua_tostring(L, 2);
+    Wt::WString styleClass = Wt::WString(raw2);
+    self->addStyleClass(styleClass);
+    return 0;
+    
+    } else if (index == 1) {
+    char const * raw2 = lua_tostring(L, 2);
+    Wt::WString styleClass = Wt::WString(raw2);
+    bool force = lua_toboolean(L, 3);
+    self->addStyleClass(styleClass, force);
+    return 0;
+    
+    } else {
+        return luaL_error(L, "Wrong arguments for WWidget.addStyleClass");
+    }
+}
+
+static const char* WWidget_setAttributeValue_args0[] = {luawt_typeToStr<WWidget>(), "char const *", "char const *", NULL};
+static const char* const* const luawt_WWidget_setAttributeValue_args[] = {WWidget_setAttributeValue_args0, NULL};
+
+int luawt_WWidget_setAttributeValue(lua_State* L) {
+    int index = luawt_getSuitableArgsGroup(L, luawt_WWidget_setAttributeValue_args);
+    WWidget* self = luawt_checkFromLua<WWidget>(L, 1);
+    if (index == 0) {
+    char const * raw2 = lua_tostring(L, 2);
+    std::string name = std::string(raw2);
+    char const * raw3 = lua_tostring(L, 3);
+    Wt::WString value = Wt::WString(raw3);
+    self->setAttributeValue(name, value);
+    return 0;
+    
+    } else {
+        return luaL_error(L, "Wrong arguments for WWidget.setAttributeValue");
+    }
+}
+
+static const char* WWidget_setTabIndex_args0[] = {luawt_typeToStr<WWidget>(), "int", NULL};
+static const char* const* const luawt_WWidget_setTabIndex_args[] = {WWidget_setTabIndex_args0, NULL};
+
+int luawt_WWidget_setTabIndex(lua_State* L) {
+    int index = luawt_getSuitableArgsGroup(L, luawt_WWidget_setTabIndex_args);
+    WWidget* self = luawt_checkFromLua<WWidget>(L, 1);
+    if (index == 0) {
+    int index = lua_tointeger(L, 2);
+    self->setTabIndex(index);
+    return 0;
+    
+    } else {
+        return luaL_error(L, "Wrong arguments for WWidget.setTabIndex");
+    }
+}
+
+static const char* WWidget_isEnabled_args0[] = {luawt_typeToStr<WWidget>(), NULL};
+static const char* const* const luawt_WWidget_isEnabled_args[] = {WWidget_isEnabled_args0, NULL};
+
+int luawt_WWidget_isEnabled(lua_State* L) {
+    int index = luawt_getSuitableArgsGroup(L, luawt_WWidget_isEnabled_args);
+    WWidget* self = luawt_checkFromLua<WWidget>(L, 1);
+    if (index == 0) {
+    bool result = self->isEnabled();
+    lua_pushboolean(L, result);
+    return 1;
+
+    } else {
+        return luaL_error(L, "Wrong arguments for WWidget.isEnabled");
+    }
+}
+
+static const char* WWidget_callJavaScriptMember_args0[] = {luawt_typeToStr<WWidget>(), "char const *", "char const *", NULL};
+static const char* const* const luawt_WWidget_callJavaScriptMember_args[] = {WWidget_callJavaScriptMember_args0, NULL};
+
+int luawt_WWidget_callJavaScriptMember(lua_State* L) {
+    int index = luawt_getSuitableArgsGroup(L, luawt_WWidget_callJavaScriptMember_args);
+    WWidget* self = luawt_checkFromLua<WWidget>(L, 1);
+    if (index == 0) {
+    char const * raw2 = lua_tostring(L, 2);
+    std::string name = std::string(raw2);
+    char const * raw3 = lua_tostring(L, 3);
+    std::string args = std::string(raw3);
+    self->callJavaScriptMember(name, args);
+    return 0;
+    
+    } else {
+        return luaL_error(L, "Wrong arguments for WWidget.callJavaScriptMember");
+    }
+}
+
+
 static const luaL_Reg luawt_WWidget_methods[] = {
     METHOD(WWidget, id),
+    METHOD(WWidget, parent),
+    METHOD(WWidget, setPositionScheme),
+    METHOD(WWidget, positionScheme),
+    METHOD(WWidget, positionAt),
+    METHOD(WWidget, setFloatSide),
+    METHOD(WWidget, floatSide),
+    METHOD(WWidget, setHiddenKeepsGeometry),
+    METHOD(WWidget, hiddenKeepsGeometry),
+    METHOD(WWidget, isHidden),
+    METHOD(WWidget, isVisible),
+    METHOD(WWidget, setDisabled),
+    METHOD(WWidget, isDisabled),
+    METHOD(WWidget, isEnabled),
+    METHOD(WWidget, setPopup),
+    METHOD(WWidget, isPopup),
+    METHOD(WWidget, setInline),
+    METHOD(WWidget, isInline),
+    METHOD(WWidget, setStyleClass),
+    METHOD(WWidget, styleClass),
+    METHOD(WWidget, addStyleClass),
+    METHOD(WWidget, removeStyleClass),
+    METHOD(WWidget, toggleStyleClass),
+    METHOD(WWidget, hasStyleClass),
+    METHOD(WWidget, verticalAlignment),
+    METHOD(WWidget, setToolTip),
+    METHOD(WWidget, toolTip),
+    METHOD(WWidget, refresh),
+    METHOD(WWidget, jsRef),
+    METHOD(WWidget, setAttributeValue),
+    METHOD(WWidget, attributeValue),
+    METHOD(WWidget, setJavaScriptMember),
+    METHOD(WWidget, javaScriptMember),
+    METHOD(WWidget, callJavaScriptMember),
+    METHOD(WWidget, tr),
+    METHOD(WWidget, load),
+    METHOD(WWidget, loaded),
+    METHOD(WWidget, setTabIndex),
+    METHOD(WWidget, tabIndex),
+    METHOD(WWidget, acceptDrops),
+    METHOD(WWidget, stopAcceptDrops),
+    METHOD(WWidget, setId),
+    METHOD(WWidget, find),
+    METHOD(WWidget, findById),
+    METHOD(WWidget, setSelectable),
+    METHOD(WWidget, doJavaScript),
+    METHOD(WWidget, isRendered),
+    METHOD(WWidget, inlineCssStyle),
+    METHOD(WWidget, hide),
+    METHOD(WWidget, show),
+    METHOD(WWidget, enable),
+    METHOD(WWidget, disable),
+    METHOD(WWidget, layoutSizeAware),
+    METHOD(WWidget, setTabOrder),
     {NULL, NULL},
 };
 
 void luawt_WWidget(lua_State* L) {
+    
     DECLARE_CLASS(
         WWidget,
         L,

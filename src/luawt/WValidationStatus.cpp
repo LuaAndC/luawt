@@ -20,7 +20,7 @@ int luawt_WValidationStatus_make(lua_State* L) {
     Wt::WFormWidget* field =
         luawt_checkFromLua<Wt::WFormWidget>(L, 1);
     WValidationStatus * result = new WValidationStatus(field);
-    luawt_Application* app = luawt_Application::instance();
+    MyApplication* app = MyApplication::instance();
     if (!app) {
         delete result;
         throw std::logic_error("No WApplication when creating WValidationStatus");
@@ -36,7 +36,7 @@ int luawt_WValidationStatus_make(lua_State* L) {
     Wt::WWidget* validStateWidget =
         luawt_checkFromLua<Wt::WWidget>(L, 2);
     WValidationStatus * result = new WValidationStatus(field, validStateWidget);
-    luawt_Application* app = luawt_Application::instance();
+    MyApplication* app = MyApplication::instance();
     if (!app) {
         delete result;
         throw std::logic_error("No WApplication when creating WValidationStatus");
@@ -54,7 +54,7 @@ int luawt_WValidationStatus_make(lua_State* L) {
     Wt::WWidget* invalidStateWidget =
         luawt_checkFromLua<Wt::WWidget>(L, 3);
     WValidationStatus * result = new WValidationStatus(field, validStateWidget, invalidStateWidget);
-    luawt_Application* app = luawt_Application::instance();
+    MyApplication* app = MyApplication::instance();
     if (!app) {
         delete result;
         throw std::logic_error("No WApplication when creating WValidationStatus");
@@ -74,7 +74,7 @@ int luawt_WValidationStatus_make(lua_State* L) {
     Wt::WWidget* invalidEmptyStateWidget =
         luawt_checkFromLua<Wt::WWidget>(L, 4);
     WValidationStatus * result = new WValidationStatus(field, validStateWidget, invalidStateWidget, invalidEmptyStateWidget);
-    luawt_Application* app = luawt_Application::instance();
+    MyApplication* app = MyApplication::instance();
     if (!app) {
         delete result;
         throw std::logic_error("No WApplication when creating WValidationStatus");

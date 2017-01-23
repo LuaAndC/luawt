@@ -13,7 +13,7 @@ int luawt_WAudio_make(lua_State* L) {
     int index = luawt_getSuitableArgsGroup(L, luawt_WAudio_make_args);
     if (index == 0) {
     WAudio * result = new WAudio();
-    luawt_Application* app = luawt_Application::instance();
+    MyApplication* app = MyApplication::instance();
     if (!app) {
         delete result;
         throw std::logic_error("No WApplication when creating WAudio");

@@ -21,13 +21,13 @@ public:
     }
 
     WApplication* operator()(const WEnvironment& env) const {
-        std::auto_ptr<luawt_Application> app(
-            new luawt_Application(0, shared_, env)
+        std::auto_ptr<MyApplication> app(
+            new MyApplication(0, shared_, env)
         );
         int status = luaL_loadstring(app->L(),
                                      code_.c_str());
         checkPcallStatus(app->L(), status);
-        luawt_toLua<luawt_Application>(app->L(), &(*app));
+        luawt_toLua<MyApplication>(app->L(), &(*app));
         WEnvironment& env_nonconst =
             const_cast<WEnvironment&>(env);
         luawt_toLua<WEnvironment>(app->L(), &env_nonconst);
