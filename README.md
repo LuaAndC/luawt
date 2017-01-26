@@ -49,17 +49,12 @@ local code = [[
 ]]
 
 local luawt = require 'luawt'
-local test = require 'luawt.test'
-
--- File with config for server.
-local wt_config = test.baseConfig()
 
 -- Start WServer with the code above.
 local server = luawt.WServer({
     code = code,
     ip = '127.0.0.1',
     port = 8080,
-    wt_config = wt_config,
 })
 server:start()
 server:waitForShutdown()
