@@ -1,4 +1,4 @@
-local test = require 'luawt.test'
+local luawt = require 'luawt'
 
 local code = [[
     local app, env = ...
@@ -23,10 +23,10 @@ local code = [[
     end)
 ]]
 
-local ip = '0.0.0.0'
-local port = 12345
-local wt_config = test.baseConfig()
-local server = test.createServer(code, ip, port, wt_config)
-
+local server = luawt.WServer({
+    code = code,
+    ip = '0.0.0.0',
+    port = 12345,
+})
 server:start()
 server:waitForShutdown()

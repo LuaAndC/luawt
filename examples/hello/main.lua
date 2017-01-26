@@ -1,13 +1,13 @@
-local test = require 'luawt.test'
+local luawt = require 'luawt'
 
 local module_file = io.open('./examples/hello/hello.lua', 'r')
 local code = module_file:read('*all')
 module_file:close()
 
-local ip = '0.0.0.0'
-local port = 12346
-local wt_config = test.baseConfig()
-local server = test.createServer(code, ip, port, wt_config)
-
+local server = luawt.WServer({
+    code = code,
+    ip = '0.0.0.0',
+    port = 12346,
+})
 server:start()
 server:waitForShutdown()
