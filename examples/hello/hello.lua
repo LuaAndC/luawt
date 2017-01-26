@@ -3,6 +3,7 @@ local luawt = require 'luawt'
 local app, env = ...
 
 function mainApp(...)
+    app:setTitle('Hello!')
     local text = luawt.WText('Your name, please?')
     local name_edit = luawt.WLineEdit(app:root())
     name_edit:setFocus()

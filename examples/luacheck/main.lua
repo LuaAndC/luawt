@@ -2,6 +2,7 @@ local luawt = require 'luawt'
 
 local code = [[
     local app, env = ...
+    app:setTitle('luacheck')
     local luacheck = require 'luacheck'
     local luawt = require 'luawt'
     local textarea = luawt.WTextArea(app:root())
