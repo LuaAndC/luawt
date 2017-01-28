@@ -3,6 +3,7 @@
 #include <Wt/WPushButton>
 #include <Wt/WContainerWidget>
 #include <Wt/WPopupMenu>
+#include <Wt/WLink>
 #include <Wt/WString>
 
 #include "globals.hpp"
@@ -62,53 +63,6 @@ int luawt_WPushButton_make(lua_State* L) {
     }
 }
 
-static const char* WPushButton_refresh_args0[] = {luawt_typeToStr<WPushButton>(), NULL};
-static const char* const* const luawt_WPushButton_refresh_args[] = {WPushButton_refresh_args0, NULL};
-
-int luawt_WPushButton_refresh(lua_State* L) {
-    int index = luawt_getSuitableArgsGroup(L, luawt_WPushButton_refresh_args);
-    WPushButton* self = luawt_checkFromLua<WPushButton>(L, 1);
-    if (index == 0) {
-    self->refresh();
-    return 0;
-    
-    } else {
-        return luaL_error(L, "Wrong arguments for WPushButton.refresh");
-    }
-}
-
-static const char* WPushButton_ref_args0[] = {luawt_typeToStr<WPushButton>(), NULL};
-static const char* const* const luawt_WPushButton_ref_args[] = {WPushButton_ref_args0, NULL};
-
-int luawt_WPushButton_ref(lua_State* L) {
-    int index = luawt_getSuitableArgsGroup(L, luawt_WPushButton_ref_args);
-    WPushButton* self = luawt_checkFromLua<WPushButton>(L, 1);
-    if (index == 0) {
-    std::string result = self->ref();
-    lua_pushstring(L, result.c_str());
-    return 1;
-
-    } else {
-        return luaL_error(L, "Wrong arguments for WPushButton.ref");
-    }
-}
-
-static const char* WPushButton_setDefault_args0[] = {luawt_typeToStr<WPushButton>(), "bool", NULL};
-static const char* const* const luawt_WPushButton_setDefault_args[] = {WPushButton_setDefault_args0, NULL};
-
-int luawt_WPushButton_setDefault(lua_State* L) {
-    int index = luawt_getSuitableArgsGroup(L, luawt_WPushButton_setDefault_args);
-    WPushButton* self = luawt_checkFromLua<WPushButton>(L, 1);
-    if (index == 0) {
-    bool enabled = lua_toboolean(L, 2);
-    self->setDefault(enabled);
-    return 0;
-    
-    } else {
-        return luaL_error(L, "Wrong arguments for WPushButton.setDefault");
-    }
-}
-
 static const char* WPushButton_setChecked_args0[] = {luawt_typeToStr<WPushButton>(), "bool", NULL};
 static const char* WPushButton_setChecked_args1[] = {luawt_typeToStr<WPushButton>(), NULL};
 static const char* const* const luawt_WPushButton_setChecked_args[] = {WPushButton_setChecked_args0, WPushButton_setChecked_args1, NULL};
@@ -130,56 +84,6 @@ int luawt_WPushButton_setChecked(lua_State* L) {
     }
 }
 
-static const char* WPushButton_setText_args0[] = {luawt_typeToStr<WPushButton>(), "char const *", NULL};
-static const char* const* const luawt_WPushButton_setText_args[] = {WPushButton_setText_args0, NULL};
-
-int luawt_WPushButton_setText(lua_State* L) {
-    int index = luawt_getSuitableArgsGroup(L, luawt_WPushButton_setText_args);
-    WPushButton* self = luawt_checkFromLua<WPushButton>(L, 1);
-    if (index == 0) {
-    char const * raw2 = lua_tostring(L, 2);
-    Wt::WString text = Wt::WString(raw2);
-    bool result = self->setText(text);
-    lua_pushboolean(L, result);
-    return 1;
-
-    } else {
-        return luaL_error(L, "Wrong arguments for WPushButton.setText");
-    }
-}
-
-static const char* WPushButton_menu_args0[] = {luawt_typeToStr<WPushButton>(), NULL};
-static const char* const* const luawt_WPushButton_menu_args[] = {WPushButton_menu_args0, NULL};
-
-int luawt_WPushButton_menu(lua_State* L) {
-    int index = luawt_getSuitableArgsGroup(L, luawt_WPushButton_menu_args);
-    WPushButton* self = luawt_checkFromLua<WPushButton>(L, 1);
-    if (index == 0) {
-    Wt::WPopupMenu * result = self->menu();
-    luawt_toLua(L, result);
-    return 1;
-
-    } else {
-        return luaL_error(L, "Wrong arguments for WPushButton.menu");
-    }
-}
-
-static const char* WPushButton_linkTarget_args0[] = {luawt_typeToStr<WPushButton>(), NULL};
-static const char* const* const luawt_WPushButton_linkTarget_args[] = {WPushButton_linkTarget_args0, NULL};
-
-int luawt_WPushButton_linkTarget(lua_State* L) {
-    int index = luawt_getSuitableArgsGroup(L, luawt_WPushButton_linkTarget_args);
-    WPushButton* self = luawt_checkFromLua<WPushButton>(L, 1);
-    if (index == 0) {
-    Wt::AnchorTarget result = self->linkTarget();
-    lua_pushinteger(L, result);
-    return 1;
-
-    } else {
-        return luaL_error(L, "Wrong arguments for WPushButton.linkTarget");
-    }
-}
-
 static const char* WPushButton_setMenu_args0[] = {luawt_typeToStr<WPushButton>(), luawt_typeToStr<Wt::WPopupMenu>(), NULL};
 static const char* const* const luawt_WPushButton_setMenu_args[] = {WPushButton_setMenu_args0, NULL};
 
@@ -197,22 +101,6 @@ int luawt_WPushButton_setMenu(lua_State* L) {
     }
 }
 
-static const char* WPushButton_isChecked_args0[] = {luawt_typeToStr<WPushButton>(), NULL};
-static const char* const* const luawt_WPushButton_isChecked_args[] = {WPushButton_isChecked_args0, NULL};
-
-int luawt_WPushButton_isChecked(lua_State* L) {
-    int index = luawt_getSuitableArgsGroup(L, luawt_WPushButton_isChecked_args);
-    WPushButton* self = luawt_checkFromLua<WPushButton>(L, 1);
-    if (index == 0) {
-    bool result = self->isChecked();
-    lua_pushboolean(L, result);
-    return 1;
-
-    } else {
-        return luaL_error(L, "Wrong arguments for WPushButton.isChecked");
-    }
-}
-
 static const char* WPushButton_isCheckable_args0[] = {luawt_typeToStr<WPushButton>(), NULL};
 static const char* const* const luawt_WPushButton_isCheckable_args[] = {WPushButton_isCheckable_args0, NULL};
 
@@ -226,55 +114,6 @@ int luawt_WPushButton_isCheckable(lua_State* L) {
 
     } else {
         return luaL_error(L, "Wrong arguments for WPushButton.isCheckable");
-    }
-}
-
-static const char* WPushButton_setLinkTarget_args0[] = {luawt_typeToStr<WPushButton>(), "int", NULL};
-static const char* const* const luawt_WPushButton_setLinkTarget_args[] = {WPushButton_setLinkTarget_args0, NULL};
-
-int luawt_WPushButton_setLinkTarget(lua_State* L) {
-    int index = luawt_getSuitableArgsGroup(L, luawt_WPushButton_setLinkTarget_args);
-    WPushButton* self = luawt_checkFromLua<WPushButton>(L, 1);
-    if (index == 0) {
-    Wt::AnchorTarget target = static_cast<Wt::AnchorTarget>(lua_tointeger(L, 2));
-    self->setLinkTarget(target);
-    return 0;
-    
-    } else {
-        return luaL_error(L, "Wrong arguments for WPushButton.setLinkTarget");
-    }
-}
-
-static const char* WPushButton_setValueText_args0[] = {luawt_typeToStr<WPushButton>(), "char const *", NULL};
-static const char* const* const luawt_WPushButton_setValueText_args[] = {WPushButton_setValueText_args0, NULL};
-
-int luawt_WPushButton_setValueText(lua_State* L) {
-    int index = luawt_getSuitableArgsGroup(L, luawt_WPushButton_setValueText_args);
-    WPushButton* self = luawt_checkFromLua<WPushButton>(L, 1);
-    if (index == 0) {
-    char const * raw2 = lua_tostring(L, 2);
-    Wt::WString value = Wt::WString(raw2);
-    self->setValueText(value);
-    return 0;
-    
-    } else {
-        return luaL_error(L, "Wrong arguments for WPushButton.setValueText");
-    }
-}
-
-static const char* WPushButton_text_args0[] = {luawt_typeToStr<WPushButton>(), NULL};
-static const char* const* const luawt_WPushButton_text_args[] = {WPushButton_text_args0, NULL};
-
-int luawt_WPushButton_text(lua_State* L) {
-    int index = luawt_getSuitableArgsGroup(L, luawt_WPushButton_text_args);
-    WPushButton* self = luawt_checkFromLua<WPushButton>(L, 1);
-    if (index == 0) {
-    Wt::WString const & result = self->text();
-    lua_pushstring(L, result.toUTF8().c_str());
-    return 1;
-
-    } else {
-        return luaL_error(L, "Wrong arguments for WPushButton.text");
     }
 }
 
@@ -310,38 +149,6 @@ int luawt_WPushButton_setRef(lua_State* L) {
     }
 }
 
-static const char* WPushButton_textFormat_args0[] = {luawt_typeToStr<WPushButton>(), NULL};
-static const char* const* const luawt_WPushButton_textFormat_args[] = {WPushButton_textFormat_args0, NULL};
-
-int luawt_WPushButton_textFormat(lua_State* L) {
-    int index = luawt_getSuitableArgsGroup(L, luawt_WPushButton_textFormat_args);
-    WPushButton* self = luawt_checkFromLua<WPushButton>(L, 1);
-    if (index == 0) {
-    Wt::TextFormat result = self->textFormat();
-    lua_pushinteger(L, result);
-    return 1;
-
-    } else {
-        return luaL_error(L, "Wrong arguments for WPushButton.textFormat");
-    }
-}
-
-static const char* WPushButton_setCheckable_args0[] = {luawt_typeToStr<WPushButton>(), "bool", NULL};
-static const char* const* const luawt_WPushButton_setCheckable_args[] = {WPushButton_setCheckable_args0, NULL};
-
-int luawt_WPushButton_setCheckable(lua_State* L) {
-    int index = luawt_getSuitableArgsGroup(L, luawt_WPushButton_setCheckable_args);
-    WPushButton* self = luawt_checkFromLua<WPushButton>(L, 1);
-    if (index == 0) {
-    bool checkable = lua_toboolean(L, 2);
-    self->setCheckable(checkable);
-    return 0;
-    
-    } else {
-        return luaL_error(L, "Wrong arguments for WPushButton.setCheckable");
-    }
-}
-
 static const char* WPushButton_setTextFormat_args0[] = {luawt_typeToStr<WPushButton>(), "int", NULL};
 static const char* const* const luawt_WPushButton_setTextFormat_args[] = {WPushButton_setTextFormat_args0, NULL};
 
@@ -356,6 +163,120 @@ int luawt_WPushButton_setTextFormat(lua_State* L) {
 
     } else {
         return luaL_error(L, "Wrong arguments for WPushButton.setTextFormat");
+    }
+}
+
+static const char* WPushButton_valueText_args0[] = {luawt_typeToStr<WPushButton>(), NULL};
+static const char* const* const luawt_WPushButton_valueText_args[] = {WPushButton_valueText_args0, NULL};
+
+int luawt_WPushButton_valueText(lua_State* L) {
+    int index = luawt_getSuitableArgsGroup(L, luawt_WPushButton_valueText_args);
+    WPushButton* self = luawt_checkFromLua<WPushButton>(L, 1);
+    if (index == 0) {
+    Wt::WString result = self->valueText();
+    lua_pushstring(L, result.toUTF8().c_str());
+    return 1;
+
+    } else {
+        return luaL_error(L, "Wrong arguments for WPushButton.valueText");
+    }
+}
+
+static const char* WPushButton_menu_args0[] = {luawt_typeToStr<WPushButton>(), NULL};
+static const char* const* const luawt_WPushButton_menu_args[] = {WPushButton_menu_args0, NULL};
+
+int luawt_WPushButton_menu(lua_State* L) {
+    int index = luawt_getSuitableArgsGroup(L, luawt_WPushButton_menu_args);
+    WPushButton* self = luawt_checkFromLua<WPushButton>(L, 1);
+    if (index == 0) {
+    Wt::WPopupMenu * result = self->menu();
+    luawt_toLua(L, result);
+    return 1;
+
+    } else {
+        return luaL_error(L, "Wrong arguments for WPushButton.menu");
+    }
+}
+
+static const char* WPushButton_isChecked_args0[] = {luawt_typeToStr<WPushButton>(), NULL};
+static const char* const* const luawt_WPushButton_isChecked_args[] = {WPushButton_isChecked_args0, NULL};
+
+int luawt_WPushButton_isChecked(lua_State* L) {
+    int index = luawt_getSuitableArgsGroup(L, luawt_WPushButton_isChecked_args);
+    WPushButton* self = luawt_checkFromLua<WPushButton>(L, 1);
+    if (index == 0) {
+    bool result = self->isChecked();
+    lua_pushboolean(L, result);
+    return 1;
+
+    } else {
+        return luaL_error(L, "Wrong arguments for WPushButton.isChecked");
+    }
+}
+
+static const char* WPushButton_setLink_args0[] = {luawt_typeToStr<WPushButton>(), "char const *", NULL};
+static const char* const* const luawt_WPushButton_setLink_args[] = {WPushButton_setLink_args0, NULL};
+
+int luawt_WPushButton_setLink(lua_State* L) {
+    int index = luawt_getSuitableArgsGroup(L, luawt_WPushButton_setLink_args);
+    WPushButton* self = luawt_checkFromLua<WPushButton>(L, 1);
+    if (index == 0) {
+    char const * raw2 = lua_tostring(L, 2);
+    Wt::WLink link = Wt::WLink(raw2);
+    self->setLink(link);
+    return 0;
+    
+    } else {
+        return luaL_error(L, "Wrong arguments for WPushButton.setLink");
+    }
+}
+
+static const char* WPushButton_linkTarget_args0[] = {luawt_typeToStr<WPushButton>(), NULL};
+static const char* const* const luawt_WPushButton_linkTarget_args[] = {WPushButton_linkTarget_args0, NULL};
+
+int luawt_WPushButton_linkTarget(lua_State* L) {
+    int index = luawt_getSuitableArgsGroup(L, luawt_WPushButton_linkTarget_args);
+    WPushButton* self = luawt_checkFromLua<WPushButton>(L, 1);
+    if (index == 0) {
+    Wt::AnchorTarget result = self->linkTarget();
+    lua_pushinteger(L, result);
+    return 1;
+
+    } else {
+        return luaL_error(L, "Wrong arguments for WPushButton.linkTarget");
+    }
+}
+
+static const char* WPushButton_setValueText_args0[] = {luawt_typeToStr<WPushButton>(), "char const *", NULL};
+static const char* const* const luawt_WPushButton_setValueText_args[] = {WPushButton_setValueText_args0, NULL};
+
+int luawt_WPushButton_setValueText(lua_State* L) {
+    int index = luawt_getSuitableArgsGroup(L, luawt_WPushButton_setValueText_args);
+    WPushButton* self = luawt_checkFromLua<WPushButton>(L, 1);
+    if (index == 0) {
+    char const * raw2 = lua_tostring(L, 2);
+    Wt::WString value = Wt::WString(raw2);
+    self->setValueText(value);
+    return 0;
+    
+    } else {
+        return luaL_error(L, "Wrong arguments for WPushButton.setValueText");
+    }
+}
+
+static const char* WPushButton_ref_args0[] = {luawt_typeToStr<WPushButton>(), NULL};
+static const char* const* const luawt_WPushButton_ref_args[] = {WPushButton_ref_args0, NULL};
+
+int luawt_WPushButton_ref(lua_State* L) {
+    int index = luawt_getSuitableArgsGroup(L, luawt_WPushButton_ref_args);
+    WPushButton* self = luawt_checkFromLua<WPushButton>(L, 1);
+    if (index == 0) {
+    std::string result = self->ref();
+    lua_pushstring(L, result.c_str());
+    return 1;
+
+    } else {
+        return luaL_error(L, "Wrong arguments for WPushButton.ref");
     }
 }
 
@@ -375,19 +296,165 @@ int luawt_WPushButton_isDefault(lua_State* L) {
     }
 }
 
-static const char* WPushButton_valueText_args0[] = {luawt_typeToStr<WPushButton>(), NULL};
-static const char* const* const luawt_WPushButton_valueText_args[] = {WPushButton_valueText_args0, NULL};
+static const char* WPushButton_setIcon_args0[] = {luawt_typeToStr<WPushButton>(), "char const *", NULL};
+static const char* const* const luawt_WPushButton_setIcon_args[] = {WPushButton_setIcon_args0, NULL};
 
-int luawt_WPushButton_valueText(lua_State* L) {
-    int index = luawt_getSuitableArgsGroup(L, luawt_WPushButton_valueText_args);
+int luawt_WPushButton_setIcon(lua_State* L) {
+    int index = luawt_getSuitableArgsGroup(L, luawt_WPushButton_setIcon_args);
     WPushButton* self = luawt_checkFromLua<WPushButton>(L, 1);
     if (index == 0) {
-    Wt::WString result = self->valueText();
+    char const * raw2 = lua_tostring(L, 2);
+    Wt::WLink link = Wt::WLink(raw2);
+    self->setIcon(link);
+    return 0;
+    
+    } else {
+        return luaL_error(L, "Wrong arguments for WPushButton.setIcon");
+    }
+}
+
+static const char* WPushButton_setDefault_args0[] = {luawt_typeToStr<WPushButton>(), "bool", NULL};
+static const char* const* const luawt_WPushButton_setDefault_args[] = {WPushButton_setDefault_args0, NULL};
+
+int luawt_WPushButton_setDefault(lua_State* L) {
+    int index = luawt_getSuitableArgsGroup(L, luawt_WPushButton_setDefault_args);
+    WPushButton* self = luawt_checkFromLua<WPushButton>(L, 1);
+    if (index == 0) {
+    bool enabled = lua_toboolean(L, 2);
+    self->setDefault(enabled);
+    return 0;
+    
+    } else {
+        return luaL_error(L, "Wrong arguments for WPushButton.setDefault");
+    }
+}
+
+static const char* WPushButton_link_args0[] = {luawt_typeToStr<WPushButton>(), NULL};
+static const char* const* const luawt_WPushButton_link_args[] = {WPushButton_link_args0, NULL};
+
+int luawt_WPushButton_link(lua_State* L) {
+    int index = luawt_getSuitableArgsGroup(L, luawt_WPushButton_link_args);
+    WPushButton* self = luawt_checkFromLua<WPushButton>(L, 1);
+    if (index == 0) {
+    Wt::WLink const & result = self->link();
+    lua_pushstring(L, result.url().c_str());
+    return 1;
+
+    } else {
+        return luaL_error(L, "Wrong arguments for WPushButton.link");
+    }
+}
+
+static const char* WPushButton_setLinkTarget_args0[] = {luawt_typeToStr<WPushButton>(), "int", NULL};
+static const char* const* const luawt_WPushButton_setLinkTarget_args[] = {WPushButton_setLinkTarget_args0, NULL};
+
+int luawt_WPushButton_setLinkTarget(lua_State* L) {
+    int index = luawt_getSuitableArgsGroup(L, luawt_WPushButton_setLinkTarget_args);
+    WPushButton* self = luawt_checkFromLua<WPushButton>(L, 1);
+    if (index == 0) {
+    Wt::AnchorTarget target = static_cast<Wt::AnchorTarget>(lua_tointeger(L, 2));
+    self->setLinkTarget(target);
+    return 0;
+    
+    } else {
+        return luaL_error(L, "Wrong arguments for WPushButton.setLinkTarget");
+    }
+}
+
+static const char* WPushButton_icon_args0[] = {luawt_typeToStr<WPushButton>(), NULL};
+static const char* const* const luawt_WPushButton_icon_args[] = {WPushButton_icon_args0, NULL};
+
+int luawt_WPushButton_icon(lua_State* L) {
+    int index = luawt_getSuitableArgsGroup(L, luawt_WPushButton_icon_args);
+    WPushButton* self = luawt_checkFromLua<WPushButton>(L, 1);
+    if (index == 0) {
+    Wt::WLink result = self->icon();
+    lua_pushstring(L, result.url().c_str());
+    return 1;
+
+    } else {
+        return luaL_error(L, "Wrong arguments for WPushButton.icon");
+    }
+}
+
+static const char* WPushButton_setCheckable_args0[] = {luawt_typeToStr<WPushButton>(), "bool", NULL};
+static const char* const* const luawt_WPushButton_setCheckable_args[] = {WPushButton_setCheckable_args0, NULL};
+
+int luawt_WPushButton_setCheckable(lua_State* L) {
+    int index = luawt_getSuitableArgsGroup(L, luawt_WPushButton_setCheckable_args);
+    WPushButton* self = luawt_checkFromLua<WPushButton>(L, 1);
+    if (index == 0) {
+    bool checkable = lua_toboolean(L, 2);
+    self->setCheckable(checkable);
+    return 0;
+    
+    } else {
+        return luaL_error(L, "Wrong arguments for WPushButton.setCheckable");
+    }
+}
+
+static const char* WPushButton_setText_args0[] = {luawt_typeToStr<WPushButton>(), "char const *", NULL};
+static const char* const* const luawt_WPushButton_setText_args[] = {WPushButton_setText_args0, NULL};
+
+int luawt_WPushButton_setText(lua_State* L) {
+    int index = luawt_getSuitableArgsGroup(L, luawt_WPushButton_setText_args);
+    WPushButton* self = luawt_checkFromLua<WPushButton>(L, 1);
+    if (index == 0) {
+    char const * raw2 = lua_tostring(L, 2);
+    Wt::WString text = Wt::WString(raw2);
+    bool result = self->setText(text);
+    lua_pushboolean(L, result);
+    return 1;
+
+    } else {
+        return luaL_error(L, "Wrong arguments for WPushButton.setText");
+    }
+}
+
+static const char* WPushButton_refresh_args0[] = {luawt_typeToStr<WPushButton>(), NULL};
+static const char* const* const luawt_WPushButton_refresh_args[] = {WPushButton_refresh_args0, NULL};
+
+int luawt_WPushButton_refresh(lua_State* L) {
+    int index = luawt_getSuitableArgsGroup(L, luawt_WPushButton_refresh_args);
+    WPushButton* self = luawt_checkFromLua<WPushButton>(L, 1);
+    if (index == 0) {
+    self->refresh();
+    return 0;
+    
+    } else {
+        return luaL_error(L, "Wrong arguments for WPushButton.refresh");
+    }
+}
+
+static const char* WPushButton_text_args0[] = {luawt_typeToStr<WPushButton>(), NULL};
+static const char* const* const luawt_WPushButton_text_args[] = {WPushButton_text_args0, NULL};
+
+int luawt_WPushButton_text(lua_State* L) {
+    int index = luawt_getSuitableArgsGroup(L, luawt_WPushButton_text_args);
+    WPushButton* self = luawt_checkFromLua<WPushButton>(L, 1);
+    if (index == 0) {
+    Wt::WString const & result = self->text();
     lua_pushstring(L, result.toUTF8().c_str());
     return 1;
 
     } else {
-        return luaL_error(L, "Wrong arguments for WPushButton.valueText");
+        return luaL_error(L, "Wrong arguments for WPushButton.text");
+    }
+}
+
+static const char* WPushButton_textFormat_args0[] = {luawt_typeToStr<WPushButton>(), NULL};
+static const char* const* const luawt_WPushButton_textFormat_args[] = {WPushButton_textFormat_args0, NULL};
+
+int luawt_WPushButton_textFormat(lua_State* L) {
+    int index = luawt_getSuitableArgsGroup(L, luawt_WPushButton_textFormat_args);
+    WPushButton* self = luawt_checkFromLua<WPushButton>(L, 1);
+    if (index == 0) {
+    Wt::TextFormat result = self->textFormat();
+    lua_pushinteger(L, result);
+    return 1;
+
+    } else {
+        return luaL_error(L, "Wrong arguments for WPushButton.textFormat");
     }
 }
 
@@ -431,6 +498,10 @@ static const luaL_Reg luawt_WPushButton_methods[] = {
     METHOD(WPushButton, text),
     METHOD(WPushButton, setTextFormat),
     METHOD(WPushButton, textFormat),
+    METHOD(WPushButton, setIcon),
+    METHOD(WPushButton, icon),
+    METHOD(WPushButton, setLink),
+    METHOD(WPushButton, link),
     METHOD(WPushButton, setRef),
     METHOD(WPushButton, ref),
     METHOD(WPushButton, valueText),

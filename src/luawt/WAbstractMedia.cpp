@@ -2,6 +2,7 @@
 
 #include <Wt/WWidget>
 #include <Wt/WAbstractMedia>
+#include <Wt/WLink>
 
 #include "globals.hpp"
 
@@ -32,6 +33,43 @@ int luawt_WAbstractMedia_pause(lua_State* L) {
     
     } else {
         return luaL_error(L, "Wrong arguments for WAbstractMedia.pause");
+    }
+}
+
+static const char* WAbstractMedia_addSource_args0[] = {luawt_typeToStr<WAbstractMedia>(), "char const *", NULL};
+static const char* WAbstractMedia_addSource_args1[] = {luawt_typeToStr<WAbstractMedia>(), "char const *", "char const *", NULL};
+static const char* WAbstractMedia_addSource_args2[] = {luawt_typeToStr<WAbstractMedia>(), "char const *", "char const *", "char const *", NULL};
+static const char* const* const luawt_WAbstractMedia_addSource_args[] = {WAbstractMedia_addSource_args0, WAbstractMedia_addSource_args1, WAbstractMedia_addSource_args2, NULL};
+
+int luawt_WAbstractMedia_addSource(lua_State* L) {
+    int index = luawt_getSuitableArgsGroup(L, luawt_WAbstractMedia_addSource_args);
+    WAbstractMedia* self = luawt_checkFromLua<WAbstractMedia>(L, 1);
+    if (index == 0) {
+    char const * raw2 = lua_tostring(L, 2);
+    Wt::WLink source = Wt::WLink(raw2);
+    self->addSource(source);
+    return 0;
+    
+    } else if (index == 1) {
+    char const * raw2 = lua_tostring(L, 2);
+    Wt::WLink source = Wt::WLink(raw2);
+    char const * raw3 = lua_tostring(L, 3);
+    std::string type = std::string(raw3);
+    self->addSource(source, type);
+    return 0;
+    
+    } else if (index == 2) {
+    char const * raw2 = lua_tostring(L, 2);
+    Wt::WLink source = Wt::WLink(raw2);
+    char const * raw3 = lua_tostring(L, 3);
+    std::string type = std::string(raw3);
+    char const * raw4 = lua_tostring(L, 4);
+    std::string media = std::string(raw4);
+    self->addSource(source, type, media);
+    return 0;
+    
+    } else {
+        return luaL_error(L, "Wrong arguments for WAbstractMedia.addSource");
     }
 }
 
@@ -177,6 +215,7 @@ static const luaL_Reg luawt_WAbstractMedia_methods[] = {
     METHOD(WAbstractMedia, setPreloadMode),
     METHOD(WAbstractMedia, preloadMode),
     METHOD(WAbstractMedia, clearSources),
+    METHOD(WAbstractMedia, addSource),
     METHOD(WAbstractMedia, setAlternativeContent),
     METHOD(WAbstractMedia, play),
     METHOD(WAbstractMedia, pause),

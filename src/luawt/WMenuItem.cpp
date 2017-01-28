@@ -1,10 +1,11 @@
 #include "boost-xtime.hpp"
 
+#include <Wt/WMenuItem>
+#include <Wt/WLink>
+#include <Wt/WString>
 #include <Wt/WWidget>
 #include <Wt/WCheckBox>
-#include <Wt/WMenuItem>
 #include <Wt/WMenu>
-#include <Wt/WString>
 
 #include "globals.hpp"
 
@@ -459,6 +460,22 @@ int luawt_WMenuItem_setFromInternalPath(lua_State* L) {
     }
 }
 
+static const char* WMenuItem_link_args0[] = {luawt_typeToStr<WMenuItem>(), NULL};
+static const char* const* const luawt_WMenuItem_link_args[] = {WMenuItem_link_args0, NULL};
+
+int luawt_WMenuItem_link(lua_State* L) {
+    int index = luawt_getSuitableArgsGroup(L, luawt_WMenuItem_link_args);
+    WMenuItem* self = luawt_checkFromLua<WMenuItem>(L, 1);
+    if (index == 0) {
+    Wt::WLink result = self->link();
+    lua_pushstring(L, result.url().c_str());
+    return 1;
+
+    } else {
+        return luaL_error(L, "Wrong arguments for WMenuItem.link");
+    }
+}
+
 static const char* WMenuItem_setCloseable_args0[] = {luawt_typeToStr<WMenuItem>(), "bool", NULL};
 static const char* const* const luawt_WMenuItem_setCloseable_args[] = {WMenuItem_setCloseable_args0, NULL};
 
@@ -622,6 +639,23 @@ int luawt_WMenuItem_isSeparator(lua_State* L) {
     }
 }
 
+static const char* WMenuItem_setLink_args0[] = {luawt_typeToStr<WMenuItem>(), "char const *", NULL};
+static const char* const* const luawt_WMenuItem_setLink_args[] = {WMenuItem_setLink_args0, NULL};
+
+int luawt_WMenuItem_setLink(lua_State* L) {
+    int index = luawt_getSuitableArgsGroup(L, luawt_WMenuItem_setLink_args);
+    WMenuItem* self = luawt_checkFromLua<WMenuItem>(L, 1);
+    if (index == 0) {
+    char const * raw2 = lua_tostring(L, 2);
+    Wt::WLink link = Wt::WLink(raw2);
+    self->setLink(link);
+    return 0;
+    
+    } else {
+        return luaL_error(L, "Wrong arguments for WMenuItem.setLink");
+    }
+}
+
 ADD_SIGNAL(scrolled, WMenuItem, Wt::WScrollEvent)
 ADD_SIGNAL(keyWentDown, WMenuItem, Wt::WKeyEvent)
 ADD_SIGNAL(keyPressed, WMenuItem, Wt::WKeyEvent)
@@ -653,6 +687,8 @@ static const luaL_Reg luawt_WMenuItem_methods[] = {
     METHOD(WMenuItem, isCheckable),
     METHOD(WMenuItem, setPathComponent),
     METHOD(WMenuItem, pathComponent),
+    METHOD(WMenuItem, setLink),
+    METHOD(WMenuItem, link),
     METHOD(WMenuItem, setLinkTarget),
     METHOD(WMenuItem, linkTarget),
     METHOD(WMenuItem, setMenu),

@@ -1,6 +1,7 @@
 #include "boost-xtime.hpp"
 
 #include <Wt/WInteractWidget>
+#include <Wt/WLink>
 #include <Wt/WProgressBar>
 #include <Wt/WMediaPlayer>
 #include <Wt/WString>
@@ -170,6 +171,24 @@ int luawt_WMediaPlayer_pause(lua_State* L) {
     
     } else {
         return luaL_error(L, "Wrong arguments for WMediaPlayer.pause");
+    }
+}
+
+static const char* WMediaPlayer_addSource_args0[] = {luawt_typeToStr<WMediaPlayer>(), "int", "char const *", NULL};
+static const char* const* const luawt_WMediaPlayer_addSource_args[] = {WMediaPlayer_addSource_args0, NULL};
+
+int luawt_WMediaPlayer_addSource(lua_State* L) {
+    int index = luawt_getSuitableArgsGroup(L, luawt_WMediaPlayer_addSource_args);
+    WMediaPlayer* self = luawt_checkFromLua<WMediaPlayer>(L, 1);
+    if (index == 0) {
+    Wt::WMediaPlayer::Encoding encoding = static_cast<Wt::WMediaPlayer::Encoding>(lua_tointeger(L, 2));
+    char const * raw3 = lua_tostring(L, 3);
+    Wt::WLink link = Wt::WLink(raw3);
+    self->addSource(encoding, link);
+    return 0;
+    
+    } else {
+        return luaL_error(L, "Wrong arguments for WMediaPlayer.addSource");
     }
 }
 
@@ -448,6 +467,23 @@ int luawt_WMediaPlayer_clearSources(lua_State* L) {
     }
 }
 
+static const char* WMediaPlayer_getSource_args0[] = {luawt_typeToStr<WMediaPlayer>(), "int", NULL};
+static const char* const* const luawt_WMediaPlayer_getSource_args[] = {WMediaPlayer_getSource_args0, NULL};
+
+int luawt_WMediaPlayer_getSource(lua_State* L) {
+    int index = luawt_getSuitableArgsGroup(L, luawt_WMediaPlayer_getSource_args);
+    WMediaPlayer* self = luawt_checkFromLua<WMediaPlayer>(L, 1);
+    if (index == 0) {
+    Wt::WMediaPlayer::Encoding encoding = static_cast<Wt::WMediaPlayer::Encoding>(lua_tointeger(L, 2));
+    Wt::WLink result = self->getSource(encoding);
+    lua_pushstring(L, result.url().c_str());
+    return 1;
+
+    } else {
+        return luaL_error(L, "Wrong arguments for WMediaPlayer.getSource");
+    }
+}
+
 static const char* WMediaPlayer_setControlsWidget_args0[] = {luawt_typeToStr<WMediaPlayer>(), luawt_typeToStr<Wt::WWidget>(), NULL};
 static const char* const* const luawt_WMediaPlayer_setControlsWidget_args[] = {WMediaPlayer_setControlsWidget_args0, NULL};
 
@@ -490,6 +526,8 @@ static const luaL_Reg luawt_WMediaPlayer_methods[] = {
     METHOD(WMediaPlayer, setControlsWidget),
     METHOD(WMediaPlayer, controlsWidget),
     METHOD(WMediaPlayer, setTitle),
+    METHOD(WMediaPlayer, addSource),
+    METHOD(WMediaPlayer, getSource),
     METHOD(WMediaPlayer, clearSources),
     METHOD(WMediaPlayer, setButton),
     METHOD(WMediaPlayer, button),

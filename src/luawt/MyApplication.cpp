@@ -3,6 +3,7 @@
 #include <Wt/WWidget>
 #include <Wt/WApplication>
 #include <Wt/WContainerWidget>
+#include <Wt/WLink>
 #include <Wt/WString>
 
 #include "globals.hpp"
@@ -751,6 +752,43 @@ int luawt_MyApplication_deferRendering(lua_State* L) {
     
     } else {
         return luaL_error(L, "Wrong arguments for MyApplication.deferRendering");
+    }
+}
+
+static const char* MyApplication_useStyleSheet_args0[] = {luawt_typeToStr<MyApplication>(), "char const *", NULL};
+static const char* MyApplication_useStyleSheet_args1[] = {luawt_typeToStr<MyApplication>(), "char const *", "char const *", NULL};
+static const char* MyApplication_useStyleSheet_args2[] = {luawt_typeToStr<MyApplication>(), "char const *", "char const *", "char const *", NULL};
+static const char* const* const luawt_MyApplication_useStyleSheet_args[] = {MyApplication_useStyleSheet_args0, MyApplication_useStyleSheet_args1, MyApplication_useStyleSheet_args2, NULL};
+
+int luawt_MyApplication_useStyleSheet(lua_State* L) {
+    int index = luawt_getSuitableArgsGroup(L, luawt_MyApplication_useStyleSheet_args);
+    MyApplication* self = luawt_checkFromLua<MyApplication>(L, 1);
+    if (index == 0) {
+    char const * raw2 = lua_tostring(L, 2);
+    Wt::WLink link = Wt::WLink(raw2);
+    self->useStyleSheet(link);
+    return 0;
+    
+    } else if (index == 1) {
+    char const * raw2 = lua_tostring(L, 2);
+    Wt::WLink link = Wt::WLink(raw2);
+    char const * raw3 = lua_tostring(L, 3);
+    std::string media = std::string(raw3);
+    self->useStyleSheet(link, media);
+    return 0;
+    
+    } else if (index == 2) {
+    char const * raw2 = lua_tostring(L, 2);
+    Wt::WLink link = Wt::WLink(raw2);
+    char const * raw3 = lua_tostring(L, 3);
+    std::string condition = std::string(raw3);
+    char const * raw4 = lua_tostring(L, 4);
+    std::string media = std::string(raw4);
+    self->useStyleSheet(link, condition, media);
+    return 0;
+    
+    } else {
+        return luaL_error(L, "Wrong arguments for MyApplication.useStyleSheet");
     }
 }
 
@@ -1520,6 +1558,8 @@ ADD_SIGNAL(globalEscapePressed, MyApplication, Wt::NoClass)
 static const luaL_Reg luawt_MyApplication_methods[] = {
     METHOD(MyApplication, root),
     METHOD(MyApplication, findWidget),
+    METHOD(MyApplication, useStyleSheet),
+    METHOD(MyApplication, useStyleSheet),
     METHOD(MyApplication, setCssTheme),
     METHOD(MyApplication, setLayoutDirection),
     METHOD(MyApplication, layoutDirection),
