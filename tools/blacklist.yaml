@@ -21,6 +21,7 @@ WAnchor:
   - tabIndex
 WApplication:
   methods:
+  - removeStyleSheet
   - setConnectionMonitor
   - waitForEvent
   signatures:
