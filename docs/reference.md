@@ -85,6 +85,7 @@
   * triggerUpdate
   * updatesEnabled
   * url
+  * useStyleSheet
  * [WAbstractItemView](https://www.webtoolkit.eu/wt/doc/reference/html/classWt_1_1WAbstractItemView.html) (abstract)
   * alternatingRowColors
   * closeEditors
@@ -123,6 +124,7 @@
   * validateEditors
   * verticalHeaderAlignment
  * [WAbstractMedia](https://www.webtoolkit.eu/wt/doc/reference/html/classWt_1_1WAbstractMedia.html) (abstract)
+  * addSource
   * clearSources
   * clicked
   * doubleClicked
@@ -236,6 +238,7 @@
   * keyPressed
   * keyWentDown
   * keyWentUp
+  * link
   * mouseDragged
   * mouseMoved
   * mouseWentDown
@@ -245,6 +248,7 @@
   * mouseWheel
   * scrolled
   * setImage
+  * setLink
   * setRef
   * setRefInternalPath
   * setTarget
@@ -736,6 +740,7 @@
   * gestureChanged
   * gestureEnded
   * gestureStarted
+  * imageLink
   * imageLoaded
   * imageRef
   * keyPressed
@@ -749,6 +754,7 @@
   * mouseWentUp
   * mouseWheel
   * setAlternateText
+  * setImageLink
   * setImageRef
   * touchEnded
   * touchMoved
@@ -859,11 +865,13 @@
   * touchStarted
   * valueText
  * [WMediaPlayer](https://www.webtoolkit.eu/wt/doc/reference/html/classWt_1_1WMediaPlayer.html)
+  * addSource
   * button
   * clearSources
   * controlsWidget
   * currentTime
   * duration
+  * getSource
   * jsPlayerRef
   * mute
   * pause
@@ -925,6 +933,7 @@
   * keyPressed
   * keyWentDown
   * keyWentUp
+  * link
   * linkTarget
   * menu
   * mouseDragged
@@ -944,6 +953,7 @@
   * setCloseable
   * setFromInternalPath
   * setIcon
+  * setLink
   * setLinkTarget
   * setMenu
   * setPathComponent
@@ -978,6 +988,7 @@
   * mouseWentUp
   * mouseWheel
   * setResponsive
+  * setTitle
   * touchEnded
   * touchMoved
   * touchStarted
@@ -1094,12 +1105,14 @@
   * gestureChanged
   * gestureEnded
   * gestureStarted
+  * icon
   * isCheckable
   * isChecked
   * isDefault
   * keyPressed
   * keyWentDown
   * keyWentUp
+  * link
   * linkTarget
   * menu
   * mouseDragged
@@ -1115,6 +1128,8 @@
   * setCheckable
   * setChecked
   * setDefault
+  * setIcon
+  * setLink
   * setLinkTarget
   * setMenu
   * setRef
