@@ -287,6 +287,7 @@ def getMembers(global_namespace, module_name, blacklisted):
     methods = main_class.member_functions(
         function=custom_matcher,
         recursive=False,
+        allow_empty=True,
     ).to_list()
     methods = [
         method
@@ -340,15 +341,16 @@ def getConstructors(global_namespace, module_name, blacklisted):
     constructors = main_class.constructors(
         function=custom_matcher,
         recursive=False,
+        allow_empty=True,
     )
     result = []
     for constructor in constructors:
         if not constructor.is_artificial:
             if not inBlacklist(constructor, blacklisted):
                 result.append(constructor)
-    if result:
-        return result, getConstructorsType(result)
-    raise Exception('Unable to bind any constructors of %s' % module_name)
+    if not result:
+        logging.warning('Unable to bind any constructors of %s' % module_name)
+    return result, getConstructorsType(result)
 
 def isModule(module_str):
     path = '%s/%s' % (INCLUDE_WT, module_str)
