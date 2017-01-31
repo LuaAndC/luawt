@@ -77,12 +77,18 @@ def loadAdditionalChunk(module_str):
 def isTemplate(method_name, decl_str):
     # Luawt doesn't support C++ templates.
     if pygccxml.declarations.templates.is_instantiation(decl_str):
-        logging.warning(
-            "Its impossible to bind method %s because luawt " +
-            "doesn't support C++ templates",
-            method_name,
-        )
-        return True
+        name = pygccxml.declarations.templates.name(decl_str)
+        temp_args = pygccxml.declarations.templates.args(decl_str)
+        if (len(temp_args) == 1) and (name == 'Wt::WFlags'):
+            # WFlags<enum> is an exception. Treated as enum.
+            addEnumByStr(decl_str, temp_args[0])
+        else:
+            logging.warning(
+                "Its impossible to bind method %s because luawt " +
+                "doesn't support C++ templates",
+                method_name,
+            )
+            return True
     return False
 
 def isConstReference(checked_type):
