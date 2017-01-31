@@ -26,12 +26,14 @@ PROBLEMATIC_FROM_BUILTIN_CONVERSIONS = {
     'std::string' : ('std::string', 'char const *'),
     'Wt::WString' : ('Wt::WString', 'char const *'),
     'Wt::WLink' : ('Wt::WLink', 'char const *'),
+    'Wt::WLength' : ('Wt::WLength', 'double'),
 }
 
 PROBLEMATIC_TO_BUILTIN_CONVERSIONS = {
     'std::string' : ('c_str', 'char const *'),
     'Wt::WString' : ('toUTF8', 'std::string'),
     'Wt::WLink' : ('url', 'std::string'),
+    'Wt::WLength' : ('value', 'double'),
 }
 
 XML_CACHE = 'src/luawt/xml'
