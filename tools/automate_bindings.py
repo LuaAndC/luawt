@@ -194,14 +194,17 @@ def checkReturnType(method_name, raw_return_type, Wt):
     )
     return False
 
+def addEnumByStr(type_str, enum_str):
+    enum_converters = (
+        'static_cast<%s>(lua_tointeger' % enum_str,
+        'lua_pushinteger',
+    )
+    BUILTIN_TYPES_CONVERTERS[type_str] = enum_converters
+
 def addEnum(type_obj):
     if pygccxml.declarations.is_enum(type_obj):
         enum_str = str(clearType(type_obj))
-        enum_converters = (
-            'static_cast<%s>(lua_tointeger' % enum_str,
-            'lua_pushinteger',
-        )
-        BUILTIN_TYPES_CONVERTERS[enum_str] = enum_converters
+        addEnumByStr(enum_str, enum_str)
 
 def getArgType(arg):
     # For compatibility with pygccxml v1.7.1
