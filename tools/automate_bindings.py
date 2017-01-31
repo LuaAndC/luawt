@@ -220,8 +220,8 @@ def getArgType(arg):
 def checkWtFunction(is_constructor, func, Wt):
     if func.access_type != 'public':
         return False
-    if isTemplate(func.name, func.decl_string):
-        return False
+    #if isTemplate(func.name, func.decl_string):
+    #    return False
     for arg in func.arguments:
         arg_field = getArgType(arg)
         addEnum(arg_field)
