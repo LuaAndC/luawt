@@ -548,10 +548,10 @@ def addWidgetToContainer(module_name):
     frame = r'''
     MyApplication* app = MyApplication::instance();
     if (!app) {
-        delete result;
+        delete l_result;
         throw std::logic_error("No WApplication when creating %s");
     }
-    app->root()->addWidget(result);
+    app->root()->addWidget(l_result);
     '''
     return frame % module_name
 
@@ -559,7 +559,7 @@ def callWtConstructor(return_type, args, module_name):
     call_s = 'new %s(' % module_name
     args_s = getArgsStr(args)
     constructor_s = call_s + args_s + ');'
-    return '%s result = %s' % (return_type, constructor_s)
+    return '%s l_result = %s' % (return_type, constructor_s)
 
 def callWtFunction(return_type, args, method_name):
     call_s = 'self->%s(' % method_name
@@ -568,10 +568,10 @@ def callWtFunction(return_type, args, method_name):
     if return_type == 'void':
         return func_s
     else:
-        return '%s result = %s' % (return_type, func_s)
+        return '%s l_result = %s' % (return_type, func_s)
 
 RETURN_CALLS_TEMPLATE = r'''
-    %s(L, %sresult%s);
+    %s(L, %sl_result%s);
     return 1;
 '''
 
