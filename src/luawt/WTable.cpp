@@ -13,22 +13,22 @@ static const char* const* const luawt_WTable_make_args[] = {WTable_make_args0, W
 int luawt_WTable_make(lua_State* L) {
     int index = luawt_getSuitableArgsGroup(L, luawt_WTable_make_args);
     if (index == 0) {
-    WTable * result = new WTable();
+    WTable * l_result = new WTable();
     MyApplication* app = MyApplication::instance();
     if (!app) {
-        delete result;
+        delete l_result;
         throw std::logic_error("No WApplication when creating WTable");
     }
-    app->root()->addWidget(result);
+    app->root()->addWidget(l_result);
     
-    luawt_toLua(L, result);
+    luawt_toLua(L, l_result);
     return 1;
 
     } else if (index == 1) {
     Wt::WContainerWidget* parent =
         luawt_checkFromLua<Wt::WContainerWidget>(L, 1);
-    WTable * result = new WTable(parent);
-    luawt_toLua(L, result);
+    WTable * l_result = new WTable(parent);
+    luawt_toLua(L, l_result);
     return 1;
 
     } else {
@@ -43,8 +43,8 @@ int luawt_WTable_columnCount(lua_State* L) {
     int index = luawt_getSuitableArgsGroup(L, luawt_WTable_columnCount_args);
     WTable* self = luawt_checkFromLua<WTable>(L, 1);
     if (index == 0) {
-    int result = self->columnCount();
-    lua_pushinteger(L, result);
+    int l_result = self->columnCount();
+    lua_pushinteger(L, l_result);
     return 1;
 
     } else {
@@ -84,8 +84,8 @@ int luawt_WTable_elementAt(lua_State* L) {
     if (index == 0) {
     int row = lua_tointeger(L, 2);
     int column = lua_tointeger(L, 3);
-    Wt::WTableCell * result = self->elementAt(row, column);
-    luawt_toLua(L, result);
+    Wt::WTableCell * l_result = self->elementAt(row, column);
+    luawt_toLua(L, l_result);
     return 1;
 
     } else {
@@ -118,14 +118,14 @@ int luawt_WTable_headerCount(lua_State* L) {
     int index = luawt_getSuitableArgsGroup(L, luawt_WTable_headerCount_args);
     WTable* self = luawt_checkFromLua<WTable>(L, 1);
     if (index == 0) {
-    int result = self->headerCount();
-    lua_pushinteger(L, result);
+    int l_result = self->headerCount();
+    lua_pushinteger(L, l_result);
     return 1;
 
     } else if (index == 1) {
     Wt::Orientation orientation = static_cast<Wt::Orientation>(lua_tointeger(L, 2));
-    int result = self->headerCount(orientation);
-    lua_pushinteger(L, result);
+    int l_result = self->headerCount(orientation);
+    lua_pushinteger(L, l_result);
     return 1;
 
     } else {
@@ -172,8 +172,8 @@ int luawt_WTable_rowCount(lua_State* L) {
     int index = luawt_getSuitableArgsGroup(L, luawt_WTable_rowCount_args);
     WTable* self = luawt_checkFromLua<WTable>(L, 1);
     if (index == 0) {
-    int result = self->rowCount();
-    lua_pushinteger(L, result);
+    int l_result = self->rowCount();
+    lua_pushinteger(L, l_result);
     return 1;
 
     } else {

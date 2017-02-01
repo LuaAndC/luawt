@@ -14,22 +14,22 @@ static const char* const* const luawt_WDateEdit_make_args[] = {WDateEdit_make_ar
 int luawt_WDateEdit_make(lua_State* L) {
     int index = luawt_getSuitableArgsGroup(L, luawt_WDateEdit_make_args);
     if (index == 0) {
-    WDateEdit * result = new WDateEdit();
+    WDateEdit * l_result = new WDateEdit();
     MyApplication* app = MyApplication::instance();
     if (!app) {
-        delete result;
+        delete l_result;
         throw std::logic_error("No WApplication when creating WDateEdit");
     }
-    app->root()->addWidget(result);
+    app->root()->addWidget(l_result);
     
-    luawt_toLua(L, result);
+    luawt_toLua(L, l_result);
     return 1;
 
     } else if (index == 1) {
     Wt::WContainerWidget* parent =
         luawt_checkFromLua<Wt::WContainerWidget>(L, 1);
-    WDateEdit * result = new WDateEdit(parent);
-    luawt_toLua(L, result);
+    WDateEdit * l_result = new WDateEdit(parent);
+    luawt_toLua(L, l_result);
     return 1;
 
     } else {
@@ -61,8 +61,8 @@ int luawt_WDateEdit_calendar(lua_State* L) {
     int index = luawt_getSuitableArgsGroup(L, luawt_WDateEdit_calendar_args);
     WDateEdit* self = luawt_checkFromLua<WDateEdit>(L, 1);
     if (index == 0) {
-    Wt::WCalendar * result = self->calendar();
-    luawt_toLua(L, result);
+    Wt::WCalendar * l_result = self->calendar();
+    luawt_toLua(L, l_result);
     return 1;
 
     } else {
@@ -77,8 +77,8 @@ int luawt_WDateEdit_format(lua_State* L) {
     int index = luawt_getSuitableArgsGroup(L, luawt_WDateEdit_format_args);
     WDateEdit* self = luawt_checkFromLua<WDateEdit>(L, 1);
     if (index == 0) {
-    Wt::WString result = self->format();
-    lua_pushstring(L, result.toUTF8().c_str());
+    Wt::WString l_result = self->format();
+    lua_pushstring(L, l_result.toUTF8().c_str());
     return 1;
 
     } else {

@@ -13,22 +13,22 @@ static const char* const* const luawt_WScrollArea_make_args[] = {WScrollArea_mak
 int luawt_WScrollArea_make(lua_State* L) {
     int index = luawt_getSuitableArgsGroup(L, luawt_WScrollArea_make_args);
     if (index == 0) {
-    WScrollArea * result = new WScrollArea();
+    WScrollArea * l_result = new WScrollArea();
     MyApplication* app = MyApplication::instance();
     if (!app) {
-        delete result;
+        delete l_result;
         throw std::logic_error("No WApplication when creating WScrollArea");
     }
-    app->root()->addWidget(result);
+    app->root()->addWidget(l_result);
     
-    luawt_toLua(L, result);
+    luawt_toLua(L, l_result);
     return 1;
 
     } else if (index == 1) {
     Wt::WContainerWidget* parent =
         luawt_checkFromLua<Wt::WContainerWidget>(L, 1);
-    WScrollArea * result = new WScrollArea(parent);
-    luawt_toLua(L, result);
+    WScrollArea * l_result = new WScrollArea(parent);
+    luawt_toLua(L, l_result);
     return 1;
 
     } else {
@@ -43,8 +43,8 @@ int luawt_WScrollArea_widget(lua_State* L) {
     int index = luawt_getSuitableArgsGroup(L, luawt_WScrollArea_widget_args);
     WScrollArea* self = luawt_checkFromLua<WScrollArea>(L, 1);
     if (index == 0) {
-    Wt::WWidget * result = self->widget();
-    luawt_toLua(L, result);
+    Wt::WWidget * l_result = self->widget();
+    luawt_toLua(L, l_result);
     return 1;
 
     } else {
@@ -59,8 +59,8 @@ int luawt_WScrollArea_verticalScrollBarPolicy(lua_State* L) {
     int index = luawt_getSuitableArgsGroup(L, luawt_WScrollArea_verticalScrollBarPolicy_args);
     WScrollArea* self = luawt_checkFromLua<WScrollArea>(L, 1);
     if (index == 0) {
-    Wt::WScrollArea::ScrollBarPolicy result = self->verticalScrollBarPolicy();
-    lua_pushinteger(L, result);
+    Wt::WScrollArea::ScrollBarPolicy l_result = self->verticalScrollBarPolicy();
+    lua_pushinteger(L, l_result);
     return 1;
 
     } else {
@@ -91,8 +91,8 @@ int luawt_WScrollArea_horizontalScrollBarPolicy(lua_State* L) {
     int index = luawt_getSuitableArgsGroup(L, luawt_WScrollArea_horizontalScrollBarPolicy_args);
     WScrollArea* self = luawt_checkFromLua<WScrollArea>(L, 1);
     if (index == 0) {
-    Wt::WScrollArea::ScrollBarPolicy result = self->horizontalScrollBarPolicy();
-    lua_pushinteger(L, result);
+    Wt::WScrollArea::ScrollBarPolicy l_result = self->horizontalScrollBarPolicy();
+    lua_pushinteger(L, l_result);
     return 1;
 
     } else {
@@ -156,8 +156,8 @@ int luawt_WScrollArea_takeWidget(lua_State* L) {
     int index = luawt_getSuitableArgsGroup(L, luawt_WScrollArea_takeWidget_args);
     WScrollArea* self = luawt_checkFromLua<WScrollArea>(L, 1);
     if (index == 0) {
-    Wt::WWidget * result = self->takeWidget();
-    luawt_toLua(L, result);
+    Wt::WWidget * l_result = self->takeWidget();
+    luawt_toLua(L, l_result);
     return 1;
 
     } else {

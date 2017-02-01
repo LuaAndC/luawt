@@ -21,36 +21,36 @@ static const char* const* const luawt_WAnchor_make_args[] = {WAnchor_make_args0,
 int luawt_WAnchor_make(lua_State* L) {
     int index = luawt_getSuitableArgsGroup(L, luawt_WAnchor_make_args);
     if (index == 0) {
-    WAnchor * result = new WAnchor();
+    WAnchor * l_result = new WAnchor();
     MyApplication* app = MyApplication::instance();
     if (!app) {
-        delete result;
+        delete l_result;
         throw std::logic_error("No WApplication when creating WAnchor");
     }
-    app->root()->addWidget(result);
+    app->root()->addWidget(l_result);
     
-    luawt_toLua(L, result);
+    luawt_toLua(L, l_result);
     return 1;
 
     } else if (index == 1) {
     Wt::WContainerWidget* parent =
         luawt_checkFromLua<Wt::WContainerWidget>(L, 1);
-    WAnchor * result = new WAnchor(parent);
-    luawt_toLua(L, result);
+    WAnchor * l_result = new WAnchor(parent);
+    luawt_toLua(L, l_result);
     return 1;
 
     } else if (index == 2) {
     char const * raw1 = lua_tostring(L, 1);
     Wt::WLink link = Wt::WLink(raw1);
-    WAnchor * result = new WAnchor(link);
+    WAnchor * l_result = new WAnchor(link);
     MyApplication* app = MyApplication::instance();
     if (!app) {
-        delete result;
+        delete l_result;
         throw std::logic_error("No WApplication when creating WAnchor");
     }
-    app->root()->addWidget(result);
+    app->root()->addWidget(l_result);
     
-    luawt_toLua(L, result);
+    luawt_toLua(L, l_result);
     return 1;
 
     } else if (index == 3) {
@@ -58,8 +58,8 @@ int luawt_WAnchor_make(lua_State* L) {
     Wt::WLink link = Wt::WLink(raw1);
     Wt::WContainerWidget* parent =
         luawt_checkFromLua<Wt::WContainerWidget>(L, 2);
-    WAnchor * result = new WAnchor(link, parent);
-    luawt_toLua(L, result);
+    WAnchor * l_result = new WAnchor(link, parent);
+    luawt_toLua(L, l_result);
     return 1;
 
     } else if (index == 4) {
@@ -67,15 +67,15 @@ int luawt_WAnchor_make(lua_State* L) {
     Wt::WLink link = Wt::WLink(raw1);
     char const * raw2 = lua_tostring(L, 2);
     Wt::WString text = Wt::WString(raw2);
-    WAnchor * result = new WAnchor(link, text);
+    WAnchor * l_result = new WAnchor(link, text);
     MyApplication* app = MyApplication::instance();
     if (!app) {
-        delete result;
+        delete l_result;
         throw std::logic_error("No WApplication when creating WAnchor");
     }
-    app->root()->addWidget(result);
+    app->root()->addWidget(l_result);
     
-    luawt_toLua(L, result);
+    luawt_toLua(L, l_result);
     return 1;
 
     } else if (index == 5) {
@@ -85,8 +85,8 @@ int luawt_WAnchor_make(lua_State* L) {
     Wt::WString text = Wt::WString(raw2);
     Wt::WContainerWidget* parent =
         luawt_checkFromLua<Wt::WContainerWidget>(L, 3);
-    WAnchor * result = new WAnchor(link, text, parent);
-    luawt_toLua(L, result);
+    WAnchor * l_result = new WAnchor(link, text, parent);
+    luawt_toLua(L, l_result);
     return 1;
 
     } else if (index == 6) {
@@ -94,15 +94,15 @@ int luawt_WAnchor_make(lua_State* L) {
     Wt::WLink link = Wt::WLink(raw1);
     Wt::WImage* image =
         luawt_checkFromLua<Wt::WImage>(L, 2);
-    WAnchor * result = new WAnchor(link, image);
+    WAnchor * l_result = new WAnchor(link, image);
     MyApplication* app = MyApplication::instance();
     if (!app) {
-        delete result;
+        delete l_result;
         throw std::logic_error("No WApplication when creating WAnchor");
     }
-    app->root()->addWidget(result);
+    app->root()->addWidget(l_result);
     
-    luawt_toLua(L, result);
+    luawt_toLua(L, l_result);
     return 1;
 
     } else if (index == 7) {
@@ -112,8 +112,8 @@ int luawt_WAnchor_make(lua_State* L) {
         luawt_checkFromLua<Wt::WImage>(L, 2);
     Wt::WContainerWidget* parent =
         luawt_checkFromLua<Wt::WContainerWidget>(L, 3);
-    WAnchor * result = new WAnchor(link, image, parent);
-    luawt_toLua(L, result);
+    WAnchor * l_result = new WAnchor(link, image, parent);
+    luawt_toLua(L, l_result);
     return 1;
 
     } else {
@@ -128,8 +128,8 @@ int luawt_WAnchor_wordWrap(lua_State* L) {
     int index = luawt_getSuitableArgsGroup(L, luawt_WAnchor_wordWrap_args);
     WAnchor* self = luawt_checkFromLua<WAnchor>(L, 1);
     if (index == 0) {
-    bool result = self->wordWrap();
-    lua_pushboolean(L, result);
+    bool l_result = self->wordWrap();
+    lua_pushboolean(L, l_result);
     return 1;
 
     } else {
@@ -177,8 +177,8 @@ int luawt_WAnchor_text(lua_State* L) {
     int index = luawt_getSuitableArgsGroup(L, luawt_WAnchor_text_args);
     WAnchor* self = luawt_checkFromLua<WAnchor>(L, 1);
     if (index == 0) {
-    Wt::WString const & result = self->text();
-    lua_pushstring(L, result.toUTF8().c_str());
+    Wt::WString const & l_result = self->text();
+    lua_pushstring(L, l_result.toUTF8().c_str());
     return 1;
 
     } else {
@@ -243,8 +243,8 @@ int luawt_WAnchor_link(lua_State* L) {
     int index = luawt_getSuitableArgsGroup(L, luawt_WAnchor_link_args);
     WAnchor* self = luawt_checkFromLua<WAnchor>(L, 1);
     if (index == 0) {
-    Wt::WLink const & result = self->link();
-    lua_pushstring(L, result.url().c_str());
+    Wt::WLink const & l_result = self->link();
+    lua_pushstring(L, l_result.url().c_str());
     return 1;
 
     } else {
@@ -259,8 +259,8 @@ int luawt_WAnchor_image(lua_State* L) {
     int index = luawt_getSuitableArgsGroup(L, luawt_WAnchor_image_args);
     WAnchor* self = luawt_checkFromLua<WAnchor>(L, 1);
     if (index == 0) {
-    Wt::WImage * result = self->image();
-    luawt_toLua(L, result);
+    Wt::WImage * l_result = self->image();
+    luawt_toLua(L, l_result);
     return 1;
 
     } else {
@@ -309,8 +309,8 @@ int luawt_WAnchor_textFormat(lua_State* L) {
     int index = luawt_getSuitableArgsGroup(L, luawt_WAnchor_textFormat_args);
     WAnchor* self = luawt_checkFromLua<WAnchor>(L, 1);
     if (index == 0) {
-    Wt::TextFormat result = self->textFormat();
-    lua_pushinteger(L, result);
+    Wt::TextFormat l_result = self->textFormat();
+    lua_pushinteger(L, l_result);
     return 1;
 
     } else {
@@ -341,8 +341,8 @@ int luawt_WAnchor_target(lua_State* L) {
     int index = luawt_getSuitableArgsGroup(L, luawt_WAnchor_target_args);
     WAnchor* self = luawt_checkFromLua<WAnchor>(L, 1);
     if (index == 0) {
-    Wt::AnchorTarget result = self->target();
-    lua_pushinteger(L, result);
+    Wt::AnchorTarget l_result = self->target();
+    lua_pushinteger(L, l_result);
     return 1;
 
     } else {

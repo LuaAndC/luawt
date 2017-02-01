@@ -50,8 +50,8 @@ int luawt_WFormWidget_isReadOnly(lua_State* L) {
     int index = luawt_getSuitableArgsGroup(L, luawt_WFormWidget_isReadOnly_args);
     WFormWidget* self = luawt_checkFromLua<WFormWidget>(L, 1);
     if (index == 0) {
-    bool result = self->isReadOnly();
-    lua_pushboolean(L, result);
+    bool l_result = self->isReadOnly();
+    lua_pushboolean(L, l_result);
     return 1;
 
     } else {
@@ -66,8 +66,8 @@ int luawt_WFormWidget_hasFocus(lua_State* L) {
     int index = luawt_getSuitableArgsGroup(L, luawt_WFormWidget_hasFocus_args);
     WFormWidget* self = luawt_checkFromLua<WFormWidget>(L, 1);
     if (index == 0) {
-    bool result = self->hasFocus();
-    lua_pushboolean(L, result);
+    bool l_result = self->hasFocus();
+    lua_pushboolean(L, l_result);
     return 1;
 
     } else {
@@ -114,8 +114,8 @@ int luawt_WFormWidget_label(lua_State* L) {
     int index = luawt_getSuitableArgsGroup(L, luawt_WFormWidget_label_args);
     WFormWidget* self = luawt_checkFromLua<WFormWidget>(L, 1);
     if (index == 0) {
-    Wt::WLabel * result = self->label();
-    luawt_toLua(L, result);
+    Wt::WLabel * l_result = self->label();
+    luawt_toLua(L, l_result);
     return 1;
 
     } else {
@@ -171,8 +171,8 @@ int luawt_WFormWidget_emptyText(lua_State* L) {
     int index = luawt_getSuitableArgsGroup(L, luawt_WFormWidget_emptyText_args);
     WFormWidget* self = luawt_checkFromLua<WFormWidget>(L, 1);
     if (index == 0) {
-    Wt::WString const & result = self->emptyText();
-    lua_pushstring(L, result.toUTF8().c_str());
+    Wt::WString const & l_result = self->emptyText();
+    lua_pushstring(L, l_result.toUTF8().c_str());
     return 1;
 
     } else {
@@ -204,8 +204,8 @@ int luawt_WFormWidget_tabIndex(lua_State* L) {
     int index = luawt_getSuitableArgsGroup(L, luawt_WFormWidget_tabIndex_args);
     WFormWidget* self = luawt_checkFromLua<WFormWidget>(L, 1);
     if (index == 0) {
-    int result = self->tabIndex();
-    lua_pushinteger(L, result);
+    int l_result = self->tabIndex();
+    lua_pushinteger(L, l_result);
     return 1;
 
     } else {
@@ -236,8 +236,8 @@ int luawt_WFormWidget_validate(lua_State* L) {
     int index = luawt_getSuitableArgsGroup(L, luawt_WFormWidget_validate_args);
     WFormWidget* self = luawt_checkFromLua<WFormWidget>(L, 1);
     if (index == 0) {
-    Wt::WValidator::State result = self->validate();
-    lua_pushinteger(L, result);
+    Wt::WValidator::State l_result = self->validate();
+    lua_pushinteger(L, l_result);
     return 1;
 
     } else {
@@ -252,8 +252,8 @@ int luawt_WFormWidget_valueText(lua_State* L) {
     int index = luawt_getSuitableArgsGroup(L, luawt_WFormWidget_valueText_args);
     WFormWidget* self = luawt_checkFromLua<WFormWidget>(L, 1);
     if (index == 0) {
-    Wt::WString result = self->valueText();
-    lua_pushstring(L, result.toUTF8().c_str());
+    Wt::WString l_result = self->valueText();
+    lua_pushstring(L, l_result.toUTF8().c_str());
     return 1;
 
     } else {

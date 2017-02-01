@@ -1,5 +1,6 @@
 #include "boost-xtime.hpp"
 
+#include <Wt/WLength>
 #include <Wt/WProgressBar>
 #include <Wt/WContainerWidget>
 #include <Wt/WString>
@@ -13,22 +14,22 @@ static const char* const* const luawt_WProgressBar_make_args[] = {WProgressBar_m
 int luawt_WProgressBar_make(lua_State* L) {
     int index = luawt_getSuitableArgsGroup(L, luawt_WProgressBar_make_args);
     if (index == 0) {
-    WProgressBar * result = new WProgressBar();
+    WProgressBar * l_result = new WProgressBar();
     MyApplication* app = MyApplication::instance();
     if (!app) {
-        delete result;
+        delete l_result;
         throw std::logic_error("No WApplication when creating WProgressBar");
     }
-    app->root()->addWidget(result);
+    app->root()->addWidget(l_result);
     
-    luawt_toLua(L, result);
+    luawt_toLua(L, l_result);
     return 1;
 
     } else if (index == 1) {
     Wt::WContainerWidget* parent =
         luawt_checkFromLua<Wt::WContainerWidget>(L, 1);
-    WProgressBar * result = new WProgressBar(parent);
-    luawt_toLua(L, result);
+    WProgressBar * l_result = new WProgressBar(parent);
+    luawt_toLua(L, l_result);
     return 1;
 
     } else {
@@ -92,8 +93,8 @@ int luawt_WProgressBar_format(lua_State* L) {
     int index = luawt_getSuitableArgsGroup(L, luawt_WProgressBar_format_args);
     WProgressBar* self = luawt_checkFromLua<WProgressBar>(L, 1);
     if (index == 0) {
-    Wt::WString const & result = self->format();
-    lua_pushstring(L, result.toUTF8().c_str());
+    Wt::WString const & l_result = self->format();
+    lua_pushstring(L, l_result.toUTF8().c_str());
     return 1;
 
     } else {
@@ -125,8 +126,8 @@ int luawt_WProgressBar_text(lua_State* L) {
     int index = luawt_getSuitableArgsGroup(L, luawt_WProgressBar_text_args);
     WProgressBar* self = luawt_checkFromLua<WProgressBar>(L, 1);
     if (index == 0) {
-    Wt::WString result = self->text();
-    lua_pushstring(L, result.toUTF8().c_str());
+    Wt::WString l_result = self->text();
+    lua_pushstring(L, l_result.toUTF8().c_str());
     return 1;
 
     } else {
@@ -141,8 +142,8 @@ int luawt_WProgressBar_maximum(lua_State* L) {
     int index = luawt_getSuitableArgsGroup(L, luawt_WProgressBar_maximum_args);
     WProgressBar* self = luawt_checkFromLua<WProgressBar>(L, 1);
     if (index == 0) {
-    double result = self->maximum();
-    lua_pushnumber(L, result);
+    double l_result = self->maximum();
+    lua_pushnumber(L, l_result);
     return 1;
 
     } else {
@@ -157,8 +158,8 @@ int luawt_WProgressBar_value(lua_State* L) {
     int index = luawt_getSuitableArgsGroup(L, luawt_WProgressBar_value_args);
     WProgressBar* self = luawt_checkFromLua<WProgressBar>(L, 1);
     if (index == 0) {
-    double result = self->value();
-    lua_pushnumber(L, result);
+    double l_result = self->value();
+    lua_pushnumber(L, l_result);
     return 1;
 
     } else {
@@ -173,12 +174,31 @@ int luawt_WProgressBar_minimum(lua_State* L) {
     int index = luawt_getSuitableArgsGroup(L, luawt_WProgressBar_minimum_args);
     WProgressBar* self = luawt_checkFromLua<WProgressBar>(L, 1);
     if (index == 0) {
-    double result = self->minimum();
-    lua_pushnumber(L, result);
+    double l_result = self->minimum();
+    lua_pushnumber(L, l_result);
     return 1;
 
     } else {
         return luaL_error(L, "Wrong arguments for WProgressBar.minimum");
+    }
+}
+
+static const char* WProgressBar_resize_args0[] = {luawt_typeToStr<WProgressBar>(), "double", "double", NULL};
+static const char* const* const luawt_WProgressBar_resize_args[] = {WProgressBar_resize_args0, NULL};
+
+int luawt_WProgressBar_resize(lua_State* L) {
+    int index = luawt_getSuitableArgsGroup(L, luawt_WProgressBar_resize_args);
+    WProgressBar* self = luawt_checkFromLua<WProgressBar>(L, 1);
+    if (index == 0) {
+    double raw2 = lua_tonumber(L, 2);
+    Wt::WLength width = Wt::WLength(raw2);
+    double raw3 = lua_tonumber(L, 3);
+    Wt::WLength height = Wt::WLength(raw3);
+    self->resize(width, height);
+    return 0;
+    
+    } else {
+        return luaL_error(L, "Wrong arguments for WProgressBar.resize");
     }
 }
 
@@ -265,6 +285,7 @@ static const luaL_Reg luawt_WProgressBar_methods[] = {
     METHOD(WProgressBar, setFormat),
     METHOD(WProgressBar, format),
     METHOD(WProgressBar, text),
+    METHOD(WProgressBar, resize),
     METHOD(WProgressBar, setValueStyleClass),
     METHOD(WProgressBar, setState),
     METHOD(WProgressBar, keyWentDown),

@@ -84,6 +84,8 @@ int luawt_WServer_make(lua_State* L) {
     if (docroot) {
         opt.push_back("--docroot");
         opt.push_back(docroot);
+    } else {
+        opt.push_back("--docroot=/usr/include/Wt");
     }
     opt.push_back(0);
     WServer* server = reinterpret_cast<WServer*>(

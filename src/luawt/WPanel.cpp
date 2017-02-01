@@ -15,22 +15,22 @@ static const char* const* const luawt_WPanel_make_args[] = {WPanel_make_args0, W
 int luawt_WPanel_make(lua_State* L) {
     int index = luawt_getSuitableArgsGroup(L, luawt_WPanel_make_args);
     if (index == 0) {
-    WPanel * result = new WPanel();
+    WPanel * l_result = new WPanel();
     MyApplication* app = MyApplication::instance();
     if (!app) {
-        delete result;
+        delete l_result;
         throw std::logic_error("No WApplication when creating WPanel");
     }
-    app->root()->addWidget(result);
+    app->root()->addWidget(l_result);
     
-    luawt_toLua(L, result);
+    luawt_toLua(L, l_result);
     return 1;
 
     } else if (index == 1) {
     Wt::WContainerWidget* parent =
         luawt_checkFromLua<Wt::WContainerWidget>(L, 1);
-    WPanel * result = new WPanel(parent);
-    luawt_toLua(L, result);
+    WPanel * l_result = new WPanel(parent);
+    luawt_toLua(L, l_result);
     return 1;
 
     } else {
@@ -45,8 +45,8 @@ int luawt_WPanel_isCollapsed(lua_State* L) {
     int index = luawt_getSuitableArgsGroup(L, luawt_WPanel_isCollapsed_args);
     WPanel* self = luawt_checkFromLua<WPanel>(L, 1);
     if (index == 0) {
-    bool result = self->isCollapsed();
-    lua_pushboolean(L, result);
+    bool l_result = self->isCollapsed();
+    lua_pushboolean(L, l_result);
     return 1;
 
     } else {
@@ -109,8 +109,8 @@ int luawt_WPanel_title(lua_State* L) {
     int index = luawt_getSuitableArgsGroup(L, luawt_WPanel_title_args);
     WPanel* self = luawt_checkFromLua<WPanel>(L, 1);
     if (index == 0) {
-    Wt::WString result = self->title();
-    lua_pushstring(L, result.toUTF8().c_str());
+    Wt::WString l_result = self->title();
+    lua_pushstring(L, l_result.toUTF8().c_str());
     return 1;
 
     } else {
@@ -142,8 +142,8 @@ int luawt_WPanel_collapseIcon(lua_State* L) {
     int index = luawt_getSuitableArgsGroup(L, luawt_WPanel_collapseIcon_args);
     WPanel* self = luawt_checkFromLua<WPanel>(L, 1);
     if (index == 0) {
-    Wt::WIconPair * result = self->collapseIcon();
-    luawt_toLua(L, result);
+    Wt::WIconPair * l_result = self->collapseIcon();
+    luawt_toLua(L, l_result);
     return 1;
 
     } else {
@@ -158,8 +158,8 @@ int luawt_WPanel_isCollapsible(lua_State* L) {
     int index = luawt_getSuitableArgsGroup(L, luawt_WPanel_isCollapsible_args);
     WPanel* self = luawt_checkFromLua<WPanel>(L, 1);
     if (index == 0) {
-    bool result = self->isCollapsible();
-    lua_pushboolean(L, result);
+    bool l_result = self->isCollapsible();
+    lua_pushboolean(L, l_result);
     return 1;
 
     } else {
@@ -174,8 +174,8 @@ int luawt_WPanel_titleBarWidget(lua_State* L) {
     int index = luawt_getSuitableArgsGroup(L, luawt_WPanel_titleBarWidget_args);
     WPanel* self = luawt_checkFromLua<WPanel>(L, 1);
     if (index == 0) {
-    Wt::WContainerWidget * result = self->titleBarWidget();
-    luawt_toLua(L, result);
+    Wt::WContainerWidget * l_result = self->titleBarWidget();
+    luawt_toLua(L, l_result);
     return 1;
 
     } else {
@@ -205,8 +205,8 @@ int luawt_WPanel_centralWidget(lua_State* L) {
     int index = luawt_getSuitableArgsGroup(L, luawt_WPanel_centralWidget_args);
     WPanel* self = luawt_checkFromLua<WPanel>(L, 1);
     if (index == 0) {
-    Wt::WWidget * result = self->centralWidget();
-    luawt_toLua(L, result);
+    Wt::WWidget * l_result = self->centralWidget();
+    luawt_toLua(L, l_result);
     return 1;
 
     } else {
@@ -237,8 +237,8 @@ int luawt_WPanel_titleBar(lua_State* L) {
     int index = luawt_getSuitableArgsGroup(L, luawt_WPanel_titleBar_args);
     WPanel* self = luawt_checkFromLua<WPanel>(L, 1);
     if (index == 0) {
-    bool result = self->titleBar();
-    lua_pushboolean(L, result);
+    bool l_result = self->titleBar();
+    lua_pushboolean(L, l_result);
     return 1;
 
     } else {

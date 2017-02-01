@@ -15,42 +15,42 @@ int luawt_WGoogleMap_make(lua_State* L) {
     int index = luawt_getSuitableArgsGroup(L, luawt_WGoogleMap_make_args);
     if (index == 0) {
     Wt::WGoogleMap::ApiVersion version = static_cast<Wt::WGoogleMap::ApiVersion>(lua_tointeger(L, 1));
-    WGoogleMap * result = new WGoogleMap(version);
+    WGoogleMap * l_result = new WGoogleMap(version);
     MyApplication* app = MyApplication::instance();
     if (!app) {
-        delete result;
+        delete l_result;
         throw std::logic_error("No WApplication when creating WGoogleMap");
     }
-    app->root()->addWidget(result);
+    app->root()->addWidget(l_result);
     
-    luawt_toLua(L, result);
+    luawt_toLua(L, l_result);
     return 1;
 
     } else if (index == 1) {
     Wt::WGoogleMap::ApiVersion version = static_cast<Wt::WGoogleMap::ApiVersion>(lua_tointeger(L, 1));
     Wt::WContainerWidget* parent =
         luawt_checkFromLua<Wt::WContainerWidget>(L, 2);
-    WGoogleMap * result = new WGoogleMap(version, parent);
-    luawt_toLua(L, result);
+    WGoogleMap * l_result = new WGoogleMap(version, parent);
+    luawt_toLua(L, l_result);
     return 1;
 
     } else if (index == 2) {
-    WGoogleMap * result = new WGoogleMap();
+    WGoogleMap * l_result = new WGoogleMap();
     MyApplication* app = MyApplication::instance();
     if (!app) {
-        delete result;
+        delete l_result;
         throw std::logic_error("No WApplication when creating WGoogleMap");
     }
-    app->root()->addWidget(result);
+    app->root()->addWidget(l_result);
     
-    luawt_toLua(L, result);
+    luawt_toLua(L, l_result);
     return 1;
 
     } else if (index == 3) {
     Wt::WContainerWidget* parent =
         luawt_checkFromLua<Wt::WContainerWidget>(L, 1);
-    WGoogleMap * result = new WGoogleMap(parent);
-    luawt_toLua(L, result);
+    WGoogleMap * l_result = new WGoogleMap(parent);
+    luawt_toLua(L, l_result);
     return 1;
 
     } else {
@@ -95,8 +95,8 @@ int luawt_WGoogleMap_apiVersion(lua_State* L) {
     int index = luawt_getSuitableArgsGroup(L, luawt_WGoogleMap_apiVersion_args);
     WGoogleMap* self = luawt_checkFromLua<WGoogleMap>(L, 1);
     if (index == 0) {
-    Wt::WGoogleMap::ApiVersion result = self->apiVersion();
-    lua_pushinteger(L, result);
+    Wt::WGoogleMap::ApiVersion l_result = self->apiVersion();
+    lua_pushinteger(L, l_result);
     return 1;
 
     } else {

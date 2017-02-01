@@ -18,36 +18,36 @@ static const char* const* const luawt_WImage_make_args[] = {WImage_make_args0, W
 int luawt_WImage_make(lua_State* L) {
     int index = luawt_getSuitableArgsGroup(L, luawt_WImage_make_args);
     if (index == 0) {
-    WImage * result = new WImage();
+    WImage * l_result = new WImage();
     MyApplication* app = MyApplication::instance();
     if (!app) {
-        delete result;
+        delete l_result;
         throw std::logic_error("No WApplication when creating WImage");
     }
-    app->root()->addWidget(result);
+    app->root()->addWidget(l_result);
     
-    luawt_toLua(L, result);
+    luawt_toLua(L, l_result);
     return 1;
 
     } else if (index == 1) {
     Wt::WContainerWidget* parent =
         luawt_checkFromLua<Wt::WContainerWidget>(L, 1);
-    WImage * result = new WImage(parent);
-    luawt_toLua(L, result);
+    WImage * l_result = new WImage(parent);
+    luawt_toLua(L, l_result);
     return 1;
 
     } else if (index == 2) {
     char const * raw1 = lua_tostring(L, 1);
     Wt::WLink imageLink = Wt::WLink(raw1);
-    WImage * result = new WImage(imageLink);
+    WImage * l_result = new WImage(imageLink);
     MyApplication* app = MyApplication::instance();
     if (!app) {
-        delete result;
+        delete l_result;
         throw std::logic_error("No WApplication when creating WImage");
     }
-    app->root()->addWidget(result);
+    app->root()->addWidget(l_result);
     
-    luawt_toLua(L, result);
+    luawt_toLua(L, l_result);
     return 1;
 
     } else if (index == 3) {
@@ -55,8 +55,8 @@ int luawt_WImage_make(lua_State* L) {
     Wt::WLink imageLink = Wt::WLink(raw1);
     Wt::WContainerWidget* parent =
         luawt_checkFromLua<Wt::WContainerWidget>(L, 2);
-    WImage * result = new WImage(imageLink, parent);
-    luawt_toLua(L, result);
+    WImage * l_result = new WImage(imageLink, parent);
+    luawt_toLua(L, l_result);
     return 1;
 
     } else if (index == 4) {
@@ -64,15 +64,15 @@ int luawt_WImage_make(lua_State* L) {
     Wt::WLink imageLink = Wt::WLink(raw1);
     char const * raw2 = lua_tostring(L, 2);
     Wt::WString altText = Wt::WString(raw2);
-    WImage * result = new WImage(imageLink, altText);
+    WImage * l_result = new WImage(imageLink, altText);
     MyApplication* app = MyApplication::instance();
     if (!app) {
-        delete result;
+        delete l_result;
         throw std::logic_error("No WApplication when creating WImage");
     }
-    app->root()->addWidget(result);
+    app->root()->addWidget(l_result);
     
-    luawt_toLua(L, result);
+    luawt_toLua(L, l_result);
     return 1;
 
     } else if (index == 5) {
@@ -82,8 +82,8 @@ int luawt_WImage_make(lua_State* L) {
     Wt::WString altText = Wt::WString(raw2);
     Wt::WContainerWidget* parent =
         luawt_checkFromLua<Wt::WContainerWidget>(L, 3);
-    WImage * result = new WImage(imageLink, altText, parent);
-    luawt_toLua(L, result);
+    WImage * l_result = new WImage(imageLink, altText, parent);
+    luawt_toLua(L, l_result);
     return 1;
 
     } else {
@@ -115,8 +115,8 @@ int luawt_WImage_imageRef(lua_State* L) {
     int index = luawt_getSuitableArgsGroup(L, luawt_WImage_imageRef_args);
     WImage* self = luawt_checkFromLua<WImage>(L, 1);
     if (index == 0) {
-    std::string const result = self->imageRef();
-    lua_pushstring(L, result.c_str());
+    std::string const l_result = self->imageRef();
+    lua_pushstring(L, l_result.c_str());
     return 1;
 
     } else {
@@ -148,8 +148,8 @@ int luawt_WImage_imageLink(lua_State* L) {
     int index = luawt_getSuitableArgsGroup(L, luawt_WImage_imageLink_args);
     WImage* self = luawt_checkFromLua<WImage>(L, 1);
     if (index == 0) {
-    Wt::WLink const & result = self->imageLink();
-    lua_pushstring(L, result.url().c_str());
+    Wt::WLink const & l_result = self->imageLink();
+    lua_pushstring(L, l_result.url().c_str());
     return 1;
 
     } else {
@@ -181,8 +181,8 @@ int luawt_WImage_alternateText(lua_State* L) {
     int index = luawt_getSuitableArgsGroup(L, luawt_WImage_alternateText_args);
     WImage* self = luawt_checkFromLua<WImage>(L, 1);
     if (index == 0) {
-    Wt::WString const & result = self->alternateText();
-    lua_pushstring(L, result.toUTF8().c_str());
+    Wt::WString const & l_result = self->alternateText();
+    lua_pushstring(L, l_result.toUTF8().c_str());
     return 1;
 
     } else {

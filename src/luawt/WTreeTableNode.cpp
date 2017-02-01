@@ -19,15 +19,15 @@ int luawt_WTreeTableNode_make(lua_State* L) {
     if (index == 0) {
     char const * raw1 = lua_tostring(L, 1);
     Wt::WString labelText = Wt::WString(raw1);
-    WTreeTableNode * result = new WTreeTableNode(labelText);
+    WTreeTableNode * l_result = new WTreeTableNode(labelText);
     MyApplication* app = MyApplication::instance();
     if (!app) {
-        delete result;
+        delete l_result;
         throw std::logic_error("No WApplication when creating WTreeTableNode");
     }
-    app->root()->addWidget(result);
+    app->root()->addWidget(l_result);
     
-    luawt_toLua(L, result);
+    luawt_toLua(L, l_result);
     return 1;
 
     } else if (index == 1) {
@@ -35,15 +35,15 @@ int luawt_WTreeTableNode_make(lua_State* L) {
     Wt::WString labelText = Wt::WString(raw1);
     Wt::WIconPair* labelIcon =
         luawt_checkFromLua<Wt::WIconPair>(L, 2);
-    WTreeTableNode * result = new WTreeTableNode(labelText, labelIcon);
+    WTreeTableNode * l_result = new WTreeTableNode(labelText, labelIcon);
     MyApplication* app = MyApplication::instance();
     if (!app) {
-        delete result;
+        delete l_result;
         throw std::logic_error("No WApplication when creating WTreeTableNode");
     }
-    app->root()->addWidget(result);
+    app->root()->addWidget(l_result);
     
-    luawt_toLua(L, result);
+    luawt_toLua(L, l_result);
     return 1;
 
     } else if (index == 2) {
@@ -53,15 +53,15 @@ int luawt_WTreeTableNode_make(lua_State* L) {
         luawt_checkFromLua<Wt::WIconPair>(L, 2);
     Wt::WTreeTableNode* parentNode =
         luawt_checkFromLua<Wt::WTreeTableNode>(L, 3);
-    WTreeTableNode * result = new WTreeTableNode(labelText, labelIcon, parentNode);
+    WTreeTableNode * l_result = new WTreeTableNode(labelText, labelIcon, parentNode);
     MyApplication* app = MyApplication::instance();
     if (!app) {
-        delete result;
+        delete l_result;
         throw std::logic_error("No WApplication when creating WTreeTableNode");
     }
-    app->root()->addWidget(result);
+    app->root()->addWidget(l_result);
     
-    luawt_toLua(L, result);
+    luawt_toLua(L, l_result);
     return 1;
 
     } else {
@@ -94,8 +94,8 @@ int luawt_WTreeTableNode_table(lua_State* L) {
     int index = luawt_getSuitableArgsGroup(L, luawt_WTreeTableNode_table_args);
     WTreeTableNode* self = luawt_checkFromLua<WTreeTableNode>(L, 1);
     if (index == 0) {
-    Wt::WTreeTable * result = self->table();
-    luawt_toLua(L, result);
+    Wt::WTreeTable * l_result = self->table();
+    luawt_toLua(L, l_result);
     return 1;
 
     } else {
@@ -129,8 +129,8 @@ int luawt_WTreeTableNode_columnWidget(lua_State* L) {
     WTreeTableNode* self = luawt_checkFromLua<WTreeTableNode>(L, 1);
     if (index == 0) {
     int column = lua_tointeger(L, 2);
-    Wt::WWidget * result = self->columnWidget(column);
-    luawt_toLua(L, result);
+    Wt::WWidget * l_result = self->columnWidget(column);
+    luawt_toLua(L, l_result);
     return 1;
 
     } else {

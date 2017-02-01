@@ -16,36 +16,36 @@ static const char* const* const luawt_WTemplate_make_args[] = {WTemplate_make_ar
 int luawt_WTemplate_make(lua_State* L) {
     int index = luawt_getSuitableArgsGroup(L, luawt_WTemplate_make_args);
     if (index == 0) {
-    WTemplate * result = new WTemplate();
+    WTemplate * l_result = new WTemplate();
     MyApplication* app = MyApplication::instance();
     if (!app) {
-        delete result;
+        delete l_result;
         throw std::logic_error("No WApplication when creating WTemplate");
     }
-    app->root()->addWidget(result);
+    app->root()->addWidget(l_result);
     
-    luawt_toLua(L, result);
+    luawt_toLua(L, l_result);
     return 1;
 
     } else if (index == 1) {
     Wt::WContainerWidget* parent =
         luawt_checkFromLua<Wt::WContainerWidget>(L, 1);
-    WTemplate * result = new WTemplate(parent);
-    luawt_toLua(L, result);
+    WTemplate * l_result = new WTemplate(parent);
+    luawt_toLua(L, l_result);
     return 1;
 
     } else if (index == 2) {
     char const * raw1 = lua_tostring(L, 1);
     Wt::WString text = Wt::WString(raw1);
-    WTemplate * result = new WTemplate(text);
+    WTemplate * l_result = new WTemplate(text);
     MyApplication* app = MyApplication::instance();
     if (!app) {
-        delete result;
+        delete l_result;
         throw std::logic_error("No WApplication when creating WTemplate");
     }
-    app->root()->addWidget(result);
+    app->root()->addWidget(l_result);
     
-    luawt_toLua(L, result);
+    luawt_toLua(L, l_result);
     return 1;
 
     } else if (index == 3) {
@@ -53,8 +53,8 @@ int luawt_WTemplate_make(lua_State* L) {
     Wt::WString text = Wt::WString(raw1);
     Wt::WContainerWidget* parent =
         luawt_checkFromLua<Wt::WContainerWidget>(L, 2);
-    WTemplate * result = new WTemplate(text, parent);
-    luawt_toLua(L, result);
+    WTemplate * l_result = new WTemplate(text, parent);
+    luawt_toLua(L, l_result);
     return 1;
 
     } else {
@@ -71,8 +71,8 @@ int luawt_WTemplate_conditionValue(lua_State* L) {
     if (index == 0) {
     char const * raw2 = lua_tostring(L, 2);
     std::string name = std::string(raw2);
-    bool result = self->conditionValue(name);
-    lua_pushboolean(L, result);
+    bool l_result = self->conditionValue(name);
+    lua_pushboolean(L, l_result);
     return 1;
 
     } else {
@@ -147,8 +147,8 @@ int luawt_WTemplate_hasInternalPathEncoding(lua_State* L) {
     int index = luawt_getSuitableArgsGroup(L, luawt_WTemplate_hasInternalPathEncoding_args);
     WTemplate* self = luawt_checkFromLua<WTemplate>(L, 1);
     if (index == 0) {
-    bool result = self->hasInternalPathEncoding();
-    lua_pushboolean(L, result);
+    bool l_result = self->hasInternalPathEncoding();
+    lua_pushboolean(L, l_result);
     return 1;
 
     } else {
@@ -163,8 +163,8 @@ int luawt_WTemplate_templateText(lua_State* L) {
     int index = luawt_getSuitableArgsGroup(L, luawt_WTemplate_templateText_args);
     WTemplate* self = luawt_checkFromLua<WTemplate>(L, 1);
     if (index == 0) {
-    Wt::WString const & result = self->templateText();
-    lua_pushstring(L, result.toUTF8().c_str());
+    Wt::WString const & l_result = self->templateText();
+    lua_pushstring(L, l_result.toUTF8().c_str());
     return 1;
 
     } else {
@@ -259,8 +259,8 @@ int luawt_WTemplate_takeWidget(lua_State* L) {
     if (index == 0) {
     char const * raw2 = lua_tostring(L, 2);
     std::string varName = std::string(raw2);
-    Wt::WWidget * result = self->takeWidget(varName);
-    luawt_toLua(L, result);
+    Wt::WWidget * l_result = self->takeWidget(varName);
+    luawt_toLua(L, l_result);
     return 1;
 
     } else {
@@ -277,8 +277,8 @@ int luawt_WTemplate_resolveWidget(lua_State* L) {
     if (index == 0) {
     char const * raw2 = lua_tostring(L, 2);
     std::string varName = std::string(raw2);
-    Wt::WWidget * result = self->resolveWidget(varName);
-    luawt_toLua(L, result);
+    Wt::WWidget * l_result = self->resolveWidget(varName);
+    luawt_toLua(L, l_result);
     return 1;
 
     } else {

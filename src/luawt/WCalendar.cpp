@@ -12,22 +12,22 @@ static const char* const* const luawt_WCalendar_make_args[] = {WCalendar_make_ar
 int luawt_WCalendar_make(lua_State* L) {
     int index = luawt_getSuitableArgsGroup(L, luawt_WCalendar_make_args);
     if (index == 0) {
-    WCalendar * result = new WCalendar();
+    WCalendar * l_result = new WCalendar();
     MyApplication* app = MyApplication::instance();
     if (!app) {
-        delete result;
+        delete l_result;
         throw std::logic_error("No WApplication when creating WCalendar");
     }
-    app->root()->addWidget(result);
+    app->root()->addWidget(l_result);
     
-    luawt_toLua(L, result);
+    luawt_toLua(L, l_result);
     return 1;
 
     } else if (index == 1) {
     Wt::WContainerWidget* parent =
         luawt_checkFromLua<Wt::WContainerWidget>(L, 1);
-    WCalendar * result = new WCalendar(parent);
-    luawt_toLua(L, result);
+    WCalendar * l_result = new WCalendar(parent);
+    luawt_toLua(L, l_result);
     return 1;
 
     } else {
@@ -42,8 +42,8 @@ int luawt_WCalendar_horizontalHeaderFormat(lua_State* L) {
     int index = luawt_getSuitableArgsGroup(L, luawt_WCalendar_horizontalHeaderFormat_args);
     WCalendar* self = luawt_checkFromLua<WCalendar>(L, 1);
     if (index == 0) {
-    Wt::WCalendar::HorizontalHeaderFormat result = self->horizontalHeaderFormat();
-    lua_pushinteger(L, result);
+    Wt::WCalendar::HorizontalHeaderFormat l_result = self->horizontalHeaderFormat();
+    lua_pushinteger(L, l_result);
     return 1;
 
     } else {
@@ -136,8 +136,8 @@ int luawt_WCalendar_currentYear(lua_State* L) {
     int index = luawt_getSuitableArgsGroup(L, luawt_WCalendar_currentYear_args);
     WCalendar* self = luawt_checkFromLua<WCalendar>(L, 1);
     if (index == 0) {
-    int result = self->currentYear();
-    lua_pushinteger(L, result);
+    int l_result = self->currentYear();
+    lua_pushinteger(L, l_result);
     return 1;
 
     } else {
@@ -229,8 +229,8 @@ int luawt_WCalendar_currentMonth(lua_State* L) {
     int index = luawt_getSuitableArgsGroup(L, luawt_WCalendar_currentMonth_args);
     WCalendar* self = luawt_checkFromLua<WCalendar>(L, 1);
     if (index == 0) {
-    int result = self->currentMonth();
-    lua_pushinteger(L, result);
+    int l_result = self->currentMonth();
+    lua_pushinteger(L, l_result);
     return 1;
 
     } else {

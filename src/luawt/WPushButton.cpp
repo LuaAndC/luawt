@@ -17,36 +17,36 @@ static const char* const* const luawt_WPushButton_make_args[] = {WPushButton_mak
 int luawt_WPushButton_make(lua_State* L) {
     int index = luawt_getSuitableArgsGroup(L, luawt_WPushButton_make_args);
     if (index == 0) {
-    WPushButton * result = new WPushButton();
+    WPushButton * l_result = new WPushButton();
     MyApplication* app = MyApplication::instance();
     if (!app) {
-        delete result;
+        delete l_result;
         throw std::logic_error("No WApplication when creating WPushButton");
     }
-    app->root()->addWidget(result);
+    app->root()->addWidget(l_result);
     
-    luawt_toLua(L, result);
+    luawt_toLua(L, l_result);
     return 1;
 
     } else if (index == 1) {
     Wt::WContainerWidget* parent =
         luawt_checkFromLua<Wt::WContainerWidget>(L, 1);
-    WPushButton * result = new WPushButton(parent);
-    luawt_toLua(L, result);
+    WPushButton * l_result = new WPushButton(parent);
+    luawt_toLua(L, l_result);
     return 1;
 
     } else if (index == 2) {
     char const * raw1 = lua_tostring(L, 1);
     Wt::WString text = Wt::WString(raw1);
-    WPushButton * result = new WPushButton(text);
+    WPushButton * l_result = new WPushButton(text);
     MyApplication* app = MyApplication::instance();
     if (!app) {
-        delete result;
+        delete l_result;
         throw std::logic_error("No WApplication when creating WPushButton");
     }
-    app->root()->addWidget(result);
+    app->root()->addWidget(l_result);
     
-    luawt_toLua(L, result);
+    luawt_toLua(L, l_result);
     return 1;
 
     } else if (index == 3) {
@@ -54,8 +54,8 @@ int luawt_WPushButton_make(lua_State* L) {
     Wt::WString text = Wt::WString(raw1);
     Wt::WContainerWidget* parent =
         luawt_checkFromLua<Wt::WContainerWidget>(L, 2);
-    WPushButton * result = new WPushButton(text, parent);
-    luawt_toLua(L, result);
+    WPushButton * l_result = new WPushButton(text, parent);
+    luawt_toLua(L, l_result);
     return 1;
 
     } else {
@@ -108,8 +108,8 @@ int luawt_WPushButton_isCheckable(lua_State* L) {
     int index = luawt_getSuitableArgsGroup(L, luawt_WPushButton_isCheckable_args);
     WPushButton* self = luawt_checkFromLua<WPushButton>(L, 1);
     if (index == 0) {
-    bool result = self->isCheckable();
-    lua_pushboolean(L, result);
+    bool l_result = self->isCheckable();
+    lua_pushboolean(L, l_result);
     return 1;
 
     } else {
@@ -157,8 +157,8 @@ int luawt_WPushButton_setTextFormat(lua_State* L) {
     WPushButton* self = luawt_checkFromLua<WPushButton>(L, 1);
     if (index == 0) {
     Wt::TextFormat format = static_cast<Wt::TextFormat>(lua_tointeger(L, 2));
-    bool result = self->setTextFormat(format);
-    lua_pushboolean(L, result);
+    bool l_result = self->setTextFormat(format);
+    lua_pushboolean(L, l_result);
     return 1;
 
     } else {
@@ -173,8 +173,8 @@ int luawt_WPushButton_valueText(lua_State* L) {
     int index = luawt_getSuitableArgsGroup(L, luawt_WPushButton_valueText_args);
     WPushButton* self = luawt_checkFromLua<WPushButton>(L, 1);
     if (index == 0) {
-    Wt::WString result = self->valueText();
-    lua_pushstring(L, result.toUTF8().c_str());
+    Wt::WString l_result = self->valueText();
+    lua_pushstring(L, l_result.toUTF8().c_str());
     return 1;
 
     } else {
@@ -189,8 +189,8 @@ int luawt_WPushButton_menu(lua_State* L) {
     int index = luawt_getSuitableArgsGroup(L, luawt_WPushButton_menu_args);
     WPushButton* self = luawt_checkFromLua<WPushButton>(L, 1);
     if (index == 0) {
-    Wt::WPopupMenu * result = self->menu();
-    luawt_toLua(L, result);
+    Wt::WPopupMenu * l_result = self->menu();
+    luawt_toLua(L, l_result);
     return 1;
 
     } else {
@@ -205,8 +205,8 @@ int luawt_WPushButton_isChecked(lua_State* L) {
     int index = luawt_getSuitableArgsGroup(L, luawt_WPushButton_isChecked_args);
     WPushButton* self = luawt_checkFromLua<WPushButton>(L, 1);
     if (index == 0) {
-    bool result = self->isChecked();
-    lua_pushboolean(L, result);
+    bool l_result = self->isChecked();
+    lua_pushboolean(L, l_result);
     return 1;
 
     } else {
@@ -238,8 +238,8 @@ int luawt_WPushButton_linkTarget(lua_State* L) {
     int index = luawt_getSuitableArgsGroup(L, luawt_WPushButton_linkTarget_args);
     WPushButton* self = luawt_checkFromLua<WPushButton>(L, 1);
     if (index == 0) {
-    Wt::AnchorTarget result = self->linkTarget();
-    lua_pushinteger(L, result);
+    Wt::AnchorTarget l_result = self->linkTarget();
+    lua_pushinteger(L, l_result);
     return 1;
 
     } else {
@@ -271,8 +271,8 @@ int luawt_WPushButton_ref(lua_State* L) {
     int index = luawt_getSuitableArgsGroup(L, luawt_WPushButton_ref_args);
     WPushButton* self = luawt_checkFromLua<WPushButton>(L, 1);
     if (index == 0) {
-    std::string result = self->ref();
-    lua_pushstring(L, result.c_str());
+    std::string l_result = self->ref();
+    lua_pushstring(L, l_result.c_str());
     return 1;
 
     } else {
@@ -287,8 +287,8 @@ int luawt_WPushButton_isDefault(lua_State* L) {
     int index = luawt_getSuitableArgsGroup(L, luawt_WPushButton_isDefault_args);
     WPushButton* self = luawt_checkFromLua<WPushButton>(L, 1);
     if (index == 0) {
-    bool result = self->isDefault();
-    lua_pushboolean(L, result);
+    bool l_result = self->isDefault();
+    lua_pushboolean(L, l_result);
     return 1;
 
     } else {
@@ -336,8 +336,8 @@ int luawt_WPushButton_link(lua_State* L) {
     int index = luawt_getSuitableArgsGroup(L, luawt_WPushButton_link_args);
     WPushButton* self = luawt_checkFromLua<WPushButton>(L, 1);
     if (index == 0) {
-    Wt::WLink const & result = self->link();
-    lua_pushstring(L, result.url().c_str());
+    Wt::WLink const & l_result = self->link();
+    lua_pushstring(L, l_result.url().c_str());
     return 1;
 
     } else {
@@ -368,8 +368,8 @@ int luawt_WPushButton_icon(lua_State* L) {
     int index = luawt_getSuitableArgsGroup(L, luawt_WPushButton_icon_args);
     WPushButton* self = luawt_checkFromLua<WPushButton>(L, 1);
     if (index == 0) {
-    Wt::WLink result = self->icon();
-    lua_pushstring(L, result.url().c_str());
+    Wt::WLink l_result = self->icon();
+    lua_pushstring(L, l_result.url().c_str());
     return 1;
 
     } else {
@@ -402,8 +402,8 @@ int luawt_WPushButton_setText(lua_State* L) {
     if (index == 0) {
     char const * raw2 = lua_tostring(L, 2);
     Wt::WString text = Wt::WString(raw2);
-    bool result = self->setText(text);
-    lua_pushboolean(L, result);
+    bool l_result = self->setText(text);
+    lua_pushboolean(L, l_result);
     return 1;
 
     } else {
@@ -433,8 +433,8 @@ int luawt_WPushButton_text(lua_State* L) {
     int index = luawt_getSuitableArgsGroup(L, luawt_WPushButton_text_args);
     WPushButton* self = luawt_checkFromLua<WPushButton>(L, 1);
     if (index == 0) {
-    Wt::WString const & result = self->text();
-    lua_pushstring(L, result.toUTF8().c_str());
+    Wt::WString const & l_result = self->text();
+    lua_pushstring(L, l_result.toUTF8().c_str());
     return 1;
 
     } else {
@@ -449,8 +449,8 @@ int luawt_WPushButton_textFormat(lua_State* L) {
     int index = luawt_getSuitableArgsGroup(L, luawt_WPushButton_textFormat_args);
     WPushButton* self = luawt_checkFromLua<WPushButton>(L, 1);
     if (index == 0) {
-    Wt::TextFormat result = self->textFormat();
-    lua_pushinteger(L, result);
+    Wt::TextFormat l_result = self->textFormat();
+    lua_pushinteger(L, l_result);
     return 1;
 
     } else {

@@ -12,8 +12,8 @@ int luawt_WAbstractToggleButton_text(lua_State* L) {
     int index = luawt_getSuitableArgsGroup(L, luawt_WAbstractToggleButton_text_args);
     WAbstractToggleButton* self = luawt_checkFromLua<WAbstractToggleButton>(L, 1);
     if (index == 0) {
-    Wt::WString const result = self->text();
-    lua_pushstring(L, result.toUTF8().c_str());
+    Wt::WString const l_result = self->text();
+    lua_pushstring(L, l_result.toUTF8().c_str());
     return 1;
 
     } else {
@@ -45,8 +45,8 @@ int luawt_WAbstractToggleButton_isChecked(lua_State* L) {
     int index = luawt_getSuitableArgsGroup(L, luawt_WAbstractToggleButton_isChecked_args);
     WAbstractToggleButton* self = luawt_checkFromLua<WAbstractToggleButton>(L, 1);
     if (index == 0) {
-    bool result = self->isChecked();
-    lua_pushboolean(L, result);
+    bool l_result = self->isChecked();
+    lua_pushboolean(L, l_result);
     return 1;
 
     } else {
@@ -114,8 +114,8 @@ int luawt_WAbstractToggleButton_valueText(lua_State* L) {
     int index = luawt_getSuitableArgsGroup(L, luawt_WAbstractToggleButton_valueText_args);
     WAbstractToggleButton* self = luawt_checkFromLua<WAbstractToggleButton>(L, 1);
     if (index == 0) {
-    Wt::WString result = self->valueText();
-    lua_pushstring(L, result.toUTF8().c_str());
+    Wt::WString l_result = self->valueText();
+    lua_pushstring(L, l_result.toUTF8().c_str());
     return 1;
 
     } else {

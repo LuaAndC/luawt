@@ -13,22 +13,22 @@ static const char* const* const luawt_WComboBox_make_args[] = {WComboBox_make_ar
 int luawt_WComboBox_make(lua_State* L) {
     int index = luawt_getSuitableArgsGroup(L, luawt_WComboBox_make_args);
     if (index == 0) {
-    WComboBox * result = new WComboBox();
+    WComboBox * l_result = new WComboBox();
     MyApplication* app = MyApplication::instance();
     if (!app) {
-        delete result;
+        delete l_result;
         throw std::logic_error("No WApplication when creating WComboBox");
     }
-    app->root()->addWidget(result);
+    app->root()->addWidget(l_result);
     
-    luawt_toLua(L, result);
+    luawt_toLua(L, l_result);
     return 1;
 
     } else if (index == 1) {
     Wt::WContainerWidget* parent =
         luawt_checkFromLua<Wt::WContainerWidget>(L, 1);
-    WComboBox * result = new WComboBox(parent);
-    luawt_toLua(L, result);
+    WComboBox * l_result = new WComboBox(parent);
+    luawt_toLua(L, l_result);
     return 1;
 
     } else {
@@ -43,8 +43,8 @@ int luawt_WComboBox_count(lua_State* L) {
     int index = luawt_getSuitableArgsGroup(L, luawt_WComboBox_count_args);
     WComboBox* self = luawt_checkFromLua<WComboBox>(L, 1);
     if (index == 0) {
-    int result = self->count();
-    lua_pushinteger(L, result);
+    int l_result = self->count();
+    lua_pushinteger(L, l_result);
     return 1;
 
     } else {
@@ -60,8 +60,8 @@ int luawt_WComboBox_itemText(lua_State* L) {
     WComboBox* self = luawt_checkFromLua<WComboBox>(L, 1);
     if (index == 0) {
     int index = lua_tointeger(L, 2);
-    Wt::WString const result = self->itemText(index);
-    lua_pushstring(L, result.toUTF8().c_str());
+    Wt::WString const l_result = self->itemText(index);
+    lua_pushstring(L, l_result.toUTF8().c_str());
     return 1;
 
     } else {
@@ -137,6 +137,33 @@ int luawt_WComboBox_addItem(lua_State* L) {
     }
 }
 
+static const char* WComboBox_findText_args0[] = {luawt_typeToStr<WComboBox>(), "char const *", NULL};
+static const char* WComboBox_findText_args1[] = {luawt_typeToStr<WComboBox>(), "char const *", "int", NULL};
+static const char* const* const luawt_WComboBox_findText_args[] = {WComboBox_findText_args0, WComboBox_findText_args1, NULL};
+
+int luawt_WComboBox_findText(lua_State* L) {
+    int index = luawt_getSuitableArgsGroup(L, luawt_WComboBox_findText_args);
+    WComboBox* self = luawt_checkFromLua<WComboBox>(L, 1);
+    if (index == 0) {
+    char const * raw2 = lua_tostring(L, 2);
+    Wt::WString text = Wt::WString(raw2);
+    int l_result = self->findText(text);
+    lua_pushinteger(L, l_result);
+    return 1;
+
+    } else if (index == 1) {
+    char const * raw2 = lua_tostring(L, 2);
+    Wt::WString text = Wt::WString(raw2);
+    Wt::WFlags<Wt::MatchFlag> flags = static_cast<Wt::MatchFlag>(lua_tointeger(L, 3));
+    int l_result = self->findText(text, flags);
+    lua_pushinteger(L, l_result);
+    return 1;
+
+    } else {
+        return luaL_error(L, "Wrong arguments for WComboBox.findText");
+    }
+}
+
 static const char* WComboBox_refresh_args0[] = {luawt_typeToStr<WComboBox>(), NULL};
 static const char* const* const luawt_WComboBox_refresh_args[] = {WComboBox_refresh_args0, NULL};
 
@@ -159,8 +186,8 @@ int luawt_WComboBox_currentText(lua_State* L) {
     int index = luawt_getSuitableArgsGroup(L, luawt_WComboBox_currentText_args);
     WComboBox* self = luawt_checkFromLua<WComboBox>(L, 1);
     if (index == 0) {
-    Wt::WString const result = self->currentText();
-    lua_pushstring(L, result.toUTF8().c_str());
+    Wt::WString const l_result = self->currentText();
+    lua_pushstring(L, l_result.toUTF8().c_str());
     return 1;
 
     } else {
@@ -175,8 +202,8 @@ int luawt_WComboBox_currentIndex(lua_State* L) {
     int index = luawt_getSuitableArgsGroup(L, luawt_WComboBox_currentIndex_args);
     WComboBox* self = luawt_checkFromLua<WComboBox>(L, 1);
     if (index == 0) {
-    int result = self->currentIndex();
-    lua_pushinteger(L, result);
+    int l_result = self->currentIndex();
+    lua_pushinteger(L, l_result);
     return 1;
 
     } else {
@@ -256,8 +283,8 @@ int luawt_WComboBox_valueText(lua_State* L) {
     int index = luawt_getSuitableArgsGroup(L, luawt_WComboBox_valueText_args);
     WComboBox* self = luawt_checkFromLua<WComboBox>(L, 1);
     if (index == 0) {
-    Wt::WString result = self->valueText();
-    lua_pushstring(L, result.toUTF8().c_str());
+    Wt::WString l_result = self->valueText();
+    lua_pushstring(L, l_result.toUTF8().c_str());
     return 1;
 
     } else {
@@ -301,6 +328,7 @@ static const luaL_Reg luawt_WComboBox_methods[] = {
     METHOD(WComboBox, currentText),
     METHOD(WComboBox, itemText),
     METHOD(WComboBox, setModelColumn),
+    METHOD(WComboBox, findText),
     METHOD(WComboBox, valueText),
     METHOD(WComboBox, setValueText),
     METHOD(WComboBox, refresh),

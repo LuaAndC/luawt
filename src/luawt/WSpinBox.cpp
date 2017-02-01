@@ -12,22 +12,22 @@ static const char* const* const luawt_WSpinBox_make_args[] = {WSpinBox_make_args
 int luawt_WSpinBox_make(lua_State* L) {
     int index = luawt_getSuitableArgsGroup(L, luawt_WSpinBox_make_args);
     if (index == 0) {
-    WSpinBox * result = new WSpinBox();
+    WSpinBox * l_result = new WSpinBox();
     MyApplication* app = MyApplication::instance();
     if (!app) {
-        delete result;
+        delete l_result;
         throw std::logic_error("No WApplication when creating WSpinBox");
     }
-    app->root()->addWidget(result);
+    app->root()->addWidget(l_result);
     
-    luawt_toLua(L, result);
+    luawt_toLua(L, l_result);
     return 1;
 
     } else if (index == 1) {
     Wt::WContainerWidget* parent =
         luawt_checkFromLua<Wt::WContainerWidget>(L, 1);
-    WSpinBox * result = new WSpinBox(parent);
-    luawt_toLua(L, result);
+    WSpinBox * l_result = new WSpinBox(parent);
+    luawt_toLua(L, l_result);
     return 1;
 
     } else {
@@ -74,8 +74,8 @@ int luawt_WSpinBox_maximum(lua_State* L) {
     int index = luawt_getSuitableArgsGroup(L, luawt_WSpinBox_maximum_args);
     WSpinBox* self = luawt_checkFromLua<WSpinBox>(L, 1);
     if (index == 0) {
-    int result = self->maximum();
-    lua_pushinteger(L, result);
+    int l_result = self->maximum();
+    lua_pushinteger(L, l_result);
     return 1;
 
     } else {
@@ -90,8 +90,8 @@ int luawt_WSpinBox_value(lua_State* L) {
     int index = luawt_getSuitableArgsGroup(L, luawt_WSpinBox_value_args);
     WSpinBox* self = luawt_checkFromLua<WSpinBox>(L, 1);
     if (index == 0) {
-    int result = self->value();
-    lua_pushinteger(L, result);
+    int l_result = self->value();
+    lua_pushinteger(L, l_result);
     return 1;
 
     } else {
@@ -106,8 +106,8 @@ int luawt_WSpinBox_singleStep(lua_State* L) {
     int index = luawt_getSuitableArgsGroup(L, luawt_WSpinBox_singleStep_args);
     WSpinBox* self = luawt_checkFromLua<WSpinBox>(L, 1);
     if (index == 0) {
-    int result = self->singleStep();
-    lua_pushinteger(L, result);
+    int l_result = self->singleStep();
+    lua_pushinteger(L, l_result);
     return 1;
 
     } else {
@@ -122,8 +122,8 @@ int luawt_WSpinBox_minimum(lua_State* L) {
     int index = luawt_getSuitableArgsGroup(L, luawt_WSpinBox_minimum_args);
     WSpinBox* self = luawt_checkFromLua<WSpinBox>(L, 1);
     if (index == 0) {
-    int result = self->minimum();
-    lua_pushinteger(L, result);
+    int l_result = self->minimum();
+    lua_pushinteger(L, l_result);
     return 1;
 
     } else {

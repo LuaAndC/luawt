@@ -1,6 +1,7 @@
 #include "boost-xtime.hpp"
 
 #include <Wt/WWidget>
+#include <Wt/WLength>
 #include <Wt/WContainerWidget>
 
 #include "globals.hpp"
@@ -12,22 +13,22 @@ static const char* const* const luawt_WContainerWidget_make_args[] = {WContainer
 int luawt_WContainerWidget_make(lua_State* L) {
     int index = luawt_getSuitableArgsGroup(L, luawt_WContainerWidget_make_args);
     if (index == 0) {
-    WContainerWidget * result = new WContainerWidget();
+    WContainerWidget * l_result = new WContainerWidget();
     MyApplication* app = MyApplication::instance();
     if (!app) {
-        delete result;
+        delete l_result;
         throw std::logic_error("No WApplication when creating WContainerWidget");
     }
-    app->root()->addWidget(result);
+    app->root()->addWidget(l_result);
     
-    luawt_toLua(L, result);
+    luawt_toLua(L, l_result);
     return 1;
 
     } else if (index == 1) {
     Wt::WContainerWidget* parent =
         luawt_checkFromLua<Wt::WContainerWidget>(L, 1);
-    WContainerWidget * result = new WContainerWidget(parent);
-    luawt_toLua(L, result);
+    WContainerWidget * l_result = new WContainerWidget(parent);
+    luawt_toLua(L, l_result);
     return 1;
 
     } else {
@@ -42,12 +43,29 @@ int luawt_WContainerWidget_count(lua_State* L) {
     int index = luawt_getSuitableArgsGroup(L, luawt_WContainerWidget_count_args);
     WContainerWidget* self = luawt_checkFromLua<WContainerWidget>(L, 1);
     if (index == 0) {
-    int result = self->count();
-    lua_pushinteger(L, result);
+    int l_result = self->count();
+    lua_pushinteger(L, l_result);
     return 1;
 
     } else {
         return luaL_error(L, "Wrong arguments for WContainerWidget.count");
+    }
+}
+
+static const char* WContainerWidget_padding_args0[] = {luawt_typeToStr<WContainerWidget>(), "int", NULL};
+static const char* const* const luawt_WContainerWidget_padding_args[] = {WContainerWidget_padding_args0, NULL};
+
+int luawt_WContainerWidget_padding(lua_State* L) {
+    int index = luawt_getSuitableArgsGroup(L, luawt_WContainerWidget_padding_args);
+    WContainerWidget* self = luawt_checkFromLua<WContainerWidget>(L, 1);
+    if (index == 0) {
+    Wt::Side side = static_cast<Wt::Side>(lua_tointeger(L, 2));
+    Wt::WLength l_result = self->padding(side);
+    lua_pushnumber(L, l_result.value());
+    return 1;
+
+    } else {
+        return luaL_error(L, "Wrong arguments for WContainerWidget.padding");
     }
 }
 
@@ -59,8 +77,8 @@ int luawt_WContainerWidget_widget(lua_State* L) {
     WContainerWidget* self = luawt_checkFromLua<WContainerWidget>(L, 1);
     if (index == 0) {
     int index = lua_tointeger(L, 2);
-    Wt::WWidget * result = self->widget(index);
-    luawt_toLua(L, result);
+    Wt::WWidget * l_result = self->widget(index);
+    luawt_toLua(L, l_result);
     return 1;
 
     } else {
@@ -96,8 +114,8 @@ int luawt_WContainerWidget_indexOf(lua_State* L) {
     if (index == 0) {
     Wt::WWidget* widget =
         luawt_checkFromLua<Wt::WWidget>(L, 2);
-    int result = self->indexOf(widget);
-    lua_pushinteger(L, result);
+    int l_result = self->indexOf(widget);
+    lua_pushinteger(L, l_result);
     return 1;
 
     } else {
@@ -185,8 +203,8 @@ int luawt_WContainerWidget_isOrderedList(lua_State* L) {
     int index = luawt_getSuitableArgsGroup(L, luawt_WContainerWidget_isOrderedList_args);
     WContainerWidget* self = luawt_checkFromLua<WContainerWidget>(L, 1);
     if (index == 0) {
-    bool result = self->isOrderedList();
-    lua_pushboolean(L, result);
+    bool l_result = self->isOrderedList();
+    lua_pushboolean(L, l_result);
     return 1;
 
     } else {
@@ -201,12 +219,35 @@ int luawt_WContainerWidget_isList(lua_State* L) {
     int index = luawt_getSuitableArgsGroup(L, luawt_WContainerWidget_isList_args);
     WContainerWidget* self = luawt_checkFromLua<WContainerWidget>(L, 1);
     if (index == 0) {
-    bool result = self->isList();
-    lua_pushboolean(L, result);
+    bool l_result = self->isList();
+    lua_pushboolean(L, l_result);
     return 1;
 
     } else {
         return luaL_error(L, "Wrong arguments for WContainerWidget.isList");
+    }
+}
+
+static const char* WContainerWidget_setOverflow_args0[] = {luawt_typeToStr<WContainerWidget>(), "int", NULL};
+static const char* WContainerWidget_setOverflow_args1[] = {luawt_typeToStr<WContainerWidget>(), "int", "int", NULL};
+static const char* const* const luawt_WContainerWidget_setOverflow_args[] = {WContainerWidget_setOverflow_args0, WContainerWidget_setOverflow_args1, NULL};
+
+int luawt_WContainerWidget_setOverflow(lua_State* L) {
+    int index = luawt_getSuitableArgsGroup(L, luawt_WContainerWidget_setOverflow_args);
+    WContainerWidget* self = luawt_checkFromLua<WContainerWidget>(L, 1);
+    if (index == 0) {
+    Wt::WContainerWidget::Overflow overflow = static_cast<Wt::WContainerWidget::Overflow>(lua_tointeger(L, 2));
+    self->setOverflow(overflow);
+    return 0;
+    
+    } else if (index == 1) {
+    Wt::WContainerWidget::Overflow overflow = static_cast<Wt::WContainerWidget::Overflow>(lua_tointeger(L, 2));
+    Wt::WFlags<Wt::Orientation> orientation = static_cast<Wt::Orientation>(lua_tointeger(L, 3));
+    self->setOverflow(overflow, orientation);
+    return 0;
+    
+    } else {
+        return luaL_error(L, "Wrong arguments for WContainerWidget.setOverflow");
     }
 }
 
@@ -227,6 +268,38 @@ int luawt_WContainerWidget_addWidget(lua_State* L) {
     }
 }
 
+static const char* WContainerWidget_setContentAlignment_args0[] = {luawt_typeToStr<WContainerWidget>(), "int", NULL};
+static const char* const* const luawt_WContainerWidget_setContentAlignment_args[] = {WContainerWidget_setContentAlignment_args0, NULL};
+
+int luawt_WContainerWidget_setContentAlignment(lua_State* L) {
+    int index = luawt_getSuitableArgsGroup(L, luawt_WContainerWidget_setContentAlignment_args);
+    WContainerWidget* self = luawt_checkFromLua<WContainerWidget>(L, 1);
+    if (index == 0) {
+    Wt::WFlags<Wt::AlignmentFlag> contentAlignment = static_cast<Wt::AlignmentFlag>(lua_tointeger(L, 2));
+    self->setContentAlignment(contentAlignment);
+    return 0;
+    
+    } else {
+        return luaL_error(L, "Wrong arguments for WContainerWidget.setContentAlignment");
+    }
+}
+
+static const char* WContainerWidget_contentAlignment_args0[] = {luawt_typeToStr<WContainerWidget>(), NULL};
+static const char* const* const luawt_WContainerWidget_contentAlignment_args[] = {WContainerWidget_contentAlignment_args0, NULL};
+
+int luawt_WContainerWidget_contentAlignment(lua_State* L) {
+    int index = luawt_getSuitableArgsGroup(L, luawt_WContainerWidget_contentAlignment_args);
+    WContainerWidget* self = luawt_checkFromLua<WContainerWidget>(L, 1);
+    if (index == 0) {
+    Wt::WFlags<Wt::AlignmentFlag> l_result = self->contentAlignment();
+    lua_pushinteger(L, l_result);
+    return 1;
+
+    } else {
+        return luaL_error(L, "Wrong arguments for WContainerWidget.contentAlignment");
+    }
+}
+
 static const char* WContainerWidget_isUnorderedList_args0[] = {luawt_typeToStr<WContainerWidget>(), NULL};
 static const char* const* const luawt_WContainerWidget_isUnorderedList_args[] = {WContainerWidget_isUnorderedList_args0, NULL};
 
@@ -234,12 +307,37 @@ int luawt_WContainerWidget_isUnorderedList(lua_State* L) {
     int index = luawt_getSuitableArgsGroup(L, luawt_WContainerWidget_isUnorderedList_args);
     WContainerWidget* self = luawt_checkFromLua<WContainerWidget>(L, 1);
     if (index == 0) {
-    bool result = self->isUnorderedList();
-    lua_pushboolean(L, result);
+    bool l_result = self->isUnorderedList();
+    lua_pushboolean(L, l_result);
     return 1;
 
     } else {
         return luaL_error(L, "Wrong arguments for WContainerWidget.isUnorderedList");
+    }
+}
+
+static const char* WContainerWidget_setPadding_args0[] = {luawt_typeToStr<WContainerWidget>(), "double", NULL};
+static const char* WContainerWidget_setPadding_args1[] = {luawt_typeToStr<WContainerWidget>(), "double", "int", NULL};
+static const char* const* const luawt_WContainerWidget_setPadding_args[] = {WContainerWidget_setPadding_args0, WContainerWidget_setPadding_args1, NULL};
+
+int luawt_WContainerWidget_setPadding(lua_State* L) {
+    int index = luawt_getSuitableArgsGroup(L, luawt_WContainerWidget_setPadding_args);
+    WContainerWidget* self = luawt_checkFromLua<WContainerWidget>(L, 1);
+    if (index == 0) {
+    double raw2 = lua_tonumber(L, 2);
+    Wt::WLength padding = Wt::WLength(raw2);
+    self->setPadding(padding);
+    return 0;
+    
+    } else if (index == 1) {
+    double raw2 = lua_tonumber(L, 2);
+    Wt::WLength padding = Wt::WLength(raw2);
+    Wt::WFlags<Wt::Side> sides = static_cast<Wt::Side>(lua_tointeger(L, 3));
+    self->setPadding(padding, sides);
+    return 0;
+    
+    } else {
+        return luaL_error(L, "Wrong arguments for WContainerWidget.setPadding");
     }
 }
 
@@ -274,6 +372,11 @@ static const luaL_Reg luawt_WContainerWidget_methods[] = {
     METHOD(WContainerWidget, indexOf),
     METHOD(WContainerWidget, widget),
     METHOD(WContainerWidget, count),
+    METHOD(WContainerWidget, setContentAlignment),
+    METHOD(WContainerWidget, setPadding),
+    METHOD(WContainerWidget, padding),
+    METHOD(WContainerWidget, contentAlignment),
+    METHOD(WContainerWidget, setOverflow),
     METHOD(WContainerWidget, setList),
     METHOD(WContainerWidget, isList),
     METHOD(WContainerWidget, isUnorderedList),

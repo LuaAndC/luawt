@@ -17,22 +17,22 @@ static const char* const* const luawt_WNavigationBar_make_args[] = {WNavigationB
 int luawt_WNavigationBar_make(lua_State* L) {
     int index = luawt_getSuitableArgsGroup(L, luawt_WNavigationBar_make_args);
     if (index == 0) {
-    WNavigationBar * result = new WNavigationBar();
+    WNavigationBar * l_result = new WNavigationBar();
     MyApplication* app = MyApplication::instance();
     if (!app) {
-        delete result;
+        delete l_result;
         throw std::logic_error("No WApplication when creating WNavigationBar");
     }
-    app->root()->addWidget(result);
+    app->root()->addWidget(l_result);
     
-    luawt_toLua(L, result);
+    luawt_toLua(L, l_result);
     return 1;
 
     } else if (index == 1) {
     Wt::WContainerWidget* parent =
         luawt_checkFromLua<Wt::WContainerWidget>(L, 1);
-    WNavigationBar * result = new WNavigationBar(parent);
-    luawt_toLua(L, result);
+    WNavigationBar * l_result = new WNavigationBar(parent);
+    luawt_toLua(L, l_result);
     return 1;
 
     } else {

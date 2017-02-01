@@ -1,10 +1,11 @@
 #include "boost-xtime.hpp"
 
+#include <Wt/WLength>
 #include <Wt/WCompositeWidget>
+#include <Wt/WString>
+#include <Wt/WWidget>
 #include <Wt/WWebWidget>
 #include <Wt/WContainerWidget>
-#include <Wt/WWidget>
-#include <Wt/WString>
 
 #include "globals.hpp"
 
@@ -16,22 +17,22 @@ static const char* const* const luawt_WCompositeWidget_make_args[] = {WComposite
 int luawt_WCompositeWidget_make(lua_State* L) {
     int index = luawt_getSuitableArgsGroup(L, luawt_WCompositeWidget_make_args);
     if (index == 0) {
-    WCompositeWidget * result = new WCompositeWidget();
+    WCompositeWidget * l_result = new WCompositeWidget();
     MyApplication* app = MyApplication::instance();
     if (!app) {
-        delete result;
+        delete l_result;
         throw std::logic_error("No WApplication when creating WCompositeWidget");
     }
-    app->root()->addWidget(result);
+    app->root()->addWidget(l_result);
     
-    luawt_toLua(L, result);
+    luawt_toLua(L, l_result);
     return 1;
 
     } else if (index == 1) {
     Wt::WContainerWidget* parent =
         luawt_checkFromLua<Wt::WContainerWidget>(L, 1);
-    WCompositeWidget * result = new WCompositeWidget(parent);
-    luawt_toLua(L, result);
+    WCompositeWidget * l_result = new WCompositeWidget(parent);
+    luawt_toLua(L, l_result);
     return 1;
 
     } else if (index == 2) {
@@ -39,8 +40,8 @@ int luawt_WCompositeWidget_make(lua_State* L) {
         luawt_checkFromLua<Wt::WWidget>(L, 1);
     Wt::WContainerWidget* parent =
         luawt_checkFromLua<Wt::WContainerWidget>(L, 2);
-    WCompositeWidget * result = new WCompositeWidget(implementation, parent);
-    luawt_toLua(L, result);
+    WCompositeWidget * l_result = new WCompositeWidget(implementation, parent);
+    luawt_toLua(L, l_result);
     return 1;
 
     } else {
@@ -80,6 +81,25 @@ int luawt_WCompositeWidget_doJavaScript(lua_State* L) {
     }
 }
 
+static const char* WCompositeWidget_setMinimumSize_args0[] = {luawt_typeToStr<WCompositeWidget>(), "double", "double", NULL};
+static const char* const* const luawt_WCompositeWidget_setMinimumSize_args[] = {WCompositeWidget_setMinimumSize_args0, NULL};
+
+int luawt_WCompositeWidget_setMinimumSize(lua_State* L) {
+    int index = luawt_getSuitableArgsGroup(L, luawt_WCompositeWidget_setMinimumSize_args);
+    WCompositeWidget* self = luawt_checkFromLua<WCompositeWidget>(L, 1);
+    if (index == 0) {
+    double raw2 = lua_tonumber(L, 2);
+    Wt::WLength width = Wt::WLength(raw2);
+    double raw3 = lua_tonumber(L, 3);
+    Wt::WLength height = Wt::WLength(raw3);
+    self->setMinimumSize(width, height);
+    return 0;
+    
+    } else {
+        return luaL_error(L, "Wrong arguments for WCompositeWidget.setMinimumSize");
+    }
+}
+
 static const char* WCompositeWidget_floatSide_args0[] = {luawt_typeToStr<WCompositeWidget>(), NULL};
 static const char* const* const luawt_WCompositeWidget_floatSide_args[] = {WCompositeWidget_floatSide_args0, NULL};
 
@@ -87,12 +107,28 @@ int luawt_WCompositeWidget_floatSide(lua_State* L) {
     int index = luawt_getSuitableArgsGroup(L, luawt_WCompositeWidget_floatSide_args);
     WCompositeWidget* self = luawt_checkFromLua<WCompositeWidget>(L, 1);
     if (index == 0) {
-    Wt::Side result = self->floatSide();
-    lua_pushinteger(L, result);
+    Wt::Side l_result = self->floatSide();
+    lua_pushinteger(L, l_result);
     return 1;
 
     } else {
         return luaL_error(L, "Wrong arguments for WCompositeWidget.floatSide");
+    }
+}
+
+static const char* WCompositeWidget_webWidget_args0[] = {luawt_typeToStr<WCompositeWidget>(), NULL};
+static const char* const* const luawt_WCompositeWidget_webWidget_args[] = {WCompositeWidget_webWidget_args0, NULL};
+
+int luawt_WCompositeWidget_webWidget(lua_State* L) {
+    int index = luawt_getSuitableArgsGroup(L, luawt_WCompositeWidget_webWidget_args);
+    WCompositeWidget* self = luawt_checkFromLua<WCompositeWidget>(L, 1);
+    if (index == 0) {
+    Wt::WWebWidget * l_result = self->webWidget();
+    luawt_toLua(L, l_result);
+    return 1;
+
+    } else {
+        return luaL_error(L, "Wrong arguments for WCompositeWidget.webWidget");
     }
 }
 
@@ -105,8 +141,8 @@ int luawt_WCompositeWidget_find(lua_State* L) {
     if (index == 0) {
     char const * raw2 = lua_tostring(L, 2);
     std::string name = std::string(raw2);
-    Wt::WWidget * result = self->find(name);
-    luawt_toLua(L, result);
+    Wt::WWidget * l_result = self->find(name);
+    luawt_toLua(L, l_result);
     return 1;
 
     } else {
@@ -114,19 +150,19 @@ int luawt_WCompositeWidget_find(lua_State* L) {
     }
 }
 
-static const char* WCompositeWidget_styleClass_args0[] = {luawt_typeToStr<WCompositeWidget>(), NULL};
-static const char* const* const luawt_WCompositeWidget_styleClass_args[] = {WCompositeWidget_styleClass_args0, NULL};
+static const char* WCompositeWidget_height_args0[] = {luawt_typeToStr<WCompositeWidget>(), NULL};
+static const char* const* const luawt_WCompositeWidget_height_args[] = {WCompositeWidget_height_args0, NULL};
 
-int luawt_WCompositeWidget_styleClass(lua_State* L) {
-    int index = luawt_getSuitableArgsGroup(L, luawt_WCompositeWidget_styleClass_args);
+int luawt_WCompositeWidget_height(lua_State* L) {
+    int index = luawt_getSuitableArgsGroup(L, luawt_WCompositeWidget_height_args);
     WCompositeWidget* self = luawt_checkFromLua<WCompositeWidget>(L, 1);
     if (index == 0) {
-    Wt::WString result = self->styleClass();
-    lua_pushstring(L, result.toUTF8().c_str());
+    Wt::WLength l_result = self->height();
+    lua_pushnumber(L, l_result.value());
     return 1;
 
     } else {
-        return luaL_error(L, "Wrong arguments for WCompositeWidget.styleClass");
+        return luaL_error(L, "Wrong arguments for WCompositeWidget.height");
     }
 }
 
@@ -137,12 +173,28 @@ int luawt_WCompositeWidget_hiddenKeepsGeometry(lua_State* L) {
     int index = luawt_getSuitableArgsGroup(L, luawt_WCompositeWidget_hiddenKeepsGeometry_args);
     WCompositeWidget* self = luawt_checkFromLua<WCompositeWidget>(L, 1);
     if (index == 0) {
-    bool result = self->hiddenKeepsGeometry();
-    lua_pushboolean(L, result);
+    bool l_result = self->hiddenKeepsGeometry();
+    lua_pushboolean(L, l_result);
     return 1;
 
     } else {
         return luaL_error(L, "Wrong arguments for WCompositeWidget.hiddenKeepsGeometry");
+    }
+}
+
+static const char* WCompositeWidget_minimumHeight_args0[] = {luawt_typeToStr<WCompositeWidget>(), NULL};
+static const char* const* const luawt_WCompositeWidget_minimumHeight_args[] = {WCompositeWidget_minimumHeight_args0, NULL};
+
+int luawt_WCompositeWidget_minimumHeight(lua_State* L) {
+    int index = luawt_getSuitableArgsGroup(L, luawt_WCompositeWidget_minimumHeight_args);
+    WCompositeWidget* self = luawt_checkFromLua<WCompositeWidget>(L, 1);
+    if (index == 0) {
+    Wt::WLength l_result = self->minimumHeight();
+    lua_pushnumber(L, l_result.value());
+    return 1;
+
+    } else {
+        return luaL_error(L, "Wrong arguments for WCompositeWidget.minimumHeight");
     }
 }
 
@@ -153,12 +205,47 @@ int luawt_WCompositeWidget_loaded(lua_State* L) {
     int index = luawt_getSuitableArgsGroup(L, luawt_WCompositeWidget_loaded_args);
     WCompositeWidget* self = luawt_checkFromLua<WCompositeWidget>(L, 1);
     if (index == 0) {
-    bool result = self->loaded();
-    lua_pushboolean(L, result);
+    bool l_result = self->loaded();
+    lua_pushboolean(L, l_result);
     return 1;
 
     } else {
         return luaL_error(L, "Wrong arguments for WCompositeWidget.loaded");
+    }
+}
+
+static const char* WCompositeWidget_setMaximumSize_args0[] = {luawt_typeToStr<WCompositeWidget>(), "double", "double", NULL};
+static const char* const* const luawt_WCompositeWidget_setMaximumSize_args[] = {WCompositeWidget_setMaximumSize_args0, NULL};
+
+int luawt_WCompositeWidget_setMaximumSize(lua_State* L) {
+    int index = luawt_getSuitableArgsGroup(L, luawt_WCompositeWidget_setMaximumSize_args);
+    WCompositeWidget* self = luawt_checkFromLua<WCompositeWidget>(L, 1);
+    if (index == 0) {
+    double raw2 = lua_tonumber(L, 2);
+    Wt::WLength width = Wt::WLength(raw2);
+    double raw3 = lua_tonumber(L, 3);
+    Wt::WLength height = Wt::WLength(raw3);
+    self->setMaximumSize(width, height);
+    return 0;
+    
+    } else {
+        return luaL_error(L, "Wrong arguments for WCompositeWidget.setMaximumSize");
+    }
+}
+
+static const char* WCompositeWidget_styleClass_args0[] = {luawt_typeToStr<WCompositeWidget>(), NULL};
+static const char* const* const luawt_WCompositeWidget_styleClass_args[] = {WCompositeWidget_styleClass_args0, NULL};
+
+int luawt_WCompositeWidget_styleClass(lua_State* L) {
+    int index = luawt_getSuitableArgsGroup(L, luawt_WCompositeWidget_styleClass_args);
+    WCompositeWidget* self = luawt_checkFromLua<WCompositeWidget>(L, 1);
+    if (index == 0) {
+    Wt::WString l_result = self->styleClass();
+    lua_pushstring(L, l_result.toUTF8().c_str());
+    return 1;
+
+    } else {
+        return luaL_error(L, "Wrong arguments for WCompositeWidget.styleClass");
     }
 }
 
@@ -169,12 +256,28 @@ int luawt_WCompositeWidget_id(lua_State* L) {
     int index = luawt_getSuitableArgsGroup(L, luawt_WCompositeWidget_id_args);
     WCompositeWidget* self = luawt_checkFromLua<WCompositeWidget>(L, 1);
     if (index == 0) {
-    std::string const result = self->id();
-    lua_pushstring(L, result.c_str());
+    std::string const l_result = self->id();
+    lua_pushstring(L, l_result.c_str());
     return 1;
 
     } else {
         return luaL_error(L, "Wrong arguments for WCompositeWidget.id");
+    }
+}
+
+static const char* WCompositeWidget_setTabIndex_args0[] = {luawt_typeToStr<WCompositeWidget>(), "int", NULL};
+static const char* const* const luawt_WCompositeWidget_setTabIndex_args[] = {WCompositeWidget_setTabIndex_args0, NULL};
+
+int luawt_WCompositeWidget_setTabIndex(lua_State* L) {
+    int index = luawt_getSuitableArgsGroup(L, luawt_WCompositeWidget_setTabIndex_args);
+    WCompositeWidget* self = luawt_checkFromLua<WCompositeWidget>(L, 1);
+    if (index == 0) {
+    int index = lua_tointeger(L, 2);
+    self->setTabIndex(index);
+    return 0;
+    
+    } else {
+        return luaL_error(L, "Wrong arguments for WCompositeWidget.setTabIndex");
     }
 }
 
@@ -185,8 +288,8 @@ int luawt_WCompositeWidget_isInline(lua_State* L) {
     int index = luawt_getSuitableArgsGroup(L, luawt_WCompositeWidget_isInline_args);
     WCompositeWidget* self = luawt_checkFromLua<WCompositeWidget>(L, 1);
     if (index == 0) {
-    bool result = self->isInline();
-    lua_pushboolean(L, result);
+    bool l_result = self->isInline();
+    lua_pushboolean(L, l_result);
     return 1;
 
     } else {
@@ -194,36 +297,60 @@ int luawt_WCompositeWidget_isInline(lua_State* L) {
     }
 }
 
-static const char* WCompositeWidget_setStyleClass_args0[] = {luawt_typeToStr<WCompositeWidget>(), "char const *", NULL};
-static const char* const* const luawt_WCompositeWidget_setStyleClass_args[] = {WCompositeWidget_setStyleClass_args0, NULL};
+static const char* WCompositeWidget_propagateSetEnabled_args0[] = {luawt_typeToStr<WCompositeWidget>(), "bool", NULL};
+static const char* const* const luawt_WCompositeWidget_propagateSetEnabled_args[] = {WCompositeWidget_propagateSetEnabled_args0, NULL};
 
-int luawt_WCompositeWidget_setStyleClass(lua_State* L) {
-    int index = luawt_getSuitableArgsGroup(L, luawt_WCompositeWidget_setStyleClass_args);
+int luawt_WCompositeWidget_propagateSetEnabled(lua_State* L) {
+    int index = luawt_getSuitableArgsGroup(L, luawt_WCompositeWidget_propagateSetEnabled_args);
     WCompositeWidget* self = luawt_checkFromLua<WCompositeWidget>(L, 1);
     if (index == 0) {
-    char const * raw2 = lua_tostring(L, 2);
-    Wt::WString styleClass = Wt::WString(raw2);
-    self->setStyleClass(styleClass);
+    bool enabled = lua_toboolean(L, 2);
+    self->propagateSetEnabled(enabled);
     return 0;
     
     } else {
-        return luaL_error(L, "Wrong arguments for WCompositeWidget.setStyleClass");
+        return luaL_error(L, "Wrong arguments for WCompositeWidget.propagateSetEnabled");
     }
 }
 
-static const char* WCompositeWidget_isDisabled_args0[] = {luawt_typeToStr<WCompositeWidget>(), NULL};
-static const char* const* const luawt_WCompositeWidget_isDisabled_args[] = {WCompositeWidget_isDisabled_args0, NULL};
+static const char* WCompositeWidget_setClearSides_args0[] = {luawt_typeToStr<WCompositeWidget>(), "int", NULL};
+static const char* const* const luawt_WCompositeWidget_setClearSides_args[] = {WCompositeWidget_setClearSides_args0, NULL};
 
-int luawt_WCompositeWidget_isDisabled(lua_State* L) {
-    int index = luawt_getSuitableArgsGroup(L, luawt_WCompositeWidget_isDisabled_args);
+int luawt_WCompositeWidget_setClearSides(lua_State* L) {
+    int index = luawt_getSuitableArgsGroup(L, luawt_WCompositeWidget_setClearSides_args);
     WCompositeWidget* self = luawt_checkFromLua<WCompositeWidget>(L, 1);
     if (index == 0) {
-    bool result = self->isDisabled();
-    lua_pushboolean(L, result);
-    return 1;
-
+    Wt::WFlags<Wt::Side> sides = static_cast<Wt::Side>(lua_tointeger(L, 2));
+    self->setClearSides(sides);
+    return 0;
+    
     } else {
-        return luaL_error(L, "Wrong arguments for WCompositeWidget.isDisabled");
+        return luaL_error(L, "Wrong arguments for WCompositeWidget.setClearSides");
+    }
+}
+
+static const char* WCompositeWidget_setOffsets_args0[] = {luawt_typeToStr<WCompositeWidget>(), "double", NULL};
+static const char* WCompositeWidget_setOffsets_args1[] = {luawt_typeToStr<WCompositeWidget>(), "double", "int", NULL};
+static const char* const* const luawt_WCompositeWidget_setOffsets_args[] = {WCompositeWidget_setOffsets_args0, WCompositeWidget_setOffsets_args1, NULL};
+
+int luawt_WCompositeWidget_setOffsets(lua_State* L) {
+    int index = luawt_getSuitableArgsGroup(L, luawt_WCompositeWidget_setOffsets_args);
+    WCompositeWidget* self = luawt_checkFromLua<WCompositeWidget>(L, 1);
+    if (index == 0) {
+    double raw2 = lua_tonumber(L, 2);
+    Wt::WLength offset = Wt::WLength(raw2);
+    self->setOffsets(offset);
+    return 0;
+    
+    } else if (index == 1) {
+    double raw2 = lua_tonumber(L, 2);
+    Wt::WLength offset = Wt::WLength(raw2);
+    Wt::WFlags<Wt::Side> sides = static_cast<Wt::Side>(lua_tointeger(L, 3));
+    self->setOffsets(offset, sides);
+    return 0;
+    
+    } else {
+        return luaL_error(L, "Wrong arguments for WCompositeWidget.setOffsets");
     }
 }
 
@@ -259,19 +386,19 @@ int luawt_WCompositeWidget_setFloatSide(lua_State* L) {
     }
 }
 
-static const char* WCompositeWidget_propagateSetEnabled_args0[] = {luawt_typeToStr<WCompositeWidget>(), "bool", NULL};
-static const char* const* const luawt_WCompositeWidget_propagateSetEnabled_args[] = {WCompositeWidget_propagateSetEnabled_args0, NULL};
+static const char* WCompositeWidget_width_args0[] = {luawt_typeToStr<WCompositeWidget>(), NULL};
+static const char* const* const luawt_WCompositeWidget_width_args[] = {WCompositeWidget_width_args0, NULL};
 
-int luawt_WCompositeWidget_propagateSetEnabled(lua_State* L) {
-    int index = luawt_getSuitableArgsGroup(L, luawt_WCompositeWidget_propagateSetEnabled_args);
+int luawt_WCompositeWidget_width(lua_State* L) {
+    int index = luawt_getSuitableArgsGroup(L, luawt_WCompositeWidget_width_args);
     WCompositeWidget* self = luawt_checkFromLua<WCompositeWidget>(L, 1);
     if (index == 0) {
-    bool enabled = lua_toboolean(L, 2);
-    self->propagateSetEnabled(enabled);
-    return 0;
-    
+    Wt::WLength l_result = self->width();
+    lua_pushnumber(L, l_result.value());
+    return 1;
+
     } else {
-        return luaL_error(L, "Wrong arguments for WCompositeWidget.propagateSetEnabled");
+        return luaL_error(L, "Wrong arguments for WCompositeWidget.width");
     }
 }
 
@@ -282,12 +409,31 @@ int luawt_WCompositeWidget_verticalAlignment(lua_State* L) {
     int index = luawt_getSuitableArgsGroup(L, luawt_WCompositeWidget_verticalAlignment_args);
     WCompositeWidget* self = luawt_checkFromLua<WCompositeWidget>(L, 1);
     if (index == 0) {
-    Wt::AlignmentFlag result = self->verticalAlignment();
-    lua_pushinteger(L, result);
+    Wt::AlignmentFlag l_result = self->verticalAlignment();
+    lua_pushinteger(L, l_result);
     return 1;
 
     } else {
         return luaL_error(L, "Wrong arguments for WCompositeWidget.verticalAlignment");
+    }
+}
+
+static const char* WCompositeWidget_resize_args0[] = {luawt_typeToStr<WCompositeWidget>(), "double", "double", NULL};
+static const char* const* const luawt_WCompositeWidget_resize_args[] = {WCompositeWidget_resize_args0, NULL};
+
+int luawt_WCompositeWidget_resize(lua_State* L) {
+    int index = luawt_getSuitableArgsGroup(L, luawt_WCompositeWidget_resize_args);
+    WCompositeWidget* self = luawt_checkFromLua<WCompositeWidget>(L, 1);
+    if (index == 0) {
+    double raw2 = lua_tonumber(L, 2);
+    Wt::WLength width = Wt::WLength(raw2);
+    double raw3 = lua_tonumber(L, 3);
+    Wt::WLength height = Wt::WLength(raw3);
+    self->resize(width, height);
+    return 0;
+    
+    } else {
+        return luaL_error(L, "Wrong arguments for WCompositeWidget.resize");
     }
 }
 
@@ -298,12 +444,28 @@ int luawt_WCompositeWidget_positionScheme(lua_State* L) {
     int index = luawt_getSuitableArgsGroup(L, luawt_WCompositeWidget_positionScheme_args);
     WCompositeWidget* self = luawt_checkFromLua<WCompositeWidget>(L, 1);
     if (index == 0) {
-    Wt::PositionScheme result = self->positionScheme();
-    lua_pushinteger(L, result);
+    Wt::PositionScheme l_result = self->positionScheme();
+    lua_pushinteger(L, l_result);
     return 1;
 
     } else {
         return luaL_error(L, "Wrong arguments for WCompositeWidget.positionScheme");
+    }
+}
+
+static const char* WCompositeWidget_lineHeight_args0[] = {luawt_typeToStr<WCompositeWidget>(), NULL};
+static const char* const* const luawt_WCompositeWidget_lineHeight_args[] = {WCompositeWidget_lineHeight_args0, NULL};
+
+int luawt_WCompositeWidget_lineHeight(lua_State* L) {
+    int index = luawt_getSuitableArgsGroup(L, luawt_WCompositeWidget_lineHeight_args);
+    WCompositeWidget* self = luawt_checkFromLua<WCompositeWidget>(L, 1);
+    if (index == 0) {
+    Wt::WLength l_result = self->lineHeight();
+    lua_pushnumber(L, l_result.value());
+    return 1;
+
+    } else {
+        return luaL_error(L, "Wrong arguments for WCompositeWidget.lineHeight");
     }
 }
 
@@ -314,8 +476,8 @@ int luawt_WCompositeWidget_tabIndex(lua_State* L) {
     int index = luawt_getSuitableArgsGroup(L, luawt_WCompositeWidget_tabIndex_args);
     WCompositeWidget* self = luawt_checkFromLua<WCompositeWidget>(L, 1);
     if (index == 0) {
-    int result = self->tabIndex();
-    lua_pushinteger(L, result);
+    int l_result = self->tabIndex();
+    lua_pushinteger(L, l_result);
     return 1;
 
     } else {
@@ -330,8 +492,8 @@ int luawt_WCompositeWidget_isHidden(lua_State* L) {
     int index = luawt_getSuitableArgsGroup(L, luawt_WCompositeWidget_isHidden_args);
     WCompositeWidget* self = luawt_checkFromLua<WCompositeWidget>(L, 1);
     if (index == 0) {
-    bool result = self->isHidden();
-    lua_pushboolean(L, result);
+    bool l_result = self->isHidden();
+    lua_pushboolean(L, l_result);
     return 1;
 
     } else {
@@ -355,6 +517,22 @@ int luawt_WCompositeWidget_setSelectable(lua_State* L) {
     }
 }
 
+static const char* WCompositeWidget_minimumWidth_args0[] = {luawt_typeToStr<WCompositeWidget>(), NULL};
+static const char* const* const luawt_WCompositeWidget_minimumWidth_args[] = {WCompositeWidget_minimumWidth_args0, NULL};
+
+int luawt_WCompositeWidget_minimumWidth(lua_State* L) {
+    int index = luawt_getSuitableArgsGroup(L, luawt_WCompositeWidget_minimumWidth_args);
+    WCompositeWidget* self = luawt_checkFromLua<WCompositeWidget>(L, 1);
+    if (index == 0) {
+    Wt::WLength l_result = self->minimumWidth();
+    lua_pushnumber(L, l_result.value());
+    return 1;
+
+    } else {
+        return luaL_error(L, "Wrong arguments for WCompositeWidget.minimumWidth");
+    }
+}
+
 static const char* WCompositeWidget_attributeValue_args0[] = {luawt_typeToStr<WCompositeWidget>(), "char const *", NULL};
 static const char* const* const luawt_WCompositeWidget_attributeValue_args[] = {WCompositeWidget_attributeValue_args0, NULL};
 
@@ -364,8 +542,8 @@ int luawt_WCompositeWidget_attributeValue(lua_State* L) {
     if (index == 0) {
     char const * raw2 = lua_tostring(L, 2);
     std::string name = std::string(raw2);
-    Wt::WString result = self->attributeValue(name);
-    lua_pushstring(L, result.toUTF8().c_str());
+    Wt::WString l_result = self->attributeValue(name);
+    lua_pushstring(L, l_result.toUTF8().c_str());
     return 1;
 
     } else {
@@ -389,6 +567,22 @@ int luawt_WCompositeWidget_setPositionScheme(lua_State* L) {
     }
 }
 
+static const char* WCompositeWidget_maximumHeight_args0[] = {luawt_typeToStr<WCompositeWidget>(), NULL};
+static const char* const* const luawt_WCompositeWidget_maximumHeight_args[] = {WCompositeWidget_maximumHeight_args0, NULL};
+
+int luawt_WCompositeWidget_maximumHeight(lua_State* L) {
+    int index = luawt_getSuitableArgsGroup(L, luawt_WCompositeWidget_maximumHeight_args);
+    WCompositeWidget* self = luawt_checkFromLua<WCompositeWidget>(L, 1);
+    if (index == 0) {
+    Wt::WLength l_result = self->maximumHeight();
+    lua_pushnumber(L, l_result.value());
+    return 1;
+
+    } else {
+        return luaL_error(L, "Wrong arguments for WCompositeWidget.maximumHeight");
+    }
+}
+
 static const char* WCompositeWidget_javaScriptMember_args0[] = {luawt_typeToStr<WCompositeWidget>(), "char const *", NULL};
 static const char* const* const luawt_WCompositeWidget_javaScriptMember_args[] = {WCompositeWidget_javaScriptMember_args0, NULL};
 
@@ -398,12 +592,28 @@ int luawt_WCompositeWidget_javaScriptMember(lua_State* L) {
     if (index == 0) {
     char const * raw2 = lua_tostring(L, 2);
     std::string name = std::string(raw2);
-    std::string result = self->javaScriptMember(name);
-    lua_pushstring(L, result.c_str());
+    std::string l_result = self->javaScriptMember(name);
+    lua_pushstring(L, l_result.c_str());
     return 1;
 
     } else {
         return luaL_error(L, "Wrong arguments for WCompositeWidget.javaScriptMember");
+    }
+}
+
+static const char* WCompositeWidget_verticalAlignmentLength_args0[] = {luawt_typeToStr<WCompositeWidget>(), NULL};
+static const char* const* const luawt_WCompositeWidget_verticalAlignmentLength_args[] = {WCompositeWidget_verticalAlignmentLength_args0, NULL};
+
+int luawt_WCompositeWidget_verticalAlignmentLength(lua_State* L) {
+    int index = luawt_getSuitableArgsGroup(L, luawt_WCompositeWidget_verticalAlignmentLength_args);
+    WCompositeWidget* self = luawt_checkFromLua<WCompositeWidget>(L, 1);
+    if (index == 0) {
+    Wt::WLength l_result = self->verticalAlignmentLength();
+    lua_pushnumber(L, l_result.value());
+    return 1;
+
+    } else {
+        return luaL_error(L, "Wrong arguments for WCompositeWidget.verticalAlignmentLength");
     }
 }
 
@@ -414,12 +624,61 @@ int luawt_WCompositeWidget_toolTip(lua_State* L) {
     int index = luawt_getSuitableArgsGroup(L, luawt_WCompositeWidget_toolTip_args);
     WCompositeWidget* self = luawt_checkFromLua<WCompositeWidget>(L, 1);
     if (index == 0) {
-    Wt::WString const & result = self->toolTip();
-    lua_pushstring(L, result.toUTF8().c_str());
+    Wt::WString const & l_result = self->toolTip();
+    lua_pushstring(L, l_result.toUTF8().c_str());
     return 1;
 
     } else {
         return luaL_error(L, "Wrong arguments for WCompositeWidget.toolTip");
+    }
+}
+
+static const char* WCompositeWidget_setVerticalAlignment_args0[] = {luawt_typeToStr<WCompositeWidget>(), "int", NULL};
+static const char* WCompositeWidget_setVerticalAlignment_args1[] = {luawt_typeToStr<WCompositeWidget>(), "int", "double", NULL};
+static const char* const* const luawt_WCompositeWidget_setVerticalAlignment_args[] = {WCompositeWidget_setVerticalAlignment_args0, WCompositeWidget_setVerticalAlignment_args1, NULL};
+
+int luawt_WCompositeWidget_setVerticalAlignment(lua_State* L) {
+    int index = luawt_getSuitableArgsGroup(L, luawt_WCompositeWidget_setVerticalAlignment_args);
+    WCompositeWidget* self = luawt_checkFromLua<WCompositeWidget>(L, 1);
+    if (index == 0) {
+    Wt::AlignmentFlag alignment = static_cast<Wt::AlignmentFlag>(lua_tointeger(L, 2));
+    self->setVerticalAlignment(alignment);
+    return 0;
+    
+    } else if (index == 1) {
+    Wt::AlignmentFlag alignment = static_cast<Wt::AlignmentFlag>(lua_tointeger(L, 2));
+    double raw3 = lua_tonumber(L, 3);
+    Wt::WLength length = Wt::WLength(raw3);
+    self->setVerticalAlignment(alignment, length);
+    return 0;
+    
+    } else {
+        return luaL_error(L, "Wrong arguments for WCompositeWidget.setVerticalAlignment");
+    }
+}
+
+static const char* WCompositeWidget_setMargin_args0[] = {luawt_typeToStr<WCompositeWidget>(), "double", NULL};
+static const char* WCompositeWidget_setMargin_args1[] = {luawt_typeToStr<WCompositeWidget>(), "double", "int", NULL};
+static const char* const* const luawt_WCompositeWidget_setMargin_args[] = {WCompositeWidget_setMargin_args0, WCompositeWidget_setMargin_args1, NULL};
+
+int luawt_WCompositeWidget_setMargin(lua_State* L) {
+    int index = luawt_getSuitableArgsGroup(L, luawt_WCompositeWidget_setMargin_args);
+    WCompositeWidget* self = luawt_checkFromLua<WCompositeWidget>(L, 1);
+    if (index == 0) {
+    double raw2 = lua_tonumber(L, 2);
+    Wt::WLength margin = Wt::WLength(raw2);
+    self->setMargin(margin);
+    return 0;
+    
+    } else if (index == 1) {
+    double raw2 = lua_tonumber(L, 2);
+    Wt::WLength margin = Wt::WLength(raw2);
+    Wt::WFlags<Wt::Side> sides = static_cast<Wt::Side>(lua_tointeger(L, 3));
+    self->setMargin(margin, sides);
+    return 0;
+    
+    } else {
+        return luaL_error(L, "Wrong arguments for WCompositeWidget.setMargin");
     }
 }
 
@@ -439,19 +698,36 @@ int luawt_WCompositeWidget_setInline(lua_State* L) {
     }
 }
 
-static const char* WCompositeWidget_webWidget_args0[] = {luawt_typeToStr<WCompositeWidget>(), NULL};
-static const char* const* const luawt_WCompositeWidget_webWidget_args[] = {WCompositeWidget_webWidget_args0, NULL};
+static const char* WCompositeWidget_offset_args0[] = {luawt_typeToStr<WCompositeWidget>(), "int", NULL};
+static const char* const* const luawt_WCompositeWidget_offset_args[] = {WCompositeWidget_offset_args0, NULL};
 
-int luawt_WCompositeWidget_webWidget(lua_State* L) {
-    int index = luawt_getSuitableArgsGroup(L, luawt_WCompositeWidget_webWidget_args);
+int luawt_WCompositeWidget_offset(lua_State* L) {
+    int index = luawt_getSuitableArgsGroup(L, luawt_WCompositeWidget_offset_args);
     WCompositeWidget* self = luawt_checkFromLua<WCompositeWidget>(L, 1);
     if (index == 0) {
-    Wt::WWebWidget * result = self->webWidget();
-    luawt_toLua(L, result);
+    Wt::Side s = static_cast<Wt::Side>(lua_tointeger(L, 2));
+    Wt::WLength l_result = self->offset(s);
+    lua_pushnumber(L, l_result.value());
     return 1;
 
     } else {
-        return luaL_error(L, "Wrong arguments for WCompositeWidget.webWidget");
+        return luaL_error(L, "Wrong arguments for WCompositeWidget.offset");
+    }
+}
+
+static const char* WCompositeWidget_clearSides_args0[] = {luawt_typeToStr<WCompositeWidget>(), NULL};
+static const char* const* const luawt_WCompositeWidget_clearSides_args[] = {WCompositeWidget_clearSides_args0, NULL};
+
+int luawt_WCompositeWidget_clearSides(lua_State* L) {
+    int index = luawt_getSuitableArgsGroup(L, luawt_WCompositeWidget_clearSides_args);
+    WCompositeWidget* self = luawt_checkFromLua<WCompositeWidget>(L, 1);
+    if (index == 0) {
+    Wt::WFlags<Wt::Side> l_result = self->clearSides();
+    lua_pushinteger(L, l_result);
+    return 1;
+
+    } else {
+        return luaL_error(L, "Wrong arguments for WCompositeWidget.clearSides");
     }
 }
 
@@ -472,6 +748,23 @@ int luawt_WCompositeWidget_setId(lua_State* L) {
     }
 }
 
+static const char* WCompositeWidget_setLineHeight_args0[] = {luawt_typeToStr<WCompositeWidget>(), "double", NULL};
+static const char* const* const luawt_WCompositeWidget_setLineHeight_args[] = {WCompositeWidget_setLineHeight_args0, NULL};
+
+int luawt_WCompositeWidget_setLineHeight(lua_State* L) {
+    int index = luawt_getSuitableArgsGroup(L, luawt_WCompositeWidget_setLineHeight_args);
+    WCompositeWidget* self = luawt_checkFromLua<WCompositeWidget>(L, 1);
+    if (index == 0) {
+    double raw2 = lua_tonumber(L, 2);
+    Wt::WLength height = Wt::WLength(raw2);
+    self->setLineHeight(height);
+    return 0;
+    
+    } else {
+        return luaL_error(L, "Wrong arguments for WCompositeWidget.setLineHeight");
+    }
+}
+
 static const char* WCompositeWidget_hasStyleClass_args0[] = {luawt_typeToStr<WCompositeWidget>(), "char const *", NULL};
 static const char* const* const luawt_WCompositeWidget_hasStyleClass_args[] = {WCompositeWidget_hasStyleClass_args0, NULL};
 
@@ -481,8 +774,8 @@ int luawt_WCompositeWidget_hasStyleClass(lua_State* L) {
     if (index == 0) {
     char const * raw2 = lua_tostring(L, 2);
     Wt::WString styleClass = Wt::WString(raw2);
-    bool result = self->hasStyleClass(styleClass);
-    lua_pushboolean(L, result);
+    bool l_result = self->hasStyleClass(styleClass);
+    lua_pushboolean(L, l_result);
     return 1;
 
     } else {
@@ -499,12 +792,28 @@ int luawt_WCompositeWidget_findById(lua_State* L) {
     if (index == 0) {
     char const * raw2 = lua_tostring(L, 2);
     std::string name = std::string(raw2);
-    Wt::WWidget * result = self->findById(name);
-    luawt_toLua(L, result);
+    Wt::WWidget * l_result = self->findById(name);
+    luawt_toLua(L, l_result);
     return 1;
 
     } else {
         return luaL_error(L, "Wrong arguments for WCompositeWidget.findById");
+    }
+}
+
+static const char* WCompositeWidget_maximumWidth_args0[] = {luawt_typeToStr<WCompositeWidget>(), NULL};
+static const char* const* const luawt_WCompositeWidget_maximumWidth_args[] = {WCompositeWidget_maximumWidth_args0, NULL};
+
+int luawt_WCompositeWidget_maximumWidth(lua_State* L) {
+    int index = luawt_getSuitableArgsGroup(L, luawt_WCompositeWidget_maximumWidth_args);
+    WCompositeWidget* self = luawt_checkFromLua<WCompositeWidget>(L, 1);
+    if (index == 0) {
+    Wt::WLength l_result = self->maximumWidth();
+    lua_pushnumber(L, l_result.value());
+    return 1;
+
+    } else {
+        return luaL_error(L, "Wrong arguments for WCompositeWidget.maximumWidth");
     }
 }
 
@@ -540,12 +849,31 @@ int luawt_WCompositeWidget_isPopup(lua_State* L) {
     int index = luawt_getSuitableArgsGroup(L, luawt_WCompositeWidget_isPopup_args);
     WCompositeWidget* self = luawt_checkFromLua<WCompositeWidget>(L, 1);
     if (index == 0) {
-    bool result = self->isPopup();
-    lua_pushboolean(L, result);
+    bool l_result = self->isPopup();
+    lua_pushboolean(L, l_result);
     return 1;
 
     } else {
         return luaL_error(L, "Wrong arguments for WCompositeWidget.isPopup");
+    }
+}
+
+static const char* WCompositeWidget_setJavaScriptMember_args0[] = {luawt_typeToStr<WCompositeWidget>(), "char const *", "char const *", NULL};
+static const char* const* const luawt_WCompositeWidget_setJavaScriptMember_args[] = {WCompositeWidget_setJavaScriptMember_args0, NULL};
+
+int luawt_WCompositeWidget_setJavaScriptMember(lua_State* L) {
+    int index = luawt_getSuitableArgsGroup(L, luawt_WCompositeWidget_setJavaScriptMember_args);
+    WCompositeWidget* self = luawt_checkFromLua<WCompositeWidget>(L, 1);
+    if (index == 0) {
+    char const * raw2 = lua_tostring(L, 2);
+    std::string name = std::string(raw2);
+    char const * raw3 = lua_tostring(L, 3);
+    std::string value = std::string(raw3);
+    self->setJavaScriptMember(name, value);
+    return 0;
+    
+    } else {
+        return luaL_error(L, "Wrong arguments for WCompositeWidget.setJavaScriptMember");
     }
 }
 
@@ -589,22 +917,20 @@ int luawt_WCompositeWidget_refresh(lua_State* L) {
     }
 }
 
-static const char* WCompositeWidget_setJavaScriptMember_args0[] = {luawt_typeToStr<WCompositeWidget>(), "char const *", "char const *", NULL};
-static const char* const* const luawt_WCompositeWidget_setJavaScriptMember_args[] = {WCompositeWidget_setJavaScriptMember_args0, NULL};
+static const char* WCompositeWidget_setStyleClass_args0[] = {luawt_typeToStr<WCompositeWidget>(), "char const *", NULL};
+static const char* const* const luawt_WCompositeWidget_setStyleClass_args[] = {WCompositeWidget_setStyleClass_args0, NULL};
 
-int luawt_WCompositeWidget_setJavaScriptMember(lua_State* L) {
-    int index = luawt_getSuitableArgsGroup(L, luawt_WCompositeWidget_setJavaScriptMember_args);
+int luawt_WCompositeWidget_setStyleClass(lua_State* L) {
+    int index = luawt_getSuitableArgsGroup(L, luawt_WCompositeWidget_setStyleClass_args);
     WCompositeWidget* self = luawt_checkFromLua<WCompositeWidget>(L, 1);
     if (index == 0) {
     char const * raw2 = lua_tostring(L, 2);
-    std::string name = std::string(raw2);
-    char const * raw3 = lua_tostring(L, 3);
-    std::string value = std::string(raw3);
-    self->setJavaScriptMember(name, value);
+    Wt::WString styleClass = Wt::WString(raw2);
+    self->setStyleClass(styleClass);
     return 0;
     
     } else {
-        return luaL_error(L, "Wrong arguments for WCompositeWidget.setJavaScriptMember");
+        return luaL_error(L, "Wrong arguments for WCompositeWidget.setStyleClass");
     }
 }
 
@@ -647,8 +973,8 @@ int luawt_WCompositeWidget_isVisible(lua_State* L) {
     int index = luawt_getSuitableArgsGroup(L, luawt_WCompositeWidget_isVisible_args);
     WCompositeWidget* self = luawt_checkFromLua<WCompositeWidget>(L, 1);
     if (index == 0) {
-    bool result = self->isVisible();
-    lua_pushboolean(L, result);
+    bool l_result = self->isVisible();
+    lua_pushboolean(L, l_result);
     return 1;
 
     } else {
@@ -700,38 +1026,6 @@ int luawt_WCompositeWidget_setAttributeValue(lua_State* L) {
     }
 }
 
-static const char* WCompositeWidget_setTabIndex_args0[] = {luawt_typeToStr<WCompositeWidget>(), "int", NULL};
-static const char* const* const luawt_WCompositeWidget_setTabIndex_args[] = {WCompositeWidget_setTabIndex_args0, NULL};
-
-int luawt_WCompositeWidget_setTabIndex(lua_State* L) {
-    int index = luawt_getSuitableArgsGroup(L, luawt_WCompositeWidget_setTabIndex_args);
-    WCompositeWidget* self = luawt_checkFromLua<WCompositeWidget>(L, 1);
-    if (index == 0) {
-    int index = lua_tointeger(L, 2);
-    self->setTabIndex(index);
-    return 0;
-    
-    } else {
-        return luaL_error(L, "Wrong arguments for WCompositeWidget.setTabIndex");
-    }
-}
-
-static const char* WCompositeWidget_isEnabled_args0[] = {luawt_typeToStr<WCompositeWidget>(), NULL};
-static const char* const* const luawt_WCompositeWidget_isEnabled_args[] = {WCompositeWidget_isEnabled_args0, NULL};
-
-int luawt_WCompositeWidget_isEnabled(lua_State* L) {
-    int index = luawt_getSuitableArgsGroup(L, luawt_WCompositeWidget_isEnabled_args);
-    WCompositeWidget* self = luawt_checkFromLua<WCompositeWidget>(L, 1);
-    if (index == 0) {
-    bool result = self->isEnabled();
-    lua_pushboolean(L, result);
-    return 1;
-
-    } else {
-        return luaL_error(L, "Wrong arguments for WCompositeWidget.isEnabled");
-    }
-}
-
 static const char* WCompositeWidget_callJavaScriptMember_args0[] = {luawt_typeToStr<WCompositeWidget>(), "char const *", "char const *", NULL};
 static const char* const* const luawt_WCompositeWidget_callJavaScriptMember_args[] = {WCompositeWidget_callJavaScriptMember_args0, NULL};
 
@@ -751,13 +1045,79 @@ int luawt_WCompositeWidget_callJavaScriptMember(lua_State* L) {
     }
 }
 
+static const char* WCompositeWidget_margin_args0[] = {luawt_typeToStr<WCompositeWidget>(), "int", NULL};
+static const char* const* const luawt_WCompositeWidget_margin_args[] = {WCompositeWidget_margin_args0, NULL};
+
+int luawt_WCompositeWidget_margin(lua_State* L) {
+    int index = luawt_getSuitableArgsGroup(L, luawt_WCompositeWidget_margin_args);
+    WCompositeWidget* self = luawt_checkFromLua<WCompositeWidget>(L, 1);
+    if (index == 0) {
+    Wt::Side side = static_cast<Wt::Side>(lua_tointeger(L, 2));
+    Wt::WLength l_result = self->margin(side);
+    lua_pushnumber(L, l_result.value());
+    return 1;
+
+    } else {
+        return luaL_error(L, "Wrong arguments for WCompositeWidget.margin");
+    }
+}
+
+static const char* WCompositeWidget_isDisabled_args0[] = {luawt_typeToStr<WCompositeWidget>(), NULL};
+static const char* const* const luawt_WCompositeWidget_isDisabled_args[] = {WCompositeWidget_isDisabled_args0, NULL};
+
+int luawt_WCompositeWidget_isDisabled(lua_State* L) {
+    int index = luawt_getSuitableArgsGroup(L, luawt_WCompositeWidget_isDisabled_args);
+    WCompositeWidget* self = luawt_checkFromLua<WCompositeWidget>(L, 1);
+    if (index == 0) {
+    bool l_result = self->isDisabled();
+    lua_pushboolean(L, l_result);
+    return 1;
+
+    } else {
+        return luaL_error(L, "Wrong arguments for WCompositeWidget.isDisabled");
+    }
+}
+
+static const char* WCompositeWidget_isEnabled_args0[] = {luawt_typeToStr<WCompositeWidget>(), NULL};
+static const char* const* const luawt_WCompositeWidget_isEnabled_args[] = {WCompositeWidget_isEnabled_args0, NULL};
+
+int luawt_WCompositeWidget_isEnabled(lua_State* L) {
+    int index = luawt_getSuitableArgsGroup(L, luawt_WCompositeWidget_isEnabled_args);
+    WCompositeWidget* self = luawt_checkFromLua<WCompositeWidget>(L, 1);
+    if (index == 0) {
+    bool l_result = self->isEnabled();
+    lua_pushboolean(L, l_result);
+    return 1;
+
+    } else {
+        return luaL_error(L, "Wrong arguments for WCompositeWidget.isEnabled");
+    }
+}
+
 
 static const luaL_Reg luawt_WCompositeWidget_methods[] = {
     METHOD(WCompositeWidget, id),
     METHOD(WCompositeWidget, setPositionScheme),
     METHOD(WCompositeWidget, positionScheme),
+    METHOD(WCompositeWidget, setOffsets),
+    METHOD(WCompositeWidget, offset),
+    METHOD(WCompositeWidget, resize),
+    METHOD(WCompositeWidget, width),
+    METHOD(WCompositeWidget, height),
+    METHOD(WCompositeWidget, setMinimumSize),
+    METHOD(WCompositeWidget, minimumWidth),
+    METHOD(WCompositeWidget, minimumHeight),
+    METHOD(WCompositeWidget, setMaximumSize),
+    METHOD(WCompositeWidget, maximumWidth),
+    METHOD(WCompositeWidget, maximumHeight),
+    METHOD(WCompositeWidget, setLineHeight),
+    METHOD(WCompositeWidget, lineHeight),
     METHOD(WCompositeWidget, setFloatSide),
     METHOD(WCompositeWidget, floatSide),
+    METHOD(WCompositeWidget, setClearSides),
+    METHOD(WCompositeWidget, clearSides),
+    METHOD(WCompositeWidget, setMargin),
+    METHOD(WCompositeWidget, margin),
     METHOD(WCompositeWidget, setHiddenKeepsGeometry),
     METHOD(WCompositeWidget, hiddenKeepsGeometry),
     METHOD(WCompositeWidget, isHidden),
@@ -774,7 +1134,9 @@ static const luaL_Reg luawt_WCompositeWidget_methods[] = {
     METHOD(WCompositeWidget, addStyleClass),
     METHOD(WCompositeWidget, removeStyleClass),
     METHOD(WCompositeWidget, hasStyleClass),
+    METHOD(WCompositeWidget, setVerticalAlignment),
     METHOD(WCompositeWidget, verticalAlignment),
+    METHOD(WCompositeWidget, verticalAlignmentLength),
     METHOD(WCompositeWidget, webWidget),
     METHOD(WCompositeWidget, setToolTip),
     METHOD(WCompositeWidget, toolTip),

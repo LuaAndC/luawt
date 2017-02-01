@@ -12,15 +12,15 @@ static const char* const* const luawt_WDefaultLoadingIndicator_make_args[] = {WD
 int luawt_WDefaultLoadingIndicator_make(lua_State* L) {
     int index = luawt_getSuitableArgsGroup(L, luawt_WDefaultLoadingIndicator_make_args);
     if (index == 0) {
-    WDefaultLoadingIndicator * result = new WDefaultLoadingIndicator();
+    WDefaultLoadingIndicator * l_result = new WDefaultLoadingIndicator();
     MyApplication* app = MyApplication::instance();
     if (!app) {
-        delete result;
+        delete l_result;
         throw std::logic_error("No WApplication when creating WDefaultLoadingIndicator");
     }
-    app->root()->addWidget(result);
+    app->root()->addWidget(l_result);
     
-    luawt_toLua(L, result);
+    luawt_toLua(L, l_result);
     return 1;
 
     } else {
@@ -35,8 +35,8 @@ int luawt_WDefaultLoadingIndicator_widget(lua_State* L) {
     int index = luawt_getSuitableArgsGroup(L, luawt_WDefaultLoadingIndicator_widget_args);
     WDefaultLoadingIndicator* self = luawt_checkFromLua<WDefaultLoadingIndicator>(L, 1);
     if (index == 0) {
-    Wt::WWidget * result = self->widget();
-    luawt_toLua(L, result);
+    Wt::WWidget * l_result = self->widget();
+    luawt_toLua(L, l_result);
     return 1;
 
     } else {
