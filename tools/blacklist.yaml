@@ -53,6 +53,13 @@ WDateEdit:
 WDatePicker:
   methods:
   - popupWidget
+WDialog:
+  methods:
+  - raiseToFront
+  - setAutoFocus
+  signatures:
+  - rejectWhenEscapePressed()
+  - rejectWhenEscapePressed(bool)
 WDoubleSpinBox:
   methods:
   - refresh
@@ -97,6 +104,7 @@ WGLWidget:
   - resizeGL
   - restoringContext
   - setClientSideMouseHandler
+  - setRenderOptions
   - shaderSource
   - uniform1f
   - uniform1i
@@ -130,11 +138,36 @@ WInPlaceEdit:
 WMediaPlayer:
   methods:
   - refresh
+WMessageBox:
+  methods:
+  - buttons
+  - defaultButton
+  - escapeButton
+  - iconImage
+  - setDefaultButton
+  - setEscapeButton
+  - setStandardButtons
+  - standardButtons
+  signatures:
+  - addButton(StandardButton)
+  - addButton(WPushButton*,StandardButton)
+WSuggestionPopup:
+  methods:
+  - currentItem
+  - editRole
+  - setDropDownIconUnfiltered
+  - setEditRole
+WTabWidget:
+  methods:
+  - setOverflow
 WTableCell:
-  whole class: true
+  methods:
+  - WTableCell
+  - isVisible
 WTableView:
   methods:
   - scrollTo
+  - setOverflow
 WTemplate:
   methods:
   - encodeTemplateText
