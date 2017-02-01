@@ -8,6 +8,7 @@ local server = luawt.WServer({
     code = code,
     ip = '0.0.0.0',
     port = 12346,
+    docroot = './examples/',
 })
 server:start()
 server:waitForShutdown()
