@@ -26,8 +26,8 @@ int luawt_WInteractWidget_mouseOverDelay(lua_State* L) {
     int index = luawt_getSuitableArgsGroup(L, luawt_WInteractWidget_mouseOverDelay_args);
     WInteractWidget* self = luawt_checkFromLua<WInteractWidget>(L, 1);
     if (index == 0) {
-    int result = self->mouseOverDelay();
-    lua_pushinteger(L, result);
+    int l_result = self->mouseOverDelay();
+    lua_pushinteger(L, l_result);
     return 1;
 
     } else {
@@ -42,8 +42,8 @@ int luawt_WInteractWidget_isEnabled(lua_State* L) {
     int index = luawt_getSuitableArgsGroup(L, luawt_WInteractWidget_isEnabled_args);
     WInteractWidget* self = luawt_checkFromLua<WInteractWidget>(L, 1);
     if (index == 0) {
-    bool result = self->isEnabled();
-    lua_pushboolean(L, result);
+    bool l_result = self->isEnabled();
+    lua_pushboolean(L, l_result);
     return 1;
 
     } else {

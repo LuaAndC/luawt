@@ -18,15 +18,15 @@ int luawt_WTreeNode_make(lua_State* L) {
     if (index == 0) {
     char const * raw1 = lua_tostring(L, 1);
     Wt::WString labelText = Wt::WString(raw1);
-    WTreeNode * result = new WTreeNode(labelText);
+    WTreeNode * l_result = new WTreeNode(labelText);
     MyApplication* app = MyApplication::instance();
     if (!app) {
-        delete result;
+        delete l_result;
         throw std::logic_error("No WApplication when creating WTreeNode");
     }
-    app->root()->addWidget(result);
+    app->root()->addWidget(l_result);
     
-    luawt_toLua(L, result);
+    luawt_toLua(L, l_result);
     return 1;
 
     } else if (index == 1) {
@@ -34,15 +34,15 @@ int luawt_WTreeNode_make(lua_State* L) {
     Wt::WString labelText = Wt::WString(raw1);
     Wt::WIconPair* labelIcon =
         luawt_checkFromLua<Wt::WIconPair>(L, 2);
-    WTreeNode * result = new WTreeNode(labelText, labelIcon);
+    WTreeNode * l_result = new WTreeNode(labelText, labelIcon);
     MyApplication* app = MyApplication::instance();
     if (!app) {
-        delete result;
+        delete l_result;
         throw std::logic_error("No WApplication when creating WTreeNode");
     }
-    app->root()->addWidget(result);
+    app->root()->addWidget(l_result);
     
-    luawt_toLua(L, result);
+    luawt_toLua(L, l_result);
     return 1;
 
     } else if (index == 2) {
@@ -52,15 +52,15 @@ int luawt_WTreeNode_make(lua_State* L) {
         luawt_checkFromLua<Wt::WIconPair>(L, 2);
     Wt::WTreeNode* parentNode =
         luawt_checkFromLua<Wt::WTreeNode>(L, 3);
-    WTreeNode * result = new WTreeNode(labelText, labelIcon, parentNode);
+    WTreeNode * l_result = new WTreeNode(labelText, labelIcon, parentNode);
     MyApplication* app = MyApplication::instance();
     if (!app) {
-        delete result;
+        delete l_result;
         throw std::logic_error("No WApplication when creating WTreeNode");
     }
-    app->root()->addWidget(result);
+    app->root()->addWidget(l_result);
     
-    luawt_toLua(L, result);
+    luawt_toLua(L, l_result);
     return 1;
 
     } else {
@@ -91,8 +91,8 @@ int luawt_WTreeNode_isSelectable(lua_State* L) {
     int index = luawt_getSuitableArgsGroup(L, luawt_WTreeNode_isSelectable_args);
     WTreeNode* self = luawt_checkFromLua<WTreeNode>(L, 1);
     if (index == 0) {
-    bool result = self->isSelectable();
-    lua_pushboolean(L, result);
+    bool l_result = self->isSelectable();
+    lua_pushboolean(L, l_result);
     return 1;
 
     } else {
@@ -140,8 +140,8 @@ int luawt_WTreeNode_hasParent(lua_State* L) {
     int index = luawt_getSuitableArgsGroup(L, luawt_WTreeNode_hasParent_args);
     WTreeNode* self = luawt_checkFromLua<WTreeNode>(L, 1);
     if (index == 0) {
-    bool result = self->hasParent();
-    lua_pushboolean(L, result);
+    bool l_result = self->hasParent();
+    lua_pushboolean(L, l_result);
     return 1;
 
     } else {
@@ -156,8 +156,8 @@ int luawt_WTreeNode_label(lua_State* L) {
     int index = luawt_getSuitableArgsGroup(L, luawt_WTreeNode_label_args);
     WTreeNode* self = luawt_checkFromLua<WTreeNode>(L, 1);
     if (index == 0) {
-    Wt::WText * result = self->label();
-    luawt_toLua(L, result);
+    Wt::WText * l_result = self->label();
+    luawt_toLua(L, l_result);
     return 1;
 
     } else {
@@ -205,8 +205,8 @@ int luawt_WTreeNode_childCountPolicy(lua_State* L) {
     int index = luawt_getSuitableArgsGroup(L, luawt_WTreeNode_childCountPolicy_args);
     WTreeNode* self = luawt_checkFromLua<WTreeNode>(L, 1);
     if (index == 0) {
-    Wt::WTreeNode::ChildCountPolicy result = self->childCountPolicy();
-    lua_pushinteger(L, result);
+    Wt::WTreeNode::ChildCountPolicy l_result = self->childCountPolicy();
+    lua_pushinteger(L, l_result);
     return 1;
 
     } else {
@@ -270,8 +270,8 @@ int luawt_WTreeNode_labelIcon(lua_State* L) {
     int index = luawt_getSuitableArgsGroup(L, luawt_WTreeNode_labelIcon_args);
     WTreeNode* self = luawt_checkFromLua<WTreeNode>(L, 1);
     if (index == 0) {
-    Wt::WIconPair * result = self->labelIcon();
-    luawt_toLua(L, result);
+    Wt::WIconPair * l_result = self->labelIcon();
+    luawt_toLua(L, l_result);
     return 1;
 
     } else {
@@ -286,8 +286,8 @@ int luawt_WTreeNode_displayedChildCount(lua_State* L) {
     int index = luawt_getSuitableArgsGroup(L, luawt_WTreeNode_displayedChildCount_args);
     WTreeNode* self = luawt_checkFromLua<WTreeNode>(L, 1);
     if (index == 0) {
-    int result = self->displayedChildCount();
-    lua_pushinteger(L, result);
+    int l_result = self->displayedChildCount();
+    lua_pushinteger(L, l_result);
     return 1;
 
     } else {
@@ -349,8 +349,8 @@ int luawt_WTreeNode_isExpanded(lua_State* L) {
     int index = luawt_getSuitableArgsGroup(L, luawt_WTreeNode_isExpanded_args);
     WTreeNode* self = luawt_checkFromLua<WTreeNode>(L, 1);
     if (index == 0) {
-    bool result = self->isExpanded();
-    lua_pushboolean(L, result);
+    bool l_result = self->isExpanded();
+    lua_pushboolean(L, l_result);
     return 1;
 
     } else {
@@ -382,8 +382,8 @@ int luawt_WTreeNode_tree(lua_State* L) {
     int index = luawt_getSuitableArgsGroup(L, luawt_WTreeNode_tree_args);
     WTreeNode* self = luawt_checkFromLua<WTreeNode>(L, 1);
     if (index == 0) {
-    Wt::WTree * result = self->tree();
-    luawt_toLua(L, result);
+    Wt::WTree * l_result = self->tree();
+    luawt_toLua(L, l_result);
     return 1;
 
     } else {
@@ -398,8 +398,8 @@ int luawt_WTreeNode_parentNode(lua_State* L) {
     int index = luawt_getSuitableArgsGroup(L, luawt_WTreeNode_parentNode_args);
     WTreeNode* self = luawt_checkFromLua<WTreeNode>(L, 1);
     if (index == 0) {
-    Wt::WTreeNode * result = self->parentNode();
-    luawt_toLua(L, result);
+    Wt::WTreeNode * l_result = self->parentNode();
+    luawt_toLua(L, l_result);
     return 1;
 
     } else {

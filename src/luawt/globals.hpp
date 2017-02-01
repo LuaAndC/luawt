@@ -1,5 +1,5 @@
 /* luawt, Lua bindings for Wt
- * Copyright (c) 2015-2016 Pavel Dolgov and Boris Nagaev
+ * Copyright (c) 2015-2017 Pavel Dolgov and Boris Nagaev
  *
  * See the LICENSE file for terms of use.
  */
@@ -551,6 +551,7 @@ void luawt_WAbstractSpinBox(lua_State* L);
 void luawt_WAbstractToggleButton(lua_State* L);
 void luawt_WAnchor(lua_State* L);
 void luawt_WAudio(lua_State* L);
+void luawt_WBreak(lua_State* L);
 void luawt_WCalendar(lua_State* L);
 void luawt_WCheckBox(lua_State* L);
 void luawt_WComboBox(lua_State* L);
@@ -559,6 +560,7 @@ void luawt_WContainerWidget(lua_State* L);
 void luawt_WDateEdit(lua_State* L);
 void luawt_WDatePicker(lua_State* L);
 void luawt_WDefaultLoadingIndicator(lua_State* L);
+void luawt_WDialog(lua_State* L);
 void luawt_WDoubleSpinBox(lua_State* L);
 void luawt_WEnvironment(lua_State* L);
 void luawt_WFileUpload(lua_State* L);
@@ -576,21 +578,26 @@ void luawt_WLineEdit(lua_State* L);
 void luawt_WMediaPlayer(lua_State* L);
 void luawt_WMenu(lua_State* L);
 void luawt_WMenuItem(lua_State* L);
+void luawt_WMessageBox(lua_State* L);
 void luawt_WNavigationBar(lua_State* L);
 void luawt_WOverlayLoadingIndicator(lua_State* L);
 void luawt_WPaintedWidget(lua_State* L);
 void luawt_WPanel(lua_State* L);
 void luawt_WPopupMenu(lua_State* L);
+void luawt_WPopupWidget(lua_State* L);
 void luawt_WProgressBar(lua_State* L);
 void luawt_WPushButton(lua_State* L);
+void luawt_WRadioButton(lua_State* L);
 void luawt_WScrollArea(lua_State* L);
 void luawt_WSelectionBox(lua_State* L);
 void luawt_WSlider(lua_State* L);
 void luawt_WSpinBox(lua_State* L);
 void luawt_WSplitButton(lua_State* L);
 void luawt_WStackedWidget(lua_State* L);
+void luawt_WSuggestionPopup(lua_State* L);
 void luawt_WTabWidget(lua_State* L);
 void luawt_WTable(lua_State* L);
+void luawt_WTableCell(lua_State* L);
 void luawt_WTableView(lua_State* L);
 void luawt_WTemplate(lua_State* L);
 #ifdef LUAWTEST
@@ -598,9 +605,11 @@ void luawt_WTestEnvironment(lua_State* L);
 #else
 void luawt_WServer(lua_State* L);
 #endif
+void luawt_WTemplateFormView(lua_State* L);
 void luawt_WText(lua_State* L);
 void luawt_WTextArea(lua_State* L);
 void luawt_WTextEdit(lua_State* L);
+void luawt_WTimerWidget(lua_State* L);
 void luawt_WToolBar(lua_State* L);
 void luawt_WTree(lua_State* L);
 void luawt_WTreeNode(lua_State* L);

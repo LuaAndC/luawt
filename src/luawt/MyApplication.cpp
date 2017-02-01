@@ -3,6 +3,7 @@
 #include <Wt/WWidget>
 #include <Wt/WApplication>
 #include <Wt/WContainerWidget>
+#include <Wt/WLink>
 #include <Wt/WString>
 
 #include "globals.hpp"
@@ -50,8 +51,8 @@ int luawt_MyApplication_requireJQuery(lua_State* L) {
     if (index == 0) {
     char const * raw2 = lua_tostring(L, 2);
     std::string url = std::string(raw2);
-    bool result = self->requireJQuery(url);
-    lua_pushboolean(L, result);
+    bool l_result = self->requireJQuery(url);
+    lua_pushboolean(L, l_result);
     return 1;
 
     } else {
@@ -68,8 +69,8 @@ int luawt_MyApplication_makeAbsoluteUrl(lua_State* L) {
     if (index == 0) {
     char const * raw2 = lua_tostring(L, 2);
     std::string url = std::string(raw2);
-    std::string result = self->makeAbsoluteUrl(url);
-    lua_pushstring(L, result.c_str());
+    std::string l_result = self->makeAbsoluteUrl(url);
+    lua_pushstring(L, l_result.c_str());
     return 1;
 
     } else {
@@ -84,8 +85,8 @@ int luawt_MyApplication_bodyClass(lua_State* L) {
     int index = luawt_getSuitableArgsGroup(L, luawt_MyApplication_bodyClass_args);
     MyApplication* self = luawt_checkFromLua<MyApplication>(L, 1);
     if (index == 0) {
-    std::string result = self->bodyClass();
-    lua_pushstring(L, result.c_str());
+    std::string l_result = self->bodyClass();
+    lua_pushstring(L, l_result.c_str());
     return 1;
 
     } else {
@@ -189,8 +190,8 @@ int luawt_MyApplication_docType(lua_State* L) {
     int index = luawt_getSuitableArgsGroup(L, luawt_MyApplication_docType_args);
     MyApplication* self = luawt_checkFromLua<MyApplication>(L, 1);
     if (index == 0) {
-    std::string result = self->docType();
-    lua_pushstring(L, result.c_str());
+    std::string l_result = self->docType();
+    lua_pushstring(L, l_result.c_str());
     return 1;
 
     } else {
@@ -205,8 +206,8 @@ int luawt_MyApplication_isConnected(lua_State* L) {
     int index = luawt_getSuitableArgsGroup(L, luawt_MyApplication_isConnected_args);
     MyApplication* self = luawt_checkFromLua<MyApplication>(L, 1);
     if (index == 0) {
-    bool result = self->isConnected();
-    lua_pushboolean(L, result);
+    bool l_result = self->isConnected();
+    lua_pushboolean(L, l_result);
     return 1;
 
     } else {
@@ -246,8 +247,8 @@ int luawt_MyApplication_domRoot(lua_State* L) {
     int index = luawt_getSuitableArgsGroup(L, luawt_MyApplication_domRoot_args);
     MyApplication* self = luawt_checkFromLua<MyApplication>(L, 1);
     if (index == 0) {
-    Wt::WContainerWidget * result = self->domRoot();
-    luawt_toLua(L, result);
+    Wt::WContainerWidget * l_result = self->domRoot();
+    luawt_toLua(L, l_result);
     return 1;
 
     } else {
@@ -262,8 +263,8 @@ int luawt_MyApplication_maximumRequestSize(lua_State* L) {
     int index = luawt_getSuitableArgsGroup(L, luawt_MyApplication_maximumRequestSize_args);
     MyApplication* self = luawt_checkFromLua<MyApplication>(L, 1);
     if (index == 0) {
-    int64_t result = self->maximumRequestSize();
-    lua_pushinteger(L, result);
+    int64_t l_result = self->maximumRequestSize();
+    lua_pushinteger(L, l_result);
     return 1;
 
     } else {
@@ -278,8 +279,8 @@ int luawt_MyApplication_internalPathValid(lua_State* L) {
     int index = luawt_getSuitableArgsGroup(L, luawt_MyApplication_internalPathValid_args);
     MyApplication* self = luawt_checkFromLua<MyApplication>(L, 1);
     if (index == 0) {
-    bool result = self->internalPathValid();
-    lua_pushboolean(L, result);
+    bool l_result = self->internalPathValid();
+    lua_pushboolean(L, l_result);
     return 1;
 
     } else {
@@ -294,8 +295,8 @@ int luawt_MyApplication_relativeResourcesUrl(lua_State* L) {
     int index = luawt_getSuitableArgsGroup(L, luawt_MyApplication_relativeResourcesUrl_args);
     MyApplication* self = luawt_checkFromLua<MyApplication>(L, 1);
     if (index == 0) {
-    std::string result = self->relativeResourcesUrl();
-    lua_pushstring(L, result.c_str());
+    std::string l_result = self->relativeResourcesUrl();
+    lua_pushstring(L, l_result.c_str());
     return 1;
 
     } else {
@@ -327,8 +328,8 @@ int luawt_MyApplication_internalPathDefaultValid(lua_State* L) {
     int index = luawt_getSuitableArgsGroup(L, luawt_MyApplication_internalPathDefaultValid_args);
     MyApplication* self = luawt_checkFromLua<MyApplication>(L, 1);
     if (index == 0) {
-    bool result = self->internalPathDefaultValid();
-    lua_pushboolean(L, result);
+    bool l_result = self->internalPathDefaultValid();
+    lua_pushboolean(L, l_result);
     return 1;
 
     } else {
@@ -343,8 +344,8 @@ int luawt_MyApplication_ajaxMethod(lua_State* L) {
     int index = luawt_getSuitableArgsGroup(L, luawt_MyApplication_ajaxMethod_args);
     MyApplication* self = luawt_checkFromLua<MyApplication>(L, 1);
     if (index == 0) {
-    Wt::WApplication::AjaxMethod result = self->ajaxMethod();
-    lua_pushinteger(L, result);
+    Wt::WApplication::AjaxMethod l_result = self->ajaxMethod();
+    lua_pushinteger(L, l_result);
     return 1;
 
     } else {
@@ -361,8 +362,8 @@ int luawt_MyApplication_internalPathMatches(lua_State* L) {
     if (index == 0) {
     char const * raw2 = lua_tostring(L, 2);
     std::string path = std::string(raw2);
-    bool result = self->internalPathMatches(path);
-    lua_pushboolean(L, result);
+    bool l_result = self->internalPathMatches(path);
+    lua_pushboolean(L, l_result);
     return 1;
 
     } else {
@@ -533,8 +534,8 @@ int luawt_MyApplication_layoutDirection(lua_State* L) {
     int index = luawt_getSuitableArgsGroup(L, luawt_MyApplication_layoutDirection_args);
     MyApplication* self = luawt_checkFromLua<MyApplication>(L, 1);
     if (index == 0) {
-    Wt::LayoutDirection result = self->layoutDirection();
-    lua_pushinteger(L, result);
+    Wt::LayoutDirection l_result = self->layoutDirection();
+    lua_pushinteger(L, l_result);
     return 1;
 
     } else {
@@ -549,8 +550,8 @@ int luawt_MyApplication_title(lua_State* L) {
     int index = luawt_getSuitableArgsGroup(L, luawt_MyApplication_title_args);
     MyApplication* self = luawt_checkFromLua<MyApplication>(L, 1);
     if (index == 0) {
-    Wt::WString const & result = self->title();
-    lua_pushstring(L, result.toUTF8().c_str());
+    Wt::WString const & l_result = self->title();
+    lua_pushstring(L, l_result.toUTF8().c_str());
     return 1;
 
     } else {
@@ -565,8 +566,8 @@ int luawt_MyApplication_onePixelGifUrl(lua_State* L) {
     int index = luawt_getSuitableArgsGroup(L, luawt_MyApplication_onePixelGifUrl_args);
     MyApplication* self = luawt_checkFromLua<MyApplication>(L, 1);
     if (index == 0) {
-    std::string result = self->onePixelGifUrl();
-    lua_pushstring(L, result.c_str());
+    std::string l_result = self->onePixelGifUrl();
+    lua_pushstring(L, l_result.c_str());
     return 1;
 
     } else {
@@ -581,8 +582,8 @@ int luawt_MyApplication_sessionId(lua_State* L) {
     int index = luawt_getSuitableArgsGroup(L, luawt_MyApplication_sessionId_args);
     MyApplication* self = luawt_checkFromLua<MyApplication>(L, 1);
     if (index == 0) {
-    std::string result = self->sessionId();
-    lua_pushstring(L, result.c_str());
+    std::string l_result = self->sessionId();
+    lua_pushstring(L, l_result.c_str());
     return 1;
 
     } else {
@@ -616,8 +617,8 @@ int luawt_MyApplication_javaScriptClass(lua_State* L) {
     int index = luawt_getSuitableArgsGroup(L, luawt_MyApplication_javaScriptClass_args);
     MyApplication* self = luawt_checkFromLua<MyApplication>(L, 1);
     if (index == 0) {
-    std::string result = self->javaScriptClass();
-    lua_pushstring(L, result.c_str());
+    std::string l_result = self->javaScriptClass();
+    lua_pushstring(L, l_result.c_str());
     return 1;
 
     } else {
@@ -754,6 +755,43 @@ int luawt_MyApplication_deferRendering(lua_State* L) {
     }
 }
 
+static const char* MyApplication_useStyleSheet_args0[] = {luawt_typeToStr<MyApplication>(), "char const *", NULL};
+static const char* MyApplication_useStyleSheet_args1[] = {luawt_typeToStr<MyApplication>(), "char const *", "char const *", NULL};
+static const char* MyApplication_useStyleSheet_args2[] = {luawt_typeToStr<MyApplication>(), "char const *", "char const *", "char const *", NULL};
+static const char* const* const luawt_MyApplication_useStyleSheet_args[] = {MyApplication_useStyleSheet_args0, MyApplication_useStyleSheet_args1, MyApplication_useStyleSheet_args2, NULL};
+
+int luawt_MyApplication_useStyleSheet(lua_State* L) {
+    int index = luawt_getSuitableArgsGroup(L, luawt_MyApplication_useStyleSheet_args);
+    MyApplication* self = luawt_checkFromLua<MyApplication>(L, 1);
+    if (index == 0) {
+    char const * raw2 = lua_tostring(L, 2);
+    Wt::WLink link = Wt::WLink(raw2);
+    self->useStyleSheet(link);
+    return 0;
+    
+    } else if (index == 1) {
+    char const * raw2 = lua_tostring(L, 2);
+    Wt::WLink link = Wt::WLink(raw2);
+    char const * raw3 = lua_tostring(L, 3);
+    std::string media = std::string(raw3);
+    self->useStyleSheet(link, media);
+    return 0;
+    
+    } else if (index == 2) {
+    char const * raw2 = lua_tostring(L, 2);
+    Wt::WLink link = Wt::WLink(raw2);
+    char const * raw3 = lua_tostring(L, 3);
+    std::string condition = std::string(raw3);
+    char const * raw4 = lua_tostring(L, 4);
+    std::string media = std::string(raw4);
+    self->useStyleSheet(link, condition, media);
+    return 0;
+    
+    } else {
+        return luaL_error(L, "Wrong arguments for MyApplication.useStyleSheet");
+    }
+}
+
 static const char* MyApplication_bookmarkUrl_args0[] = {luawt_typeToStr<MyApplication>(), NULL};
 static const char* MyApplication_bookmarkUrl_args1[] = {luawt_typeToStr<MyApplication>(), "char const *", NULL};
 static const char* const* const luawt_MyApplication_bookmarkUrl_args[] = {MyApplication_bookmarkUrl_args0, MyApplication_bookmarkUrl_args1, NULL};
@@ -762,15 +800,15 @@ int luawt_MyApplication_bookmarkUrl(lua_State* L) {
     int index = luawt_getSuitableArgsGroup(L, luawt_MyApplication_bookmarkUrl_args);
     MyApplication* self = luawt_checkFromLua<MyApplication>(L, 1);
     if (index == 0) {
-    std::string result = self->bookmarkUrl();
-    lua_pushstring(L, result.c_str());
+    std::string l_result = self->bookmarkUrl();
+    lua_pushstring(L, l_result.c_str());
     return 1;
 
     } else if (index == 1) {
     char const * raw2 = lua_tostring(L, 2);
     std::string internalPath = std::string(raw2);
-    std::string result = self->bookmarkUrl(internalPath);
-    lua_pushstring(L, result.c_str());
+    std::string l_result = self->bookmarkUrl(internalPath);
+    lua_pushstring(L, l_result.c_str());
     return 1;
 
     } else {
@@ -787,8 +825,8 @@ int luawt_MyApplication_findWidget(lua_State* L) {
     if (index == 0) {
     char const * raw2 = lua_tostring(L, 2);
     std::string name = std::string(raw2);
-    Wt::WWidget * result = self->findWidget(name);
-    luawt_toLua(L, result);
+    Wt::WWidget * l_result = self->findWidget(name);
+    luawt_toLua(L, l_result);
     return 1;
 
     } else {
@@ -805,8 +843,8 @@ int luawt_MyApplication_resolveRelativeUrl(lua_State* L) {
     if (index == 0) {
     char const * raw2 = lua_tostring(L, 2);
     std::string url = std::string(raw2);
-    std::string result = self->resolveRelativeUrl(url);
-    lua_pushstring(L, result.c_str());
+    std::string l_result = self->resolveRelativeUrl(url);
+    lua_pushstring(L, l_result.c_str());
     return 1;
 
     } else {
@@ -821,8 +859,8 @@ int luawt_MyApplication_resourcesUrl(lua_State* L) {
     int index = luawt_getSuitableArgsGroup(L, luawt_MyApplication_resourcesUrl_args);
     MyApplication* self = luawt_checkFromLua<MyApplication>(L, 1);
     if (index == 0) {
-    std::string result = self->resourcesUrl();
-    lua_pushstring(L, result.c_str());
+    std::string l_result = self->resourcesUrl();
+    lua_pushstring(L, l_result.c_str());
     return 1;
 
     } else {
@@ -901,8 +939,8 @@ int luawt_MyApplication_require(lua_State* L) {
     if (index == 0) {
     char const * raw2 = lua_tostring(L, 2);
     std::string url = std::string(raw2);
-    bool result = self->require(url);
-    lua_pushboolean(L, result);
+    bool l_result = self->require(url);
+    lua_pushboolean(L, l_result);
     return 1;
 
     } else if (index == 1) {
@@ -910,8 +948,8 @@ int luawt_MyApplication_require(lua_State* L) {
     std::string url = std::string(raw2);
     char const * raw3 = lua_tostring(L, 3);
     std::string symbol = std::string(raw3);
-    bool result = self->require(url, symbol);
-    lua_pushboolean(L, result);
+    bool l_result = self->require(url, symbol);
+    lua_pushboolean(L, l_result);
     return 1;
 
     } else {
@@ -947,8 +985,8 @@ int luawt_MyApplication_pathMatches(lua_State* L) {
     std::string path = std::string(raw2);
     char const * raw3 = lua_tostring(L, 3);
     std::string query = std::string(raw3);
-    bool result = self->pathMatches(path, query);
-    lua_pushboolean(L, result);
+    bool l_result = self->pathMatches(path, query);
+    lua_pushboolean(L, l_result);
     return 1;
 
     } else {
@@ -1024,8 +1062,8 @@ int luawt_MyApplication_encodeUntrustedUrl(lua_State* L) {
     if (index == 0) {
     char const * raw2 = lua_tostring(L, 2);
     std::string url = std::string(raw2);
-    std::string result = self->encodeUntrustedUrl(url);
-    lua_pushstring(L, result.c_str());
+    std::string l_result = self->encodeUntrustedUrl(url);
+    lua_pushstring(L, l_result.c_str());
     return 1;
 
     } else {
@@ -1055,8 +1093,8 @@ int luawt_MyApplication_hasQuit(lua_State* L) {
     int index = luawt_getSuitableArgsGroup(L, luawt_MyApplication_hasQuit_args);
     MyApplication* self = luawt_checkFromLua<MyApplication>(L, 1);
     if (index == 0) {
-    bool result = self->hasQuit();
-    lua_pushboolean(L, result);
+    bool l_result = self->hasQuit();
+    lua_pushboolean(L, l_result);
     return 1;
 
     } else {
@@ -1073,8 +1111,8 @@ int luawt_MyApplication_internalPathNextPart(lua_State* L) {
     if (index == 0) {
     char const * raw2 = lua_tostring(L, 2);
     std::string path = std::string(raw2);
-    std::string result = self->internalPathNextPart(path);
-    lua_pushstring(L, result.c_str());
+    std::string l_result = self->internalPathNextPart(path);
+    lua_pushstring(L, l_result.c_str());
     return 1;
 
     } else {
@@ -1196,8 +1234,8 @@ int luawt_MyApplication_internalSubPath(lua_State* L) {
     if (index == 0) {
     char const * raw2 = lua_tostring(L, 2);
     std::string path = std::string(raw2);
-    std::string result = self->internalSubPath(path);
-    lua_pushstring(L, result.c_str());
+    std::string l_result = self->internalSubPath(path);
+    lua_pushstring(L, l_result.c_str());
     return 1;
 
     } else {
@@ -1213,15 +1251,15 @@ int luawt_MyApplication_url(lua_State* L) {
     int index = luawt_getSuitableArgsGroup(L, luawt_MyApplication_url_args);
     MyApplication* self = luawt_checkFromLua<MyApplication>(L, 1);
     if (index == 0) {
-    std::string result = self->url();
-    lua_pushstring(L, result.c_str());
+    std::string l_result = self->url();
+    lua_pushstring(L, l_result.c_str());
     return 1;
 
     } else if (index == 1) {
     char const * raw2 = lua_tostring(L, 2);
     std::string internalPath = std::string(raw2);
-    std::string result = self->url(internalPath);
-    lua_pushstring(L, result.c_str());
+    std::string l_result = self->url(internalPath);
+    lua_pushstring(L, l_result.c_str());
     return 1;
 
     } else {
@@ -1236,8 +1274,8 @@ int luawt_MyApplication_root(lua_State* L) {
     int index = luawt_getSuitableArgsGroup(L, luawt_MyApplication_root_args);
     MyApplication* self = luawt_checkFromLua<MyApplication>(L, 1);
     if (index == 0) {
-    Wt::WContainerWidget * result = self->root();
-    luawt_toLua(L, result);
+    Wt::WContainerWidget * l_result = self->root();
+    luawt_toLua(L, l_result);
     return 1;
 
     } else {
@@ -1252,8 +1290,8 @@ int luawt_MyApplication_appRoot(lua_State* L) {
     int index = luawt_getSuitableArgsGroup(L, luawt_MyApplication_appRoot_args);
     MyApplication* self = luawt_checkFromLua<MyApplication>(L, 1);
     if (index == 0) {
-    std::string result = self->appRoot();
-    lua_pushstring(L, result.c_str());
+    std::string l_result = self->appRoot();
+    lua_pushstring(L, l_result.c_str());
     return 1;
 
     } else {
@@ -1268,8 +1306,8 @@ int luawt_MyApplication_customJQuery(lua_State* L) {
     int index = luawt_getSuitableArgsGroup(L, luawt_MyApplication_customJQuery_args);
     MyApplication* self = luawt_checkFromLua<MyApplication>(L, 1);
     if (index == 0) {
-    bool result = self->customJQuery();
-    lua_pushboolean(L, result);
+    bool l_result = self->customJQuery();
+    lua_pushboolean(L, l_result);
     return 1;
 
     } else {
@@ -1314,8 +1352,8 @@ int luawt_MyApplication_updatesEnabled(lua_State* L) {
     int index = luawt_getSuitableArgsGroup(L, luawt_MyApplication_updatesEnabled_args);
     MyApplication* self = luawt_checkFromLua<MyApplication>(L, 1);
     if (index == 0) {
-    bool result = self->updatesEnabled();
-    lua_pushboolean(L, result);
+    bool l_result = self->updatesEnabled();
+    lua_pushboolean(L, l_result);
     return 1;
 
     } else {
@@ -1346,8 +1384,8 @@ int luawt_MyApplication_internalPath(lua_State* L) {
     int index = luawt_getSuitableArgsGroup(L, luawt_MyApplication_internalPath_args);
     MyApplication* self = luawt_checkFromLua<MyApplication>(L, 1);
     if (index == 0) {
-    std::string result = self->internalPath();
-    lua_pushstring(L, result.c_str());
+    std::string l_result = self->internalPath();
+    lua_pushstring(L, l_result.c_str());
     return 1;
 
     } else {
@@ -1394,8 +1432,8 @@ int luawt_MyApplication_domRoot2(lua_State* L) {
     int index = luawt_getSuitableArgsGroup(L, luawt_MyApplication_domRoot2_args);
     MyApplication* self = luawt_checkFromLua<MyApplication>(L, 1);
     if (index == 0) {
-    Wt::WContainerWidget * result = self->domRoot2();
-    luawt_toLua(L, result);
+    Wt::WContainerWidget * l_result = self->domRoot2();
+    luawt_toLua(L, l_result);
     return 1;
 
     } else {
@@ -1438,8 +1476,8 @@ int luawt_MyApplication_debug(lua_State* L) {
     int index = luawt_getSuitableArgsGroup(L, luawt_MyApplication_debug_args);
     MyApplication* self = luawt_checkFromLua<MyApplication>(L, 1);
     if (index == 0) {
-    bool result = self->debug();
-    lua_pushboolean(L, result);
+    bool l_result = self->debug();
+    lua_pushboolean(L, l_result);
     return 1;
 
     } else {
@@ -1454,8 +1492,8 @@ int luawt_MyApplication_docRoot(lua_State* L) {
     int index = luawt_getSuitableArgsGroup(L, luawt_MyApplication_docRoot_args);
     MyApplication* self = luawt_checkFromLua<MyApplication>(L, 1);
     if (index == 0) {
-    std::string result = self->docRoot();
-    lua_pushstring(L, result.c_str());
+    std::string l_result = self->docRoot();
+    lua_pushstring(L, l_result.c_str());
     return 1;
 
     } else {
@@ -1470,8 +1508,8 @@ int luawt_MyApplication_isQuited(lua_State* L) {
     int index = luawt_getSuitableArgsGroup(L, luawt_MyApplication_isQuited_args);
     MyApplication* self = luawt_checkFromLua<MyApplication>(L, 1);
     if (index == 0) {
-    bool result = self->isQuited();
-    lua_pushboolean(L, result);
+    bool l_result = self->isQuited();
+    lua_pushboolean(L, l_result);
     return 1;
 
     } else {
@@ -1486,8 +1524,8 @@ int luawt_MyApplication_htmlClass(lua_State* L) {
     int index = luawt_getSuitableArgsGroup(L, luawt_MyApplication_htmlClass_args);
     MyApplication* self = luawt_checkFromLua<MyApplication>(L, 1);
     if (index == 0) {
-    std::string result = self->htmlClass();
-    lua_pushstring(L, result.c_str());
+    std::string l_result = self->htmlClass();
+    lua_pushstring(L, l_result.c_str());
     return 1;
 
     } else {
@@ -1502,8 +1540,8 @@ int luawt_MyApplication_closeMessage(lua_State* L) {
     int index = luawt_getSuitableArgsGroup(L, luawt_MyApplication_closeMessage_args);
     MyApplication* self = luawt_checkFromLua<MyApplication>(L, 1);
     if (index == 0) {
-    Wt::WString const & result = self->closeMessage();
-    lua_pushstring(L, result.toUTF8().c_str());
+    Wt::WString const & l_result = self->closeMessage();
+    lua_pushstring(L, l_result.toUTF8().c_str());
     return 1;
 
     } else {
@@ -1520,6 +1558,8 @@ ADD_SIGNAL(globalEscapePressed, MyApplication, Wt::NoClass)
 static const luaL_Reg luawt_MyApplication_methods[] = {
     METHOD(MyApplication, root),
     METHOD(MyApplication, findWidget),
+    METHOD(MyApplication, useStyleSheet),
+    METHOD(MyApplication, useStyleSheet),
     METHOD(MyApplication, setCssTheme),
     METHOD(MyApplication, setLayoutDirection),
     METHOD(MyApplication, layoutDirection),

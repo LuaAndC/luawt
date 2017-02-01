@@ -25,11 +25,15 @@ BUILTIN_TYPES_CONVERTERS = {
 PROBLEMATIC_FROM_BUILTIN_CONVERSIONS = {
     'std::string' : ('std::string', 'char const *'),
     'Wt::WString' : ('Wt::WString', 'char const *'),
+    'Wt::WLink' : ('Wt::WLink', 'char const *'),
+    'Wt::WLength' : ('Wt::WLength', 'double'),
 }
 
 PROBLEMATIC_TO_BUILTIN_CONVERSIONS = {
     'std::string' : ('c_str', 'char const *'),
     'Wt::WString' : ('toUTF8', 'std::string'),
+    'Wt::WLink' : ('url', 'std::string'),
+    'Wt::WLength' : ('value', 'double'),
 }
 
 XML_CACHE = 'src/luawt/xml'
@@ -73,12 +77,18 @@ def loadAdditionalChunk(module_str):
 def isTemplate(method_name, decl_str):
     # Luawt doesn't support C++ templates.
     if pygccxml.declarations.templates.is_instantiation(decl_str):
-        logging.warning(
-            "Its impossible to bind method %s because luawt " +
-            "doesn't support C++ templates",
-            method_name,
-        )
-        return True
+        name = pygccxml.declarations.templates.name(decl_str)
+        temp_args = pygccxml.declarations.templates.args(decl_str)
+        if (len(temp_args) == 1) and (name == 'Wt::WFlags'):
+            # WFlags<enum> is an exception. Treated as enum.
+            addEnumByStr(decl_str, temp_args[0])
+        else:
+            logging.warning(
+                "Its impossible to bind method %s because luawt " +
+                "doesn't support C++ templates",
+                method_name,
+            )
+            return True
     return False
 
 def isConstReference(checked_type):
@@ -190,14 +200,17 @@ def checkReturnType(method_name, raw_return_type, Wt):
     )
     return False
 
+def addEnumByStr(type_str, enum_str):
+    enum_converters = (
+        'static_cast<%s>(lua_tointeger' % enum_str,
+        'lua_pushinteger',
+    )
+    BUILTIN_TYPES_CONVERTERS[type_str] = enum_converters
+
 def addEnum(type_obj):
     if pygccxml.declarations.is_enum(type_obj):
         enum_str = str(clearType(type_obj))
-        enum_converters = (
-            'static_cast<%s>(lua_tointeger' % enum_str,
-            'lua_pushinteger',
-        )
-        BUILTIN_TYPES_CONVERTERS[enum_str] = enum_converters
+        addEnumByStr(enum_str, enum_str)
 
 def getArgType(arg):
     # For compatibility with pygccxml v1.7.1
@@ -207,8 +220,8 @@ def getArgType(arg):
 def checkWtFunction(is_constructor, func, Wt):
     if func.access_type != 'public':
         return False
-    if isTemplate(func.name, func.decl_string):
-        return False
+    #if isTemplate(func.name, func.decl_string):
+    #    return False
     for arg in func.arguments:
         arg_field = getArgType(arg)
         addEnum(arg_field)
@@ -285,6 +298,7 @@ def getMembers(global_namespace, module_name, blacklisted):
     methods = main_class.member_functions(
         function=custom_matcher,
         recursive=False,
+        allow_empty=True,
     ).to_list()
     methods = [
         method
@@ -338,15 +352,16 @@ def getConstructors(global_namespace, module_name, blacklisted):
     constructors = main_class.constructors(
         function=custom_matcher,
         recursive=False,
+        allow_empty=True,
     )
     result = []
     for constructor in constructors:
         if not constructor.is_artificial:
             if not inBlacklist(constructor, blacklisted):
                 result.append(constructor)
-    if result:
-        return result, getConstructorsType(result)
-    raise Exception('Unable to bind any constructors of %s' % module_name)
+    if not result:
+        logging.warning('Unable to bind any constructors of %s' % module_name)
+    return result, getConstructorsType(result)
 
 def isModule(module_str):
     path = '%s/%s' % (INCLUDE_WT, module_str)
@@ -533,10 +548,10 @@ def addWidgetToContainer(module_name):
     frame = r'''
     MyApplication* app = MyApplication::instance();
     if (!app) {
-        delete result;
+        delete l_result;
         throw std::logic_error("No WApplication when creating %s");
     }
-    app->root()->addWidget(result);
+    app->root()->addWidget(l_result);
     '''
     return frame % module_name
 
@@ -544,7 +559,7 @@ def callWtConstructor(return_type, args, module_name):
     call_s = 'new %s(' % module_name
     args_s = getArgsStr(args)
     constructor_s = call_s + args_s + ');'
-    return '%s result = %s' % (return_type, constructor_s)
+    return '%s l_result = %s' % (return_type, constructor_s)
 
 def callWtFunction(return_type, args, method_name):
     call_s = 'self->%s(' % method_name
@@ -553,10 +568,10 @@ def callWtFunction(return_type, args, method_name):
     if return_type == 'void':
         return func_s
     else:
-        return '%s result = %s' % (return_type, func_s)
+        return '%s l_result = %s' % (return_type, func_s)
 
 RETURN_CALLS_TEMPLATE = r'''
-    %s(L, %sresult%s);
+    %s(L, %sl_result%s);
     return 1;
 '''
 

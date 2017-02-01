@@ -19,36 +19,36 @@ static const char* const* const luawt_WLabel_make_args[] = {WLabel_make_args0, W
 int luawt_WLabel_make(lua_State* L) {
     int index = luawt_getSuitableArgsGroup(L, luawt_WLabel_make_args);
     if (index == 0) {
-    WLabel * result = new WLabel();
+    WLabel * l_result = new WLabel();
     MyApplication* app = MyApplication::instance();
     if (!app) {
-        delete result;
+        delete l_result;
         throw std::logic_error("No WApplication when creating WLabel");
     }
-    app->root()->addWidget(result);
+    app->root()->addWidget(l_result);
     
-    luawt_toLua(L, result);
+    luawt_toLua(L, l_result);
     return 1;
 
     } else if (index == 1) {
     Wt::WContainerWidget* parent =
         luawt_checkFromLua<Wt::WContainerWidget>(L, 1);
-    WLabel * result = new WLabel(parent);
-    luawt_toLua(L, result);
+    WLabel * l_result = new WLabel(parent);
+    luawt_toLua(L, l_result);
     return 1;
 
     } else if (index == 2) {
     char const * raw1 = lua_tostring(L, 1);
     Wt::WString text = Wt::WString(raw1);
-    WLabel * result = new WLabel(text);
+    WLabel * l_result = new WLabel(text);
     MyApplication* app = MyApplication::instance();
     if (!app) {
-        delete result;
+        delete l_result;
         throw std::logic_error("No WApplication when creating WLabel");
     }
-    app->root()->addWidget(result);
+    app->root()->addWidget(l_result);
     
-    luawt_toLua(L, result);
+    luawt_toLua(L, l_result);
     return 1;
 
     } else if (index == 3) {
@@ -56,22 +56,22 @@ int luawt_WLabel_make(lua_State* L) {
     Wt::WString text = Wt::WString(raw1);
     Wt::WContainerWidget* parent =
         luawt_checkFromLua<Wt::WContainerWidget>(L, 2);
-    WLabel * result = new WLabel(text, parent);
-    luawt_toLua(L, result);
+    WLabel * l_result = new WLabel(text, parent);
+    luawt_toLua(L, l_result);
     return 1;
 
     } else if (index == 4) {
     Wt::WImage* image =
         luawt_checkFromLua<Wt::WImage>(L, 1);
-    WLabel * result = new WLabel(image);
+    WLabel * l_result = new WLabel(image);
     MyApplication* app = MyApplication::instance();
     if (!app) {
-        delete result;
+        delete l_result;
         throw std::logic_error("No WApplication when creating WLabel");
     }
-    app->root()->addWidget(result);
+    app->root()->addWidget(l_result);
     
-    luawt_toLua(L, result);
+    luawt_toLua(L, l_result);
     return 1;
 
     } else if (index == 5) {
@@ -79,8 +79,8 @@ int luawt_WLabel_make(lua_State* L) {
         luawt_checkFromLua<Wt::WImage>(L, 1);
     Wt::WContainerWidget* parent =
         luawt_checkFromLua<Wt::WContainerWidget>(L, 2);
-    WLabel * result = new WLabel(image, parent);
-    luawt_toLua(L, result);
+    WLabel * l_result = new WLabel(image, parent);
+    luawt_toLua(L, l_result);
     return 1;
 
     } else {
@@ -95,8 +95,8 @@ int luawt_WLabel_buddy(lua_State* L) {
     int index = luawt_getSuitableArgsGroup(L, luawt_WLabel_buddy_args);
     WLabel* self = luawt_checkFromLua<WLabel>(L, 1);
     if (index == 0) {
-    Wt::WFormWidget * result = self->buddy();
-    luawt_toLua(L, result);
+    Wt::WFormWidget * l_result = self->buddy();
+    luawt_toLua(L, l_result);
     return 1;
 
     } else {
@@ -153,8 +153,8 @@ int luawt_WLabel_text(lua_State* L) {
     int index = luawt_getSuitableArgsGroup(L, luawt_WLabel_text_args);
     WLabel* self = luawt_checkFromLua<WLabel>(L, 1);
     if (index == 0) {
-    Wt::WString const & result = self->text();
-    lua_pushstring(L, result.toUTF8().c_str());
+    Wt::WString const & l_result = self->text();
+    lua_pushstring(L, l_result.toUTF8().c_str());
     return 1;
 
     } else {
@@ -186,8 +186,8 @@ int luawt_WLabel_wordWrap(lua_State* L) {
     int index = luawt_getSuitableArgsGroup(L, luawt_WLabel_wordWrap_args);
     WLabel* self = luawt_checkFromLua<WLabel>(L, 1);
     if (index == 0) {
-    bool result = self->wordWrap();
-    lua_pushboolean(L, result);
+    bool l_result = self->wordWrap();
+    lua_pushboolean(L, l_result);
     return 1;
 
     } else {
@@ -202,8 +202,8 @@ int luawt_WLabel_image(lua_State* L) {
     int index = luawt_getSuitableArgsGroup(L, luawt_WLabel_image_args);
     WLabel* self = luawt_checkFromLua<WLabel>(L, 1);
     if (index == 0) {
-    Wt::WImage * result = self->image();
-    luawt_toLua(L, result);
+    Wt::WImage * l_result = self->image();
+    luawt_toLua(L, l_result);
     return 1;
 
     } else {
@@ -234,8 +234,8 @@ int luawt_WLabel_textFormat(lua_State* L) {
     int index = luawt_getSuitableArgsGroup(L, luawt_WLabel_textFormat_args);
     WLabel* self = luawt_checkFromLua<WLabel>(L, 1);
     if (index == 0) {
-    Wt::TextFormat result = self->textFormat();
-    lua_pushinteger(L, result);
+    Wt::TextFormat l_result = self->textFormat();
+    lua_pushinteger(L, l_result);
     return 1;
 
     } else {
@@ -251,8 +251,8 @@ int luawt_WLabel_setTextFormat(lua_State* L) {
     WLabel* self = luawt_checkFromLua<WLabel>(L, 1);
     if (index == 0) {
     Wt::TextFormat format = static_cast<Wt::TextFormat>(lua_tointeger(L, 2));
-    bool result = self->setTextFormat(format);
-    lua_pushboolean(L, result);
+    bool l_result = self->setTextFormat(format);
+    lua_pushboolean(L, l_result);
     return 1;
 
     } else {

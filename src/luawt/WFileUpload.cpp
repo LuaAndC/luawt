@@ -14,22 +14,22 @@ static const char* const* const luawt_WFileUpload_make_args[] = {WFileUpload_mak
 int luawt_WFileUpload_make(lua_State* L) {
     int index = luawt_getSuitableArgsGroup(L, luawt_WFileUpload_make_args);
     if (index == 0) {
-    WFileUpload * result = new WFileUpload();
+    WFileUpload * l_result = new WFileUpload();
     MyApplication* app = MyApplication::instance();
     if (!app) {
-        delete result;
+        delete l_result;
         throw std::logic_error("No WApplication when creating WFileUpload");
     }
-    app->root()->addWidget(result);
+    app->root()->addWidget(l_result);
     
-    luawt_toLua(L, result);
+    luawt_toLua(L, l_result);
     return 1;
 
     } else if (index == 1) {
     Wt::WContainerWidget* parent =
         luawt_checkFromLua<Wt::WContainerWidget>(L, 1);
-    WFileUpload * result = new WFileUpload(parent);
-    luawt_toLua(L, result);
+    WFileUpload * l_result = new WFileUpload(parent);
+    luawt_toLua(L, l_result);
     return 1;
 
     } else {
@@ -44,8 +44,8 @@ int luawt_WFileUpload_clientFileName(lua_State* L) {
     int index = luawt_getSuitableArgsGroup(L, luawt_WFileUpload_clientFileName_args);
     WFileUpload* self = luawt_checkFromLua<WFileUpload>(L, 1);
     if (index == 0) {
-    Wt::WString result = self->clientFileName();
-    lua_pushstring(L, result.toUTF8().c_str());
+    Wt::WString l_result = self->clientFileName();
+    lua_pushstring(L, l_result.toUTF8().c_str());
     return 1;
 
     } else {
@@ -60,8 +60,8 @@ int luawt_WFileUpload_contentDescription(lua_State* L) {
     int index = luawt_getSuitableArgsGroup(L, luawt_WFileUpload_contentDescription_args);
     WFileUpload* self = luawt_checkFromLua<WFileUpload>(L, 1);
     if (index == 0) {
-    Wt::WString result = self->contentDescription();
-    lua_pushstring(L, result.toUTF8().c_str());
+    Wt::WString l_result = self->contentDescription();
+    lua_pushstring(L, l_result.toUTF8().c_str());
     return 1;
 
     } else {
@@ -76,8 +76,8 @@ int luawt_WFileUpload_spoolFileName(lua_State* L) {
     int index = luawt_getSuitableArgsGroup(L, luawt_WFileUpload_spoolFileName_args);
     WFileUpload* self = luawt_checkFromLua<WFileUpload>(L, 1);
     if (index == 0) {
-    std::string result = self->spoolFileName();
-    lua_pushstring(L, result.c_str());
+    std::string l_result = self->spoolFileName();
+    lua_pushstring(L, l_result.c_str());
     return 1;
 
     } else {
@@ -92,8 +92,8 @@ int luawt_WFileUpload_multiple(lua_State* L) {
     int index = luawt_getSuitableArgsGroup(L, luawt_WFileUpload_multiple_args);
     WFileUpload* self = luawt_checkFromLua<WFileUpload>(L, 1);
     if (index == 0) {
-    bool result = self->multiple();
-    lua_pushboolean(L, result);
+    bool l_result = self->multiple();
+    lua_pushboolean(L, l_result);
     return 1;
 
     } else {
@@ -124,8 +124,8 @@ int luawt_WFileUpload_fileTextSize(lua_State* L) {
     int index = luawt_getSuitableArgsGroup(L, luawt_WFileUpload_fileTextSize_args);
     WFileUpload* self = luawt_checkFromLua<WFileUpload>(L, 1);
     if (index == 0) {
-    int result = self->fileTextSize();
-    lua_pushinteger(L, result);
+    int l_result = self->fileTextSize();
+    lua_pushinteger(L, l_result);
     return 1;
 
     } else {
@@ -188,8 +188,8 @@ int luawt_WFileUpload_progressBar(lua_State* L) {
     int index = luawt_getSuitableArgsGroup(L, luawt_WFileUpload_progressBar_args);
     WFileUpload* self = luawt_checkFromLua<WFileUpload>(L, 1);
     if (index == 0) {
-    Wt::WProgressBar * result = self->progressBar();
-    luawt_toLua(L, result);
+    Wt::WProgressBar * l_result = self->progressBar();
+    luawt_toLua(L, l_result);
     return 1;
 
     } else {
@@ -204,8 +204,8 @@ int luawt_WFileUpload_emptyFileName(lua_State* L) {
     int index = luawt_getSuitableArgsGroup(L, luawt_WFileUpload_emptyFileName_args);
     WFileUpload* self = luawt_checkFromLua<WFileUpload>(L, 1);
     if (index == 0) {
-    bool result = self->emptyFileName();
-    lua_pushboolean(L, result);
+    bool l_result = self->emptyFileName();
+    lua_pushboolean(L, l_result);
     return 1;
 
     } else {
@@ -235,8 +235,8 @@ int luawt_WFileUpload_canUpload(lua_State* L) {
     int index = luawt_getSuitableArgsGroup(L, luawt_WFileUpload_canUpload_args);
     WFileUpload* self = luawt_checkFromLua<WFileUpload>(L, 1);
     if (index == 0) {
-    bool result = self->canUpload();
-    lua_pushboolean(L, result);
+    bool l_result = self->canUpload();
+    lua_pushboolean(L, l_result);
     return 1;
 
     } else {
@@ -251,8 +251,8 @@ int luawt_WFileUpload_isUploaded(lua_State* L) {
     int index = luawt_getSuitableArgsGroup(L, luawt_WFileUpload_isUploaded_args);
     WFileUpload* self = luawt_checkFromLua<WFileUpload>(L, 1);
     if (index == 0) {
-    bool result = self->isUploaded();
-    lua_pushboolean(L, result);
+    bool l_result = self->isUploaded();
+    lua_pushboolean(L, l_result);
     return 1;
 
     } else {
@@ -282,8 +282,8 @@ int luawt_WFileUpload_empty(lua_State* L) {
     int index = luawt_getSuitableArgsGroup(L, luawt_WFileUpload_empty_args);
     WFileUpload* self = luawt_checkFromLua<WFileUpload>(L, 1);
     if (index == 0) {
-    bool result = self->empty();
-    lua_pushboolean(L, result);
+    bool l_result = self->empty();
+    lua_pushboolean(L, l_result);
     return 1;
 
     } else {

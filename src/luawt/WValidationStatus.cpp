@@ -19,15 +19,15 @@ int luawt_WValidationStatus_make(lua_State* L) {
     if (index == 0) {
     Wt::WFormWidget* field =
         luawt_checkFromLua<Wt::WFormWidget>(L, 1);
-    WValidationStatus * result = new WValidationStatus(field);
+    WValidationStatus * l_result = new WValidationStatus(field);
     MyApplication* app = MyApplication::instance();
     if (!app) {
-        delete result;
+        delete l_result;
         throw std::logic_error("No WApplication when creating WValidationStatus");
     }
-    app->root()->addWidget(result);
+    app->root()->addWidget(l_result);
     
-    luawt_toLua(L, result);
+    luawt_toLua(L, l_result);
     return 1;
 
     } else if (index == 1) {
@@ -35,15 +35,15 @@ int luawt_WValidationStatus_make(lua_State* L) {
         luawt_checkFromLua<Wt::WFormWidget>(L, 1);
     Wt::WWidget* validStateWidget =
         luawt_checkFromLua<Wt::WWidget>(L, 2);
-    WValidationStatus * result = new WValidationStatus(field, validStateWidget);
+    WValidationStatus * l_result = new WValidationStatus(field, validStateWidget);
     MyApplication* app = MyApplication::instance();
     if (!app) {
-        delete result;
+        delete l_result;
         throw std::logic_error("No WApplication when creating WValidationStatus");
     }
-    app->root()->addWidget(result);
+    app->root()->addWidget(l_result);
     
-    luawt_toLua(L, result);
+    luawt_toLua(L, l_result);
     return 1;
 
     } else if (index == 2) {
@@ -53,15 +53,15 @@ int luawt_WValidationStatus_make(lua_State* L) {
         luawt_checkFromLua<Wt::WWidget>(L, 2);
     Wt::WWidget* invalidStateWidget =
         luawt_checkFromLua<Wt::WWidget>(L, 3);
-    WValidationStatus * result = new WValidationStatus(field, validStateWidget, invalidStateWidget);
+    WValidationStatus * l_result = new WValidationStatus(field, validStateWidget, invalidStateWidget);
     MyApplication* app = MyApplication::instance();
     if (!app) {
-        delete result;
+        delete l_result;
         throw std::logic_error("No WApplication when creating WValidationStatus");
     }
-    app->root()->addWidget(result);
+    app->root()->addWidget(l_result);
     
-    luawt_toLua(L, result);
+    luawt_toLua(L, l_result);
     return 1;
 
     } else if (index == 3) {
@@ -73,15 +73,15 @@ int luawt_WValidationStatus_make(lua_State* L) {
         luawt_checkFromLua<Wt::WWidget>(L, 3);
     Wt::WWidget* invalidEmptyStateWidget =
         luawt_checkFromLua<Wt::WWidget>(L, 4);
-    WValidationStatus * result = new WValidationStatus(field, validStateWidget, invalidStateWidget, invalidEmptyStateWidget);
+    WValidationStatus * l_result = new WValidationStatus(field, validStateWidget, invalidStateWidget, invalidEmptyStateWidget);
     MyApplication* app = MyApplication::instance();
     if (!app) {
-        delete result;
+        delete l_result;
         throw std::logic_error("No WApplication when creating WValidationStatus");
     }
-    app->root()->addWidget(result);
+    app->root()->addWidget(l_result);
     
-    luawt_toLua(L, result);
+    luawt_toLua(L, l_result);
     return 1;
 
     } else if (index == 4) {
@@ -95,8 +95,8 @@ int luawt_WValidationStatus_make(lua_State* L) {
         luawt_checkFromLua<Wt::WWidget>(L, 4);
     Wt::WContainerWidget* parent =
         luawt_checkFromLua<Wt::WContainerWidget>(L, 5);
-    WValidationStatus * result = new WValidationStatus(field, validStateWidget, invalidStateWidget, invalidEmptyStateWidget, parent);
-    luawt_toLua(L, result);
+    WValidationStatus * l_result = new WValidationStatus(field, validStateWidget, invalidStateWidget, invalidEmptyStateWidget, parent);
+    luawt_toLua(L, l_result);
     return 1;
 
     } else {
@@ -111,8 +111,8 @@ int luawt_WValidationStatus_valid(lua_State* L) {
     int index = luawt_getSuitableArgsGroup(L, luawt_WValidationStatus_valid_args);
     WValidationStatus* self = luawt_checkFromLua<WValidationStatus>(L, 1);
     if (index == 0) {
-    bool result = self->valid();
-    lua_pushboolean(L, result);
+    bool l_result = self->valid();
+    lua_pushboolean(L, l_result);
     return 1;
 
     } else {

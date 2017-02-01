@@ -15,36 +15,36 @@ static const char* const* const luawt_WTextArea_make_args[] = {WTextArea_make_ar
 int luawt_WTextArea_make(lua_State* L) {
     int index = luawt_getSuitableArgsGroup(L, luawt_WTextArea_make_args);
     if (index == 0) {
-    WTextArea * result = new WTextArea();
+    WTextArea * l_result = new WTextArea();
     MyApplication* app = MyApplication::instance();
     if (!app) {
-        delete result;
+        delete l_result;
         throw std::logic_error("No WApplication when creating WTextArea");
     }
-    app->root()->addWidget(result);
+    app->root()->addWidget(l_result);
     
-    luawt_toLua(L, result);
+    luawt_toLua(L, l_result);
     return 1;
 
     } else if (index == 1) {
     Wt::WContainerWidget* parent =
         luawt_checkFromLua<Wt::WContainerWidget>(L, 1);
-    WTextArea * result = new WTextArea(parent);
-    luawt_toLua(L, result);
+    WTextArea * l_result = new WTextArea(parent);
+    luawt_toLua(L, l_result);
     return 1;
 
     } else if (index == 2) {
     char const * raw1 = lua_tostring(L, 1);
     Wt::WString content = Wt::WString(raw1);
-    WTextArea * result = new WTextArea(content);
+    WTextArea * l_result = new WTextArea(content);
     MyApplication* app = MyApplication::instance();
     if (!app) {
-        delete result;
+        delete l_result;
         throw std::logic_error("No WApplication when creating WTextArea");
     }
-    app->root()->addWidget(result);
+    app->root()->addWidget(l_result);
     
-    luawt_toLua(L, result);
+    luawt_toLua(L, l_result);
     return 1;
 
     } else if (index == 3) {
@@ -52,8 +52,8 @@ int luawt_WTextArea_make(lua_State* L) {
     Wt::WString content = Wt::WString(raw1);
     Wt::WContainerWidget* parent =
         luawt_checkFromLua<Wt::WContainerWidget>(L, 2);
-    WTextArea * result = new WTextArea(content, parent);
-    luawt_toLua(L, result);
+    WTextArea * l_result = new WTextArea(content, parent);
+    luawt_toLua(L, l_result);
     return 1;
 
     } else {
@@ -84,8 +84,8 @@ int luawt_WTextArea_cursorPosition(lua_State* L) {
     int index = luawt_getSuitableArgsGroup(L, luawt_WTextArea_cursorPosition_args);
     WTextArea* self = luawt_checkFromLua<WTextArea>(L, 1);
     if (index == 0) {
-    int result = self->cursorPosition();
-    lua_pushinteger(L, result);
+    int l_result = self->cursorPosition();
+    lua_pushinteger(L, l_result);
     return 1;
 
     } else {
@@ -100,8 +100,8 @@ int luawt_WTextArea_rows(lua_State* L) {
     int index = luawt_getSuitableArgsGroup(L, luawt_WTextArea_rows_args);
     WTextArea* self = luawt_checkFromLua<WTextArea>(L, 1);
     if (index == 0) {
-    int result = self->rows();
-    lua_pushinteger(L, result);
+    int l_result = self->rows();
+    lua_pushinteger(L, l_result);
     return 1;
 
     } else {
@@ -116,8 +116,8 @@ int luawt_WTextArea_text(lua_State* L) {
     int index = luawt_getSuitableArgsGroup(L, luawt_WTextArea_text_args);
     WTextArea* self = luawt_checkFromLua<WTextArea>(L, 1);
     if (index == 0) {
-    Wt::WString const & result = self->text();
-    lua_pushstring(L, result.toUTF8().c_str());
+    Wt::WString const & l_result = self->text();
+    lua_pushstring(L, l_result.toUTF8().c_str());
     return 1;
 
     } else {
@@ -149,8 +149,8 @@ int luawt_WTextArea_selectedText(lua_State* L) {
     int index = luawt_getSuitableArgsGroup(L, luawt_WTextArea_selectedText_args);
     WTextArea* self = luawt_checkFromLua<WTextArea>(L, 1);
     if (index == 0) {
-    Wt::WString result = self->selectedText();
-    lua_pushstring(L, result.toUTF8().c_str());
+    Wt::WString l_result = self->selectedText();
+    lua_pushstring(L, l_result.toUTF8().c_str());
     return 1;
 
     } else {
@@ -181,8 +181,8 @@ int luawt_WTextArea_selectionStart(lua_State* L) {
     int index = luawt_getSuitableArgsGroup(L, luawt_WTextArea_selectionStart_args);
     WTextArea* self = luawt_checkFromLua<WTextArea>(L, 1);
     if (index == 0) {
-    int result = self->selectionStart();
-    lua_pushinteger(L, result);
+    int l_result = self->selectionStart();
+    lua_pushinteger(L, l_result);
     return 1;
 
     } else {
@@ -197,8 +197,8 @@ int luawt_WTextArea_hasSelectedText(lua_State* L) {
     int index = luawt_getSuitableArgsGroup(L, luawt_WTextArea_hasSelectedText_args);
     WTextArea* self = luawt_checkFromLua<WTextArea>(L, 1);
     if (index == 0) {
-    bool result = self->hasSelectedText();
-    lua_pushboolean(L, result);
+    bool l_result = self->hasSelectedText();
+    lua_pushboolean(L, l_result);
     return 1;
 
     } else {
@@ -230,8 +230,8 @@ int luawt_WTextArea_columns(lua_State* L) {
     int index = luawt_getSuitableArgsGroup(L, luawt_WTextArea_columns_args);
     WTextArea* self = luawt_checkFromLua<WTextArea>(L, 1);
     if (index == 0) {
-    int result = self->columns();
-    lua_pushinteger(L, result);
+    int l_result = self->columns();
+    lua_pushinteger(L, l_result);
     return 1;
 
     } else {
@@ -246,8 +246,8 @@ int luawt_WTextArea_valueText(lua_State* L) {
     int index = luawt_getSuitableArgsGroup(L, luawt_WTextArea_valueText_args);
     WTextArea* self = luawt_checkFromLua<WTextArea>(L, 1);
     if (index == 0) {
-    Wt::WString result = self->valueText();
-    lua_pushstring(L, result.toUTF8().c_str());
+    Wt::WString l_result = self->valueText();
+    lua_pushstring(L, l_result.toUTF8().c_str());
     return 1;
 
     } else {

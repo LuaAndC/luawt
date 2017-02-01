@@ -1,6 +1,7 @@
 #include "boost-xtime.hpp"
 
 #include <Wt/WInteractWidget>
+#include <Wt/WLink>
 #include <Wt/WProgressBar>
 #include <Wt/WMediaPlayer>
 #include <Wt/WString>
@@ -18,23 +19,23 @@ int luawt_WMediaPlayer_make(lua_State* L) {
     int index = luawt_getSuitableArgsGroup(L, luawt_WMediaPlayer_make_args);
     if (index == 0) {
     Wt::WMediaPlayer::MediaType mediaType = static_cast<Wt::WMediaPlayer::MediaType>(lua_tointeger(L, 1));
-    WMediaPlayer * result = new WMediaPlayer(mediaType);
+    WMediaPlayer * l_result = new WMediaPlayer(mediaType);
     MyApplication* app = MyApplication::instance();
     if (!app) {
-        delete result;
+        delete l_result;
         throw std::logic_error("No WApplication when creating WMediaPlayer");
     }
-    app->root()->addWidget(result);
+    app->root()->addWidget(l_result);
     
-    luawt_toLua(L, result);
+    luawt_toLua(L, l_result);
     return 1;
 
     } else if (index == 1) {
     Wt::WMediaPlayer::MediaType mediaType = static_cast<Wt::WMediaPlayer::MediaType>(lua_tointeger(L, 1));
     Wt::WContainerWidget* parent =
         luawt_checkFromLua<Wt::WContainerWidget>(L, 2);
-    WMediaPlayer * result = new WMediaPlayer(mediaType, parent);
-    luawt_toLua(L, result);
+    WMediaPlayer * l_result = new WMediaPlayer(mediaType, parent);
+    luawt_toLua(L, l_result);
     return 1;
 
     } else {
@@ -66,8 +67,8 @@ int luawt_WMediaPlayer_text(lua_State* L) {
     WMediaPlayer* self = luawt_checkFromLua<WMediaPlayer>(L, 1);
     if (index == 0) {
     Wt::WMediaPlayer::TextId id = static_cast<Wt::WMediaPlayer::TextId>(lua_tointeger(L, 2));
-    Wt::WText * result = self->text(id);
-    luawt_toLua(L, result);
+    Wt::WText * l_result = self->text(id);
+    luawt_toLua(L, l_result);
     return 1;
 
     } else {
@@ -133,8 +134,8 @@ int luawt_WMediaPlayer_duration(lua_State* L) {
     int index = luawt_getSuitableArgsGroup(L, luawt_WMediaPlayer_duration_args);
     WMediaPlayer* self = luawt_checkFromLua<WMediaPlayer>(L, 1);
     if (index == 0) {
-    double result = self->duration();
-    lua_pushnumber(L, result);
+    double l_result = self->duration();
+    lua_pushnumber(L, l_result);
     return 1;
 
     } else {
@@ -173,6 +174,24 @@ int luawt_WMediaPlayer_pause(lua_State* L) {
     }
 }
 
+static const char* WMediaPlayer_addSource_args0[] = {luawt_typeToStr<WMediaPlayer>(), "int", "char const *", NULL};
+static const char* const* const luawt_WMediaPlayer_addSource_args[] = {WMediaPlayer_addSource_args0, NULL};
+
+int luawt_WMediaPlayer_addSource(lua_State* L) {
+    int index = luawt_getSuitableArgsGroup(L, luawt_WMediaPlayer_addSource_args);
+    WMediaPlayer* self = luawt_checkFromLua<WMediaPlayer>(L, 1);
+    if (index == 0) {
+    Wt::WMediaPlayer::Encoding encoding = static_cast<Wt::WMediaPlayer::Encoding>(lua_tointeger(L, 2));
+    char const * raw3 = lua_tostring(L, 3);
+    Wt::WLink link = Wt::WLink(raw3);
+    self->addSource(encoding, link);
+    return 0;
+    
+    } else {
+        return luaL_error(L, "Wrong arguments for WMediaPlayer.addSource");
+    }
+}
+
 static const char* WMediaPlayer_button_args0[] = {luawt_typeToStr<WMediaPlayer>(), "int", NULL};
 static const char* const* const luawt_WMediaPlayer_button_args[] = {WMediaPlayer_button_args0, NULL};
 
@@ -181,8 +200,8 @@ int luawt_WMediaPlayer_button(lua_State* L) {
     WMediaPlayer* self = luawt_checkFromLua<WMediaPlayer>(L, 1);
     if (index == 0) {
     Wt::WMediaPlayer::ButtonControlId id = static_cast<Wt::WMediaPlayer::ButtonControlId>(lua_tointeger(L, 2));
-    Wt::WInteractWidget * result = self->button(id);
-    luawt_toLua(L, result);
+    Wt::WInteractWidget * l_result = self->button(id);
+    luawt_toLua(L, l_result);
     return 1;
 
     } else {
@@ -197,8 +216,8 @@ int luawt_WMediaPlayer_jsPlayerRef(lua_State* L) {
     int index = luawt_getSuitableArgsGroup(L, luawt_WMediaPlayer_jsPlayerRef_args);
     WMediaPlayer* self = luawt_checkFromLua<WMediaPlayer>(L, 1);
     if (index == 0) {
-    std::string result = self->jsPlayerRef();
-    lua_pushstring(L, result.c_str());
+    std::string l_result = self->jsPlayerRef();
+    lua_pushstring(L, l_result.c_str());
     return 1;
 
     } else {
@@ -213,8 +232,8 @@ int luawt_WMediaPlayer_playing(lua_State* L) {
     int index = luawt_getSuitableArgsGroup(L, luawt_WMediaPlayer_playing_args);
     WMediaPlayer* self = luawt_checkFromLua<WMediaPlayer>(L, 1);
     if (index == 0) {
-    bool result = self->playing();
-    lua_pushboolean(L, result);
+    bool l_result = self->playing();
+    lua_pushboolean(L, l_result);
     return 1;
 
     } else {
@@ -229,8 +248,8 @@ int luawt_WMediaPlayer_videoWidth(lua_State* L) {
     int index = luawt_getSuitableArgsGroup(L, luawt_WMediaPlayer_videoWidth_args);
     WMediaPlayer* self = luawt_checkFromLua<WMediaPlayer>(L, 1);
     if (index == 0) {
-    int result = self->videoWidth();
-    lua_pushinteger(L, result);
+    int l_result = self->videoWidth();
+    lua_pushinteger(L, l_result);
     return 1;
 
     } else {
@@ -276,8 +295,8 @@ int luawt_WMediaPlayer_controlsWidget(lua_State* L) {
     int index = luawt_getSuitableArgsGroup(L, luawt_WMediaPlayer_controlsWidget_args);
     WMediaPlayer* self = luawt_checkFromLua<WMediaPlayer>(L, 1);
     if (index == 0) {
-    Wt::WWidget * result = self->controlsWidget();
-    luawt_toLua(L, result);
+    Wt::WWidget * l_result = self->controlsWidget();
+    luawt_toLua(L, l_result);
     return 1;
 
     } else {
@@ -326,8 +345,8 @@ int luawt_WMediaPlayer_progressBar(lua_State* L) {
     WMediaPlayer* self = luawt_checkFromLua<WMediaPlayer>(L, 1);
     if (index == 0) {
     Wt::WMediaPlayer::BarControlId id = static_cast<Wt::WMediaPlayer::BarControlId>(lua_tointeger(L, 2));
-    Wt::WProgressBar * result = self->progressBar(id);
-    luawt_toLua(L, result);
+    Wt::WProgressBar * l_result = self->progressBar(id);
+    luawt_toLua(L, l_result);
     return 1;
 
     } else {
@@ -342,8 +361,8 @@ int luawt_WMediaPlayer_volume(lua_State* L) {
     int index = luawt_getSuitableArgsGroup(L, luawt_WMediaPlayer_volume_args);
     WMediaPlayer* self = luawt_checkFromLua<WMediaPlayer>(L, 1);
     if (index == 0) {
-    double result = self->volume();
-    lua_pushnumber(L, result);
+    double l_result = self->volume();
+    lua_pushnumber(L, l_result);
     return 1;
 
     } else {
@@ -358,8 +377,8 @@ int luawt_WMediaPlayer_videoHeight(lua_State* L) {
     int index = luawt_getSuitableArgsGroup(L, luawt_WMediaPlayer_videoHeight_args);
     WMediaPlayer* self = luawt_checkFromLua<WMediaPlayer>(L, 1);
     if (index == 0) {
-    int result = self->videoHeight();
-    lua_pushinteger(L, result);
+    int l_result = self->videoHeight();
+    lua_pushinteger(L, l_result);
     return 1;
 
     } else {
@@ -374,8 +393,8 @@ int luawt_WMediaPlayer_readyState(lua_State* L) {
     int index = luawt_getSuitableArgsGroup(L, luawt_WMediaPlayer_readyState_args);
     WMediaPlayer* self = luawt_checkFromLua<WMediaPlayer>(L, 1);
     if (index == 0) {
-    Wt::WMediaPlayer::ReadyState result = self->readyState();
-    lua_pushinteger(L, result);
+    Wt::WMediaPlayer::ReadyState l_result = self->readyState();
+    lua_pushinteger(L, l_result);
     return 1;
 
     } else {
@@ -390,8 +409,8 @@ int luawt_WMediaPlayer_currentTime(lua_State* L) {
     int index = luawt_getSuitableArgsGroup(L, luawt_WMediaPlayer_currentTime_args);
     WMediaPlayer* self = luawt_checkFromLua<WMediaPlayer>(L, 1);
     if (index == 0) {
-    double result = self->currentTime();
-    lua_pushnumber(L, result);
+    double l_result = self->currentTime();
+    lua_pushnumber(L, l_result);
     return 1;
 
     } else {
@@ -424,8 +443,8 @@ int luawt_WMediaPlayer_playbackRate(lua_State* L) {
     int index = luawt_getSuitableArgsGroup(L, luawt_WMediaPlayer_playbackRate_args);
     WMediaPlayer* self = luawt_checkFromLua<WMediaPlayer>(L, 1);
     if (index == 0) {
-    double result = self->playbackRate();
-    lua_pushnumber(L, result);
+    double l_result = self->playbackRate();
+    lua_pushnumber(L, l_result);
     return 1;
 
     } else {
@@ -445,6 +464,23 @@ int luawt_WMediaPlayer_clearSources(lua_State* L) {
     
     } else {
         return luaL_error(L, "Wrong arguments for WMediaPlayer.clearSources");
+    }
+}
+
+static const char* WMediaPlayer_getSource_args0[] = {luawt_typeToStr<WMediaPlayer>(), "int", NULL};
+static const char* const* const luawt_WMediaPlayer_getSource_args[] = {WMediaPlayer_getSource_args0, NULL};
+
+int luawt_WMediaPlayer_getSource(lua_State* L) {
+    int index = luawt_getSuitableArgsGroup(L, luawt_WMediaPlayer_getSource_args);
+    WMediaPlayer* self = luawt_checkFromLua<WMediaPlayer>(L, 1);
+    if (index == 0) {
+    Wt::WMediaPlayer::Encoding encoding = static_cast<Wt::WMediaPlayer::Encoding>(lua_tointeger(L, 2));
+    Wt::WLink l_result = self->getSource(encoding);
+    lua_pushstring(L, l_result.url().c_str());
+    return 1;
+
+    } else {
+        return luaL_error(L, "Wrong arguments for WMediaPlayer.getSource");
     }
 }
 
@@ -490,6 +526,8 @@ static const luaL_Reg luawt_WMediaPlayer_methods[] = {
     METHOD(WMediaPlayer, setControlsWidget),
     METHOD(WMediaPlayer, controlsWidget),
     METHOD(WMediaPlayer, setTitle),
+    METHOD(WMediaPlayer, addSource),
+    METHOD(WMediaPlayer, getSource),
     METHOD(WMediaPlayer, clearSources),
     METHOD(WMediaPlayer, setButton),
     METHOD(WMediaPlayer, button),

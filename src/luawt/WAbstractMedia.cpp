@@ -2,6 +2,7 @@
 
 #include <Wt/WWidget>
 #include <Wt/WAbstractMedia>
+#include <Wt/WLink>
 
 #include "globals.hpp"
 
@@ -35,6 +36,43 @@ int luawt_WAbstractMedia_pause(lua_State* L) {
     }
 }
 
+static const char* WAbstractMedia_addSource_args0[] = {luawt_typeToStr<WAbstractMedia>(), "char const *", NULL};
+static const char* WAbstractMedia_addSource_args1[] = {luawt_typeToStr<WAbstractMedia>(), "char const *", "char const *", NULL};
+static const char* WAbstractMedia_addSource_args2[] = {luawt_typeToStr<WAbstractMedia>(), "char const *", "char const *", "char const *", NULL};
+static const char* const* const luawt_WAbstractMedia_addSource_args[] = {WAbstractMedia_addSource_args0, WAbstractMedia_addSource_args1, WAbstractMedia_addSource_args2, NULL};
+
+int luawt_WAbstractMedia_addSource(lua_State* L) {
+    int index = luawt_getSuitableArgsGroup(L, luawt_WAbstractMedia_addSource_args);
+    WAbstractMedia* self = luawt_checkFromLua<WAbstractMedia>(L, 1);
+    if (index == 0) {
+    char const * raw2 = lua_tostring(L, 2);
+    Wt::WLink source = Wt::WLink(raw2);
+    self->addSource(source);
+    return 0;
+    
+    } else if (index == 1) {
+    char const * raw2 = lua_tostring(L, 2);
+    Wt::WLink source = Wt::WLink(raw2);
+    char const * raw3 = lua_tostring(L, 3);
+    std::string type = std::string(raw3);
+    self->addSource(source, type);
+    return 0;
+    
+    } else if (index == 2) {
+    char const * raw2 = lua_tostring(L, 2);
+    Wt::WLink source = Wt::WLink(raw2);
+    char const * raw3 = lua_tostring(L, 3);
+    std::string type = std::string(raw3);
+    char const * raw4 = lua_tostring(L, 4);
+    std::string media = std::string(raw4);
+    self->addSource(source, type, media);
+    return 0;
+    
+    } else {
+        return luaL_error(L, "Wrong arguments for WAbstractMedia.addSource");
+    }
+}
+
 static const char* WAbstractMedia_readyState_args0[] = {luawt_typeToStr<WAbstractMedia>(), NULL};
 static const char* const* const luawt_WAbstractMedia_readyState_args[] = {WAbstractMedia_readyState_args0, NULL};
 
@@ -42,8 +80,8 @@ int luawt_WAbstractMedia_readyState(lua_State* L) {
     int index = luawt_getSuitableArgsGroup(L, luawt_WAbstractMedia_readyState_args);
     WAbstractMedia* self = luawt_checkFromLua<WAbstractMedia>(L, 1);
     if (index == 0) {
-    Wt::WAbstractMedia::ReadyState result = self->readyState();
-    lua_pushinteger(L, result);
+    Wt::WAbstractMedia::ReadyState l_result = self->readyState();
+    lua_pushinteger(L, l_result);
     return 1;
 
     } else {
@@ -73,8 +111,8 @@ int luawt_WAbstractMedia_jsMediaRef(lua_State* L) {
     int index = luawt_getSuitableArgsGroup(L, luawt_WAbstractMedia_jsMediaRef_args);
     WAbstractMedia* self = luawt_checkFromLua<WAbstractMedia>(L, 1);
     if (index == 0) {
-    std::string result = self->jsMediaRef();
-    lua_pushstring(L, result.c_str());
+    std::string l_result = self->jsMediaRef();
+    lua_pushstring(L, l_result.c_str());
     return 1;
 
     } else {
@@ -122,12 +160,28 @@ int luawt_WAbstractMedia_playing(lua_State* L) {
     int index = luawt_getSuitableArgsGroup(L, luawt_WAbstractMedia_playing_args);
     WAbstractMedia* self = luawt_checkFromLua<WAbstractMedia>(L, 1);
     if (index == 0) {
-    bool result = self->playing();
-    lua_pushboolean(L, result);
+    bool l_result = self->playing();
+    lua_pushboolean(L, l_result);
     return 1;
 
     } else {
         return luaL_error(L, "Wrong arguments for WAbstractMedia.playing");
+    }
+}
+
+static const char* WAbstractMedia_getOptions_args0[] = {luawt_typeToStr<WAbstractMedia>(), NULL};
+static const char* const* const luawt_WAbstractMedia_getOptions_args[] = {WAbstractMedia_getOptions_args0, NULL};
+
+int luawt_WAbstractMedia_getOptions(lua_State* L) {
+    int index = luawt_getSuitableArgsGroup(L, luawt_WAbstractMedia_getOptions_args);
+    WAbstractMedia* self = luawt_checkFromLua<WAbstractMedia>(L, 1);
+    if (index == 0) {
+    Wt::WFlags<Wt::WAbstractMedia::Options> l_result = self->getOptions();
+    lua_pushinteger(L, l_result);
+    return 1;
+
+    } else {
+        return luaL_error(L, "Wrong arguments for WAbstractMedia.getOptions");
     }
 }
 
@@ -138,8 +192,8 @@ int luawt_WAbstractMedia_preloadMode(lua_State* L) {
     int index = luawt_getSuitableArgsGroup(L, luawt_WAbstractMedia_preloadMode_args);
     WAbstractMedia* self = luawt_checkFromLua<WAbstractMedia>(L, 1);
     if (index == 0) {
-    Wt::WAbstractMedia::PreloadMode result = self->preloadMode();
-    lua_pushinteger(L, result);
+    Wt::WAbstractMedia::PreloadMode l_result = self->preloadMode();
+    lua_pushinteger(L, l_result);
     return 1;
 
     } else {
@@ -174,9 +228,11 @@ ADD_SIGNAL(gestureChanged, WAbstractMedia, Wt::WGestureEvent)
 ADD_SIGNAL(gestureEnded, WAbstractMedia, Wt::WGestureEvent)
 
 static const luaL_Reg luawt_WAbstractMedia_methods[] = {
+    METHOD(WAbstractMedia, getOptions),
     METHOD(WAbstractMedia, setPreloadMode),
     METHOD(WAbstractMedia, preloadMode),
     METHOD(WAbstractMedia, clearSources),
+    METHOD(WAbstractMedia, addSource),
     METHOD(WAbstractMedia, setAlternativeContent),
     METHOD(WAbstractMedia, play),
     METHOD(WAbstractMedia, pause),

@@ -18,15 +18,15 @@ int luawt_WIconPair_make(lua_State* L) {
     std::string icon1URL = std::string(raw1);
     char const * raw2 = lua_tostring(L, 2);
     std::string icon2URL = std::string(raw2);
-    WIconPair * result = new WIconPair(icon1URL, icon2URL);
+    WIconPair * l_result = new WIconPair(icon1URL, icon2URL);
     MyApplication* app = MyApplication::instance();
     if (!app) {
-        delete result;
+        delete l_result;
         throw std::logic_error("No WApplication when creating WIconPair");
     }
-    app->root()->addWidget(result);
+    app->root()->addWidget(l_result);
     
-    luawt_toLua(L, result);
+    luawt_toLua(L, l_result);
     return 1;
 
     } else if (index == 1) {
@@ -35,15 +35,15 @@ int luawt_WIconPair_make(lua_State* L) {
     char const * raw2 = lua_tostring(L, 2);
     std::string icon2URL = std::string(raw2);
     bool clickIsSwitch = lua_toboolean(L, 3);
-    WIconPair * result = new WIconPair(icon1URL, icon2URL, clickIsSwitch);
+    WIconPair * l_result = new WIconPair(icon1URL, icon2URL, clickIsSwitch);
     MyApplication* app = MyApplication::instance();
     if (!app) {
-        delete result;
+        delete l_result;
         throw std::logic_error("No WApplication when creating WIconPair");
     }
-    app->root()->addWidget(result);
+    app->root()->addWidget(l_result);
     
-    luawt_toLua(L, result);
+    luawt_toLua(L, l_result);
     return 1;
 
     } else if (index == 2) {
@@ -54,8 +54,8 @@ int luawt_WIconPair_make(lua_State* L) {
     bool clickIsSwitch = lua_toboolean(L, 3);
     Wt::WContainerWidget* parent =
         luawt_checkFromLua<Wt::WContainerWidget>(L, 4);
-    WIconPair * result = new WIconPair(icon1URL, icon2URL, clickIsSwitch, parent);
-    luawt_toLua(L, result);
+    WIconPair * l_result = new WIconPair(icon1URL, icon2URL, clickIsSwitch, parent);
+    luawt_toLua(L, l_result);
     return 1;
 
     } else {
@@ -70,8 +70,8 @@ int luawt_WIconPair_icon1(lua_State* L) {
     int index = luawt_getSuitableArgsGroup(L, luawt_WIconPair_icon1_args);
     WIconPair* self = luawt_checkFromLua<WIconPair>(L, 1);
     if (index == 0) {
-    Wt::WImage * result = self->icon1();
-    luawt_toLua(L, result);
+    Wt::WImage * l_result = self->icon1();
+    luawt_toLua(L, l_result);
     return 1;
 
     } else {
@@ -86,8 +86,8 @@ int luawt_WIconPair_icon2(lua_State* L) {
     int index = luawt_getSuitableArgsGroup(L, luawt_WIconPair_icon2_args);
     WIconPair* self = luawt_checkFromLua<WIconPair>(L, 1);
     if (index == 0) {
-    Wt::WImage * result = self->icon2();
-    luawt_toLua(L, result);
+    Wt::WImage * l_result = self->icon2();
+    luawt_toLua(L, l_result);
     return 1;
 
     } else {
@@ -132,8 +132,8 @@ int luawt_WIconPair_state(lua_State* L) {
     int index = luawt_getSuitableArgsGroup(L, luawt_WIconPair_state_args);
     WIconPair* self = luawt_checkFromLua<WIconPair>(L, 1);
     if (index == 0) {
-    int result = self->state();
-    lua_pushinteger(L, result);
+    int l_result = self->state();
+    lua_pushinteger(L, l_result);
     return 1;
 
     } else {

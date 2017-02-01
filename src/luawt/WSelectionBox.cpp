@@ -12,22 +12,22 @@ static const char* const* const luawt_WSelectionBox_make_args[] = {WSelectionBox
 int luawt_WSelectionBox_make(lua_State* L) {
     int index = luawt_getSuitableArgsGroup(L, luawt_WSelectionBox_make_args);
     if (index == 0) {
-    WSelectionBox * result = new WSelectionBox();
+    WSelectionBox * l_result = new WSelectionBox();
     MyApplication* app = MyApplication::instance();
     if (!app) {
-        delete result;
+        delete l_result;
         throw std::logic_error("No WApplication when creating WSelectionBox");
     }
-    app->root()->addWidget(result);
+    app->root()->addWidget(l_result);
     
-    luawt_toLua(L, result);
+    luawt_toLua(L, l_result);
     return 1;
 
     } else if (index == 1) {
     Wt::WContainerWidget* parent =
         luawt_checkFromLua<Wt::WContainerWidget>(L, 1);
-    WSelectionBox * result = new WSelectionBox(parent);
-    luawt_toLua(L, result);
+    WSelectionBox * l_result = new WSelectionBox(parent);
+    luawt_toLua(L, l_result);
     return 1;
 
     } else {
@@ -57,8 +57,8 @@ int luawt_WSelectionBox_selectionMode(lua_State* L) {
     int index = luawt_getSuitableArgsGroup(L, luawt_WSelectionBox_selectionMode_args);
     WSelectionBox* self = luawt_checkFromLua<WSelectionBox>(L, 1);
     if (index == 0) {
-    Wt::SelectionMode result = self->selectionMode();
-    lua_pushinteger(L, result);
+    Wt::SelectionMode l_result = self->selectionMode();
+    lua_pushinteger(L, l_result);
     return 1;
 
     } else {
@@ -73,8 +73,8 @@ int luawt_WSelectionBox_verticalSize(lua_State* L) {
     int index = luawt_getSuitableArgsGroup(L, luawt_WSelectionBox_verticalSize_args);
     WSelectionBox* self = luawt_checkFromLua<WSelectionBox>(L, 1);
     if (index == 0) {
-    int result = self->verticalSize();
-    lua_pushinteger(L, result);
+    int l_result = self->verticalSize();
+    lua_pushinteger(L, l_result);
     return 1;
 
     } else {

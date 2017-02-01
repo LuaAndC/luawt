@@ -1,5 +1,6 @@
 #include "boost-xtime.hpp"
 
+#include <Wt/WLength>
 #include <Wt/WString>
 #include <Wt/WContainerWidget>
 #include <Wt/WText>
@@ -17,36 +18,36 @@ static const char* const* const luawt_WText_make_args[] = {WText_make_args0, WTe
 int luawt_WText_make(lua_State* L) {
     int index = luawt_getSuitableArgsGroup(L, luawt_WText_make_args);
     if (index == 0) {
-    WText * result = new WText();
+    WText * l_result = new WText();
     MyApplication* app = MyApplication::instance();
     if (!app) {
-        delete result;
+        delete l_result;
         throw std::logic_error("No WApplication when creating WText");
     }
-    app->root()->addWidget(result);
+    app->root()->addWidget(l_result);
     
-    luawt_toLua(L, result);
+    luawt_toLua(L, l_result);
     return 1;
 
     } else if (index == 1) {
     Wt::WContainerWidget* parent =
         luawt_checkFromLua<Wt::WContainerWidget>(L, 1);
-    WText * result = new WText(parent);
-    luawt_toLua(L, result);
+    WText * l_result = new WText(parent);
+    luawt_toLua(L, l_result);
     return 1;
 
     } else if (index == 2) {
     char const * raw1 = lua_tostring(L, 1);
     Wt::WString text = Wt::WString(raw1);
-    WText * result = new WText(text);
+    WText * l_result = new WText(text);
     MyApplication* app = MyApplication::instance();
     if (!app) {
-        delete result;
+        delete l_result;
         throw std::logic_error("No WApplication when creating WText");
     }
-    app->root()->addWidget(result);
+    app->root()->addWidget(l_result);
     
-    luawt_toLua(L, result);
+    luawt_toLua(L, l_result);
     return 1;
 
     } else if (index == 3) {
@@ -54,23 +55,23 @@ int luawt_WText_make(lua_State* L) {
     Wt::WString text = Wt::WString(raw1);
     Wt::WContainerWidget* parent =
         luawt_checkFromLua<Wt::WContainerWidget>(L, 2);
-    WText * result = new WText(text, parent);
-    luawt_toLua(L, result);
+    WText * l_result = new WText(text, parent);
+    luawt_toLua(L, l_result);
     return 1;
 
     } else if (index == 4) {
     char const * raw1 = lua_tostring(L, 1);
     Wt::WString text = Wt::WString(raw1);
     Wt::TextFormat textFormat = static_cast<Wt::TextFormat>(lua_tointeger(L, 2));
-    WText * result = new WText(text, textFormat);
+    WText * l_result = new WText(text, textFormat);
     MyApplication* app = MyApplication::instance();
     if (!app) {
-        delete result;
+        delete l_result;
         throw std::logic_error("No WApplication when creating WText");
     }
-    app->root()->addWidget(result);
+    app->root()->addWidget(l_result);
     
-    luawt_toLua(L, result);
+    luawt_toLua(L, l_result);
     return 1;
 
     } else if (index == 5) {
@@ -79,8 +80,8 @@ int luawt_WText_make(lua_State* L) {
     Wt::TextFormat textFormat = static_cast<Wt::TextFormat>(lua_tointeger(L, 2));
     Wt::WContainerWidget* parent =
         luawt_checkFromLua<Wt::WContainerWidget>(L, 3);
-    WText * result = new WText(text, textFormat, parent);
-    luawt_toLua(L, result);
+    WText * l_result = new WText(text, textFormat, parent);
+    luawt_toLua(L, l_result);
     return 1;
 
     } else {
@@ -95,8 +96,8 @@ int luawt_WText_hasInternalPathEncoding(lua_State* L) {
     int index = luawt_getSuitableArgsGroup(L, luawt_WText_hasInternalPathEncoding_args);
     WText* self = luawt_checkFromLua<WText>(L, 1);
     if (index == 0) {
-    bool result = self->hasInternalPathEncoding();
-    lua_pushboolean(L, result);
+    bool l_result = self->hasInternalPathEncoding();
+    lua_pushboolean(L, l_result);
     return 1;
 
     } else {
@@ -111,8 +112,8 @@ int luawt_WText_text(lua_State* L) {
     int index = luawt_getSuitableArgsGroup(L, luawt_WText_text_args);
     WText* self = luawt_checkFromLua<WText>(L, 1);
     if (index == 0) {
-    Wt::WString const & result = self->text();
-    lua_pushstring(L, result.toUTF8().c_str());
+    Wt::WString const & l_result = self->text();
+    lua_pushstring(L, l_result.toUTF8().c_str());
     return 1;
 
     } else {
@@ -129,8 +130,8 @@ int luawt_WText_setText(lua_State* L) {
     if (index == 0) {
     char const * raw2 = lua_tostring(L, 2);
     Wt::WString text = Wt::WString(raw2);
-    bool result = self->setText(text);
-    lua_pushboolean(L, result);
+    bool l_result = self->setText(text);
+    lua_pushboolean(L, l_result);
     return 1;
 
     } else {
@@ -153,6 +154,48 @@ int luawt_WText_refresh(lua_State* L) {
     }
 }
 
+static const char* WText_setPadding_args0[] = {luawt_typeToStr<WText>(), "double", NULL};
+static const char* WText_setPadding_args1[] = {luawt_typeToStr<WText>(), "double", "int", NULL};
+static const char* const* const luawt_WText_setPadding_args[] = {WText_setPadding_args0, WText_setPadding_args1, NULL};
+
+int luawt_WText_setPadding(lua_State* L) {
+    int index = luawt_getSuitableArgsGroup(L, luawt_WText_setPadding_args);
+    WText* self = luawt_checkFromLua<WText>(L, 1);
+    if (index == 0) {
+    double raw2 = lua_tonumber(L, 2);
+    Wt::WLength padding = Wt::WLength(raw2);
+    self->setPadding(padding);
+    return 0;
+    
+    } else if (index == 1) {
+    double raw2 = lua_tonumber(L, 2);
+    Wt::WLength padding = Wt::WLength(raw2);
+    Wt::WFlags<Wt::Side> sides = static_cast<Wt::Side>(lua_tointeger(L, 3));
+    self->setPadding(padding, sides);
+    return 0;
+    
+    } else {
+        return luaL_error(L, "Wrong arguments for WText.setPadding");
+    }
+}
+
+static const char* WText_padding_args0[] = {luawt_typeToStr<WText>(), "int", NULL};
+static const char* const* const luawt_WText_padding_args[] = {WText_padding_args0, NULL};
+
+int luawt_WText_padding(lua_State* L) {
+    int index = luawt_getSuitableArgsGroup(L, luawt_WText_padding_args);
+    WText* self = luawt_checkFromLua<WText>(L, 1);
+    if (index == 0) {
+    Wt::Side side = static_cast<Wt::Side>(lua_tointeger(L, 2));
+    Wt::WLength l_result = self->padding(side);
+    lua_pushnumber(L, l_result.value());
+    return 1;
+
+    } else {
+        return luaL_error(L, "Wrong arguments for WText.padding");
+    }
+}
+
 static const char* WText_wordWrap_args0[] = {luawt_typeToStr<WText>(), NULL};
 static const char* const* const luawt_WText_wordWrap_args[] = {WText_wordWrap_args0, NULL};
 
@@ -160,8 +203,8 @@ int luawt_WText_wordWrap(lua_State* L) {
     int index = luawt_getSuitableArgsGroup(L, luawt_WText_wordWrap_args);
     WText* self = luawt_checkFromLua<WText>(L, 1);
     if (index == 0) {
-    bool result = self->wordWrap();
-    lua_pushboolean(L, result);
+    bool l_result = self->wordWrap();
+    lua_pushboolean(L, l_result);
     return 1;
 
     } else {
@@ -192,8 +235,8 @@ int luawt_WText_textFormat(lua_State* L) {
     int index = luawt_getSuitableArgsGroup(L, luawt_WText_textFormat_args);
     WText* self = luawt_checkFromLua<WText>(L, 1);
     if (index == 0) {
-    Wt::TextFormat result = self->textFormat();
-    lua_pushinteger(L, result);
+    Wt::TextFormat l_result = self->textFormat();
+    lua_pushinteger(L, l_result);
     return 1;
 
     } else {
@@ -209,8 +252,8 @@ int luawt_WText_setTextFormat(lua_State* L) {
     WText* self = luawt_checkFromLua<WText>(L, 1);
     if (index == 0) {
     Wt::TextFormat format = static_cast<Wt::TextFormat>(lua_tointeger(L, 2));
-    bool result = self->setTextFormat(format);
-    lua_pushboolean(L, result);
+    bool l_result = self->setTextFormat(format);
+    lua_pushboolean(L, l_result);
     return 1;
 
     } else {
@@ -262,6 +305,8 @@ static const luaL_Reg luawt_WText_methods[] = {
     METHOD(WText, textFormat),
     METHOD(WText, setWordWrap),
     METHOD(WText, wordWrap),
+    METHOD(WText, setPadding),
+    METHOD(WText, padding),
     METHOD(WText, setInternalPathEncoding),
     METHOD(WText, hasInternalPathEncoding),
     METHOD(WText, refresh),

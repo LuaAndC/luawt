@@ -1,5 +1,6 @@
 #include "boost-xtime.hpp"
 
+#include <Wt/WLength>
 #include <Wt/WContainerWidget>
 #include <Wt/WTableView>
 
@@ -12,26 +13,59 @@ static const char* const* const luawt_WTableView_make_args[] = {WTableView_make_
 int luawt_WTableView_make(lua_State* L) {
     int index = luawt_getSuitableArgsGroup(L, luawt_WTableView_make_args);
     if (index == 0) {
-    WTableView * result = new WTableView();
+    WTableView * l_result = new WTableView();
     MyApplication* app = MyApplication::instance();
     if (!app) {
-        delete result;
+        delete l_result;
         throw std::logic_error("No WApplication when creating WTableView");
     }
-    app->root()->addWidget(result);
+    app->root()->addWidget(l_result);
     
-    luawt_toLua(L, result);
+    luawt_toLua(L, l_result);
     return 1;
 
     } else if (index == 1) {
     Wt::WContainerWidget* parent =
         luawt_checkFromLua<Wt::WContainerWidget>(L, 1);
-    WTableView * result = new WTableView(parent);
-    luawt_toLua(L, result);
+    WTableView * l_result = new WTableView(parent);
+    luawt_toLua(L, l_result);
     return 1;
 
     } else {
         return luaL_error(L, "Wrong arguments for WTableView.make");
+    }
+}
+
+static const char* WTableView_setRowHeight_args0[] = {luawt_typeToStr<WTableView>(), "double", NULL};
+static const char* const* const luawt_WTableView_setRowHeight_args[] = {WTableView_setRowHeight_args0, NULL};
+
+int luawt_WTableView_setRowHeight(lua_State* L) {
+    int index = luawt_getSuitableArgsGroup(L, luawt_WTableView_setRowHeight_args);
+    WTableView* self = luawt_checkFromLua<WTableView>(L, 1);
+    if (index == 0) {
+    double raw2 = lua_tonumber(L, 2);
+    Wt::WLength rowHeight = Wt::WLength(raw2);
+    self->setRowHeight(rowHeight);
+    return 0;
+    
+    } else {
+        return luaL_error(L, "Wrong arguments for WTableView.setRowHeight");
+    }
+}
+
+static const char* WTableView_currentPage_args0[] = {luawt_typeToStr<WTableView>(), NULL};
+static const char* const* const luawt_WTableView_currentPage_args[] = {WTableView_currentPage_args0, NULL};
+
+int luawt_WTableView_currentPage(lua_State* L) {
+    int index = luawt_getSuitableArgsGroup(L, luawt_WTableView_currentPage_args);
+    WTableView* self = luawt_checkFromLua<WTableView>(L, 1);
+    if (index == 0) {
+    int l_result = self->currentPage();
+    lua_pushinteger(L, l_result);
+    return 1;
+
+    } else {
+        return luaL_error(L, "Wrong arguments for WTableView.currentPage");
     }
 }
 
@@ -42,8 +76,8 @@ int luawt_WTableView_pageSize(lua_State* L) {
     int index = luawt_getSuitableArgsGroup(L, luawt_WTableView_pageSize_args);
     WTableView* self = luawt_checkFromLua<WTableView>(L, 1);
     if (index == 0) {
-    int result = self->pageSize();
-    lua_pushinteger(L, result);
+    int l_result = self->pageSize();
+    lua_pushinteger(L, l_result);
     return 1;
 
     } else {
@@ -58,8 +92,8 @@ int luawt_WTableView_pageCount(lua_State* L) {
     int index = luawt_getSuitableArgsGroup(L, luawt_WTableView_pageCount_args);
     WTableView* self = luawt_checkFromLua<WTableView>(L, 1);
     if (index == 0) {
-    int result = self->pageCount();
-    lua_pushinteger(L, result);
+    int l_result = self->pageCount();
+    lua_pushinteger(L, l_result);
     return 1;
 
     } else {
@@ -100,6 +134,24 @@ int luawt_WTableView_setAlternatingRowColors(lua_State* L) {
     }
 }
 
+static const char* WTableView_setColumnWidth_args0[] = {luawt_typeToStr<WTableView>(), "int", "double", NULL};
+static const char* const* const luawt_WTableView_setColumnWidth_args[] = {WTableView_setColumnWidth_args0, NULL};
+
+int luawt_WTableView_setColumnWidth(lua_State* L) {
+    int index = luawt_getSuitableArgsGroup(L, luawt_WTableView_setColumnWidth_args);
+    WTableView* self = luawt_checkFromLua<WTableView>(L, 1);
+    if (index == 0) {
+    int column = lua_tointeger(L, 2);
+    double raw3 = lua_tonumber(L, 3);
+    Wt::WLength width = Wt::WLength(raw3);
+    self->setColumnWidth(column, width);
+    return 0;
+    
+    } else {
+        return luaL_error(L, "Wrong arguments for WTableView.setColumnWidth");
+    }
+}
+
 static const char* WTableView_setRowHeaderCount_args0[] = {luawt_typeToStr<WTableView>(), "int", NULL};
 static const char* const* const luawt_WTableView_setRowHeaderCount_args[] = {WTableView_setRowHeaderCount_args0, NULL};
 
@@ -116,19 +168,20 @@ int luawt_WTableView_setRowHeaderCount(lua_State* L) {
     }
 }
 
-static const char* WTableView_currentPage_args0[] = {luawt_typeToStr<WTableView>(), NULL};
-static const char* const* const luawt_WTableView_currentPage_args[] = {WTableView_currentPage_args0, NULL};
+static const char* WTableView_setHeaderHeight_args0[] = {luawt_typeToStr<WTableView>(), "double", NULL};
+static const char* const* const luawt_WTableView_setHeaderHeight_args[] = {WTableView_setHeaderHeight_args0, NULL};
 
-int luawt_WTableView_currentPage(lua_State* L) {
-    int index = luawt_getSuitableArgsGroup(L, luawt_WTableView_currentPage_args);
+int luawt_WTableView_setHeaderHeight(lua_State* L) {
+    int index = luawt_getSuitableArgsGroup(L, luawt_WTableView_setHeaderHeight_args);
     WTableView* self = luawt_checkFromLua<WTableView>(L, 1);
     if (index == 0) {
-    int result = self->currentPage();
-    lua_pushinteger(L, result);
-    return 1;
-
+    double raw2 = lua_tonumber(L, 2);
+    Wt::WLength height = Wt::WLength(raw2);
+    self->setHeaderHeight(height);
+    return 0;
+    
     } else {
-        return luaL_error(L, "Wrong arguments for WTableView.currentPage");
+        return luaL_error(L, "Wrong arguments for WTableView.setHeaderHeight");
     }
 }
 
@@ -148,9 +201,32 @@ int luawt_WTableView_setCurrentPage(lua_State* L) {
     }
 }
 
+static const char* WTableView_resize_args0[] = {luawt_typeToStr<WTableView>(), "double", "double", NULL};
+static const char* const* const luawt_WTableView_resize_args[] = {WTableView_resize_args0, NULL};
+
+int luawt_WTableView_resize(lua_State* L) {
+    int index = luawt_getSuitableArgsGroup(L, luawt_WTableView_resize_args);
+    WTableView* self = luawt_checkFromLua<WTableView>(L, 1);
+    if (index == 0) {
+    double raw2 = lua_tonumber(L, 2);
+    Wt::WLength width = Wt::WLength(raw2);
+    double raw3 = lua_tonumber(L, 3);
+    Wt::WLength height = Wt::WLength(raw3);
+    self->resize(width, height);
+    return 0;
+    
+    } else {
+        return luaL_error(L, "Wrong arguments for WTableView.resize");
+    }
+}
+
 
 static const luaL_Reg luawt_WTableView_methods[] = {
+    METHOD(WTableView, setColumnWidth),
     METHOD(WTableView, setAlternatingRowColors),
+    METHOD(WTableView, setRowHeight),
+    METHOD(WTableView, setHeaderHeight),
+    METHOD(WTableView, resize),
     METHOD(WTableView, setColumnHidden),
     METHOD(WTableView, setRowHeaderCount),
     METHOD(WTableView, pageCount),

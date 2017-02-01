@@ -1,5 +1,6 @@
 #include "boost-xtime.hpp"
 
+#include <Wt/WLength>
 #include <Wt/WString>
 #include <Wt/WContainerWidget>
 #include <Wt/WTextEdit>
@@ -15,36 +16,36 @@ static const char* const* const luawt_WTextEdit_make_args[] = {WTextEdit_make_ar
 int luawt_WTextEdit_make(lua_State* L) {
     int index = luawt_getSuitableArgsGroup(L, luawt_WTextEdit_make_args);
     if (index == 0) {
-    WTextEdit * result = new WTextEdit();
+    WTextEdit * l_result = new WTextEdit();
     MyApplication* app = MyApplication::instance();
     if (!app) {
-        delete result;
+        delete l_result;
         throw std::logic_error("No WApplication when creating WTextEdit");
     }
-    app->root()->addWidget(result);
+    app->root()->addWidget(l_result);
     
-    luawt_toLua(L, result);
+    luawt_toLua(L, l_result);
     return 1;
 
     } else if (index == 1) {
     Wt::WContainerWidget* parent =
         luawt_checkFromLua<Wt::WContainerWidget>(L, 1);
-    WTextEdit * result = new WTextEdit(parent);
-    luawt_toLua(L, result);
+    WTextEdit * l_result = new WTextEdit(parent);
+    luawt_toLua(L, l_result);
     return 1;
 
     } else if (index == 2) {
     char const * raw1 = lua_tostring(L, 1);
     Wt::WString text = Wt::WString(raw1);
-    WTextEdit * result = new WTextEdit(text);
+    WTextEdit * l_result = new WTextEdit(text);
     MyApplication* app = MyApplication::instance();
     if (!app) {
-        delete result;
+        delete l_result;
         throw std::logic_error("No WApplication when creating WTextEdit");
     }
-    app->root()->addWidget(result);
+    app->root()->addWidget(l_result);
     
-    luawt_toLua(L, result);
+    luawt_toLua(L, l_result);
     return 1;
 
     } else if (index == 3) {
@@ -52,8 +53,8 @@ int luawt_WTextEdit_make(lua_State* L) {
     Wt::WString text = Wt::WString(raw1);
     Wt::WContainerWidget* parent =
         luawt_checkFromLua<Wt::WContainerWidget>(L, 2);
-    WTextEdit * result = new WTextEdit(text, parent);
-    luawt_toLua(L, result);
+    WTextEdit * l_result = new WTextEdit(text, parent);
+    luawt_toLua(L, l_result);
     return 1;
 
     } else {
@@ -102,8 +103,8 @@ int luawt_WTextEdit_extraPlugins(lua_State* L) {
     int index = luawt_getSuitableArgsGroup(L, luawt_WTextEdit_extraPlugins_args);
     WTextEdit* self = luawt_checkFromLua<WTextEdit>(L, 1);
     if (index == 0) {
-    std::string const result = self->extraPlugins();
-    lua_pushstring(L, result.c_str());
+    std::string const l_result = self->extraPlugins();
+    lua_pushstring(L, l_result.c_str());
     return 1;
 
     } else {
@@ -118,8 +119,8 @@ int luawt_WTextEdit_styleSheet(lua_State* L) {
     int index = luawt_getSuitableArgsGroup(L, luawt_WTextEdit_styleSheet_args);
     WTextEdit* self = luawt_checkFromLua<WTextEdit>(L, 1);
     if (index == 0) {
-    std::string const result = self->styleSheet();
-    lua_pushstring(L, result.c_str());
+    std::string const l_result = self->styleSheet();
+    lua_pushstring(L, l_result.c_str());
     return 1;
 
     } else {
@@ -142,6 +143,25 @@ int luawt_WTextEdit_setToolBar(lua_State* L) {
     
     } else {
         return luaL_error(L, "Wrong arguments for WTextEdit.setToolBar");
+    }
+}
+
+static const char* WTextEdit_resize_args0[] = {luawt_typeToStr<WTextEdit>(), "double", "double", NULL};
+static const char* const* const luawt_WTextEdit_resize_args[] = {WTextEdit_resize_args0, NULL};
+
+int luawt_WTextEdit_resize(lua_State* L) {
+    int index = luawt_getSuitableArgsGroup(L, luawt_WTextEdit_resize_args);
+    WTextEdit* self = luawt_checkFromLua<WTextEdit>(L, 1);
+    if (index == 0) {
+    double raw2 = lua_tonumber(L, 2);
+    Wt::WLength width = Wt::WLength(raw2);
+    double raw3 = lua_tonumber(L, 3);
+    Wt::WLength height = Wt::WLength(raw3);
+    self->resize(width, height);
+    return 0;
+    
+    } else {
+        return luaL_error(L, "Wrong arguments for WTextEdit.resize");
     }
 }
 
@@ -170,8 +190,8 @@ int luawt_WTextEdit_toolBar(lua_State* L) {
     WTextEdit* self = luawt_checkFromLua<WTextEdit>(L, 1);
     if (index == 0) {
     int i = lua_tointeger(L, 2);
-    std::string const result = self->toolBar(i);
-    lua_pushstring(L, result.c_str());
+    std::string const l_result = self->toolBar(i);
+    lua_pushstring(L, l_result.c_str());
     return 1;
 
     } else {
@@ -212,6 +232,7 @@ static const luaL_Reg luawt_WTextEdit_methods[] = {
     METHOD(WTextEdit, extraPlugins),
     METHOD(WTextEdit, setToolBar),
     METHOD(WTextEdit, toolBar),
+    METHOD(WTextEdit, resize),
     METHOD(WTextEdit, changed),
     METHOD(WTextEdit, selected),
     METHOD(WTextEdit, blurred),

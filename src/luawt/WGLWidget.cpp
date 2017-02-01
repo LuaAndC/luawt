@@ -1,8 +1,9 @@
 #include "boost-xtime.hpp"
 
-#include <Wt/WImage>
-#include <Wt/WWidget>
+#include <Wt/WLength>
 #include <Wt/WVideo>
+#include <Wt/WWidget>
+#include <Wt/WImage>
 #include <Wt/WContainerWidget>
 #include <Wt/WGLWidget>
 
@@ -16,8 +17,8 @@ int luawt_WGLWidget_make(lua_State* L) {
     if (index == 0) {
     Wt::WContainerWidget* parent =
         luawt_checkFromLua<Wt::WContainerWidget>(L, 1);
-    WGLWidget * result = new WGLWidget(parent);
-    luawt_toLua(L, result);
+    WGLWidget * l_result = new WGLWidget(parent);
+    luawt_toLua(L, l_result);
     return 1;
 
     } else {
@@ -281,21 +282,22 @@ int luawt_WGLWidget_colorMask(lua_State* L) {
     }
 }
 
-static const char* WGLWidget_drawArrays_args0[] = {luawt_typeToStr<WGLWidget>(), "int", "int", "int", NULL};
-static const char* const* const luawt_WGLWidget_drawArrays_args[] = {WGLWidget_drawArrays_args0, NULL};
+static const char* WGLWidget_clearColor_args0[] = {luawt_typeToStr<WGLWidget>(), "double", "double", "double", "double", NULL};
+static const char* const* const luawt_WGLWidget_clearColor_args[] = {WGLWidget_clearColor_args0, NULL};
 
-int luawt_WGLWidget_drawArrays(lua_State* L) {
-    int index = luawt_getSuitableArgsGroup(L, luawt_WGLWidget_drawArrays_args);
+int luawt_WGLWidget_clearColor(lua_State* L) {
+    int index = luawt_getSuitableArgsGroup(L, luawt_WGLWidget_clearColor_args);
     WGLWidget* self = luawt_checkFromLua<WGLWidget>(L, 1);
     if (index == 0) {
-    Wt::WGLWidget::GLenum mode = static_cast<Wt::WGLWidget::GLenum>(lua_tointeger(L, 2));
-    int first = lua_tointeger(L, 3);
-    unsigned int count = lua_tointeger(L, 4);
-    self->drawArrays(mode, first, count);
+    double r = lua_tonumber(L, 2);
+    double g = lua_tonumber(L, 3);
+    double b = lua_tonumber(L, 4);
+    double a = lua_tonumber(L, 5);
+    self->clearColor(r, g, b, a);
     return 0;
     
     } else {
-        return luaL_error(L, "Wrong arguments for WGLWidget.drawArrays");
+        return luaL_error(L, "Wrong arguments for WGLWidget.clearColor");
     }
 }
 
@@ -313,22 +315,6 @@ int luawt_WGLWidget_depthRange(lua_State* L) {
     
     } else {
         return luaL_error(L, "Wrong arguments for WGLWidget.depthRange");
-    }
-}
-
-static const char* WGLWidget_generateMipmap_args0[] = {luawt_typeToStr<WGLWidget>(), "int", NULL};
-static const char* const* const luawt_WGLWidget_generateMipmap_args[] = {WGLWidget_generateMipmap_args0, NULL};
-
-int luawt_WGLWidget_generateMipmap(lua_State* L) {
-    int index = luawt_getSuitableArgsGroup(L, luawt_WGLWidget_generateMipmap_args);
-    WGLWidget* self = luawt_checkFromLua<WGLWidget>(L, 1);
-    if (index == 0) {
-    Wt::WGLWidget::GLenum target = static_cast<Wt::WGLWidget::GLenum>(lua_tointeger(L, 2));
-    self->generateMipmap(target);
-    return 0;
-    
-    } else {
-        return luaL_error(L, "Wrong arguments for WGLWidget.generateMipmap");
     }
 }
 
@@ -353,55 +339,19 @@ int luawt_WGLWidget_enableClientErrorChecks(lua_State* L) {
     }
 }
 
-static const char* WGLWidget_polygonOffset_args0[] = {luawt_typeToStr<WGLWidget>(), "double", "double", NULL};
-static const char* const* const luawt_WGLWidget_polygonOffset_args[] = {WGLWidget_polygonOffset_args0, NULL};
+static const char* WGLWidget_generateMipmap_args0[] = {luawt_typeToStr<WGLWidget>(), "int", NULL};
+static const char* const* const luawt_WGLWidget_generateMipmap_args[] = {WGLWidget_generateMipmap_args0, NULL};
 
-int luawt_WGLWidget_polygonOffset(lua_State* L) {
-    int index = luawt_getSuitableArgsGroup(L, luawt_WGLWidget_polygonOffset_args);
+int luawt_WGLWidget_generateMipmap(lua_State* L) {
+    int index = luawt_getSuitableArgsGroup(L, luawt_WGLWidget_generateMipmap_args);
     WGLWidget* self = luawt_checkFromLua<WGLWidget>(L, 1);
     if (index == 0) {
-    double factor = lua_tonumber(L, 2);
-    double units = lua_tonumber(L, 3);
-    self->polygonOffset(factor, units);
+    Wt::WGLWidget::GLenum target = static_cast<Wt::WGLWidget::GLenum>(lua_tointeger(L, 2));
+    self->generateMipmap(target);
     return 0;
     
     } else {
-        return luaL_error(L, "Wrong arguments for WGLWidget.polygonOffset");
-    }
-}
-
-static const char* WGLWidget_stencilFunc_args0[] = {luawt_typeToStr<WGLWidget>(), "int", "int", "int", NULL};
-static const char* const* const luawt_WGLWidget_stencilFunc_args[] = {WGLWidget_stencilFunc_args0, NULL};
-
-int luawt_WGLWidget_stencilFunc(lua_State* L) {
-    int index = luawt_getSuitableArgsGroup(L, luawt_WGLWidget_stencilFunc_args);
-    WGLWidget* self = luawt_checkFromLua<WGLWidget>(L, 1);
-    if (index == 0) {
-    Wt::WGLWidget::GLenum func = static_cast<Wt::WGLWidget::GLenum>(lua_tointeger(L, 2));
-    int ref = lua_tointeger(L, 3);
-    unsigned int mask = lua_tointeger(L, 4);
-    self->stencilFunc(func, ref, mask);
-    return 0;
-    
-    } else {
-        return luaL_error(L, "Wrong arguments for WGLWidget.stencilFunc");
-    }
-}
-
-static const char* WGLWidget_blendEquationSeparate_args0[] = {luawt_typeToStr<WGLWidget>(), "int", "int", NULL};
-static const char* const* const luawt_WGLWidget_blendEquationSeparate_args[] = {WGLWidget_blendEquationSeparate_args0, NULL};
-
-int luawt_WGLWidget_blendEquationSeparate(lua_State* L) {
-    int index = luawt_getSuitableArgsGroup(L, luawt_WGLWidget_blendEquationSeparate_args);
-    WGLWidget* self = luawt_checkFromLua<WGLWidget>(L, 1);
-    if (index == 0) {
-    Wt::WGLWidget::GLenum modeRGB = static_cast<Wt::WGLWidget::GLenum>(lua_tointeger(L, 2));
-    Wt::WGLWidget::GLenum modeAlpha = static_cast<Wt::WGLWidget::GLenum>(lua_tointeger(L, 3));
-    self->blendEquationSeparate(modeRGB, modeAlpha);
-    return 0;
-    
-    } else {
-        return luaL_error(L, "Wrong arguments for WGLWidget.blendEquationSeparate");
+        return luaL_error(L, "Wrong arguments for WGLWidget.generateMipmap");
     }
 }
 
@@ -460,6 +410,93 @@ int luawt_WGLWidget_texImage2D(lua_State* L) {
     
     } else {
         return luaL_error(L, "Wrong arguments for WGLWidget.texImage2D");
+    }
+}
+
+static const char* WGLWidget_viewport_args0[] = {luawt_typeToStr<WGLWidget>(), "int", "int", "int", "int", NULL};
+static const char* const* const luawt_WGLWidget_viewport_args[] = {WGLWidget_viewport_args0, NULL};
+
+int luawt_WGLWidget_viewport(lua_State* L) {
+    int index = luawt_getSuitableArgsGroup(L, luawt_WGLWidget_viewport_args);
+    WGLWidget* self = luawt_checkFromLua<WGLWidget>(L, 1);
+    if (index == 0) {
+    int x = lua_tointeger(L, 2);
+    int y = lua_tointeger(L, 3);
+    unsigned int width = lua_tointeger(L, 4);
+    unsigned int height = lua_tointeger(L, 5);
+    self->viewport(x, y, width, height);
+    return 0;
+    
+    } else {
+        return luaL_error(L, "Wrong arguments for WGLWidget.viewport");
+    }
+}
+
+static const char* WGLWidget_polygonOffset_args0[] = {luawt_typeToStr<WGLWidget>(), "double", "double", NULL};
+static const char* const* const luawt_WGLWidget_polygonOffset_args[] = {WGLWidget_polygonOffset_args0, NULL};
+
+int luawt_WGLWidget_polygonOffset(lua_State* L) {
+    int index = luawt_getSuitableArgsGroup(L, luawt_WGLWidget_polygonOffset_args);
+    WGLWidget* self = luawt_checkFromLua<WGLWidget>(L, 1);
+    if (index == 0) {
+    double factor = lua_tonumber(L, 2);
+    double units = lua_tonumber(L, 3);
+    self->polygonOffset(factor, units);
+    return 0;
+    
+    } else {
+        return luaL_error(L, "Wrong arguments for WGLWidget.polygonOffset");
+    }
+}
+
+static const char* WGLWidget_stencilFunc_args0[] = {luawt_typeToStr<WGLWidget>(), "int", "int", "int", NULL};
+static const char* const* const luawt_WGLWidget_stencilFunc_args[] = {WGLWidget_stencilFunc_args0, NULL};
+
+int luawt_WGLWidget_stencilFunc(lua_State* L) {
+    int index = luawt_getSuitableArgsGroup(L, luawt_WGLWidget_stencilFunc_args);
+    WGLWidget* self = luawt_checkFromLua<WGLWidget>(L, 1);
+    if (index == 0) {
+    Wt::WGLWidget::GLenum func = static_cast<Wt::WGLWidget::GLenum>(lua_tointeger(L, 2));
+    int ref = lua_tointeger(L, 3);
+    unsigned int mask = lua_tointeger(L, 4);
+    self->stencilFunc(func, ref, mask);
+    return 0;
+    
+    } else {
+        return luaL_error(L, "Wrong arguments for WGLWidget.stencilFunc");
+    }
+}
+
+static const char* WGLWidget_blendEquationSeparate_args0[] = {luawt_typeToStr<WGLWidget>(), "int", "int", NULL};
+static const char* const* const luawt_WGLWidget_blendEquationSeparate_args[] = {WGLWidget_blendEquationSeparate_args0, NULL};
+
+int luawt_WGLWidget_blendEquationSeparate(lua_State* L) {
+    int index = luawt_getSuitableArgsGroup(L, luawt_WGLWidget_blendEquationSeparate_args);
+    WGLWidget* self = luawt_checkFromLua<WGLWidget>(L, 1);
+    if (index == 0) {
+    Wt::WGLWidget::GLenum modeRGB = static_cast<Wt::WGLWidget::GLenum>(lua_tointeger(L, 2));
+    Wt::WGLWidget::GLenum modeAlpha = static_cast<Wt::WGLWidget::GLenum>(lua_tointeger(L, 3));
+    self->blendEquationSeparate(modeRGB, modeAlpha);
+    return 0;
+    
+    } else {
+        return luaL_error(L, "Wrong arguments for WGLWidget.blendEquationSeparate");
+    }
+}
+
+static const char* WGLWidget_repaintGL_args0[] = {luawt_typeToStr<WGLWidget>(), "int", NULL};
+static const char* const* const luawt_WGLWidget_repaintGL_args[] = {WGLWidget_repaintGL_args0, NULL};
+
+int luawt_WGLWidget_repaintGL(lua_State* L) {
+    int index = luawt_getSuitableArgsGroup(L, luawt_WGLWidget_repaintGL_args);
+    WGLWidget* self = luawt_checkFromLua<WGLWidget>(L, 1);
+    if (index == 0) {
+    Wt::WFlags<Wt::WGLWidget::ClientSideRenderer> which = static_cast<Wt::WGLWidget::ClientSideRenderer>(lua_tointeger(L, 2));
+    self->repaintGL(which);
+    return 0;
+    
+    } else {
+        return luaL_error(L, "Wrong arguments for WGLWidget.repaintGL");
     }
 }
 
@@ -670,22 +707,38 @@ int luawt_WGLWidget_clearDepth(lua_State* L) {
     }
 }
 
-static const char* WGLWidget_viewport_args0[] = {luawt_typeToStr<WGLWidget>(), "int", "int", "int", "int", NULL};
-static const char* const* const luawt_WGLWidget_viewport_args[] = {WGLWidget_viewport_args0, NULL};
+static const char* WGLWidget_resize_args0[] = {luawt_typeToStr<WGLWidget>(), "double", "double", NULL};
+static const char* const* const luawt_WGLWidget_resize_args[] = {WGLWidget_resize_args0, NULL};
 
-int luawt_WGLWidget_viewport(lua_State* L) {
-    int index = luawt_getSuitableArgsGroup(L, luawt_WGLWidget_viewport_args);
+int luawt_WGLWidget_resize(lua_State* L) {
+    int index = luawt_getSuitableArgsGroup(L, luawt_WGLWidget_resize_args);
     WGLWidget* self = luawt_checkFromLua<WGLWidget>(L, 1);
     if (index == 0) {
-    int x = lua_tointeger(L, 2);
-    int y = lua_tointeger(L, 3);
-    unsigned int width = lua_tointeger(L, 4);
-    unsigned int height = lua_tointeger(L, 5);
-    self->viewport(x, y, width, height);
+    double raw2 = lua_tonumber(L, 2);
+    Wt::WLength width = Wt::WLength(raw2);
+    double raw3 = lua_tonumber(L, 3);
+    Wt::WLength height = Wt::WLength(raw3);
+    self->resize(width, height);
     return 0;
     
     } else {
-        return luaL_error(L, "Wrong arguments for WGLWidget.viewport");
+        return luaL_error(L, "Wrong arguments for WGLWidget.resize");
+    }
+}
+
+static const char* WGLWidget_clear_args0[] = {luawt_typeToStr<WGLWidget>(), "int", NULL};
+static const char* const* const luawt_WGLWidget_clear_args[] = {WGLWidget_clear_args0, NULL};
+
+int luawt_WGLWidget_clear(lua_State* L) {
+    int index = luawt_getSuitableArgsGroup(L, luawt_WGLWidget_clear_args);
+    WGLWidget* self = luawt_checkFromLua<WGLWidget>(L, 1);
+    if (index == 0) {
+    Wt::WFlags<Wt::WGLWidget::GLenum> mask = static_cast<Wt::WGLWidget::GLenum>(lua_tointeger(L, 2));
+    self->clear(mask);
+    return 0;
+    
+    } else {
+        return luaL_error(L, "Wrong arguments for WGLWidget.clear");
     }
 }
 
@@ -834,22 +887,21 @@ int luawt_WGLWidget_copyTexSubImage2D(lua_State* L) {
     }
 }
 
-static const char* WGLWidget_clearColor_args0[] = {luawt_typeToStr<WGLWidget>(), "double", "double", "double", "double", NULL};
-static const char* const* const luawt_WGLWidget_clearColor_args[] = {WGLWidget_clearColor_args0, NULL};
+static const char* WGLWidget_drawArrays_args0[] = {luawt_typeToStr<WGLWidget>(), "int", "int", "int", NULL};
+static const char* const* const luawt_WGLWidget_drawArrays_args[] = {WGLWidget_drawArrays_args0, NULL};
 
-int luawt_WGLWidget_clearColor(lua_State* L) {
-    int index = luawt_getSuitableArgsGroup(L, luawt_WGLWidget_clearColor_args);
+int luawt_WGLWidget_drawArrays(lua_State* L) {
+    int index = luawt_getSuitableArgsGroup(L, luawt_WGLWidget_drawArrays_args);
     WGLWidget* self = luawt_checkFromLua<WGLWidget>(L, 1);
     if (index == 0) {
-    double r = lua_tonumber(L, 2);
-    double g = lua_tonumber(L, 3);
-    double b = lua_tonumber(L, 4);
-    double a = lua_tonumber(L, 5);
-    self->clearColor(r, g, b, a);
+    Wt::WGLWidget::GLenum mode = static_cast<Wt::WGLWidget::GLenum>(lua_tointeger(L, 2));
+    int first = lua_tointeger(L, 3);
+    unsigned int count = lua_tointeger(L, 4);
+    self->drawArrays(mode, first, count);
     return 0;
     
     } else {
-        return luaL_error(L, "Wrong arguments for WGLWidget.clearColor");
+        return luaL_error(L, "Wrong arguments for WGLWidget.drawArrays");
     }
 }
 
@@ -875,6 +927,8 @@ ADD_SIGNAL(gestureChanged, WGLWidget, Wt::WGestureEvent)
 ADD_SIGNAL(gestureEnded, WGLWidget, Wt::WGestureEvent)
 
 static const luaL_Reg luawt_WGLWidget_methods[] = {
+    METHOD(WGLWidget, repaintGL),
+    METHOD(WGLWidget, resize),
     METHOD(WGLWidget, debugger),
     METHOD(WGLWidget, activeTexture),
     METHOD(WGLWidget, blendColor),
@@ -883,6 +937,7 @@ static const luaL_Reg luawt_WGLWidget_methods[] = {
     METHOD(WGLWidget, blendFunc),
     METHOD(WGLWidget, blendFuncSeparate),
     METHOD(WGLWidget, bufferData),
+    METHOD(WGLWidget, clear),
     METHOD(WGLWidget, clearColor),
     METHOD(WGLWidget, clearDepth),
     METHOD(WGLWidget, clearStencil),

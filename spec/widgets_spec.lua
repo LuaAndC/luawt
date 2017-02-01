@@ -1,5 +1,5 @@
 -- luawt, Lua bindings for Wt
--- Copyright (c) 2015-2016 Pavel Dolgov and Boris Nagaev
+-- Copyright (c) 2015-2017 Pavel Dolgov and Boris Nagaev
 -- See the LICENSE file for terms of use.
 
 local test = require 'luawt.test'
@@ -7,6 +7,9 @@ local test = require 'luawt.test'
 describe("luawt widgets", function()
 
     -- List of widgets tests
+    it("creates WBreak", function()
+        test.testWidget("WBreak", true)
+    end)
     it("creates WCalendar", function()
         test.testWidget("WCalendar", true)
     end)
@@ -79,6 +82,9 @@ describe("luawt widgets", function()
     it("creates WTreeView", function()
         test.testWidget("WTreeView", true)
     end)
+    it("creates WTemplateFormView", function()
+        test.testWidget("WTemplateFormView", true)
+    end)
     it("creates WSlider", function()
         test.testWidget("WSlider", true)
     end)
@@ -99,6 +105,9 @@ describe("luawt widgets", function()
     end)
     it("creates WOverlayLoadingIndicator", function()
         test.testWidget("WOverlayLoadingIndicator", false)
+    end)
+    it("creates WRadioButton", function()
+        test.testWidget("WRadioButton", true)
     end)
     it("creates WTabWidget", function()
         test.testWidget("WTabWidget", true)

@@ -1,5 +1,6 @@
 #include "boost-xtime.hpp"
 
+#include <Wt/WLength>
 #include <Wt/WPaintedWidget>
 
 #include "globals.hpp"
@@ -20,6 +21,46 @@ int luawt_WPaintedWidget_setPreferredMethod(lua_State* L) {
     }
 }
 
+static const char* WPaintedWidget_update_args0[] = {luawt_typeToStr<WPaintedWidget>(), NULL};
+static const char* WPaintedWidget_update_args1[] = {luawt_typeToStr<WPaintedWidget>(), "int", NULL};
+static const char* const* const luawt_WPaintedWidget_update_args[] = {WPaintedWidget_update_args0, WPaintedWidget_update_args1, NULL};
+
+int luawt_WPaintedWidget_update(lua_State* L) {
+    int index = luawt_getSuitableArgsGroup(L, luawt_WPaintedWidget_update_args);
+    WPaintedWidget* self = luawt_checkFromLua<WPaintedWidget>(L, 1);
+    if (index == 0) {
+    self->update();
+    return 0;
+    
+    } else if (index == 1) {
+    Wt::WFlags<Wt::PaintFlag> flags = static_cast<Wt::PaintFlag>(lua_tointeger(L, 2));
+    self->update(flags);
+    return 0;
+    
+    } else {
+        return luaL_error(L, "Wrong arguments for WPaintedWidget.update");
+    }
+}
+
+static const char* WPaintedWidget_resize_args0[] = {luawt_typeToStr<WPaintedWidget>(), "double", "double", NULL};
+static const char* const* const luawt_WPaintedWidget_resize_args[] = {WPaintedWidget_resize_args0, NULL};
+
+int luawt_WPaintedWidget_resize(lua_State* L) {
+    int index = luawt_getSuitableArgsGroup(L, luawt_WPaintedWidget_resize_args);
+    WPaintedWidget* self = luawt_checkFromLua<WPaintedWidget>(L, 1);
+    if (index == 0) {
+    double raw2 = lua_tonumber(L, 2);
+    Wt::WLength width = Wt::WLength(raw2);
+    double raw3 = lua_tonumber(L, 3);
+    Wt::WLength height = Wt::WLength(raw3);
+    self->resize(width, height);
+    return 0;
+    
+    } else {
+        return luaL_error(L, "Wrong arguments for WPaintedWidget.resize");
+    }
+}
+
 static const char* WPaintedWidget_preferredMethod_args0[] = {luawt_typeToStr<WPaintedWidget>(), NULL};
 static const char* const* const luawt_WPaintedWidget_preferredMethod_args[] = {WPaintedWidget_preferredMethod_args0, NULL};
 
@@ -27,8 +68,8 @@ int luawt_WPaintedWidget_preferredMethod(lua_State* L) {
     int index = luawt_getSuitableArgsGroup(L, luawt_WPaintedWidget_preferredMethod_args);
     WPaintedWidget* self = luawt_checkFromLua<WPaintedWidget>(L, 1);
     if (index == 0) {
-    Wt::WPaintedWidget::Method result = self->preferredMethod();
-    lua_pushinteger(L, result);
+    Wt::WPaintedWidget::Method l_result = self->preferredMethod();
+    lua_pushinteger(L, l_result);
     return 1;
 
     } else {
@@ -60,6 +101,8 @@ ADD_SIGNAL(gestureEnded, WPaintedWidget, Wt::WGestureEvent)
 static const luaL_Reg luawt_WPaintedWidget_methods[] = {
     METHOD(WPaintedWidget, setPreferredMethod),
     METHOD(WPaintedWidget, preferredMethod),
+    METHOD(WPaintedWidget, update),
+    METHOD(WPaintedWidget, resize),
     METHOD(WPaintedWidget, keyWentDown),
     METHOD(WPaintedWidget, keyPressed),
     METHOD(WPaintedWidget, keyWentUp),

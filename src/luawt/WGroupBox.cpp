@@ -15,36 +15,36 @@ static const char* const* const luawt_WGroupBox_make_args[] = {WGroupBox_make_ar
 int luawt_WGroupBox_make(lua_State* L) {
     int index = luawt_getSuitableArgsGroup(L, luawt_WGroupBox_make_args);
     if (index == 0) {
-    WGroupBox * result = new WGroupBox();
+    WGroupBox * l_result = new WGroupBox();
     MyApplication* app = MyApplication::instance();
     if (!app) {
-        delete result;
+        delete l_result;
         throw std::logic_error("No WApplication when creating WGroupBox");
     }
-    app->root()->addWidget(result);
+    app->root()->addWidget(l_result);
     
-    luawt_toLua(L, result);
+    luawt_toLua(L, l_result);
     return 1;
 
     } else if (index == 1) {
     Wt::WContainerWidget* parent =
         luawt_checkFromLua<Wt::WContainerWidget>(L, 1);
-    WGroupBox * result = new WGroupBox(parent);
-    luawt_toLua(L, result);
+    WGroupBox * l_result = new WGroupBox(parent);
+    luawt_toLua(L, l_result);
     return 1;
 
     } else if (index == 2) {
     char const * raw1 = lua_tostring(L, 1);
     Wt::WString title = Wt::WString(raw1);
-    WGroupBox * result = new WGroupBox(title);
+    WGroupBox * l_result = new WGroupBox(title);
     MyApplication* app = MyApplication::instance();
     if (!app) {
-        delete result;
+        delete l_result;
         throw std::logic_error("No WApplication when creating WGroupBox");
     }
-    app->root()->addWidget(result);
+    app->root()->addWidget(l_result);
     
-    luawt_toLua(L, result);
+    luawt_toLua(L, l_result);
     return 1;
 
     } else if (index == 3) {
@@ -52,8 +52,8 @@ int luawt_WGroupBox_make(lua_State* L) {
     Wt::WString title = Wt::WString(raw1);
     Wt::WContainerWidget* parent =
         luawt_checkFromLua<Wt::WContainerWidget>(L, 2);
-    WGroupBox * result = new WGroupBox(title, parent);
-    luawt_toLua(L, result);
+    WGroupBox * l_result = new WGroupBox(title, parent);
+    luawt_toLua(L, l_result);
     return 1;
 
     } else {
@@ -100,8 +100,8 @@ int luawt_WGroupBox_title(lua_State* L) {
     int index = luawt_getSuitableArgsGroup(L, luawt_WGroupBox_title_args);
     WGroupBox* self = luawt_checkFromLua<WGroupBox>(L, 1);
     if (index == 0) {
-    Wt::WString const & result = self->title();
-    lua_pushstring(L, result.toUTF8().c_str());
+    Wt::WString const & l_result = self->title();
+    lua_pushstring(L, l_result.toUTF8().c_str());
     return 1;
 
     } else {

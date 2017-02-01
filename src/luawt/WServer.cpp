@@ -1,5 +1,5 @@
 /* luawt, Lua bindings for Wt
- * Copyright (c) 2015-2016 Pavel Dolgov and Boris Nagaev
+ * Copyright (c) 2015-2017 Pavel Dolgov and Boris Nagaev
  *
  * See the LICENSE file for terms of use.
  */
@@ -63,6 +63,12 @@ int luawt_WServer_make(lua_State* L) {
     if (!lua_isnil(L, -1)) {
         config = luaL_checkstring(L, -1);
     }
+    // get document root for static files
+    const char* docroot = 0;
+    lua_getfield(L, 1, "docroot");
+    if (!lua_isnil(L, -1)) {
+        docroot = luaL_checkstring(L, -1);
+    }
     // make argc, argv
     typedef std::vector<const char*> Options;
     Options opt;
@@ -71,10 +77,15 @@ int luawt_WServer_make(lua_State* L) {
     opt.push_back(ip);
     opt.push_back("--http-port");
     opt.push_back(port);
-    opt.push_back("--docroot=/usr/share/Wt");
     if (config) {
         opt.push_back("--config");
         opt.push_back(config);
+    }
+    if (docroot) {
+        opt.push_back("--docroot");
+        opt.push_back(docroot);
+    } else {
+        opt.push_back("--docroot=/usr/include/Wt");
     }
     opt.push_back(0);
     WServer* server = reinterpret_cast<WServer*>(

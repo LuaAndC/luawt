@@ -15,36 +15,36 @@ static const char* const* const luawt_WCheckBox_make_args[] = {WCheckBox_make_ar
 int luawt_WCheckBox_make(lua_State* L) {
     int index = luawt_getSuitableArgsGroup(L, luawt_WCheckBox_make_args);
     if (index == 0) {
-    WCheckBox * result = new WCheckBox();
+    WCheckBox * l_result = new WCheckBox();
     MyApplication* app = MyApplication::instance();
     if (!app) {
-        delete result;
+        delete l_result;
         throw std::logic_error("No WApplication when creating WCheckBox");
     }
-    app->root()->addWidget(result);
+    app->root()->addWidget(l_result);
     
-    luawt_toLua(L, result);
+    luawt_toLua(L, l_result);
     return 1;
 
     } else if (index == 1) {
     Wt::WContainerWidget* parent =
         luawt_checkFromLua<Wt::WContainerWidget>(L, 1);
-    WCheckBox * result = new WCheckBox(parent);
-    luawt_toLua(L, result);
+    WCheckBox * l_result = new WCheckBox(parent);
+    luawt_toLua(L, l_result);
     return 1;
 
     } else if (index == 2) {
     char const * raw1 = lua_tostring(L, 1);
     Wt::WString text = Wt::WString(raw1);
-    WCheckBox * result = new WCheckBox(text);
+    WCheckBox * l_result = new WCheckBox(text);
     MyApplication* app = MyApplication::instance();
     if (!app) {
-        delete result;
+        delete l_result;
         throw std::logic_error("No WApplication when creating WCheckBox");
     }
-    app->root()->addWidget(result);
+    app->root()->addWidget(l_result);
     
-    luawt_toLua(L, result);
+    luawt_toLua(L, l_result);
     return 1;
 
     } else if (index == 3) {
@@ -52,8 +52,8 @@ int luawt_WCheckBox_make(lua_State* L) {
     Wt::WString text = Wt::WString(raw1);
     Wt::WContainerWidget* parent =
         luawt_checkFromLua<Wt::WContainerWidget>(L, 2);
-    WCheckBox * result = new WCheckBox(text, parent);
-    luawt_toLua(L, result);
+    WCheckBox * l_result = new WCheckBox(text, parent);
+    luawt_toLua(L, l_result);
     return 1;
 
     } else {
@@ -84,8 +84,8 @@ int luawt_WCheckBox_isTristate(lua_State* L) {
     int index = luawt_getSuitableArgsGroup(L, luawt_WCheckBox_isTristate_args);
     WCheckBox* self = luawt_checkFromLua<WCheckBox>(L, 1);
     if (index == 0) {
-    bool result = self->isTristate();
-    lua_pushboolean(L, result);
+    bool l_result = self->isTristate();
+    lua_pushboolean(L, l_result);
     return 1;
 
     } else {
@@ -121,8 +121,8 @@ int luawt_WCheckBox_checkState(lua_State* L) {
     int index = luawt_getSuitableArgsGroup(L, luawt_WCheckBox_checkState_args);
     WCheckBox* self = luawt_checkFromLua<WCheckBox>(L, 1);
     if (index == 0) {
-    Wt::CheckState result = self->checkState();
-    lua_pushinteger(L, result);
+    Wt::CheckState l_result = self->checkState();
+    lua_pushinteger(L, l_result);
     return 1;
 
     } else {

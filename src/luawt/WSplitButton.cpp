@@ -17,36 +17,36 @@ static const char* const* const luawt_WSplitButton_make_args[] = {WSplitButton_m
 int luawt_WSplitButton_make(lua_State* L) {
     int index = luawt_getSuitableArgsGroup(L, luawt_WSplitButton_make_args);
     if (index == 0) {
-    WSplitButton * result = new WSplitButton();
+    WSplitButton * l_result = new WSplitButton();
     MyApplication* app = MyApplication::instance();
     if (!app) {
-        delete result;
+        delete l_result;
         throw std::logic_error("No WApplication when creating WSplitButton");
     }
-    app->root()->addWidget(result);
+    app->root()->addWidget(l_result);
     
-    luawt_toLua(L, result);
+    luawt_toLua(L, l_result);
     return 1;
 
     } else if (index == 1) {
     Wt::WContainerWidget* parent =
         luawt_checkFromLua<Wt::WContainerWidget>(L, 1);
-    WSplitButton * result = new WSplitButton(parent);
-    luawt_toLua(L, result);
+    WSplitButton * l_result = new WSplitButton(parent);
+    luawt_toLua(L, l_result);
     return 1;
 
     } else if (index == 2) {
     char const * raw1 = lua_tostring(L, 1);
     Wt::WString label = Wt::WString(raw1);
-    WSplitButton * result = new WSplitButton(label);
+    WSplitButton * l_result = new WSplitButton(label);
     MyApplication* app = MyApplication::instance();
     if (!app) {
-        delete result;
+        delete l_result;
         throw std::logic_error("No WApplication when creating WSplitButton");
     }
-    app->root()->addWidget(result);
+    app->root()->addWidget(l_result);
     
-    luawt_toLua(L, result);
+    luawt_toLua(L, l_result);
     return 1;
 
     } else if (index == 3) {
@@ -54,8 +54,8 @@ int luawt_WSplitButton_make(lua_State* L) {
     Wt::WString label = Wt::WString(raw1);
     Wt::WContainerWidget* parent =
         luawt_checkFromLua<Wt::WContainerWidget>(L, 2);
-    WSplitButton * result = new WSplitButton(label, parent);
-    luawt_toLua(L, result);
+    WSplitButton * l_result = new WSplitButton(label, parent);
+    luawt_toLua(L, l_result);
     return 1;
 
     } else {
@@ -70,8 +70,8 @@ int luawt_WSplitButton_menu(lua_State* L) {
     int index = luawt_getSuitableArgsGroup(L, luawt_WSplitButton_menu_args);
     WSplitButton* self = luawt_checkFromLua<WSplitButton>(L, 1);
     if (index == 0) {
-    Wt::WPopupMenu * result = self->menu();
-    luawt_toLua(L, result);
+    Wt::WPopupMenu * l_result = self->menu();
+    luawt_toLua(L, l_result);
     return 1;
 
     } else {
@@ -86,8 +86,8 @@ int luawt_WSplitButton_actionButton(lua_State* L) {
     int index = luawt_getSuitableArgsGroup(L, luawt_WSplitButton_actionButton_args);
     WSplitButton* self = luawt_checkFromLua<WSplitButton>(L, 1);
     if (index == 0) {
-    Wt::WPushButton * result = self->actionButton();
-    luawt_toLua(L, result);
+    Wt::WPushButton * l_result = self->actionButton();
+    luawt_toLua(L, l_result);
     return 1;
 
     } else {
@@ -102,8 +102,8 @@ int luawt_WSplitButton_dropDownButton(lua_State* L) {
     int index = luawt_getSuitableArgsGroup(L, luawt_WSplitButton_dropDownButton_args);
     WSplitButton* self = luawt_checkFromLua<WSplitButton>(L, 1);
     if (index == 0) {
-    Wt::WPushButton * result = self->dropDownButton();
-    luawt_toLua(L, result);
+    Wt::WPushButton * l_result = self->dropDownButton();
+    luawt_toLua(L, l_result);
     return 1;
 
     } else {

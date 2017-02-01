@@ -1,7 +1,9 @@
 #include "boost-xtime.hpp"
 
-#include <Wt/WWidget>
 #include <Wt/WLineEdit>
+#include <Wt/WLink>
+#include <Wt/WString>
+#include <Wt/WWidget>
 #include <Wt/WNavigationBar>
 #include <Wt/WMenu>
 #include <Wt/WContainerWidget>
@@ -15,22 +17,22 @@ static const char* const* const luawt_WNavigationBar_make_args[] = {WNavigationB
 int luawt_WNavigationBar_make(lua_State* L) {
     int index = luawt_getSuitableArgsGroup(L, luawt_WNavigationBar_make_args);
     if (index == 0) {
-    WNavigationBar * result = new WNavigationBar();
+    WNavigationBar * l_result = new WNavigationBar();
     MyApplication* app = MyApplication::instance();
     if (!app) {
-        delete result;
+        delete l_result;
         throw std::logic_error("No WApplication when creating WNavigationBar");
     }
-    app->root()->addWidget(result);
+    app->root()->addWidget(l_result);
     
-    luawt_toLua(L, result);
+    luawt_toLua(L, l_result);
     return 1;
 
     } else if (index == 1) {
     Wt::WContainerWidget* parent =
         luawt_checkFromLua<Wt::WContainerWidget>(L, 1);
-    WNavigationBar * result = new WNavigationBar(parent);
-    luawt_toLua(L, result);
+    WNavigationBar * l_result = new WNavigationBar(parent);
+    luawt_toLua(L, l_result);
     return 1;
 
     } else {
@@ -63,28 +65,29 @@ int luawt_WNavigationBar_addSearch(lua_State* L) {
     }
 }
 
-static const char* WNavigationBar_addWidget_args0[] = {luawt_typeToStr<WNavigationBar>(), luawt_typeToStr<Wt::WWidget>(), NULL};
-static const char* WNavigationBar_addWidget_args1[] = {luawt_typeToStr<WNavigationBar>(), luawt_typeToStr<Wt::WWidget>(), "int", NULL};
-static const char* const* const luawt_WNavigationBar_addWidget_args[] = {WNavigationBar_addWidget_args0, WNavigationBar_addWidget_args1, NULL};
+static const char* WNavigationBar_setTitle_args0[] = {luawt_typeToStr<WNavigationBar>(), "char const *", NULL};
+static const char* WNavigationBar_setTitle_args1[] = {luawt_typeToStr<WNavigationBar>(), "char const *", "char const *", NULL};
+static const char* const* const luawt_WNavigationBar_setTitle_args[] = {WNavigationBar_setTitle_args0, WNavigationBar_setTitle_args1, NULL};
 
-int luawt_WNavigationBar_addWidget(lua_State* L) {
-    int index = luawt_getSuitableArgsGroup(L, luawt_WNavigationBar_addWidget_args);
+int luawt_WNavigationBar_setTitle(lua_State* L) {
+    int index = luawt_getSuitableArgsGroup(L, luawt_WNavigationBar_setTitle_args);
     WNavigationBar* self = luawt_checkFromLua<WNavigationBar>(L, 1);
     if (index == 0) {
-    Wt::WWidget* widget =
-        luawt_checkFromLua<Wt::WWidget>(L, 2);
-    self->addWidget(widget);
+    char const * raw2 = lua_tostring(L, 2);
+    Wt::WString title = Wt::WString(raw2);
+    self->setTitle(title);
     return 0;
     
     } else if (index == 1) {
-    Wt::WWidget* widget =
-        luawt_checkFromLua<Wt::WWidget>(L, 2);
-    Wt::AlignmentFlag alignment = static_cast<Wt::AlignmentFlag>(lua_tointeger(L, 3));
-    self->addWidget(widget, alignment);
+    char const * raw2 = lua_tostring(L, 2);
+    Wt::WString title = Wt::WString(raw2);
+    char const * raw3 = lua_tostring(L, 3);
+    Wt::WLink link = Wt::WLink(raw3);
+    self->setTitle(title, link);
     return 0;
     
     } else {
-        return luaL_error(L, "Wrong arguments for WNavigationBar.addWidget");
+        return luaL_error(L, "Wrong arguments for WNavigationBar.setTitle");
     }
 }
 
@@ -138,6 +141,31 @@ int luawt_WNavigationBar_addFormField(lua_State* L) {
     }
 }
 
+static const char* WNavigationBar_addWidget_args0[] = {luawt_typeToStr<WNavigationBar>(), luawt_typeToStr<Wt::WWidget>(), NULL};
+static const char* WNavigationBar_addWidget_args1[] = {luawt_typeToStr<WNavigationBar>(), luawt_typeToStr<Wt::WWidget>(), "int", NULL};
+static const char* const* const luawt_WNavigationBar_addWidget_args[] = {WNavigationBar_addWidget_args0, WNavigationBar_addWidget_args1, NULL};
+
+int luawt_WNavigationBar_addWidget(lua_State* L) {
+    int index = luawt_getSuitableArgsGroup(L, luawt_WNavigationBar_addWidget_args);
+    WNavigationBar* self = luawt_checkFromLua<WNavigationBar>(L, 1);
+    if (index == 0) {
+    Wt::WWidget* widget =
+        luawt_checkFromLua<Wt::WWidget>(L, 2);
+    self->addWidget(widget);
+    return 0;
+    
+    } else if (index == 1) {
+    Wt::WWidget* widget =
+        luawt_checkFromLua<Wt::WWidget>(L, 2);
+    Wt::AlignmentFlag alignment = static_cast<Wt::AlignmentFlag>(lua_tointeger(L, 3));
+    self->addWidget(widget, alignment);
+    return 0;
+    
+    } else {
+        return luaL_error(L, "Wrong arguments for WNavigationBar.addWidget");
+    }
+}
+
 static const char* WNavigationBar_setResponsive_args0[] = {luawt_typeToStr<WNavigationBar>(), "bool", NULL};
 static const char* const* const luawt_WNavigationBar_setResponsive_args[] = {WNavigationBar_setResponsive_args0, NULL};
 
@@ -176,6 +204,7 @@ ADD_SIGNAL(gestureChanged, WNavigationBar, Wt::WGestureEvent)
 ADD_SIGNAL(gestureEnded, WNavigationBar, Wt::WGestureEvent)
 
 static const luaL_Reg luawt_WNavigationBar_methods[] = {
+    METHOD(WNavigationBar, setTitle),
     METHOD(WNavigationBar, setResponsive),
     METHOD(WNavigationBar, addMenu),
     METHOD(WNavigationBar, addFormField),

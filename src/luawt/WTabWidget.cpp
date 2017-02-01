@@ -16,22 +16,22 @@ static const char* const* const luawt_WTabWidget_make_args[] = {WTabWidget_make_
 int luawt_WTabWidget_make(lua_State* L) {
     int index = luawt_getSuitableArgsGroup(L, luawt_WTabWidget_make_args);
     if (index == 0) {
-    WTabWidget * result = new WTabWidget();
+    WTabWidget * l_result = new WTabWidget();
     MyApplication* app = MyApplication::instance();
     if (!app) {
-        delete result;
+        delete l_result;
         throw std::logic_error("No WApplication when creating WTabWidget");
     }
-    app->root()->addWidget(result);
+    app->root()->addWidget(l_result);
     
-    luawt_toLua(L, result);
+    luawt_toLua(L, l_result);
     return 1;
 
     } else if (index == 1) {
     Wt::WContainerWidget* parent =
         luawt_checkFromLua<Wt::WContainerWidget>(L, 1);
-    WTabWidget * result = new WTabWidget(parent);
-    luawt_toLua(L, result);
+    WTabWidget * l_result = new WTabWidget(parent);
+    luawt_toLua(L, l_result);
     return 1;
 
     } else {
@@ -47,8 +47,8 @@ int luawt_WTabWidget_tabToolTip(lua_State* L) {
     WTabWidget* self = luawt_checkFromLua<WTabWidget>(L, 1);
     if (index == 0) {
     int index = lua_tointeger(L, 2);
-    Wt::WString const & result = self->tabToolTip(index);
-    lua_pushstring(L, result.toUTF8().c_str());
+    Wt::WString const & l_result = self->tabToolTip(index);
+    lua_pushstring(L, l_result.toUTF8().c_str());
     return 1;
 
     } else {
@@ -64,8 +64,8 @@ int luawt_WTabWidget_isTabEnabled(lua_State* L) {
     WTabWidget* self = luawt_checkFromLua<WTabWidget>(L, 1);
     if (index == 0) {
     int index = lua_tointeger(L, 2);
-    bool result = self->isTabEnabled(index);
-    lua_pushboolean(L, result);
+    bool l_result = self->isTabEnabled(index);
+    lua_pushboolean(L, l_result);
     return 1;
 
     } else {
@@ -80,8 +80,8 @@ int luawt_WTabWidget_internalBasePath(lua_State* L) {
     int index = luawt_getSuitableArgsGroup(L, luawt_WTabWidget_internalBasePath_args);
     WTabWidget* self = luawt_checkFromLua<WTabWidget>(L, 1);
     if (index == 0) {
-    std::string const & result = self->internalBasePath();
-    lua_pushstring(L, result.c_str());
+    std::string const & l_result = self->internalBasePath();
+    lua_pushstring(L, l_result.c_str());
     return 1;
 
     } else {
@@ -112,8 +112,8 @@ int luawt_WTabWidget_currentWidget(lua_State* L) {
     int index = luawt_getSuitableArgsGroup(L, luawt_WTabWidget_currentWidget_args);
     WTabWidget* self = luawt_checkFromLua<WTabWidget>(L, 1);
     if (index == 0) {
-    Wt::WWidget * result = self->currentWidget();
-    luawt_toLua(L, result);
+    Wt::WWidget * l_result = self->currentWidget();
+    luawt_toLua(L, l_result);
     return 1;
 
     } else {
@@ -184,8 +184,8 @@ int luawt_WTabWidget_isTabCloseable(lua_State* L) {
     WTabWidget* self = luawt_checkFromLua<WTabWidget>(L, 1);
     if (index == 0) {
     int index = lua_tointeger(L, 2);
-    bool result = self->isTabCloseable(index);
-    lua_pushboolean(L, result);
+    bool l_result = self->isTabCloseable(index);
+    lua_pushboolean(L, l_result);
     return 1;
 
     } else {
@@ -201,8 +201,8 @@ int luawt_WTabWidget_widget(lua_State* L) {
     WTabWidget* self = luawt_checkFromLua<WTabWidget>(L, 1);
     if (index == 0) {
     int index = lua_tointeger(L, 2);
-    Wt::WWidget * result = self->widget(index);
-    luawt_toLua(L, result);
+    Wt::WWidget * l_result = self->widget(index);
+    luawt_toLua(L, l_result);
     return 1;
 
     } else {
@@ -236,8 +236,8 @@ int luawt_WTabWidget_indexOf(lua_State* L) {
     if (index == 0) {
     Wt::WWidget* widget =
         luawt_checkFromLua<Wt::WWidget>(L, 2);
-    int result = self->indexOf(widget);
-    lua_pushinteger(L, result);
+    int l_result = self->indexOf(widget);
+    lua_pushinteger(L, l_result);
     return 1;
 
     } else {
@@ -252,8 +252,8 @@ int luawt_WTabWidget_internalPathEnabled(lua_State* L) {
     int index = luawt_getSuitableArgsGroup(L, luawt_WTabWidget_internalPathEnabled_args);
     WTabWidget* self = luawt_checkFromLua<WTabWidget>(L, 1);
     if (index == 0) {
-    bool result = self->internalPathEnabled();
-    lua_pushboolean(L, result);
+    bool l_result = self->internalPathEnabled();
+    lua_pushboolean(L, l_result);
     return 1;
 
     } else {
@@ -269,8 +269,8 @@ int luawt_WTabWidget_tabText(lua_State* L) {
     WTabWidget* self = luawt_checkFromLua<WTabWidget>(L, 1);
     if (index == 0) {
     int index = lua_tointeger(L, 2);
-    Wt::WString const & result = self->tabText(index);
-    lua_pushstring(L, result.toUTF8().c_str());
+    Wt::WString const & l_result = self->tabText(index);
+    lua_pushstring(L, l_result.toUTF8().c_str());
     return 1;
 
     } else {
@@ -290,8 +290,8 @@ int luawt_WTabWidget_addTab(lua_State* L) {
         luawt_checkFromLua<Wt::WWidget>(L, 2);
     char const * raw3 = lua_tostring(L, 3);
     Wt::WString label = Wt::WString(raw3);
-    Wt::WMenuItem * result = self->addTab(child, label);
-    luawt_toLua(L, result);
+    Wt::WMenuItem * l_result = self->addTab(child, label);
+    luawt_toLua(L, l_result);
     return 1;
 
     } else if (index == 1) {
@@ -300,8 +300,8 @@ int luawt_WTabWidget_addTab(lua_State* L) {
     char const * raw3 = lua_tostring(L, 3);
     Wt::WString label = Wt::WString(raw3);
     Wt::WTabWidget::LoadPolicy arg2 = static_cast<Wt::WTabWidget::LoadPolicy>(lua_tointeger(L, 4));
-    Wt::WMenuItem * result = self->addTab(child, label, arg2);
-    luawt_toLua(L, result);
+    Wt::WMenuItem * l_result = self->addTab(child, label, arg2);
+    luawt_toLua(L, l_result);
     return 1;
 
     } else {
@@ -333,8 +333,8 @@ int luawt_WTabWidget_contentsStack(lua_State* L) {
     int index = luawt_getSuitableArgsGroup(L, luawt_WTabWidget_contentsStack_args);
     WTabWidget* self = luawt_checkFromLua<WTabWidget>(L, 1);
     if (index == 0) {
-    Wt::WStackedWidget * result = self->contentsStack();
-    luawt_toLua(L, result);
+    Wt::WStackedWidget * l_result = self->contentsStack();
+    luawt_toLua(L, l_result);
     return 1;
 
     } else {
@@ -349,8 +349,8 @@ int luawt_WTabWidget_count(lua_State* L) {
     int index = luawt_getSuitableArgsGroup(L, luawt_WTabWidget_count_args);
     WTabWidget* self = luawt_checkFromLua<WTabWidget>(L, 1);
     if (index == 0) {
-    int result = self->count();
-    lua_pushinteger(L, result);
+    int l_result = self->count();
+    lua_pushinteger(L, l_result);
     return 1;
 
     } else {
@@ -435,8 +435,8 @@ int luawt_WTabWidget_currentIndex(lua_State* L) {
     int index = luawt_getSuitableArgsGroup(L, luawt_WTabWidget_currentIndex_args);
     WTabWidget* self = luawt_checkFromLua<WTabWidget>(L, 1);
     if (index == 0) {
-    int result = self->currentIndex();
-    lua_pushinteger(L, result);
+    int l_result = self->currentIndex();
+    lua_pushinteger(L, l_result);
     return 1;
 
     } else {
@@ -452,8 +452,8 @@ int luawt_WTabWidget_isTabHidden(lua_State* L) {
     WTabWidget* self = luawt_checkFromLua<WTabWidget>(L, 1);
     if (index == 0) {
     int index = lua_tointeger(L, 2);
-    bool result = self->isTabHidden(index);
-    lua_pushboolean(L, result);
+    bool l_result = self->isTabHidden(index);
+    lua_pushboolean(L, l_result);
     return 1;
 
     } else {

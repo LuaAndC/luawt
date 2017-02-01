@@ -1,7 +1,8 @@
 #include "boost-xtime.hpp"
 
-#include <Wt/WWidget>
+#include <Wt/WLength>
 #include <Wt/WWebWidget>
+#include <Wt/WWidget>
 #include <Wt/WString>
 
 #include "globals.hpp"
@@ -70,6 +71,25 @@ int luawt_WWebWidget_setFormObject(lua_State* L) {
     }
 }
 
+static const char* WWebWidget_setMinimumSize_args0[] = {luawt_typeToStr<WWebWidget>(), "double", "double", NULL};
+static const char* const* const luawt_WWebWidget_setMinimumSize_args[] = {WWebWidget_setMinimumSize_args0, NULL};
+
+int luawt_WWebWidget_setMinimumSize(lua_State* L) {
+    int index = luawt_getSuitableArgsGroup(L, luawt_WWebWidget_setMinimumSize_args);
+    WWebWidget* self = luawt_checkFromLua<WWebWidget>(L, 1);
+    if (index == 0) {
+    double raw2 = lua_tonumber(L, 2);
+    Wt::WLength width = Wt::WLength(raw2);
+    double raw3 = lua_tonumber(L, 3);
+    Wt::WLength height = Wt::WLength(raw3);
+    self->setMinimumSize(width, height);
+    return 0;
+    
+    } else {
+        return luaL_error(L, "Wrong arguments for WWebWidget.setMinimumSize");
+    }
+}
+
 static const char* WWebWidget_floatSide_args0[] = {luawt_typeToStr<WWebWidget>(), NULL};
 static const char* const* const luawt_WWebWidget_floatSide_args[] = {WWebWidget_floatSide_args0, NULL};
 
@@ -77,8 +97,8 @@ int luawt_WWebWidget_floatSide(lua_State* L) {
     int index = luawt_getSuitableArgsGroup(L, luawt_WWebWidget_floatSide_args);
     WWebWidget* self = luawt_checkFromLua<WWebWidget>(L, 1);
     if (index == 0) {
-    Wt::Side result = self->floatSide();
-    lua_pushinteger(L, result);
+    Wt::Side l_result = self->floatSide();
+    lua_pushinteger(L, l_result);
     return 1;
 
     } else {
@@ -95,8 +115,8 @@ int luawt_WWebWidget_resolveRelativeUrl(lua_State* L) {
     if (index == 0) {
     char const * raw2 = lua_tostring(L, 2);
     std::string url = std::string(raw2);
-    std::string result = self->resolveRelativeUrl(url);
-    lua_pushstring(L, result.c_str());
+    std::string l_result = self->resolveRelativeUrl(url);
+    lua_pushstring(L, l_result.c_str());
     return 1;
 
     } else {
@@ -104,19 +124,19 @@ int luawt_WWebWidget_resolveRelativeUrl(lua_State* L) {
     }
 }
 
-static const char* WWebWidget_styleClass_args0[] = {luawt_typeToStr<WWebWidget>(), NULL};
-static const char* const* const luawt_WWebWidget_styleClass_args[] = {WWebWidget_styleClass_args0, NULL};
+static const char* WWebWidget_height_args0[] = {luawt_typeToStr<WWebWidget>(), NULL};
+static const char* const* const luawt_WWebWidget_height_args[] = {WWebWidget_height_args0, NULL};
 
-int luawt_WWebWidget_styleClass(lua_State* L) {
-    int index = luawt_getSuitableArgsGroup(L, luawt_WWebWidget_styleClass_args);
+int luawt_WWebWidget_height(lua_State* L) {
+    int index = luawt_getSuitableArgsGroup(L, luawt_WWebWidget_height_args);
     WWebWidget* self = luawt_checkFromLua<WWebWidget>(L, 1);
     if (index == 0) {
-    Wt::WString result = self->styleClass();
-    lua_pushstring(L, result.toUTF8().c_str());
+    Wt::WLength l_result = self->height();
+    lua_pushnumber(L, l_result.value());
     return 1;
 
     } else {
-        return luaL_error(L, "Wrong arguments for WWebWidget.styleClass");
+        return luaL_error(L, "Wrong arguments for WWebWidget.height");
     }
 }
 
@@ -127,8 +147,8 @@ int luawt_WWebWidget_hiddenKeepsGeometry(lua_State* L) {
     int index = luawt_getSuitableArgsGroup(L, luawt_WWebWidget_hiddenKeepsGeometry_args);
     WWebWidget* self = luawt_checkFromLua<WWebWidget>(L, 1);
     if (index == 0) {
-    bool result = self->hiddenKeepsGeometry();
-    lua_pushboolean(L, result);
+    bool l_result = self->hiddenKeepsGeometry();
+    lua_pushboolean(L, l_result);
     return 1;
 
     } else {
@@ -136,19 +156,19 @@ int luawt_WWebWidget_hiddenKeepsGeometry(lua_State* L) {
     }
 }
 
-static const char* WWebWidget_id_args0[] = {luawt_typeToStr<WWebWidget>(), NULL};
-static const char* const* const luawt_WWebWidget_id_args[] = {WWebWidget_id_args0, NULL};
+static const char* WWebWidget_minimumHeight_args0[] = {luawt_typeToStr<WWebWidget>(), NULL};
+static const char* const* const luawt_WWebWidget_minimumHeight_args[] = {WWebWidget_minimumHeight_args0, NULL};
 
-int luawt_WWebWidget_id(lua_State* L) {
-    int index = luawt_getSuitableArgsGroup(L, luawt_WWebWidget_id_args);
+int luawt_WWebWidget_minimumHeight(lua_State* L) {
+    int index = luawt_getSuitableArgsGroup(L, luawt_WWebWidget_minimumHeight_args);
     WWebWidget* self = luawt_checkFromLua<WWebWidget>(L, 1);
     if (index == 0) {
-    std::string const result = self->id();
-    lua_pushstring(L, result.c_str());
+    Wt::WLength l_result = self->minimumHeight();
+    lua_pushnumber(L, l_result.value());
     return 1;
 
     } else {
-        return luaL_error(L, "Wrong arguments for WWebWidget.id");
+        return luaL_error(L, "Wrong arguments for WWebWidget.minimumHeight");
     }
 }
 
@@ -159,12 +179,47 @@ int luawt_WWebWidget_loaded(lua_State* L) {
     int index = luawt_getSuitableArgsGroup(L, luawt_WWebWidget_loaded_args);
     WWebWidget* self = luawt_checkFromLua<WWebWidget>(L, 1);
     if (index == 0) {
-    bool result = self->loaded();
-    lua_pushboolean(L, result);
+    bool l_result = self->loaded();
+    lua_pushboolean(L, l_result);
     return 1;
 
     } else {
         return luaL_error(L, "Wrong arguments for WWebWidget.loaded");
+    }
+}
+
+static const char* WWebWidget_setMaximumSize_args0[] = {luawt_typeToStr<WWebWidget>(), "double", "double", NULL};
+static const char* const* const luawt_WWebWidget_setMaximumSize_args[] = {WWebWidget_setMaximumSize_args0, NULL};
+
+int luawt_WWebWidget_setMaximumSize(lua_State* L) {
+    int index = luawt_getSuitableArgsGroup(L, luawt_WWebWidget_setMaximumSize_args);
+    WWebWidget* self = luawt_checkFromLua<WWebWidget>(L, 1);
+    if (index == 0) {
+    double raw2 = lua_tonumber(L, 2);
+    Wt::WLength width = Wt::WLength(raw2);
+    double raw3 = lua_tonumber(L, 3);
+    Wt::WLength height = Wt::WLength(raw3);
+    self->setMaximumSize(width, height);
+    return 0;
+    
+    } else {
+        return luaL_error(L, "Wrong arguments for WWebWidget.setMaximumSize");
+    }
+}
+
+static const char* WWebWidget_styleClass_args0[] = {luawt_typeToStr<WWebWidget>(), NULL};
+static const char* const* const luawt_WWebWidget_styleClass_args[] = {WWebWidget_styleClass_args0, NULL};
+
+int luawt_WWebWidget_styleClass(lua_State* L) {
+    int index = luawt_getSuitableArgsGroup(L, luawt_WWebWidget_styleClass_args);
+    WWebWidget* self = luawt_checkFromLua<WWebWidget>(L, 1);
+    if (index == 0) {
+    Wt::WString l_result = self->styleClass();
+    lua_pushstring(L, l_result.toUTF8().c_str());
+    return 1;
+
+    } else {
+        return luaL_error(L, "Wrong arguments for WWebWidget.styleClass");
     }
 }
 
@@ -177,12 +232,28 @@ int luawt_WWebWidget_find(lua_State* L) {
     if (index == 0) {
     char const * raw2 = lua_tostring(L, 2);
     std::string name = std::string(raw2);
-    Wt::WWidget * result = self->find(name);
-    luawt_toLua(L, result);
+    Wt::WWidget * l_result = self->find(name);
+    luawt_toLua(L, l_result);
     return 1;
 
     } else {
         return luaL_error(L, "Wrong arguments for WWebWidget.find");
+    }
+}
+
+static const char* WWebWidget_setTabIndex_args0[] = {luawt_typeToStr<WWebWidget>(), "int", NULL};
+static const char* const* const luawt_WWebWidget_setTabIndex_args[] = {WWebWidget_setTabIndex_args0, NULL};
+
+int luawt_WWebWidget_setTabIndex(lua_State* L) {
+    int index = luawt_getSuitableArgsGroup(L, luawt_WWebWidget_setTabIndex_args);
+    WWebWidget* self = luawt_checkFromLua<WWebWidget>(L, 1);
+    if (index == 0) {
+    int index = lua_tointeger(L, 2);
+    self->setTabIndex(index);
+    return 0;
+    
+    } else {
+        return luaL_error(L, "Wrong arguments for WWebWidget.setTabIndex");
     }
 }
 
@@ -193,8 +264,8 @@ int luawt_WWebWidget_isInline(lua_State* L) {
     int index = luawt_getSuitableArgsGroup(L, luawt_WWebWidget_isInline_args);
     WWebWidget* self = luawt_checkFromLua<WWebWidget>(L, 1);
     if (index == 0) {
-    bool result = self->isInline();
-    lua_pushboolean(L, result);
+    bool l_result = self->isInline();
+    lua_pushboolean(L, l_result);
     return 1;
 
     } else {
@@ -209,8 +280,8 @@ int luawt_WWebWidget_canOptimizeUpdates(lua_State* L) {
     int index = luawt_getSuitableArgsGroup(L, luawt_WWebWidget_canOptimizeUpdates_args);
     WWebWidget* self = luawt_checkFromLua<WWebWidget>(L, 1);
     if (index == 0) {
-    bool result = self->canOptimizeUpdates();
-    lua_pushboolean(L, result);
+    bool l_result = self->canOptimizeUpdates();
+    lua_pushboolean(L, l_result);
     return 1;
 
     } else {
@@ -218,20 +289,19 @@ int luawt_WWebWidget_canOptimizeUpdates(lua_State* L) {
     }
 }
 
-static const char* WWebWidget_setStyleClass_args0[] = {luawt_typeToStr<WWebWidget>(), "char const *", NULL};
-static const char* const* const luawt_WWebWidget_setStyleClass_args[] = {WWebWidget_setStyleClass_args0, NULL};
+static const char* WWebWidget_setClearSides_args0[] = {luawt_typeToStr<WWebWidget>(), "int", NULL};
+static const char* const* const luawt_WWebWidget_setClearSides_args[] = {WWebWidget_setClearSides_args0, NULL};
 
-int luawt_WWebWidget_setStyleClass(lua_State* L) {
-    int index = luawt_getSuitableArgsGroup(L, luawt_WWebWidget_setStyleClass_args);
+int luawt_WWebWidget_setClearSides(lua_State* L) {
+    int index = luawt_getSuitableArgsGroup(L, luawt_WWebWidget_setClearSides_args);
     WWebWidget* self = luawt_checkFromLua<WWebWidget>(L, 1);
     if (index == 0) {
-    char const * raw2 = lua_tostring(L, 2);
-    Wt::WString styleClass = Wt::WString(raw2);
-    self->setStyleClass(styleClass);
+    Wt::WFlags<Wt::Side> sides = static_cast<Wt::Side>(lua_tointeger(L, 2));
+    self->setClearSides(sides);
     return 0;
     
     } else {
-        return luaL_error(L, "Wrong arguments for WWebWidget.setStyleClass");
+        return luaL_error(L, "Wrong arguments for WWebWidget.setClearSides");
     }
 }
 
@@ -242,8 +312,8 @@ int luawt_WWebWidget_isRendered(lua_State* L) {
     int index = luawt_getSuitableArgsGroup(L, luawt_WWebWidget_isRendered_args);
     WWebWidget* self = luawt_checkFromLua<WWebWidget>(L, 1);
     if (index == 0) {
-    bool result = self->isRendered();
-    lua_pushboolean(L, result);
+    bool l_result = self->isRendered();
+    lua_pushboolean(L, l_result);
     return 1;
 
     } else {
@@ -251,19 +321,28 @@ int luawt_WWebWidget_isRendered(lua_State* L) {
     }
 }
 
-static const char* WWebWidget_isDisabled_args0[] = {luawt_typeToStr<WWebWidget>(), NULL};
-static const char* const* const luawt_WWebWidget_isDisabled_args[] = {WWebWidget_isDisabled_args0, NULL};
+static const char* WWebWidget_setOffsets_args0[] = {luawt_typeToStr<WWebWidget>(), "double", NULL};
+static const char* WWebWidget_setOffsets_args1[] = {luawt_typeToStr<WWebWidget>(), "double", "int", NULL};
+static const char* const* const luawt_WWebWidget_setOffsets_args[] = {WWebWidget_setOffsets_args0, WWebWidget_setOffsets_args1, NULL};
 
-int luawt_WWebWidget_isDisabled(lua_State* L) {
-    int index = luawt_getSuitableArgsGroup(L, luawt_WWebWidget_isDisabled_args);
+int luawt_WWebWidget_setOffsets(lua_State* L) {
+    int index = luawt_getSuitableArgsGroup(L, luawt_WWebWidget_setOffsets_args);
     WWebWidget* self = luawt_checkFromLua<WWebWidget>(L, 1);
     if (index == 0) {
-    bool result = self->isDisabled();
-    lua_pushboolean(L, result);
-    return 1;
-
+    double raw2 = lua_tonumber(L, 2);
+    Wt::WLength offset = Wt::WLength(raw2);
+    self->setOffsets(offset);
+    return 0;
+    
+    } else if (index == 1) {
+    double raw2 = lua_tonumber(L, 2);
+    Wt::WLength offset = Wt::WLength(raw2);
+    Wt::WFlags<Wt::Side> sides = static_cast<Wt::Side>(lua_tointeger(L, 3));
+    self->setOffsets(offset, sides);
+    return 0;
+    
     } else {
-        return luaL_error(L, "Wrong arguments for WWebWidget.isDisabled");
+        return luaL_error(L, "Wrong arguments for WWebWidget.setOffsets");
     }
 }
 
@@ -299,6 +378,22 @@ int luawt_WWebWidget_setFloatSide(lua_State* L) {
     }
 }
 
+static const char* WWebWidget_width_args0[] = {luawt_typeToStr<WWebWidget>(), NULL};
+static const char* const* const luawt_WWebWidget_width_args[] = {WWebWidget_width_args0, NULL};
+
+int luawt_WWebWidget_width(lua_State* L) {
+    int index = luawt_getSuitableArgsGroup(L, luawt_WWebWidget_width_args);
+    WWebWidget* self = luawt_checkFromLua<WWebWidget>(L, 1);
+    if (index == 0) {
+    Wt::WLength l_result = self->width();
+    lua_pushnumber(L, l_result.value());
+    return 1;
+
+    } else {
+        return luaL_error(L, "Wrong arguments for WWebWidget.width");
+    }
+}
+
 static const char* WWebWidget_verticalAlignment_args0[] = {luawt_typeToStr<WWebWidget>(), NULL};
 static const char* const* const luawt_WWebWidget_verticalAlignment_args[] = {WWebWidget_verticalAlignment_args0, NULL};
 
@@ -306,12 +401,31 @@ int luawt_WWebWidget_verticalAlignment(lua_State* L) {
     int index = luawt_getSuitableArgsGroup(L, luawt_WWebWidget_verticalAlignment_args);
     WWebWidget* self = luawt_checkFromLua<WWebWidget>(L, 1);
     if (index == 0) {
-    Wt::AlignmentFlag result = self->verticalAlignment();
-    lua_pushinteger(L, result);
+    Wt::AlignmentFlag l_result = self->verticalAlignment();
+    lua_pushinteger(L, l_result);
     return 1;
 
     } else {
         return luaL_error(L, "Wrong arguments for WWebWidget.verticalAlignment");
+    }
+}
+
+static const char* WWebWidget_resize_args0[] = {luawt_typeToStr<WWebWidget>(), "double", "double", NULL};
+static const char* const* const luawt_WWebWidget_resize_args[] = {WWebWidget_resize_args0, NULL};
+
+int luawt_WWebWidget_resize(lua_State* L) {
+    int index = luawt_getSuitableArgsGroup(L, luawt_WWebWidget_resize_args);
+    WWebWidget* self = luawt_checkFromLua<WWebWidget>(L, 1);
+    if (index == 0) {
+    double raw2 = lua_tonumber(L, 2);
+    Wt::WLength width = Wt::WLength(raw2);
+    double raw3 = lua_tonumber(L, 3);
+    Wt::WLength height = Wt::WLength(raw3);
+    self->resize(width, height);
+    return 0;
+    
+    } else {
+        return luaL_error(L, "Wrong arguments for WWebWidget.resize");
     }
 }
 
@@ -322,12 +436,44 @@ int luawt_WWebWidget_positionScheme(lua_State* L) {
     int index = luawt_getSuitableArgsGroup(L, luawt_WWebWidget_positionScheme_args);
     WWebWidget* self = luawt_checkFromLua<WWebWidget>(L, 1);
     if (index == 0) {
-    Wt::PositionScheme result = self->positionScheme();
-    lua_pushinteger(L, result);
+    Wt::PositionScheme l_result = self->positionScheme();
+    lua_pushinteger(L, l_result);
     return 1;
 
     } else {
         return luaL_error(L, "Wrong arguments for WWebWidget.positionScheme");
+    }
+}
+
+static const char* WWebWidget_lineHeight_args0[] = {luawt_typeToStr<WWebWidget>(), NULL};
+static const char* const* const luawt_WWebWidget_lineHeight_args[] = {WWebWidget_lineHeight_args0, NULL};
+
+int luawt_WWebWidget_lineHeight(lua_State* L) {
+    int index = luawt_getSuitableArgsGroup(L, luawt_WWebWidget_lineHeight_args);
+    WWebWidget* self = luawt_checkFromLua<WWebWidget>(L, 1);
+    if (index == 0) {
+    Wt::WLength l_result = self->lineHeight();
+    lua_pushnumber(L, l_result.value());
+    return 1;
+
+    } else {
+        return luaL_error(L, "Wrong arguments for WWebWidget.lineHeight");
+    }
+}
+
+static const char* WWebWidget_id_args0[] = {luawt_typeToStr<WWebWidget>(), NULL};
+static const char* const* const luawt_WWebWidget_id_args[] = {WWebWidget_id_args0, NULL};
+
+int luawt_WWebWidget_id(lua_State* L) {
+    int index = luawt_getSuitableArgsGroup(L, luawt_WWebWidget_id_args);
+    WWebWidget* self = luawt_checkFromLua<WWebWidget>(L, 1);
+    if (index == 0) {
+    std::string const l_result = self->id();
+    lua_pushstring(L, l_result.c_str());
+    return 1;
+
+    } else {
+        return luaL_error(L, "Wrong arguments for WWebWidget.id");
     }
 }
 
@@ -338,8 +484,8 @@ int luawt_WWebWidget_tabIndex(lua_State* L) {
     int index = luawt_getSuitableArgsGroup(L, luawt_WWebWidget_tabIndex_args);
     WWebWidget* self = luawt_checkFromLua<WWebWidget>(L, 1);
     if (index == 0) {
-    int result = self->tabIndex();
-    lua_pushinteger(L, result);
+    int l_result = self->tabIndex();
+    lua_pushinteger(L, l_result);
     return 1;
 
     } else {
@@ -354,8 +500,8 @@ int luawt_WWebWidget_isHidden(lua_State* L) {
     int index = luawt_getSuitableArgsGroup(L, luawt_WWebWidget_isHidden_args);
     WWebWidget* self = luawt_checkFromLua<WWebWidget>(L, 1);
     if (index == 0) {
-    bool result = self->isHidden();
-    lua_pushboolean(L, result);
+    bool l_result = self->isHidden();
+    lua_pushboolean(L, l_result);
     return 1;
 
     } else {
@@ -379,6 +525,22 @@ int luawt_WWebWidget_setSelectable(lua_State* L) {
     }
 }
 
+static const char* WWebWidget_minimumWidth_args0[] = {luawt_typeToStr<WWebWidget>(), NULL};
+static const char* const* const luawt_WWebWidget_minimumWidth_args[] = {WWebWidget_minimumWidth_args0, NULL};
+
+int luawt_WWebWidget_minimumWidth(lua_State* L) {
+    int index = luawt_getSuitableArgsGroup(L, luawt_WWebWidget_minimumWidth_args);
+    WWebWidget* self = luawt_checkFromLua<WWebWidget>(L, 1);
+    if (index == 0) {
+    Wt::WLength l_result = self->minimumWidth();
+    lua_pushnumber(L, l_result.value());
+    return 1;
+
+    } else {
+        return luaL_error(L, "Wrong arguments for WWebWidget.minimumWidth");
+    }
+}
+
 static const char* WWebWidget_attributeValue_args0[] = {luawt_typeToStr<WWebWidget>(), "char const *", NULL};
 static const char* const* const luawt_WWebWidget_attributeValue_args[] = {WWebWidget_attributeValue_args0, NULL};
 
@@ -388,12 +550,28 @@ int luawt_WWebWidget_attributeValue(lua_State* L) {
     if (index == 0) {
     char const * raw2 = lua_tostring(L, 2);
     std::string name = std::string(raw2);
-    Wt::WString result = self->attributeValue(name);
-    lua_pushstring(L, result.toUTF8().c_str());
+    Wt::WString l_result = self->attributeValue(name);
+    lua_pushstring(L, l_result.toUTF8().c_str());
     return 1;
 
     } else {
         return luaL_error(L, "Wrong arguments for WWebWidget.attributeValue");
+    }
+}
+
+static const char* WWebWidget_domElementType_args0[] = {luawt_typeToStr<WWebWidget>(), NULL};
+static const char* const* const luawt_WWebWidget_domElementType_args[] = {WWebWidget_domElementType_args0, NULL};
+
+int luawt_WWebWidget_domElementType(lua_State* L) {
+    int index = luawt_getSuitableArgsGroup(L, luawt_WWebWidget_domElementType_args);
+    WWebWidget* self = luawt_checkFromLua<WWebWidget>(L, 1);
+    if (index == 0) {
+    Wt::DomElementType l_result = self->domElementType();
+    lua_pushinteger(L, l_result);
+    return 1;
+
+    } else {
+        return luaL_error(L, "Wrong arguments for WWebWidget.domElementType");
     }
 }
 
@@ -413,19 +591,19 @@ int luawt_WWebWidget_setPositionScheme(lua_State* L) {
     }
 }
 
-static const char* WWebWidget_domElementType_args0[] = {luawt_typeToStr<WWebWidget>(), NULL};
-static const char* const* const luawt_WWebWidget_domElementType_args[] = {WWebWidget_domElementType_args0, NULL};
+static const char* WWebWidget_maximumHeight_args0[] = {luawt_typeToStr<WWebWidget>(), NULL};
+static const char* const* const luawt_WWebWidget_maximumHeight_args[] = {WWebWidget_maximumHeight_args0, NULL};
 
-int luawt_WWebWidget_domElementType(lua_State* L) {
-    int index = luawt_getSuitableArgsGroup(L, luawt_WWebWidget_domElementType_args);
+int luawt_WWebWidget_maximumHeight(lua_State* L) {
+    int index = luawt_getSuitableArgsGroup(L, luawt_WWebWidget_maximumHeight_args);
     WWebWidget* self = luawt_checkFromLua<WWebWidget>(L, 1);
     if (index == 0) {
-    Wt::DomElementType result = self->domElementType();
-    lua_pushinteger(L, result);
+    Wt::WLength l_result = self->maximumHeight();
+    lua_pushnumber(L, l_result.value());
     return 1;
 
     } else {
-        return luaL_error(L, "Wrong arguments for WWebWidget.domElementType");
+        return luaL_error(L, "Wrong arguments for WWebWidget.maximumHeight");
     }
 }
 
@@ -438,12 +616,28 @@ int luawt_WWebWidget_javaScriptMember(lua_State* L) {
     if (index == 0) {
     char const * raw2 = lua_tostring(L, 2);
     std::string name = std::string(raw2);
-    std::string result = self->javaScriptMember(name);
-    lua_pushstring(L, result.c_str());
+    std::string l_result = self->javaScriptMember(name);
+    lua_pushstring(L, l_result.c_str());
     return 1;
 
     } else {
         return luaL_error(L, "Wrong arguments for WWebWidget.javaScriptMember");
+    }
+}
+
+static const char* WWebWidget_verticalAlignmentLength_args0[] = {luawt_typeToStr<WWebWidget>(), NULL};
+static const char* const* const luawt_WWebWidget_verticalAlignmentLength_args[] = {WWebWidget_verticalAlignmentLength_args0, NULL};
+
+int luawt_WWebWidget_verticalAlignmentLength(lua_State* L) {
+    int index = luawt_getSuitableArgsGroup(L, luawt_WWebWidget_verticalAlignmentLength_args);
+    WWebWidget* self = luawt_checkFromLua<WWebWidget>(L, 1);
+    if (index == 0) {
+    Wt::WLength l_result = self->verticalAlignmentLength();
+    lua_pushnumber(L, l_result.value());
+    return 1;
+
+    } else {
+        return luaL_error(L, "Wrong arguments for WWebWidget.verticalAlignmentLength");
     }
 }
 
@@ -454,8 +648,8 @@ int luawt_WWebWidget_toolTip(lua_State* L) {
     int index = luawt_getSuitableArgsGroup(L, luawt_WWebWidget_toolTip_args);
     WWebWidget* self = luawt_checkFromLua<WWebWidget>(L, 1);
     if (index == 0) {
-    Wt::WString const & result = self->toolTip();
-    lua_pushstring(L, result.toUTF8().c_str());
+    Wt::WString const & l_result = self->toolTip();
+    lua_pushstring(L, l_result.toUTF8().c_str());
     return 1;
 
     } else {
@@ -470,12 +664,61 @@ int luawt_WWebWidget_zIndex(lua_State* L) {
     int index = luawt_getSuitableArgsGroup(L, luawt_WWebWidget_zIndex_args);
     WWebWidget* self = luawt_checkFromLua<WWebWidget>(L, 1);
     if (index == 0) {
-    int result = self->zIndex();
-    lua_pushinteger(L, result);
+    int l_result = self->zIndex();
+    lua_pushinteger(L, l_result);
     return 1;
 
     } else {
         return luaL_error(L, "Wrong arguments for WWebWidget.zIndex");
+    }
+}
+
+static const char* WWebWidget_setVerticalAlignment_args0[] = {luawt_typeToStr<WWebWidget>(), "int", NULL};
+static const char* WWebWidget_setVerticalAlignment_args1[] = {luawt_typeToStr<WWebWidget>(), "int", "double", NULL};
+static const char* const* const luawt_WWebWidget_setVerticalAlignment_args[] = {WWebWidget_setVerticalAlignment_args0, WWebWidget_setVerticalAlignment_args1, NULL};
+
+int luawt_WWebWidget_setVerticalAlignment(lua_State* L) {
+    int index = luawt_getSuitableArgsGroup(L, luawt_WWebWidget_setVerticalAlignment_args);
+    WWebWidget* self = luawt_checkFromLua<WWebWidget>(L, 1);
+    if (index == 0) {
+    Wt::AlignmentFlag alignment = static_cast<Wt::AlignmentFlag>(lua_tointeger(L, 2));
+    self->setVerticalAlignment(alignment);
+    return 0;
+    
+    } else if (index == 1) {
+    Wt::AlignmentFlag alignment = static_cast<Wt::AlignmentFlag>(lua_tointeger(L, 2));
+    double raw3 = lua_tonumber(L, 3);
+    Wt::WLength length = Wt::WLength(raw3);
+    self->setVerticalAlignment(alignment, length);
+    return 0;
+    
+    } else {
+        return luaL_error(L, "Wrong arguments for WWebWidget.setVerticalAlignment");
+    }
+}
+
+static const char* WWebWidget_setMargin_args0[] = {luawt_typeToStr<WWebWidget>(), "double", NULL};
+static const char* WWebWidget_setMargin_args1[] = {luawt_typeToStr<WWebWidget>(), "double", "int", NULL};
+static const char* const* const luawt_WWebWidget_setMargin_args[] = {WWebWidget_setMargin_args0, WWebWidget_setMargin_args1, NULL};
+
+int luawt_WWebWidget_setMargin(lua_State* L) {
+    int index = luawt_getSuitableArgsGroup(L, luawt_WWebWidget_setMargin_args);
+    WWebWidget* self = luawt_checkFromLua<WWebWidget>(L, 1);
+    if (index == 0) {
+    double raw2 = lua_tonumber(L, 2);
+    Wt::WLength margin = Wt::WLength(raw2);
+    self->setMargin(margin);
+    return 0;
+    
+    } else if (index == 1) {
+    double raw2 = lua_tonumber(L, 2);
+    Wt::WLength margin = Wt::WLength(raw2);
+    Wt::WFlags<Wt::Side> sides = static_cast<Wt::Side>(lua_tointeger(L, 3));
+    self->setMargin(margin, sides);
+    return 0;
+    
+    } else {
+        return luaL_error(L, "Wrong arguments for WWebWidget.setMargin");
     }
 }
 
@@ -511,6 +754,39 @@ int luawt_WWebWidget_setInline(lua_State* L) {
     }
 }
 
+static const char* WWebWidget_offset_args0[] = {luawt_typeToStr<WWebWidget>(), "int", NULL};
+static const char* const* const luawt_WWebWidget_offset_args[] = {WWebWidget_offset_args0, NULL};
+
+int luawt_WWebWidget_offset(lua_State* L) {
+    int index = luawt_getSuitableArgsGroup(L, luawt_WWebWidget_offset_args);
+    WWebWidget* self = luawt_checkFromLua<WWebWidget>(L, 1);
+    if (index == 0) {
+    Wt::Side s = static_cast<Wt::Side>(lua_tointeger(L, 2));
+    Wt::WLength l_result = self->offset(s);
+    lua_pushnumber(L, l_result.value());
+    return 1;
+
+    } else {
+        return luaL_error(L, "Wrong arguments for WWebWidget.offset");
+    }
+}
+
+static const char* WWebWidget_clearSides_args0[] = {luawt_typeToStr<WWebWidget>(), NULL};
+static const char* const* const luawt_WWebWidget_clearSides_args[] = {WWebWidget_clearSides_args0, NULL};
+
+int luawt_WWebWidget_clearSides(lua_State* L) {
+    int index = luawt_getSuitableArgsGroup(L, luawt_WWebWidget_clearSides_args);
+    WWebWidget* self = luawt_checkFromLua<WWebWidget>(L, 1);
+    if (index == 0) {
+    Wt::WFlags<Wt::Side> l_result = self->clearSides();
+    lua_pushinteger(L, l_result);
+    return 1;
+
+    } else {
+        return luaL_error(L, "Wrong arguments for WWebWidget.clearSides");
+    }
+}
+
 static const char* WWebWidget_setId_args0[] = {luawt_typeToStr<WWebWidget>(), "char const *", NULL};
 static const char* const* const luawt_WWebWidget_setId_args[] = {WWebWidget_setId_args0, NULL};
 
@@ -528,6 +804,23 @@ int luawt_WWebWidget_setId(lua_State* L) {
     }
 }
 
+static const char* WWebWidget_setLineHeight_args0[] = {luawt_typeToStr<WWebWidget>(), "double", NULL};
+static const char* const* const luawt_WWebWidget_setLineHeight_args[] = {WWebWidget_setLineHeight_args0, NULL};
+
+int luawt_WWebWidget_setLineHeight(lua_State* L) {
+    int index = luawt_getSuitableArgsGroup(L, luawt_WWebWidget_setLineHeight_args);
+    WWebWidget* self = luawt_checkFromLua<WWebWidget>(L, 1);
+    if (index == 0) {
+    double raw2 = lua_tonumber(L, 2);
+    Wt::WLength height = Wt::WLength(raw2);
+    self->setLineHeight(height);
+    return 0;
+    
+    } else {
+        return luaL_error(L, "Wrong arguments for WWebWidget.setLineHeight");
+    }
+}
+
 static const char* WWebWidget_hasStyleClass_args0[] = {luawt_typeToStr<WWebWidget>(), "char const *", NULL};
 static const char* const* const luawt_WWebWidget_hasStyleClass_args[] = {WWebWidget_hasStyleClass_args0, NULL};
 
@@ -537,8 +830,8 @@ int luawt_WWebWidget_hasStyleClass(lua_State* L) {
     if (index == 0) {
     char const * raw2 = lua_tostring(L, 2);
     Wt::WString styleClass = Wt::WString(raw2);
-    bool result = self->hasStyleClass(styleClass);
-    lua_pushboolean(L, result);
+    bool l_result = self->hasStyleClass(styleClass);
+    lua_pushboolean(L, l_result);
     return 1;
 
     } else {
@@ -555,12 +848,28 @@ int luawt_WWebWidget_findById(lua_State* L) {
     if (index == 0) {
     char const * raw2 = lua_tostring(L, 2);
     std::string id = std::string(raw2);
-    Wt::WWidget * result = self->findById(id);
-    luawt_toLua(L, result);
+    Wt::WWidget * l_result = self->findById(id);
+    luawt_toLua(L, l_result);
     return 1;
 
     } else {
         return luaL_error(L, "Wrong arguments for WWebWidget.findById");
+    }
+}
+
+static const char* WWebWidget_maximumWidth_args0[] = {luawt_typeToStr<WWebWidget>(), NULL};
+static const char* const* const luawt_WWebWidget_maximumWidth_args[] = {WWebWidget_maximumWidth_args0, NULL};
+
+int luawt_WWebWidget_maximumWidth(lua_State* L) {
+    int index = luawt_getSuitableArgsGroup(L, luawt_WWebWidget_maximumWidth_args);
+    WWebWidget* self = luawt_checkFromLua<WWebWidget>(L, 1);
+    if (index == 0) {
+    Wt::WLength l_result = self->maximumWidth();
+    lua_pushnumber(L, l_result.value());
+    return 1;
+
+    } else {
+        return luaL_error(L, "Wrong arguments for WWebWidget.maximumWidth");
     }
 }
 
@@ -599,16 +908,16 @@ int luawt_WWebWidget_escapeText(lua_State* L) {
     if (index == 0) {
     char const * raw2 = lua_tostring(L, 2);
     Wt::WString text = Wt::WString(raw2);
-    Wt::WString result = self->escapeText(text);
-    lua_pushstring(L, result.toUTF8().c_str());
+    Wt::WString l_result = self->escapeText(text);
+    lua_pushstring(L, l_result.toUTF8().c_str());
     return 1;
 
     } else if (index == 1) {
     char const * raw2 = lua_tostring(L, 2);
     Wt::WString text = Wt::WString(raw2);
     bool newlinesToo = lua_toboolean(L, 3);
-    Wt::WString result = self->escapeText(text, newlinesToo);
-    lua_pushstring(L, result.toUTF8().c_str());
+    Wt::WString l_result = self->escapeText(text, newlinesToo);
+    lua_pushstring(L, l_result.toUTF8().c_str());
     return 1;
 
     } else {
@@ -623,12 +932,31 @@ int luawt_WWebWidget_isPopup(lua_State* L) {
     int index = luawt_getSuitableArgsGroup(L, luawt_WWebWidget_isPopup_args);
     WWebWidget* self = luawt_checkFromLua<WWebWidget>(L, 1);
     if (index == 0) {
-    bool result = self->isPopup();
-    lua_pushboolean(L, result);
+    bool l_result = self->isPopup();
+    lua_pushboolean(L, l_result);
     return 1;
 
     } else {
         return luaL_error(L, "Wrong arguments for WWebWidget.isPopup");
+    }
+}
+
+static const char* WWebWidget_setJavaScriptMember_args0[] = {luawt_typeToStr<WWebWidget>(), "char const *", "char const *", NULL};
+static const char* const* const luawt_WWebWidget_setJavaScriptMember_args[] = {WWebWidget_setJavaScriptMember_args0, NULL};
+
+int luawt_WWebWidget_setJavaScriptMember(lua_State* L) {
+    int index = luawt_getSuitableArgsGroup(L, luawt_WWebWidget_setJavaScriptMember_args);
+    WWebWidget* self = luawt_checkFromLua<WWebWidget>(L, 1);
+    if (index == 0) {
+    char const * raw2 = lua_tostring(L, 2);
+    std::string name = std::string(raw2);
+    char const * raw3 = lua_tostring(L, 3);
+    std::string value = std::string(raw3);
+    self->setJavaScriptMember(name, value);
+    return 0;
+    
+    } else {
+        return luaL_error(L, "Wrong arguments for WWebWidget.setJavaScriptMember");
     }
 }
 
@@ -672,22 +1000,20 @@ int luawt_WWebWidget_refresh(lua_State* L) {
     }
 }
 
-static const char* WWebWidget_setJavaScriptMember_args0[] = {luawt_typeToStr<WWebWidget>(), "char const *", "char const *", NULL};
-static const char* const* const luawt_WWebWidget_setJavaScriptMember_args[] = {WWebWidget_setJavaScriptMember_args0, NULL};
+static const char* WWebWidget_setStyleClass_args0[] = {luawt_typeToStr<WWebWidget>(), "char const *", NULL};
+static const char* const* const luawt_WWebWidget_setStyleClass_args[] = {WWebWidget_setStyleClass_args0, NULL};
 
-int luawt_WWebWidget_setJavaScriptMember(lua_State* L) {
-    int index = luawt_getSuitableArgsGroup(L, luawt_WWebWidget_setJavaScriptMember_args);
+int luawt_WWebWidget_setStyleClass(lua_State* L) {
+    int index = luawt_getSuitableArgsGroup(L, luawt_WWebWidget_setStyleClass_args);
     WWebWidget* self = luawt_checkFromLua<WWebWidget>(L, 1);
     if (index == 0) {
     char const * raw2 = lua_tostring(L, 2);
-    std::string name = std::string(raw2);
-    char const * raw3 = lua_tostring(L, 3);
-    std::string value = std::string(raw3);
-    self->setJavaScriptMember(name, value);
+    Wt::WString styleClass = Wt::WString(raw2);
+    self->setStyleClass(styleClass);
     return 0;
     
     } else {
-        return luaL_error(L, "Wrong arguments for WWebWidget.setJavaScriptMember");
+        return luaL_error(L, "Wrong arguments for WWebWidget.setStyleClass");
     }
 }
 
@@ -730,8 +1056,8 @@ int luawt_WWebWidget_isVisible(lua_State* L) {
     int index = luawt_getSuitableArgsGroup(L, luawt_WWebWidget_isVisible_args);
     WWebWidget* self = luawt_checkFromLua<WWebWidget>(L, 1);
     if (index == 0) {
-    bool result = self->isVisible();
-    lua_pushboolean(L, result);
+    bool l_result = self->isVisible();
+    lua_pushboolean(L, l_result);
     return 1;
 
     } else {
@@ -783,38 +1109,6 @@ int luawt_WWebWidget_setAttributeValue(lua_State* L) {
     }
 }
 
-static const char* WWebWidget_setTabIndex_args0[] = {luawt_typeToStr<WWebWidget>(), "int", NULL};
-static const char* const* const luawt_WWebWidget_setTabIndex_args[] = {WWebWidget_setTabIndex_args0, NULL};
-
-int luawt_WWebWidget_setTabIndex(lua_State* L) {
-    int index = luawt_getSuitableArgsGroup(L, luawt_WWebWidget_setTabIndex_args);
-    WWebWidget* self = luawt_checkFromLua<WWebWidget>(L, 1);
-    if (index == 0) {
-    int index = lua_tointeger(L, 2);
-    self->setTabIndex(index);
-    return 0;
-    
-    } else {
-        return luaL_error(L, "Wrong arguments for WWebWidget.setTabIndex");
-    }
-}
-
-static const char* WWebWidget_isEnabled_args0[] = {luawt_typeToStr<WWebWidget>(), NULL};
-static const char* const* const luawt_WWebWidget_isEnabled_args[] = {WWebWidget_isEnabled_args0, NULL};
-
-int luawt_WWebWidget_isEnabled(lua_State* L) {
-    int index = luawt_getSuitableArgsGroup(L, luawt_WWebWidget_isEnabled_args);
-    WWebWidget* self = luawt_checkFromLua<WWebWidget>(L, 1);
-    if (index == 0) {
-    bool result = self->isEnabled();
-    lua_pushboolean(L, result);
-    return 1;
-
-    } else {
-        return luaL_error(L, "Wrong arguments for WWebWidget.isEnabled");
-    }
-}
-
 static const char* WWebWidget_callJavaScriptMember_args0[] = {luawt_typeToStr<WWebWidget>(), "char const *", "char const *", NULL};
 static const char* const* const luawt_WWebWidget_callJavaScriptMember_args[] = {WWebWidget_callJavaScriptMember_args0, NULL};
 
@@ -834,12 +1128,78 @@ int luawt_WWebWidget_callJavaScriptMember(lua_State* L) {
     }
 }
 
+static const char* WWebWidget_margin_args0[] = {luawt_typeToStr<WWebWidget>(), "int", NULL};
+static const char* const* const luawt_WWebWidget_margin_args[] = {WWebWidget_margin_args0, NULL};
+
+int luawt_WWebWidget_margin(lua_State* L) {
+    int index = luawt_getSuitableArgsGroup(L, luawt_WWebWidget_margin_args);
+    WWebWidget* self = luawt_checkFromLua<WWebWidget>(L, 1);
+    if (index == 0) {
+    Wt::Side side = static_cast<Wt::Side>(lua_tointeger(L, 2));
+    Wt::WLength l_result = self->margin(side);
+    lua_pushnumber(L, l_result.value());
+    return 1;
+
+    } else {
+        return luaL_error(L, "Wrong arguments for WWebWidget.margin");
+    }
+}
+
+static const char* WWebWidget_isDisabled_args0[] = {luawt_typeToStr<WWebWidget>(), NULL};
+static const char* const* const luawt_WWebWidget_isDisabled_args[] = {WWebWidget_isDisabled_args0, NULL};
+
+int luawt_WWebWidget_isDisabled(lua_State* L) {
+    int index = luawt_getSuitableArgsGroup(L, luawt_WWebWidget_isDisabled_args);
+    WWebWidget* self = luawt_checkFromLua<WWebWidget>(L, 1);
+    if (index == 0) {
+    bool l_result = self->isDisabled();
+    lua_pushboolean(L, l_result);
+    return 1;
+
+    } else {
+        return luaL_error(L, "Wrong arguments for WWebWidget.isDisabled");
+    }
+}
+
+static const char* WWebWidget_isEnabled_args0[] = {luawt_typeToStr<WWebWidget>(), NULL};
+static const char* const* const luawt_WWebWidget_isEnabled_args[] = {WWebWidget_isEnabled_args0, NULL};
+
+int luawt_WWebWidget_isEnabled(lua_State* L) {
+    int index = luawt_getSuitableArgsGroup(L, luawt_WWebWidget_isEnabled_args);
+    WWebWidget* self = luawt_checkFromLua<WWebWidget>(L, 1);
+    if (index == 0) {
+    bool l_result = self->isEnabled();
+    lua_pushboolean(L, l_result);
+    return 1;
+
+    } else {
+        return luaL_error(L, "Wrong arguments for WWebWidget.isEnabled");
+    }
+}
+
 
 static const luaL_Reg luawt_WWebWidget_methods[] = {
     METHOD(WWebWidget, setPositionScheme),
     METHOD(WWebWidget, positionScheme),
+    METHOD(WWebWidget, setOffsets),
+    METHOD(WWebWidget, offset),
+    METHOD(WWebWidget, resize),
+    METHOD(WWebWidget, width),
+    METHOD(WWebWidget, height),
+    METHOD(WWebWidget, setMinimumSize),
+    METHOD(WWebWidget, minimumWidth),
+    METHOD(WWebWidget, minimumHeight),
+    METHOD(WWebWidget, setMaximumSize),
+    METHOD(WWebWidget, maximumWidth),
+    METHOD(WWebWidget, maximumHeight),
+    METHOD(WWebWidget, setLineHeight),
+    METHOD(WWebWidget, lineHeight),
     METHOD(WWebWidget, setFloatSide),
     METHOD(WWebWidget, floatSide),
+    METHOD(WWebWidget, setClearSides),
+    METHOD(WWebWidget, clearSides),
+    METHOD(WWebWidget, setMargin),
+    METHOD(WWebWidget, margin),
     METHOD(WWebWidget, setHiddenKeepsGeometry),
     METHOD(WWebWidget, hiddenKeepsGeometry),
     METHOD(WWebWidget, isHidden),
@@ -856,7 +1216,9 @@ static const luaL_Reg luawt_WWebWidget_methods[] = {
     METHOD(WWebWidget, addStyleClass),
     METHOD(WWebWidget, removeStyleClass),
     METHOD(WWebWidget, hasStyleClass),
+    METHOD(WWebWidget, setVerticalAlignment),
     METHOD(WWebWidget, verticalAlignment),
+    METHOD(WWebWidget, verticalAlignmentLength),
     METHOD(WWebWidget, setToolTip),
     METHOD(WWebWidget, toolTip),
     METHOD(WWebWidget, refresh),

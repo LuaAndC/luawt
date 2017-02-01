@@ -28,8 +28,8 @@ int luawt_WAbstractSpinBox_suffix(lua_State* L) {
     int index = luawt_getSuitableArgsGroup(L, luawt_WAbstractSpinBox_suffix_args);
     WAbstractSpinBox* self = luawt_checkFromLua<WAbstractSpinBox>(L, 1);
     if (index == 0) {
-    Wt::WString const & result = self->suffix();
-    lua_pushstring(L, result.toUTF8().c_str());
+    Wt::WString const & l_result = self->suffix();
+    lua_pushstring(L, l_result.toUTF8().c_str());
     return 1;
 
     } else {
@@ -78,8 +78,8 @@ int luawt_WAbstractSpinBox_prefix(lua_State* L) {
     int index = luawt_getSuitableArgsGroup(L, luawt_WAbstractSpinBox_prefix_args);
     WAbstractSpinBox* self = luawt_checkFromLua<WAbstractSpinBox>(L, 1);
     if (index == 0) {
-    Wt::WString const & result = self->prefix();
-    lua_pushstring(L, result.toUTF8().c_str());
+    Wt::WString const & l_result = self->prefix();
+    lua_pushstring(L, l_result.toUTF8().c_str());
     return 1;
 
     } else {
@@ -94,8 +94,8 @@ int luawt_WAbstractSpinBox_nativeControl(lua_State* L) {
     int index = luawt_getSuitableArgsGroup(L, luawt_WAbstractSpinBox_nativeControl_args);
     WAbstractSpinBox* self = luawt_checkFromLua<WAbstractSpinBox>(L, 1);
     if (index == 0) {
-    bool result = self->nativeControl();
-    lua_pushboolean(L, result);
+    bool l_result = self->nativeControl();
+    lua_pushboolean(L, l_result);
     return 1;
 
     } else {
@@ -110,8 +110,8 @@ int luawt_WAbstractSpinBox_validate(lua_State* L) {
     int index = luawt_getSuitableArgsGroup(L, luawt_WAbstractSpinBox_validate_args);
     WAbstractSpinBox* self = luawt_checkFromLua<WAbstractSpinBox>(L, 1);
     if (index == 0) {
-    Wt::WValidator::State result = self->validate();
-    lua_pushinteger(L, result);
+    Wt::WValidator::State l_result = self->validate();
+    lua_pushinteger(L, l_result);
     return 1;
 
     } else {

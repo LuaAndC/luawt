@@ -13,22 +13,22 @@ static const char* const* const luawt_WToolBar_make_args[] = {WToolBar_make_args
 int luawt_WToolBar_make(lua_State* L) {
     int index = luawt_getSuitableArgsGroup(L, luawt_WToolBar_make_args);
     if (index == 0) {
-    WToolBar * result = new WToolBar();
+    WToolBar * l_result = new WToolBar();
     MyApplication* app = MyApplication::instance();
     if (!app) {
-        delete result;
+        delete l_result;
         throw std::logic_error("No WApplication when creating WToolBar");
     }
-    app->root()->addWidget(result);
+    app->root()->addWidget(l_result);
     
-    luawt_toLua(L, result);
+    luawt_toLua(L, l_result);
     return 1;
 
     } else if (index == 1) {
     Wt::WContainerWidget* parent =
         luawt_checkFromLua<Wt::WContainerWidget>(L, 1);
-    WToolBar * result = new WToolBar(parent);
-    luawt_toLua(L, result);
+    WToolBar * l_result = new WToolBar(parent);
+    luawt_toLua(L, l_result);
     return 1;
 
     } else {
@@ -43,8 +43,8 @@ int luawt_WToolBar_count(lua_State* L) {
     int index = luawt_getSuitableArgsGroup(L, luawt_WToolBar_count_args);
     WToolBar* self = luawt_checkFromLua<WToolBar>(L, 1);
     if (index == 0) {
-    int result = self->count();
-    lua_pushinteger(L, result);
+    int l_result = self->count();
+    lua_pushinteger(L, l_result);
     return 1;
 
     } else {
@@ -60,8 +60,8 @@ int luawt_WToolBar_widget(lua_State* L) {
     WToolBar* self = luawt_checkFromLua<WToolBar>(L, 1);
     if (index == 0) {
     int index = lua_tointeger(L, 2);
-    Wt::WWidget * result = self->widget(index);
-    luawt_toLua(L, result);
+    Wt::WWidget * l_result = self->widget(index);
+    luawt_toLua(L, l_result);
     return 1;
 
     } else {
@@ -76,8 +76,8 @@ int luawt_WToolBar_isCompact(lua_State* L) {
     int index = luawt_getSuitableArgsGroup(L, luawt_WToolBar_isCompact_args);
     WToolBar* self = luawt_checkFromLua<WToolBar>(L, 1);
     if (index == 0) {
-    bool result = self->isCompact();
-    lua_pushboolean(L, result);
+    bool l_result = self->isCompact();
+    lua_pushboolean(L, l_result);
     return 1;
 
     } else {
