@@ -74,14 +74,14 @@ def loadAdditionalChunk(module_str):
     else:
         raise Exception('Unable to load module called %s' % module_str)
 
-def isTemplate(method_name, decl_str):
+def isTemplate(method_name, decl_str, namespace):
     # Luawt doesn't support C++ templates.
     if pygccxml.declarations.templates.is_instantiation(decl_str):
         name = pygccxml.declarations.templates.name(decl_str)
         temp_args = pygccxml.declarations.templates.args(decl_str)
         if (len(temp_args) == 1) and (name == 'Wt::WFlags'):
             # WFlags<enum> is an exception. Treated as enum.
-            addEnumByStr(decl_str, temp_args[0])
+            addEnumByStr(decl_str, temp_args[0], namespace)
         else:
             logging.warning(
                 "Its impossible to bind method %s because luawt " +
@@ -142,7 +142,7 @@ def isBaseOrItsDescendant(child, base_name, Wt):
     return False
 
 def checkArgumentType(method_name, arg_type, Wt):
-    if isTemplate(method_name, str(arg_type)):
+    if isTemplate(method_name, str(arg_type), Wt):
         return False
     # Is built-in or problematic
     if getBuiltinType(str(arg_type)):
@@ -178,7 +178,7 @@ def checkArgumentType(method_name, arg_type, Wt):
 
 def checkReturnType(method_name, raw_return_type, Wt):
     # Special cases.
-    if isTemplate(method_name, str(raw_return_type)):
+    if isTemplate(method_name, str(raw_return_type), Wt):
         return False
     if str(raw_return_type) == 'void':
         return True
@@ -200,17 +200,17 @@ def checkReturnType(method_name, raw_return_type, Wt):
     )
     return False
 
-def addEnumByStr(type_str, enum_str):
+def addEnumByStr(type_str, enum_str, namespace):
     enum_converters = (
         'static_cast<%s>(lua_tointeger' % enum_str,
         'lua_pushinteger',
     )
     BUILTIN_TYPES_CONVERTERS[type_str] = enum_converters
 
-def addEnum(type_obj):
+def addEnum(type_obj, namespace):
     if pygccxml.declarations.is_enum(type_obj):
         enum_str = str(clearType(type_obj))
-        addEnumByStr(enum_str, enum_str)
+        addEnumByStr(enum_str, enum_str, namespace)
 
 def getArgType(arg):
     # For compatibility with pygccxml v1.7.1
@@ -220,15 +220,15 @@ def getArgType(arg):
 def checkWtFunction(is_constructor, func, Wt):
     if func.access_type != 'public':
         return False
-    #if isTemplate(func.name, func.decl_string):
+    #if isTemplate(func.name, func.decl_string, Wt):
     #    return False
     for arg in func.arguments:
         arg_field = getArgType(arg)
-        addEnum(arg_field)
+        addEnum(arg_field, Wt)
         if not checkArgumentType(func.name, arg_field, Wt):
             return False
     if not is_constructor:
-        addEnum(func.return_type)
+        addEnum(func.return_type, Wt)
         if not checkReturnType(func.name, func.return_type, Wt):
            return False
     # OK, all checks've passed.
