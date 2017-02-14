@@ -15,6 +15,8 @@ import shutil
 import pygccxml
 import yaml
 
+GLOBAL_ENUMS_REGISTRY = {}
+
 BUILTIN_TYPES_CONVERTERS = {
     'int': ('lua_tointeger', 'lua_pushinteger'),
     'bool': ('lua_toboolean', 'lua_pushboolean'),
