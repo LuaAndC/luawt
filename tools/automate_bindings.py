@@ -209,6 +209,18 @@ def addEnumByStr(type_str, enum_str, namespace):
     )
     BUILTIN_TYPES_CONVERTERS[type_str] = enum_converters
 
+def getEnumStr(type_obj):
+    decl_str = str(type_obj)
+    if pygccxml.declarations.templates.is_instantiation(decl_str):
+        name = pygccxml.declarations.templates.name(decl_str)
+        temp_args = pygccxml.declarations.templates.args(decl_str)
+        if (len(temp_args) == 1) and (name == 'Wt::WFlags'):
+            # WFlags<enum> is an exception. Treated as enum.
+            return temp_args[0]
+    if pygccxml.declarations.is_enum(type_obj):
+        return str(clearType(type_obj))
+    return ''
+
 def addEnum(type_obj, namespace):
     if pygccxml.declarations.is_enum(type_obj):
         enum_str = str(clearType(type_obj))
