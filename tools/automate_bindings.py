@@ -221,6 +221,9 @@ def getEnumStr(type_obj):
         return str(clearType(type_obj))
     return ''
 
+def getEnumArrName(full_type):
+    return 'luawt_enum_' + getEnumStr(full_type) + '_arr'
+
 def addEnum(type_obj, namespace):
     if pygccxml.declarations.is_enum(type_obj):
         enum_str = str(clearType(type_obj))
