@@ -225,9 +225,18 @@ def getEnumArrName(full_type):
     return 'luawt_enum_' + getEnumStr(full_type) + '_arr'
 
 def addEnum(type_obj, namespace):
-    if pygccxml.declarations.is_enum(type_obj):
-        enum_str = str(clearType(type_obj))
-        addEnumByStr(enum_str, enum_str, namespace)
+    enum_str = getEnumStr(type_obj)
+    type_str = str(type_obj)
+    if enum_str:
+        enum_converters = (
+            'static_cast<%s>(luaL_checkoption' % enum_str,
+            'lua_pushstring',
+        )
+        BUILTIN_TYPES_CONVERTERS[type_str] = enum_converters
+        enum_obj = namespace.enumeration(name=enum_str)
+        for val in enum_obj.values:
+            GLOBAL_ENUMS_REGISTRY[type_str].append((val[1], val[0]))
+        GLOBAL_ENUMS_REGISTRY[type_str].sort()
 
 def getArgType(arg):
     # For compatibility with pygccxml v1.7.1
@@ -510,7 +519,12 @@ def getBuiltinTypeArgument(options):
     '''
     # Enum: need to close static_cast
     get_enum_arg_template = r'''
-    %(argument_type)s %(argument_name)s = %(func)s(L, %(index)s));
+    %(argument_type)s %(argument_name)s = %(func)s(
+        L,
+        %(index)s,
+        NULL,
+        %(enum_arr)s
+    ));
     '''
     problematic_type = findCorrespondingKeyInDict(
         PROBLEMATIC_TO_BUILTIN_CONVERSIONS,
@@ -725,6 +739,7 @@ def implementLuaCFunction(
                 'argument_name' : arg.name,
                 'argument_type' : arg_field,
                 'index' : i + arg_index_offset,
+                'enum_arr': getEnumArrName(arg_field)
             }
             arg_type = getBuiltinType(str(arg_field))
             if arg_type:
