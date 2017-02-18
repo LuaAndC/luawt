@@ -76,15 +76,11 @@ def loadAdditionalChunk(module_str):
     else:
         raise Exception('Unable to load module called %s' % module_str)
 
-def isTemplate(method_name, decl_str, namespace):
+def isTemplate(method_name, decl_obj, namespace):
     # Luawt doesn't support C++ templates.
-    if pygccxml.declarations.templates.is_instantiation(decl_str):
-        name = pygccxml.declarations.templates.name(decl_str)
-        temp_args = pygccxml.declarations.templates.args(decl_str)
-        if (len(temp_args) == 1) and (name == 'Wt::WFlags'):
+    if pygccxml.declarations.templates.is_instantiation(str(decl_obj)):
+        if not getEnumStr(decl_obj):
             # WFlags<enum> is an exception. Treated as enum.
-            addEnumByStr(decl_str, temp_args[0], namespace)
-        else:
             logging.warning(
                 "Its impossible to bind method %s because luawt " +
                 "doesn't support C++ templates",
@@ -144,7 +140,7 @@ def isBaseOrItsDescendant(child, base_name, Wt):
     return False
 
 def checkArgumentType(method_name, arg_type, Wt):
-    if isTemplate(method_name, str(arg_type), Wt):
+    if isTemplate(method_name, arg_type, Wt):
         return False
     # Is built-in or problematic
     if getBuiltinType(str(arg_type)):
@@ -180,7 +176,7 @@ def checkArgumentType(method_name, arg_type, Wt):
 
 def checkReturnType(method_name, raw_return_type, Wt):
     # Special cases.
-    if isTemplate(method_name, str(raw_return_type), Wt):
+    if isTemplate(method_name, raw_return_type, Wt):
         return False
     if str(raw_return_type) == 'void':
         return True
@@ -246,8 +242,6 @@ def getArgType(arg):
 def checkWtFunction(is_constructor, func, Wt):
     if func.access_type != 'public':
         return False
-    #if isTemplate(func.name, func.decl_string, Wt):
-    #    return False
     for arg in func.arguments:
         arg_field = getArgType(arg)
         addEnum(arg_field, Wt)
