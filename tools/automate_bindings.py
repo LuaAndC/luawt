@@ -198,12 +198,6 @@ def checkReturnType(method_name, raw_return_type, Wt):
     )
     return False
 
-def addEnumByStr(type_str, enum_str, namespace):
-    enum_converters = (
-        'static_cast<%s>(lua_tointeger' % enum_str,
-        'lua_pushinteger',
-    )
-    BUILTIN_TYPES_CONVERTERS[type_str] = enum_converters
 
 def getEnumStr(type_obj):
     decl_str = str(type_obj)
