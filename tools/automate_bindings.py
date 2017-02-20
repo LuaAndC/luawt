@@ -528,8 +528,8 @@ def getBuiltinTypeArgument(options):
         ).lstrip()
         return code
     else:
-        # Enum
         if 'static_cast' in options['func']:
+            # Enum
             return get_enum_arg_template.lstrip() % options
         else:
             return get_builtin_arg_template.lstrip() % options
