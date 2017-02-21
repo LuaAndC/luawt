@@ -652,8 +652,8 @@ static const char* const* const luawt_%(module)s_%(func)s_args[] = {%(body)s};
 
 def handleEnum(type_o):
     _, detector = BUILTIN_TYPES_CONVERTERS[type_o]
-    if detector == 'lua_pushinteger':
-        return 'int'
+    if detector == 'lua_pushstring':
+        return 'char const *'
     return type_o
 
 def generateArgsArray(args_groups, module_name, func_name, is_constructor):
