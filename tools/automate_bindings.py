@@ -224,9 +224,10 @@ def addEnum(type_obj, namespace):
         )
         BUILTIN_TYPES_CONVERTERS[type_str] = enum_converters
         enum_obj = namespace.enumeration(name=enum_str)
+        GLOBAL_ENUMS_REGISTRY[type_str] = (getEnumArrName(type_obj), [])
         for val in enum_obj.values:
-            GLOBAL_ENUMS_REGISTRY[type_str].append((val[1], val[0]))
-        GLOBAL_ENUMS_REGISTRY[type_str].sort()
+            GLOBAL_ENUMS_REGISTRY[type_str][1].append((val[1], val[0]))
+        GLOBAL_ENUMS_REGISTRY[type_str][1].sort()
 
 def getArgType(arg):
     # For compatibility with pygccxml v1.7.1
