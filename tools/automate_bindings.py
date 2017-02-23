@@ -595,6 +595,11 @@ RETURN_CALLS_TEMPLATE = r'''
     return 1;
 '''
 
+RETURN_ENUM_TEMPLATE = r'''
+    %s(L, %s[l_result]);
+    return 1;
+'''
+
 def getBuiltinTypeFromProblematic(problematic_type):
     next_type = problematic_type
     convert_f = ''
