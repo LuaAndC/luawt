@@ -634,7 +634,14 @@ def returnValue(return_type):
         )
         if problematic_type:
             convert_f = getBuiltinTypeFromProblematic(problematic_type)
-        return RETURN_CALLS_TEMPLATE % (func_name, ref_str, convert_f)
+        if return_type in GLOBAL_ENUMS_REGISTRY:
+            # Enum.
+            return RETURN_ENUM_TEMPLATE % (
+                func_name,
+                GLOBAL_ENUMS_REGISTRY[return_type][0],
+            )
+        else:
+            return RETURN_CALLS_TEMPLATE % (func_name, ref_str, convert_f)
 
 def getBuiltinType(full_type):
     builtin_type = findCorrespondingKeyInDict(
