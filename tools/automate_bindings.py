@@ -858,6 +858,13 @@ def generateSignals(signals, module_name):
         sig_code.append(SIG_TEMPLATE % options)
     return ''.join(sig_code)
 
+ENUM_ARRAY_TEMPLATE = r'''
+static const char* const %s[] = {
+%s
+};
+
+'''
+
 def generateModule(module_name, methods, base, constructors, signals):
     source = []
     includes = getIncludes(module_name, methods, constructors)
