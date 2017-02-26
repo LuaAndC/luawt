@@ -865,6 +865,18 @@ static const char* const %s[] = {
 
 '''
 
+def generateEnumArrays():
+    code = ''
+    for enum_key in GLOBAL_ENUMS_REGISTRY:
+        name = GLOBAL_ENUMS_REGISTRY[enum_key][0]
+        body = ''
+        for i, val in enumerate(GLOBAL_ENUMS_REGISTRY[enum_key][1]):
+            body += '    ' + val[1]
+            if i != (len(GLOBAL_ENUMS_REGISTRY[enum_key][1]) - 1):
+                body += ',\n'
+        code += ENUM_ARRAY_TEMPLATE % (name, body)
+    return code
+
 def generateModule(module_name, methods, base, constructors, signals):
     source = []
     includes = getIncludes(module_name, methods, constructors)
