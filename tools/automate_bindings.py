@@ -881,6 +881,7 @@ def generateModule(module_name, methods, base, constructors, signals):
     source = []
     includes = getIncludes(module_name, methods, constructors)
     source.append(generateIncludes(includes))
+    source.append(generateEnumArrays())
     source.append(generateConstructor(module_name, constructors))
     # Group by method name to find overloaded groups.
     name2methods = {}
