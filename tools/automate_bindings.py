@@ -871,7 +871,7 @@ def generateEnumArrays():
         name = GLOBAL_ENUMS_REGISTRY[enum_key][0]
         body = ''
         for i, val in enumerate(GLOBAL_ENUMS_REGISTRY[enum_key][1]):
-            body += '    ' + val[1]
+            body += '    ' + '"' + val[1] + '"'
             if i != (len(GLOBAL_ENUMS_REGISTRY[enum_key][1]) - 1):
                 body += ',\n'
         code += ENUM_ARRAY_TEMPLATE % (name, body)
