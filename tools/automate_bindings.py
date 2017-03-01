@@ -198,6 +198,12 @@ def checkReturnType(method_name, raw_return_type, Wt):
     )
     return False
 
+def enumObjFromNamespace(enum_str, namespace):
+    try:
+        return namespace.enumeration(name=enum_str)
+    except:
+        return None
+
 
 def getEnumStr(type_obj):
     decl_str = str(type_obj)
