@@ -868,13 +868,17 @@ ENUM_ARRAY_TEMPLATE = r'''
 static const char* const %s[] = {
 %s
 };
-
 '''
 
 def generateEnumArrays():
     code = ''
+    names = []
     for enum_key in GLOBAL_ENUMS_REGISTRY:
         name = GLOBAL_ENUMS_REGISTRY[enum_key][0]
+        if name in names:
+            continue
+        else:
+            names.append(name)
         body = ''
         for i, val in enumerate(GLOBAL_ENUMS_REGISTRY[enum_key][1]):
             body += '    ' + '"' + val[1] + '"'
