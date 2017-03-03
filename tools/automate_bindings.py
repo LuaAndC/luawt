@@ -198,6 +198,16 @@ def checkReturnType(method_name, raw_return_type, Wt):
     )
     return False
 
+def getInternalNamespace(decl_str):
+    chunks = decl_str.split('::')
+    if len(chunks) == 3:
+        # Decl has internal namespace, e.g. Wt::Namespace::Enum.
+        try:
+            return loadAdditionalChunk(chunks[1])
+        except:
+            return None
+    return None
+
 def enumObjFromNamespace(enum_str, namespace):
     try:
         return namespace.enumeration(name=enum_str)
