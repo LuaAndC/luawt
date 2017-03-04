@@ -214,6 +214,21 @@ def enumObjFromNamespace(enum_str, namespace):
     except:
         return None
 
+def getEnumObj(enum_str, default_namespace):
+    enum_obj = enumObjFromNamespace(enum_str, default_namespace)
+    if not enum_obj:
+        # Not found: enum isn't declared in the given module.
+        # Check other options: WGlobal and internal namespace.
+        glob = loadAdditionalChunk('WGlobal')
+        internal = getInternalNamespace(enum_str)
+        # Try WGlobal.
+        enum_obj = enumObjFromNamespace(enum_str, glob)
+        if not enum_obj and internal:
+            # Try internal namespace.
+            enum_obj = enumObjFromNamespace(enum_str, internal)
+    if not enum_obj:
+        raise Exception('Unable to find enum %s' % enum_str)
+    return enum_obj
 
 def getEnumStr(type_obj):
     decl_str = str(type_obj)
