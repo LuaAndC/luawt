@@ -254,7 +254,7 @@ def addEnum(type_obj, namespace):
             'lua_pushstring',
         )
         BUILTIN_TYPES_CONVERTERS[type_str] = enum_converters
-        enum_obj = namespace.enumeration(name=enum_str)
+        enum_obj = getEnumObj(getClassStr(enum_str), namespace)
         GLOBAL_ENUMS_REGISTRY[type_str] = (getEnumArrName(type_obj), [])
         for val in enum_obj.values:
             GLOBAL_ENUMS_REGISTRY[type_str][1].append((val[1], val[0]))
