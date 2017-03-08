@@ -541,6 +541,18 @@ inline int luawt_getSuitableArgsGroup(
     return -1;
 }
 
+/* Facilities for dealing with enums. */
+inline int luawt_getEnumIndex(
+    const long long int enum_values[],
+    long long int enum_value
+) {
+    for (int i = 0; i < sizeof(enum_values) / sizeof (long long int); i++) {
+        if (enum_values[i] == enum_value) {
+            return i;
+        }
+    }
+}
+
 /* This functions are called from luaopen() */
 void luawt_MyApplication(lua_State* L);
 void luawt_Shared(lua_State* L);
