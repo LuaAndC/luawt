@@ -893,6 +893,7 @@ def generateSignals(signals, module_name):
 ENUM_ARRAY_TEMPLATE = r'''
 static const char* const %s[] = {
 %s
+    NULL
 };
 '''
 
