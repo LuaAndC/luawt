@@ -890,10 +890,16 @@ def generateSignals(signals, module_name):
         sig_code.append(SIG_TEMPLATE % options)
     return ''.join(sig_code)
 
-ENUM_ARRAY_TEMPLATE = r'''
+ENUM_STRING_ARRAY_TEMPLATE = r'''
 static const char* const %s[] = {
 %s
     NULL
+};
+'''
+
+ENUM_VALUE_ARRAY_TEMPLATE = r'''
+static const long long int %s[] = {
+%s
 };
 '''
 
@@ -901,17 +907,22 @@ def generateEnumArrays():
     code = ''
     names = []
     for enum_key in GLOBAL_ENUMS_REGISTRY:
-        name = GLOBAL_ENUMS_REGISTRY[enum_key][0]
-        if name in names:
+        name_str = GLOBAL_ENUMS_REGISTRY[enum_key][0] + '_str'
+        name_val = GLOBAL_ENUMS_REGISTRY[enum_key][0] + '_val'
+        if name_str in names:
             continue
         else:
-            names.append(name)
-        body = ''
+            names.append(name_str)
+        body_str = ''
+        body_val = ''
         for i, val in enumerate(GLOBAL_ENUMS_REGISTRY[enum_key][1]):
-            body += '    ' + '"' + val[1] + '"'
-            if i != (len(GLOBAL_ENUMS_REGISTRY[enum_key][1]) - 1):
-                body += ',\n'
-        code += ENUM_ARRAY_TEMPLATE % (name, body)
+            body_str += '    ' + '"' + val[1] + '"' + ','
+            body_val += '    ' + str(val[0])
+            if i != len(GLOBAL_ENUMS_REGISTRY[enum_key][1]) - 1:
+                body_str += '\n'
+                body_val += ',\n'
+        code += ENUM_STRING_ARRAY_TEMPLATE % (name_str, body_str)
+        code += ENUM_VALUE_ARRAY_TEMPLATE % (name_val, body_val)
     return code
 
 def generateModule(module_name, methods, base, constructors, signals):
