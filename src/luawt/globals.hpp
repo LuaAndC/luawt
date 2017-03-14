@@ -7,9 +7,11 @@
 #ifndef GLOBALS_HPP_
 #define GLOBALS_HPP_
 
+#include <algorithm>
 #include <cassert>
 #include <cstring>
 #include <exception>
+#include <iterator>
 #include <memory>
 #include <stdexcept>
 #include <typeinfo>
@@ -546,11 +548,15 @@ inline int luawt_getEnumIndex(
     const long long int enum_values[],
     long long int enum_value
 ) {
-    for (int i = 0; i < sizeof(enum_values) / sizeof (long long int); i++) {
-        if (enum_values[i] == enum_value) {
-            return i;
-        }
+    int size = sizeof(enum_values) / sizeof(long long int);
+    int index = std::distance(
+        enum_values,
+        std::find(enum_values, enum_values + size, enum_value)
+    );
+    if (index == size) {
+        throw std::logic_error("LuaWt: error enum value not found.");
     }
+    return index;
 }
 
 /* This functions are called from luaopen() */
