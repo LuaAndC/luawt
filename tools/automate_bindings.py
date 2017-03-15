@@ -772,10 +772,13 @@ def implementLuaCFunction(
         for i, arg in enumerate(args):
             arg_field = getArgType(arg)
             options = {
+                'module' : module_name,
+                'method' : method_name,
                 'argument_name' : arg.name,
                 'argument_type' : arg_field,
                 'index' : i + arg_index_offset,
-                'enum_arr': getEnumArrName(arg_field) + '_str'
+                'enum_str_arr' : getEnumArrName(arg_field) + '_str',
+                'enum_val_arr' : getEnumArrName(arg_field) + '_val',
             }
             arg_type = getBuiltinType(str(arg_field))
             if arg_type:
