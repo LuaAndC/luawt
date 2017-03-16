@@ -727,9 +727,9 @@ def generateArgsArray(args_groups, module_name, func_name, is_constructor):
         args_arrs += 'NULL};\n'
     body += 'NULL'
     options = {
-        'module': module_name,
-        'func': func_name,
         'body' : body,
+        'func' : func_name,
+        'module' : module_name,
     }
     return args_arrs + ARGS_ARRAY_TEMPLATE.strip() % options
 
@@ -772,13 +772,13 @@ def implementLuaCFunction(
         for i, arg in enumerate(args):
             arg_field = getArgType(arg)
             options = {
-                'module' : module_name,
-                'method' : method_name,
                 'argument_name' : arg.name,
                 'argument_type' : arg_field,
-                'index' : i + arg_index_offset,
                 'enum_str_arr' : getEnumArrName(arg_field) + '_str',
                 'enum_val_arr' : getEnumArrName(arg_field) + '_val',
+                'index' : i + arg_index_offset,
+                'method' : method_name,
+                'module' : module_name,
             }
             arg_type = getBuiltinType(str(arg_field))
             if arg_type:
@@ -861,10 +861,10 @@ def generateModuleFunc(module_name, base, is_not_abstract):
     else:
         make = '0'
     options = {
-        'module_name' : module_name,
-        'make' : make,
         'base' : base,
         'get_base_str' : get_base,
+        'make' : make,
+        'module_name' : module_name,
     }
     return MODULE_FUNC_TEMPLATE.lstrip() % options
 
@@ -889,9 +889,9 @@ def generateSignals(signals, module_name):
         if len(events) != 1:
             continue
         options = {
-            'name' : signal.name,
-            'module' : module_name,
             'event' : events[0],
+            'module' : module_name,
+            'name' : signal.name,
         }
         sig_code.append(SIG_TEMPLATE % options)
     return ''.join(sig_code)
@@ -1066,8 +1066,8 @@ def addTest(module_name, constructors_type):
     else:
         has_args = (constructors_type == 2)
         options = {
-            'module_name' : module_name,
             'has_args' : str(has_args).lower(),
+            'module_name' : module_name,
         }
         module_str = '    ' + TEST_FRAME.lstrip() % options
         parameters = [
