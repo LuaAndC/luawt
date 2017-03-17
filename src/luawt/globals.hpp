@@ -480,15 +480,19 @@ inline bool luawt_equalTypes(
     const char* expected_type
 ) {
     int real_type = lua_type(L, index);
+    // The main result.
     bool result = false;
+    // Auxiliary variables to parse `expected_type` strs.
+    bool is_int = (strcmp(expected_type, "int") == 0);
+    bool is_double = (strcmp(expected_type, "double") == 0);
+    bool is_enum = (strcmp(expected_type, "enum") == 0);
+    bool is_string = (strcmp(expected_type, "char const *") == 0);
     if (real_type == LUA_TNUMBER) {
-        bool is_int = (strcmp(expected_type, "int") == 0);
-        bool is_double = (strcmp(expected_type, "double") == 0);
-        result = is_int || is_double;
+        result = is_int || is_double || is_enum;
     } else if (real_type == LUA_TBOOLEAN) {
         result = (strcmp(expected_type, "bool") == 0);
     } else if (real_type == LUA_TSTRING) {
-        result = (strcmp(expected_type, "char const *") == 0);
+        result = is_string || is_enum;
     } else if (real_type == LUA_TUSERDATA) {
         std::string real_name;
         if (lua_getmetatable(L, index)) {
