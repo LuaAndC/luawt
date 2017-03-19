@@ -251,7 +251,7 @@ def addEnum(type_obj, namespace):
     type_str = str(type_obj)
     if enum_str:
         enum_converters = (
-            'static_cast<%s>(%s' % (enum_str, getEnumArrName(type_obj) + '_val'),
+            'static_cast<%s>' % enum_str,
             'lua_pushstring',
         )
         BUILTIN_TYPES_CONVERTERS[type_str] = enum_converters
@@ -540,13 +540,23 @@ def getBuiltinTypeArgument(options):
     '''
     # Enum: need to close static_cast
     get_enum_arg_template = r'''
-    int enum_index = luaL_checkoption(
-        L,
-        %(index)s,
-        NULL,
-        %(enum_arr)s
-    );
-    %(argument_type)s %(argument_name)s = %(func)s[enum_index]);
+    %(argument_type)s %(argument_name)s;
+    if (lua_type(L, %(index)s) == LUA_TNUMBER) {
+        %(argument_name)s = %(func)s(lua_tointeger(L, %(index)s));
+    } else if (lua_type(L, %(index)s) == LUA_TSTRING) {
+        int enum_index = luaL_checkoption(
+            L,
+            %(index)s,
+            NULL,
+            %(enum_str_arr)s
+        );
+        %(argument_name)s = %(func)s(%(enum_val_arr)s[enum_index]);
+    } else {
+        return luaL_error(
+            L,
+            "Wrong enum type in args of %(module)s.%(method)s"
+        );
+    }
     '''
     problematic_type = findCorrespondingKeyInDict(
         PROBLEMATIC_TO_BUILTIN_CONVERSIONS,
