@@ -538,7 +538,6 @@ def getBuiltinTypeArgument(options):
     get_builtin_arg_template = r'''
     %(argument_type)s %(argument_name)s = %(func)s(L, %(index)s);
     '''
-    # Enum: need to close static_cast
     get_enum_arg_template = r'''
     %(argument_type)s %(argument_name)s;
     if (lua_type(L, %(index)s) == LUA_TNUMBER) {
