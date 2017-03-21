@@ -548,6 +548,8 @@ inline int luawt_getSuitableArgsGroup(
 }
 
 /* Facilities for dealing with enums. */
+
+/* Function returns index of the given enum value. */
 inline int luawt_getEnumIndex(
     const long long int enum_values[],
     long long int enum_value
