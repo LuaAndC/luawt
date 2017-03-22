@@ -549,6 +549,12 @@ inline int luawt_getSuitableArgsGroup(
 
 /* Facilities for dealing with enums. */
 
+/* Set global enums table (luawt.enums). */
+inline void luawt_setEnumsTable(lua_State* L) {
+    lua_newtable(L);
+    lua_setfield(L, -2, "enums");
+}
+
 /* Function returns index of the given enum value. */
 inline int luawt_getEnumIndex(
     const long long int enum_values[],
