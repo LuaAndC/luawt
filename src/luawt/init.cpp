@@ -109,6 +109,7 @@ int luaopen_luawt(lua_State* L)
 #endif
 {
     luaL_newmetatable(L, "luawt"); // module luawt
+    luawt_setEnumsTable(L);
     for (const luawt_Reg* reg = luawt_modules; reg->name; ++reg) {
         int stack_size1 = lua_gettop(L);
         reg->func(L); // must not change stack
