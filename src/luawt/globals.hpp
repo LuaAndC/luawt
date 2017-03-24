@@ -555,6 +555,36 @@ inline void luawt_setEnumsTable(lua_State* L) {
     lua_setfield(L, -2, "enums");
 }
 
+inline void luawt_setEnumTable(
+    lua_State* L,
+    const char* enum_name,
+    const long long int enum_values[],
+    const char* const enum_strings[]
+) {
+    luaL_getmetatable(L, "luawt");
+    lua_getfield(L, -1, "enums");
+    assert(lua_type(L, -1) == LUA_TTABLE);
+    lua_getfield(L, -1, enum_name);
+    if (lua_type(L, -1) != LUA_TNIL) {
+        // Already exists.
+        // luawt, luawt.enums, luawt.enums.GivenEnum.
+        lua_pop(L, 3);
+        return;
+    }
+    // nil
+    lua_pop(L, 1);
+    lua_newtable(L);
+    int enum_n = 0;
+    while (enum_strings[enum_n] != NULL) {
+        lua_pushinteger(L, enum_values[enum_n]);
+        lua_setfield(L, -2, enum_strings[enum_n]);
+        enum_n++;
+    }
+    lua_setfield(L, -2, enum_name);
+    // luawt, luawt.enums
+    lua_pop(L, 2);
+}
+
 /* Function returns index of the given enum value. */
 inline int luawt_getEnumIndex(
     const long long int enum_values[],
