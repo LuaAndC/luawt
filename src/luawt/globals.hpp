@@ -555,6 +555,11 @@ inline void luawt_setEnumsTable(lua_State* L) {
     lua_setfield(L, -2, "enums");
 }
 
+/* Function creates and sets table to store enum values
+   indexing by enum strings. For instance:
+   `luawt.enums.EnumName['SomeFlag'] --> integer value of 'SomeFlag'`
+   in the context of `EnumName`.
+*/
 inline void luawt_setEnumTable(
     lua_State* L,
     const char* enum_name,
