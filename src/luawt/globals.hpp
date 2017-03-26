@@ -549,6 +549,14 @@ inline int luawt_getSuitableArgsGroup(
 
 /* Facilities for dealing with enums. */
 
+#define CALL_SET_ENUM_TABLE(enum_name) \
+    luawt_setEnumTable( \
+        L, \
+        #enum_name, \
+        luawt_enum_##enum_name##_val, \
+        luawt_enum_##enum_name##_str \
+    );
+
 /* Set global enums table (luawt.enums). */
 inline void luawt_setEnumsTable(lua_State* L) {
     lua_newtable(L);
