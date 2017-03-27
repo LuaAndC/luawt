@@ -244,6 +244,8 @@ def getEnumStr(type_obj):
 
 def getEnumArrName(full_type):
     return 'luawt_enum_' + getClassStr(getEnumStr(full_type))
+def getEnumName(full_type):
+    return getClassStr(getEnumStr(full_type))
 
 
 def addEnum(type_obj, namespace):
