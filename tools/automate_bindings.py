@@ -242,11 +242,11 @@ def getEnumStr(type_obj):
         return str(clearType(type_obj))
     return ''
 
-def getEnumArrName(full_type):
-    return 'luawt_enum_' + getClassStr(getEnumStr(full_type))
 def getEnumName(full_type):
     return getClassStr(getEnumStr(full_type))
 
+def getEnumArrName(enum_name, end):
+    return 'luawt_enum_' + enum_name + end
 
 def addEnum(type_obj, namespace):
     enum_str = getEnumStr(type_obj)
@@ -258,7 +258,7 @@ def addEnum(type_obj, namespace):
         )
         BUILTIN_TYPES_CONVERTERS[type_str] = enum_converters
         enum_obj = getEnumObj(getClassStr(enum_str), namespace)
-        GLOBAL_ENUMS_REGISTRY[type_str] = (getEnumArrName(type_obj), [])
+        GLOBAL_ENUMS_REGISTRY[type_str] = (getEnumName(type_obj), [])
         for val in enum_obj.values:
             GLOBAL_ENUMS_REGISTRY[type_str][1].append((val[1], val[0]))
         GLOBAL_ENUMS_REGISTRY[type_str][1].sort()
@@ -682,9 +682,9 @@ def returnValue(return_type):
         if return_type in GLOBAL_ENUMS_REGISTRY:
             # Enum.
             return RETURN_ENUM_TEMPLATE % (
-                GLOBAL_ENUMS_REGISTRY[return_type][0] + '_val',
+                getEnumArrName(GLOBAL_ENUMS_REGISTRY[return_type][0], '_val'),
                 func_name,
-                GLOBAL_ENUMS_REGISTRY[return_type][0] + '_str',
+                getEnumArrName(GLOBAL_ENUMS_REGISTRY[return_type][0], '_str'),
             )
         else:
             return RETURN_CALLS_TEMPLATE % (func_name, ref_str, convert_f)
@@ -785,8 +785,8 @@ def implementLuaCFunction(
             options = {
                 'argument_name' : arg.name,
                 'argument_type' : arg_field,
-                'enum_str_arr' : getEnumArrName(arg_field) + '_str',
-                'enum_val_arr' : getEnumArrName(arg_field) + '_val',
+                'enum_str_arr' : getEnumArrName(getEnumName(arg_field), '_str'),
+                'enum_val_arr' : getEnumArrName(getEnumName(arg_field), '_val'),
                 'index' : i + arg_index_offset,
                 'method' : method_name,
                 'module' : module_name,
@@ -924,12 +924,13 @@ def generateEnumArrays():
     code = ''
     names = []
     for enum_key in GLOBAL_ENUMS_REGISTRY:
-        name_str = GLOBAL_ENUMS_REGISTRY[enum_key][0] + '_str'
-        name_val = GLOBAL_ENUMS_REGISTRY[enum_key][0] + '_val'
-        if name_str in names:
+        enum_name = GLOBAL_ENUMS_REGISTRY[enum_key][0]
+        name_str = getEnumArrName(enum_name, '_str')
+        name_val = getEnumArrName(enum_name, '_val')
+        if enum_name in names:
             continue
         else:
-            names.append(name_str)
+            names.append(enum_name)
         body_str = ''
         body_val = ''
         for i, val in enumerate(GLOBAL_ENUMS_REGISTRY[enum_key][1]):
