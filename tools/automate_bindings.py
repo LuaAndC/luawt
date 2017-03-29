@@ -845,6 +845,7 @@ def generateMethodsArray(module_name, methods):
 MODULE_FUNC_TEMPLATE = r'''
 void luawt_%(module_name)s(lua_State* L) {
     %(get_base_str)s
+    %(set_enums_calls)s
     DECLARE_CLASS(
         %(module_name)s,
         L,
@@ -856,11 +857,17 @@ void luawt_%(module_name)s(lua_State* L) {
 }
 '''
 
-def generateModuleFunc(module_name, base, is_not_abstract):
+def generateModuleFunc(module_name, base, enum_names, is_not_abstract):
     base_frame = '''
     const char* base = luawt_typeToStr<%s>();
     assert(base);
     '''
+    set_enums_calls = ''
+    set_enum_call_frame = r'''
+    CALL_SET_ENUM_TABLE(%s);
+    '''
+    for enum_name in enum_names:
+        set_enums_calls += set_enum_call_frame.rstrip() % enum_name
     if base == '0':
         # WApplication or WWidget
         get_base = ''
@@ -876,6 +883,7 @@ def generateModuleFunc(module_name, base, is_not_abstract):
         'get_base_str' : get_base,
         'make' : make,
         'module_name' : module_name,
+        'set_enums_calls' : set_enums_calls,
     }
     return MODULE_FUNC_TEMPLATE.lstrip() % options
 
@@ -941,13 +949,14 @@ def generateEnumArrays():
                 body_val += ',\n'
         code += ENUM_STRING_ARRAY_TEMPLATE % (name_str, body_str)
         code += ENUM_VALUE_ARRAY_TEMPLATE % (name_val, body_val)
-    return code
+    return code, names
 
 def generateModule(module_name, methods, base, constructors, signals):
     source = []
     includes = getIncludes(module_name, methods, constructors)
     source.append(generateIncludes(includes))
-    source.append(generateEnumArrays())
+    enum_arrays, enum_names = generateEnumArrays()
+    source.append(enum_arrays)
     source.append(generateConstructor(module_name, constructors))
     # Group by method name to find overloaded groups.
     name2methods = {}
@@ -971,6 +980,7 @@ def generateModule(module_name, methods, base, constructors, signals):
     source.append(generateModuleFunc(
         module_name,
         base,
+        enum_names,
         is_not_abstract=bool(constructors),
     ))
     return ''.join(source)
