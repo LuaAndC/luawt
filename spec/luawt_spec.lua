@@ -96,4 +96,27 @@ describe("luawt", function()
         test.clear(server, wt_config, false)
     end)
 
+    pending("provides different ways for using #enums", function()
+        local code = [[
+            local app, env = ...
+            local luawt = require 'luawt'
+            app:root():setContentAlignment(4)
+            local alignment = app:root():contentAlignment()
+            luawt.Shared.alignment = alignment
+            luawt.Shared.alignment_val =
+                luawt.enums.AlignmentFlag[alignment]
+            app:root():setContentAlignment('AlignLeft')
+            alignment = app:root():contentAlignment()
+            luawt.Shared.alignment2 = alignment
+            luawt.Shared.alignment_val2 =
+                luawt.enums.AlignmentFlag[alignment]
+        ]]
+        local server, wt_config, data = test.getData(code)
+        assert.truthy(luawt.Shared.alignment == "AlignCenter")
+        assert.truthy(luawt.Shared.alignment_val == 4)
+        assert.truthy(luawt.Shared.alignment2 == "AlignLeft")
+        assert.truthy(luawt.Shared.alignment_val2 == 1)
+        test.clear(server, wt_config, false)
+    end)
+
 end)
