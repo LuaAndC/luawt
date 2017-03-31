@@ -257,6 +257,13 @@ def addEnum(type_obj, namespace):
             'lua_pushstring',
         )
         BUILTIN_TYPES_CONVERTERS[type_str] = enum_converters
+        return True
+    return False
+
+def declareEnum(type_obj, namespace):
+    enum_str = getEnumStr(type_obj)
+    type_str = str(type_obj)
+    if enum_str:
         enum_obj = getEnumObj(getClassStr(enum_str), namespace)
         GLOBAL_ENUMS_REGISTRY[type_str] = (getEnumName(type_obj), [])
         for val in enum_obj.values:
@@ -271,15 +278,21 @@ def getArgType(arg):
 def checkWtFunction(is_constructor, func, Wt):
     if func.access_type != 'public':
         return False
+    enums = []
     for arg in func.arguments:
         arg_field = getArgType(arg)
-        addEnum(arg_field, Wt)
+        if addEnum(arg_field, Wt):
+            enums.append(arg_field)
         if not checkArgumentType(func.name, arg_field, Wt):
             return False
     if not is_constructor:
-        addEnum(func.return_type, Wt)
+        if addEnum(func.return_type, Wt):
+            enums.append(func.return_type)
         if not checkReturnType(func.name, func.return_type, Wt):
            return False
+    # We have to declare needed enums.
+    for enum in enums:
+        declareEnum(enum, Wt)
     # OK, all checks've passed.
     return True
 
