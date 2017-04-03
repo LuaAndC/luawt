@@ -1023,7 +1023,7 @@ def readFile(filename):
         return f.readlines()
 
 def writeSourceToFile(module_name, source):
-    writeToFile('src/luawt/%s.cpp' % module_name, source)
+    writeToFile('src/luawt/%s' % module_name, source)
 
 def addItemToFiles(parameters, module_name, Wt = None):
     for parameter in parameters:
@@ -1119,7 +1119,7 @@ def bind(modules, module_only, blacklist):
             if constructors:
                 # Is not abstract
                 addTest(module_name, constructors_type)
-            writeSourceToFile(module_name, source)
+            writeSourceToFile(module_name + '.cpp', source)
         except Exception as e:
             if len(modules) == 1:
                 raise
