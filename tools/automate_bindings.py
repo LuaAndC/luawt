@@ -943,6 +943,13 @@ def generateEnumArrays():
         code += ENUM_VALUE_ARRAY_TEMPLATE % (name_val, body_val)
     return code, names
 
+SET_ENUMS_FUNC_TEMPLATE = r'''
+void luawt_setEnumsTables(lua_State* L) {
+    luawt_setEnumsTable(L);
+    %s
+}
+'''
+
 def generateModule(module_name, methods, base, constructors, signals):
     source = []
     includes = getIncludes(module_name, methods, constructors)
