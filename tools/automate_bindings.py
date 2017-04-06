@@ -950,6 +950,15 @@ void luawt_setEnumsTables(lua_State* L) {
 }
 '''
 
+def generateSetEnumsCalls(enum_names):
+    call_template = r'''
+    CALL_SET_ENUM_TABLE(%s)
+    '''
+    body = ''
+    for enum_name in enum_names:
+        body += call_template.rstrip() % enum_name
+    return SET_ENUMS_FUNC_TEMPLATE % body
+
 def generateModule(module_name, methods, base, constructors, signals):
     source = []
     includes = getIncludes(module_name, methods, constructors)
