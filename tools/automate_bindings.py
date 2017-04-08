@@ -1106,7 +1106,7 @@ def addTest(module_name, constructors_type):
         ]
         addItemToFiles(parameters, module_name)
 
-def bind(modules, module_only, blacklist):
+def bind(modules, module_only, blacklist, gen_enums=False):
     for module in modules:
         try:
             global_namespace = parse(module)
@@ -1253,6 +1253,12 @@ def main():
         required=False,
     )
     parser.add_argument(
+        '--gen-enums',
+        help='Generate file enums.hpp (fill with enums arrays)',
+        action='store_true',
+        required=False,
+    )
+    parser.add_argument(
         '--module-only',
         help='Do not change globals.hpp, init.cpp and rockspec',
         action='store_true',
@@ -1273,7 +1279,7 @@ def main():
     if args.bind:
         bind([args.bind], args.module_only, blacklist)
     elif args.bind_all:
-        bind(getAllModules(), args.module_only, blacklist)
+        bind(getAllModules(), args.module_only, blacklist, args.gen_enums)
     elif args.gen_members:
         print(yaml.dump(
             collectMembers(args.gen_members),
