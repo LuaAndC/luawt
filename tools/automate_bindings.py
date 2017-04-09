@@ -1106,6 +1106,15 @@ def addTest(module_name, constructors_type):
         ]
         addItemToFiles(parameters, module_name)
 
+ENUMS_DIRECTIVES_TEMPLATE = r'''
+#ifndef ENUMS_HPP_
+#define ENUMS_HPP_
+
+#include "boost-xtime.hpp"
+
+#include "globals.hpp"
+'''
+
 def bind(modules, module_only, blacklist, gen_enums=False):
     for module in modules:
         try:
