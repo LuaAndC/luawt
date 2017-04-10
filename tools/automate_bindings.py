@@ -451,6 +451,7 @@ INCLUDES_TEMPLATE = r'''
 
 %s
 
+#include "enums.hpp"
 #include "globals.hpp"
 
 '''
