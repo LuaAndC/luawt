@@ -246,7 +246,7 @@ def getEnumName(full_type):
     return getClassStr(getEnumStr(full_type))
 
 def getEnumArrName(enum_name, end):
-    return 'luawt_enum_' + enum_name + end
+    return 'luawt_enum_' + enum_name.replace('::', '_') + end
 
 def addEnum(type_obj, namespace):
     enum_str = getEnumStr(type_obj)
@@ -957,7 +957,7 @@ def generateSetEnumsCalls(enum_names):
     '''
     body = ''
     for enum_name in enum_names:
-        body += call_template.rstrip() % enum_name
+        body += call_template.rstrip() % enum_name.replace('::', '_')
     return SET_ENUMS_FUNC_TEMPLATE % body
 
 def generateModule(module_name, methods, base, constructors, signals):
