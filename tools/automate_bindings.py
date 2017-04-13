@@ -200,10 +200,10 @@ def checkReturnType(method_name, raw_return_type, Wt):
 
 def getInternalNamespace(decl_str):
     chunks = decl_str.split('::')
-    if len(chunks) == 3:
-        # Decl has internal namespace, e.g. Wt::Namespace::Enum.
+    if len(chunks) == 2:
+        # Decl has internal namespace, e.g. Namespace::Enum.
         try:
-            return loadAdditionalChunk(chunks[1])
+            return loadAdditionalChunk(chunks[0])
         except:
             return None
     return None
