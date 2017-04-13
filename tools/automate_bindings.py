@@ -215,6 +215,10 @@ def enumObjFromNamespace(enum_str, namespace):
         return None
 
 def getEnumObj(enum_str, default_namespace):
+    chunks = enum_str.split('::')
+    if len(chunks) == 2:
+        # Namespace::Enum --> Enum
+        enum_str = chunks[1]
     enum_obj = enumObjFromNamespace(enum_str, default_namespace)
     if not enum_obj:
         # Not found: enum isn't declared in the given module.
