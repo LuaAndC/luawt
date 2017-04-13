@@ -945,7 +945,7 @@ def generateEnumArrays():
     return code, names
 
 SET_ENUMS_FUNC_TEMPLATE = r'''
-void luawt_setEnumsTables(lua_State* L) {
+inline void luawt_setEnumsTables(lua_State* L) {
     luawt_setEnumsTable(L);
     %s
 }
