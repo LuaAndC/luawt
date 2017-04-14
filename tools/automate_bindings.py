@@ -546,23 +546,13 @@ def getBuiltinTypeArgument(options):
     %(argument_type)s %(argument_name)s = %(func)s(L, %(index)s);
     '''
     get_enum_arg_template = r'''
-    %(argument_type)s %(argument_name)s;
-    if (lua_type(L, %(index)s) == LUA_TNUMBER) {
-        %(argument_name)s = %(func)s(lua_tointeger(L, %(index)s));
-    } else if (lua_type(L, %(index)s) == LUA_TSTRING) {
-        int enum_index = luaL_checkoption(
-            L,
-            %(index)s,
-            NULL,
-            %(enum_str_arr)s
-        );
-        %(argument_name)s = %(func)s(%(enum_val_arr)s[enum_index]);
-    } else {
-        return luaL_error(
-            L,
-            "Wrong enum type in args of %(module)s.%(method)s"
-        );
-    }
+    %(argument_type)s %(argument_name)s = %(func)s(luawt_getEnum(
+        L,
+        %(enum_str_arr)s,
+        %(enum_val_arr)s,
+        %(index)s,
+        "Wrong enum type in args of %(module)s.%(method)s"
+    ));
     '''
     problematic_type = findCorrespondingKeyInDict(
         PROBLEMATIC_TO_BUILTIN_CONVERSIONS,
