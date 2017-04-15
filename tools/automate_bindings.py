@@ -635,8 +635,7 @@ RETURN_CALLS_TEMPLATE = r'''
 '''
 
 RETURN_ENUM_TEMPLATE = r'''
-    int enum_index = luawt_getEnumIndex(%s, l_result);
-    %s(L, %s[enum_index]);
+    luawt_returnEnum(L, %s, %s, l_result, "%s");
     return 1;
 '''
 
@@ -676,10 +675,11 @@ def returnValue(return_type):
             convert_f = getBuiltinTypeFromProblematic(problematic_type)
         if return_type in GLOBAL_ENUMS_REGISTRY:
             # Enum.
+            enum_name = GLOBAL_ENUMS_REGISTRY[return_type][0]
             return RETURN_ENUM_TEMPLATE % (
-                getEnumArrName(GLOBAL_ENUMS_REGISTRY[return_type][0], '_val'),
-                func_name,
-                getEnumArrName(GLOBAL_ENUMS_REGISTRY[return_type][0], '_str'),
+                getEnumArrName(enum_name, '_str'),
+                getEnumArrName(enum_name, '_val'),
+                enum_name,
             )
         else:
             return RETURN_CALLS_TEMPLATE % (func_name, ref_str, convert_f)
