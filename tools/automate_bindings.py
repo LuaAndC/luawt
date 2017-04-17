@@ -1107,6 +1107,7 @@ ENUMS_DIRECTIVES_TEMPLATE = r'''
 
 #include "boost-xtime.hpp"
 
+#include "Global.hpp"
 #include "globals.hpp"
 '''
 
