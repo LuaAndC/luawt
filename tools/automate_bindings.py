@@ -910,7 +910,7 @@ static const char* const %s[] = {
 '''
 
 ENUM_VALUE_ARRAY_TEMPLATE = r'''
-static const long long int %s[] = {
+static const lint %s[] = {
 %s
 };
 '''
