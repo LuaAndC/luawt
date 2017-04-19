@@ -915,6 +915,17 @@ static const lint %s[] = {
 };
 '''
 
+def generateSpecialEnumsSet(special_enums):
+    code = ''
+    body = ''
+    for special_enum in special_enums:
+        body += '    ' + '"' + special_enum + '"' + ',\n'
+    name = 'luawt_SpecialEnums_arr'
+    end = '%s + %s' % (name, len(special_enums))
+    code += ENUM_STRING_ARRAY_TEMPLATE % (name, body)
+    code += 'StrsSet luawt_SpecialEnums(%s, %s);' % (name, end);
+    return code
+
 def generateEnumArrays():
     code = ''
     names = []
