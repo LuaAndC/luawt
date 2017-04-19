@@ -907,7 +907,7 @@ def isSpecialEnum(enum_key):
     enum_pairs = GLOBAL_ENUMS_REGISTRY[enum_key][1]
     if len(enum_pairs) <= 1:
         return False
-    values_sum = enums_pairs[0][0]
+    values_sum = enum_pairs[0][0]
     del enum_pairs[0]
     for enum_pair in enum_pairs:
         enum_val = enum_pair[0]
