@@ -943,6 +943,8 @@ def generateSpecialEnumsSet(special_enums):
 def generateEnumArrays():
     code = ''
     names = []
+    # 'Special' enums (with bitwise different values).
+    special_enums = []
     for enum_key in GLOBAL_ENUMS_REGISTRY:
         enum_name = GLOBAL_ENUMS_REGISTRY[enum_key][0]
         name_str = getEnumArrName(enum_name, '_str')
@@ -961,6 +963,9 @@ def generateEnumArrays():
                 body_val += ',\n'
         code += ENUM_STRING_ARRAY_TEMPLATE % (name_str, body_str)
         code += ENUM_VALUE_ARRAY_TEMPLATE % (name_val, body_val)
+        if isSpecialEnum(enum_key):
+            special_enums.append(enum_name)
+    code += generateSpecialEnumsSet(special_enums)
     return code, names
 
 SET_ENUMS_FUNC_TEMPLATE = r'''
