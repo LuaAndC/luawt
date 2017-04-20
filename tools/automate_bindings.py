@@ -937,7 +937,7 @@ def generateSpecialEnumsSet(special_enums):
     name = 'luawt_SpecialEnums_arr'
     end = '%s + %s' % (name, len(special_enums))
     code += ENUM_STRING_ARRAY_TEMPLATE % (name, body)
-    code += 'StrsSet luawt_SpecialEnums(%s, %s);' % (name, end);
+    code += 'StrsSet luawt_SpecialEnums(%s, %s);\n' % (name, end);
     return code
 
 def generateEnumArrays():
