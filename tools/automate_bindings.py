@@ -908,12 +908,13 @@ def isSpecialEnum(enum_key):
     if len(enum_pairs) <= 1:
         return False
     values_sum = enum_pairs[0][0]
-    del enum_pairs[0]
-    for enum_pair in enum_pairs:
-        enum_val = enum_pair[0]
+    index = 1
+    while index < len(enum_pairs):
+        enum_val = enum_pairs[index][0]
         values_sum = values_sum & enum_val
         if values_sum:
             return False
+        index = index + 1
     return True
 
 ENUM_STRING_ARRAY_TEMPLATE = r'''
