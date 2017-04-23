@@ -905,14 +905,16 @@ def generateSignals(signals, module_name):
 # Check if all values of the given enum are bitwise different.
 def isSpecialEnum(enum_key):
     enum_pairs = GLOBAL_ENUMS_REGISTRY[enum_key][1]
-    if len(enum_pairs) <= 1:
-        return False
     values_sum = 0
+    pairs_n = 0
     for enum_pair in enum_pairs:
         enum_val = enum_pair[0]
+        pairs_n += (enum_val != 0)
         if values_sum & enum_val:
             return False
         values_sum = values_sum | enum_val
+    if pairs_n <= 2:
+        return False
     return True
 
 ENUM_STRING_ARRAY_TEMPLATE = r'''
