@@ -913,7 +913,7 @@ def isSpecialEnum(enum_key):
         if values_sum & enum_val:
             return False
         values_sum = values_sum | enum_val
-    if pairs_n <= 2:
+    if pairs_n <= 1:
         return False
     return True
 
