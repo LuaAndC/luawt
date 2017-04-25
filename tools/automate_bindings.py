@@ -1034,7 +1034,7 @@ def getClassNameFromModuleStr(module_str):
     class_name = class_name.strip()
     return class_name
 
-def addItem(pattern, added_str, content, module_name, Wt = None):
+def addItem(pattern, added_str, content, module_name = None, Wt = None):
     first, last = getMatchRange(pattern, content)
     # init.cpp, special condition: base must be before descendant.
     if pattern == r'MODULE\([a-zA-Z]+\),':
