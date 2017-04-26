@@ -974,6 +974,7 @@ inline void luawt_setEnumsTables(lua_State* L) {
     luawt_setEnumsTable(L);
     %s
 }
+
 '''
 
 def generateSetEnumsCalls(enum_names):
@@ -983,7 +984,7 @@ def generateSetEnumsCalls(enum_names):
     body = ''
     for enum_name in enum_names:
         body += call_template.rstrip() % enum_name.replace('::', '_')
-    return SET_ENUMS_FUNC_TEMPLATE % body
+    return SET_ENUMS_FUNC_TEMPLATE.lstrip() % body
 
 def generateModule(module_name, methods, base, constructors, signals):
     source = []
