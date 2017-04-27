@@ -1140,7 +1140,6 @@ ENUMS_DIRECTIVES_TEMPLATE = r'''
 #include "boost-xtime.hpp"
 
 #include "Global.hpp"
-#include "globals.hpp"
 '''
 
 def bind(modules, module_only, blacklist, gen_enums=False):
