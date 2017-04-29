@@ -1038,8 +1038,8 @@ def getClassNameFromModuleStr(module_str):
 
 def addItem(pattern, added_str, content, module_name = None, Wt = None):
     first, last = getMatchRange(pattern, content)
-    # init.cpp, special condition: base must be before descendant.
     if pattern == r'MODULE\([a-zA-Z]+\),':
+        # init.cpp, special condition: base must be before descendant.
         curr_index = last
         curr_class = getClassNameFromModuleStr(content[curr_index])
         while not isDescendantOf(module_name, curr_class, Wt):
@@ -1048,8 +1048,8 @@ def addItem(pattern, added_str, content, module_name = None, Wt = None):
             if curr_index < first:
                 break
         curr_index += 1
-    # Lexicographical order.
     else:
+        # Lexicographical order.
         curr_index = first
         while added_str > content[curr_index]:
             curr_index += 1
