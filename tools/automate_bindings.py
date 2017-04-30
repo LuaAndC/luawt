@@ -1036,7 +1036,14 @@ def getClassNameFromModuleStr(module_str):
     class_name = class_name.strip()
     return class_name
 
-def addItem(pattern, added_str, content, module_name = None, Wt = None):
+def addItem(
+    pattern,
+    added_str,
+    content,
+    insert_before_match = None,
+    module_name = None,
+    Wt = None
+):
     first, last = getMatchRange(pattern, content)
     if pattern == r'MODULE\([a-zA-Z]+\),':
         # init.cpp, special condition: base must be before descendant.
@@ -1048,6 +1055,8 @@ def addItem(pattern, added_str, content, module_name = None, Wt = None):
             if curr_index < first:
                 break
         curr_index += 1
+    elif insert_before_match:
+        curr_index = first
     else:
         # Lexicographical order.
         curr_index = first
@@ -1076,6 +1085,7 @@ def addItemToFiles(parameters, module_name, Wt = None):
             parameter['pattern'],
             parameter['module_str'],
             content,
+            False,
             module_name,
             Wt,
         ))
