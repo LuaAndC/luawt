@@ -1190,10 +1190,15 @@ def bind(modules, module_only, blacklist, gen_enums=False):
                 logging.warning('Unable to bind %s: %s', module, e)
     if gen_enums:
         enum_arrays, enum_names = generateEnumArrays()
-        set_enums = generateSetEnumsCalls(enum_names)
         close_dirs = '\n#endif'
-        code = ENUMS_DIRECTIVES_TEMPLATE + enum_arrays + set_enums + close_dirs
+        code = ENUMS_DIRECTIVES_TEMPLATE + enum_arrays + close_dirs
         writeSourceToFile('enums.hpp', code)
+        writeToFile('src/luawt/globals.hpp', addItem(
+            '/* Get enum string corresponding',
+            generateSetEnumsCalls(enum_names),
+            readFile('src/luawt/globals.hpp'),
+            True
+        ))
 
 def collectMembers(path):
     if os.path.exists(XML_CACHE):
