@@ -603,22 +603,6 @@ inline void luawt_setEnumTable(
     lua_pop(L, 2);
 }
 
-/* Function returns index of the given enum value. */
-inline int luawt_getEnumIndex(
-    const long long int enum_values[],
-    long long int enum_value
-) {
-    int size = sizeof(enum_values) / sizeof(long long int);
-    int index = std::distance(
-        enum_values,
-        std::find(enum_values, enum_values + size, enum_value)
-    );
-    if (index == size) {
-        throw std::logic_error("LuaWt: error enum value not found.");
-    }
-    return index;
-}
-
 /* These functions are called from luaopen() */
 void luawt_MyApplication(lua_State* L);
 void luawt_Shared(lua_State* L);
