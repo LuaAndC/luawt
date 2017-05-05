@@ -31,6 +31,9 @@
 
 #include <lua.hpp>
 
+#include "Global.hpp"
+#include "enums.hpp"
+
 #if LUA_VERSION_NUM == 501
 #define my_setfuncs(L, funcs) luaL_register(L, 0, funcs)
 #define my_equal lua_equal
