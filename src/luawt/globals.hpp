@@ -622,6 +622,43 @@ inline lint luawt_enumStrToValue(
     return enum_values[enum_index];
 }
 
+/* Function examines all possible options of representing enums,
+   chooses the appropriate one and converts it to `lint`.
+*/
+inline lint luawt_getEnum(
+    lua_State* L,
+    const char* const enum_strings[],
+    const lint enum_values[],
+    int index,
+    const char* error_message
+) {
+    if (lua_type(L, index) == LUA_TNUMBER) {
+        // The simplest case: we have the value as a number.
+        return lua_tointeger(L, index);
+    } else if (lua_type(L, index) == LUA_TSTRING) {
+        // Convert from string to `lint`.
+        return luawt_enumStrToValue(L, enum_strings, enum_values, index);
+    } else if (lua_type(L, index) == LUA_TTABLE) {
+        // 'Special' enum (with bitwise different values).
+        lint result = 0;
+        for (int i = 1; i <= my_rawlen(L, index); i++) {
+            lua_pushinteger(L, i);
+            lua_gettable(L, index);
+            result |= luawt_enumStrToValue(
+                L,
+                enum_strings,
+                enum_values,
+                -1
+            );
+            // Enum string.
+            lua_pop(L, 1);
+        }
+        return result;
+    } else {
+        return luaL_error(L, error_message);
+    }
+}
+
 /* These functions are called from luaopen() */
 void luawt_MyApplication(lua_State* L);
 void luawt_Shared(lua_State* L);
