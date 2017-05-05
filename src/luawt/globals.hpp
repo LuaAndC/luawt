@@ -576,7 +576,7 @@ inline void luawt_setEnumsTable(lua_State* L) {
 inline void luawt_setEnumTable(
     lua_State* L,
     const char* enum_name,
-    const long long int enum_values[],
+    const lint enum_values[],
     const char* const enum_strings[]
 ) {
     luaL_getmetatable(L, "luawt");
