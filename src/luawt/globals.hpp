@@ -659,6 +659,12 @@ inline lint luawt_getEnum(
     }
 }
 
+/* Check whether `enum_name` is in global set of special enums or not.
+*/
+inline bool luawt_isSpecialEnum(const char* enum_name) {
+    return luawt_SpecialEnums.find(enum_name) != luawt_SpecialEnums.end();
+}
+
 /* These functions are called from luaopen() */
 void luawt_MyApplication(lua_State* L);
 void luawt_Shared(lua_State* L);
