@@ -505,6 +505,8 @@ inline bool luawt_equalTypes(
             lua_pop(L, 2);
         }
         result = luawt_ascendToBase(L, std::string(expected_type), real_name);
+    } else if (real_type == LUA_TTABLE) {
+        result = is_enum;
     }
     return result;
 }
