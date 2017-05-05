@@ -665,6 +665,41 @@ inline bool luawt_isSpecialEnum(const char* enum_name) {
     return luawt_SpecialEnums.find(enum_name) != luawt_SpecialEnums.end();
 }
 
+/* Return enum in the form of string or table([str] -> val).
+   Use tables only for representing enums with bitwise different
+   values, in case of combination of multiple values in flag enums.
+*/
+inline void luawt_returnEnum(
+    lua_State* L,
+    const char* const enum_strings[],
+    const lint enum_values[],
+    lint enum_value,
+    const char* enum_name
+) {
+    int size = sizeof(enum_values) / sizeof(lint);
+    if (luawt_isSpecialEnum(enum_name)) {
+        // 'Special' enum (bitwise different values).
+        lua_newtable(L);
+        for (int i = 0; i < size; i++) {
+            if (enum_values[i] & enum_value) {
+                lua_pushstring(L, enum_strings[i]);
+                lua_pushinteger(L, enum_values[i]);
+                lua_settable(L, -3);
+            }
+        }
+    } else {
+        // Simple case: value -> string.
+        int index = std::distance(
+            enum_values,
+            std::find(enum_values, enum_values + size, enum_value)
+        );
+        if (index == size) {
+            throw std::logic_error("LuaWt: error enum value not found.");
+        }
+        lua_pushstring(L, enum_strings[index]);
+    }
+}
+
 /* These functions are called from luaopen() */
 void luawt_MyApplication(lua_State* L);
 void luawt_Shared(lua_State* L);
