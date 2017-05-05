@@ -603,6 +603,25 @@ inline void luawt_setEnumTable(
     lua_pop(L, 2);
 }
 
+/* Get enum value corresponding to the given enum string. */
+inline lint luawt_enumStrToValue(
+    lua_State* L,
+    const char* const enum_strings[],
+    const lint enum_values[],
+    int index
+) {
+    if (lua_type(L, index) != LUA_TSTRING) {
+        return luaL_error(L, "Enum array must contain only strings");
+    }
+    int enum_index = luaL_checkoption(
+        L,
+        index,
+        NULL,
+        enum_strings
+    );
+    return enum_values[enum_index];
+}
+
 /* These functions are called from luaopen() */
 void luawt_MyApplication(lua_State* L);
 void luawt_Shared(lua_State* L);
