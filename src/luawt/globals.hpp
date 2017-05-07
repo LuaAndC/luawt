@@ -729,27 +729,29 @@ inline void luawt_returnEnum(
     lint enum_value,
     const char* enum_name
 ) {
-    int size = sizeof(enum_values) / sizeof(lint);
     if (luawt_isSpecialEnum(enum_name)) {
         // 'Special' enum (bitwise different values).
+        int index = 0;
         lua_newtable(L);
-        for (int i = 0; i < size; i++) {
-            if (enum_values[i] & enum_value) {
-                lua_pushstring(L, enum_strings[i]);
-                lua_pushinteger(L, enum_values[i]);
+        while (enum_strings[index] != NULL) {
+            if (enum_values[index] & enum_value) {
+                lua_pushstring(L, enum_strings[index]);
+                lua_pushinteger(L, enum_values[index]);
                 lua_settable(L, -3);
             }
+            index++;
         }
     } else {
         // Simple case: value -> string.
-        int index = std::distance(
-            enum_values,
-            std::find(enum_values, enum_values + size, enum_value)
-        );
-        if (index == size) {
-            throw std::logic_error("LuaWt: error enum value not found.");
+        int index = 0;
+        while (enum_strings[index] != NULL) {
+            if (enum_values[index] == enum_value) {
+                lua_pushstring(L, enum_strings[index]);
+                return;
+            }
+            index++;
         }
-        lua_pushstring(L, enum_strings[index]);
+        throw std::logic_error("LuaWt: error enum value not found.");
     }
 }
 
