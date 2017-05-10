@@ -9,16 +9,23 @@
 #include <Wt/WContainerWidget>
 #include <Wt/WText>
 
+#include "enums.hpp"
 #include "globals.hpp"
 
-static const char* WMediaPlayer_make_args0[] = {"int", NULL};
-static const char* WMediaPlayer_make_args1[] = {"int", luawt_typeToStr<Wt::WContainerWidget>(), NULL};
+static const char* WMediaPlayer_make_args0[] = {"enum", NULL};
+static const char* WMediaPlayer_make_args1[] = {"enum", luawt_typeToStr<Wt::WContainerWidget>(), NULL};
 static const char* const* const luawt_WMediaPlayer_make_args[] = {WMediaPlayer_make_args0, WMediaPlayer_make_args1, NULL};
 
 int luawt_WMediaPlayer_make(lua_State* L) {
     int index = luawt_getSuitableArgsGroup(L, luawt_WMediaPlayer_make_args);
     if (index == 0) {
-    Wt::WMediaPlayer::MediaType mediaType = static_cast<Wt::WMediaPlayer::MediaType>(lua_tointeger(L, 1));
+    Wt::WMediaPlayer::MediaType mediaType = static_cast<Wt::WMediaPlayer::MediaType>(luawt_getEnum(
+        L,
+        luawt_enum_WMediaPlayer_MediaType_str,
+        luawt_enum_WMediaPlayer_MediaType_val,
+        1,
+        "Wrong enum type in args of WMediaPlayer.make"
+    ));
     WMediaPlayer * l_result = new WMediaPlayer(mediaType);
     MyApplication* app = MyApplication::instance();
     if (!app) {
@@ -31,7 +38,13 @@ int luawt_WMediaPlayer_make(lua_State* L) {
     return 1;
 
     } else if (index == 1) {
-    Wt::WMediaPlayer::MediaType mediaType = static_cast<Wt::WMediaPlayer::MediaType>(lua_tointeger(L, 1));
+    Wt::WMediaPlayer::MediaType mediaType = static_cast<Wt::WMediaPlayer::MediaType>(luawt_getEnum(
+        L,
+        luawt_enum_WMediaPlayer_MediaType_str,
+        luawt_enum_WMediaPlayer_MediaType_val,
+        1,
+        "Wrong enum type in args of WMediaPlayer.make"
+    ));
     Wt::WContainerWidget* parent =
         luawt_checkFromLua<Wt::WContainerWidget>(L, 2);
     WMediaPlayer * l_result = new WMediaPlayer(mediaType, parent);
@@ -59,14 +72,20 @@ int luawt_WMediaPlayer_mute(lua_State* L) {
     }
 }
 
-static const char* WMediaPlayer_text_args0[] = {luawt_typeToStr<WMediaPlayer>(), "int", NULL};
+static const char* WMediaPlayer_text_args0[] = {luawt_typeToStr<WMediaPlayer>(), "enum", NULL};
 static const char* const* const luawt_WMediaPlayer_text_args[] = {WMediaPlayer_text_args0, NULL};
 
 int luawt_WMediaPlayer_text(lua_State* L) {
     int index = luawt_getSuitableArgsGroup(L, luawt_WMediaPlayer_text_args);
     WMediaPlayer* self = luawt_checkFromLua<WMediaPlayer>(L, 1);
     if (index == 0) {
-    Wt::WMediaPlayer::TextId id = static_cast<Wt::WMediaPlayer::TextId>(lua_tointeger(L, 2));
+    Wt::WMediaPlayer::TextId id = static_cast<Wt::WMediaPlayer::TextId>(luawt_getEnum(
+        L,
+        luawt_enum_WMediaPlayer_TextId_str,
+        luawt_enum_WMediaPlayer_TextId_val,
+        2,
+        "Wrong enum type in args of WMediaPlayer.text"
+    ));
     Wt::WText * l_result = self->text(id);
     luawt_toLua(L, l_result);
     return 1;
@@ -109,14 +128,20 @@ int luawt_WMediaPlayer_setPlaybackRate(lua_State* L) {
     }
 }
 
-static const char* WMediaPlayer_setText_args0[] = {luawt_typeToStr<WMediaPlayer>(), "int", luawt_typeToStr<Wt::WText>(), NULL};
+static const char* WMediaPlayer_setText_args0[] = {luawt_typeToStr<WMediaPlayer>(), "enum", luawt_typeToStr<Wt::WText>(), NULL};
 static const char* const* const luawt_WMediaPlayer_setText_args[] = {WMediaPlayer_setText_args0, NULL};
 
 int luawt_WMediaPlayer_setText(lua_State* L) {
     int index = luawt_getSuitableArgsGroup(L, luawt_WMediaPlayer_setText_args);
     WMediaPlayer* self = luawt_checkFromLua<WMediaPlayer>(L, 1);
     if (index == 0) {
-    Wt::WMediaPlayer::TextId id = static_cast<Wt::WMediaPlayer::TextId>(lua_tointeger(L, 2));
+    Wt::WMediaPlayer::TextId id = static_cast<Wt::WMediaPlayer::TextId>(luawt_getEnum(
+        L,
+        luawt_enum_WMediaPlayer_TextId_str,
+        luawt_enum_WMediaPlayer_TextId_val,
+        2,
+        "Wrong enum type in args of WMediaPlayer.setText"
+    ));
     Wt::WText* text =
         luawt_checkFromLua<Wt::WText>(L, 3);
     self->setText(id, text);
@@ -174,14 +199,20 @@ int luawt_WMediaPlayer_pause(lua_State* L) {
     }
 }
 
-static const char* WMediaPlayer_addSource_args0[] = {luawt_typeToStr<WMediaPlayer>(), "int", "char const *", NULL};
+static const char* WMediaPlayer_addSource_args0[] = {luawt_typeToStr<WMediaPlayer>(), "enum", "char const *", NULL};
 static const char* const* const luawt_WMediaPlayer_addSource_args[] = {WMediaPlayer_addSource_args0, NULL};
 
 int luawt_WMediaPlayer_addSource(lua_State* L) {
     int index = luawt_getSuitableArgsGroup(L, luawt_WMediaPlayer_addSource_args);
     WMediaPlayer* self = luawt_checkFromLua<WMediaPlayer>(L, 1);
     if (index == 0) {
-    Wt::WMediaPlayer::Encoding encoding = static_cast<Wt::WMediaPlayer::Encoding>(lua_tointeger(L, 2));
+    Wt::WMediaPlayer::Encoding encoding = static_cast<Wt::WMediaPlayer::Encoding>(luawt_getEnum(
+        L,
+        luawt_enum_WMediaPlayer_Encoding_str,
+        luawt_enum_WMediaPlayer_Encoding_val,
+        2,
+        "Wrong enum type in args of WMediaPlayer.addSource"
+    ));
     char const * raw3 = lua_tostring(L, 3);
     Wt::WLink link = Wt::WLink(raw3);
     self->addSource(encoding, link);
@@ -192,14 +223,20 @@ int luawt_WMediaPlayer_addSource(lua_State* L) {
     }
 }
 
-static const char* WMediaPlayer_button_args0[] = {luawt_typeToStr<WMediaPlayer>(), "int", NULL};
+static const char* WMediaPlayer_button_args0[] = {luawt_typeToStr<WMediaPlayer>(), "enum", NULL};
 static const char* const* const luawt_WMediaPlayer_button_args[] = {WMediaPlayer_button_args0, NULL};
 
 int luawt_WMediaPlayer_button(lua_State* L) {
     int index = luawt_getSuitableArgsGroup(L, luawt_WMediaPlayer_button_args);
     WMediaPlayer* self = luawt_checkFromLua<WMediaPlayer>(L, 1);
     if (index == 0) {
-    Wt::WMediaPlayer::ButtonControlId id = static_cast<Wt::WMediaPlayer::ButtonControlId>(lua_tointeger(L, 2));
+    Wt::WMediaPlayer::ButtonControlId id = static_cast<Wt::WMediaPlayer::ButtonControlId>(luawt_getEnum(
+        L,
+        luawt_enum_WMediaPlayer_ButtonControlId_str,
+        luawt_enum_WMediaPlayer_ButtonControlId_val,
+        2,
+        "Wrong enum type in args of WMediaPlayer.button"
+    ));
     Wt::WInteractWidget * l_result = self->button(id);
     luawt_toLua(L, l_result);
     return 1;
@@ -304,14 +341,20 @@ int luawt_WMediaPlayer_controlsWidget(lua_State* L) {
     }
 }
 
-static const char* WMediaPlayer_setButton_args0[] = {luawt_typeToStr<WMediaPlayer>(), "int", luawt_typeToStr<Wt::WInteractWidget>(), NULL};
+static const char* WMediaPlayer_setButton_args0[] = {luawt_typeToStr<WMediaPlayer>(), "enum", luawt_typeToStr<Wt::WInteractWidget>(), NULL};
 static const char* const* const luawt_WMediaPlayer_setButton_args[] = {WMediaPlayer_setButton_args0, NULL};
 
 int luawt_WMediaPlayer_setButton(lua_State* L) {
     int index = luawt_getSuitableArgsGroup(L, luawt_WMediaPlayer_setButton_args);
     WMediaPlayer* self = luawt_checkFromLua<WMediaPlayer>(L, 1);
     if (index == 0) {
-    Wt::WMediaPlayer::ButtonControlId id = static_cast<Wt::WMediaPlayer::ButtonControlId>(lua_tointeger(L, 2));
+    Wt::WMediaPlayer::ButtonControlId id = static_cast<Wt::WMediaPlayer::ButtonControlId>(luawt_getEnum(
+        L,
+        luawt_enum_WMediaPlayer_ButtonControlId_str,
+        luawt_enum_WMediaPlayer_ButtonControlId_val,
+        2,
+        "Wrong enum type in args of WMediaPlayer.setButton"
+    ));
     Wt::WInteractWidget* btn =
         luawt_checkFromLua<Wt::WInteractWidget>(L, 3);
     self->setButton(id, btn);
@@ -337,14 +380,20 @@ int luawt_WMediaPlayer_stop(lua_State* L) {
     }
 }
 
-static const char* WMediaPlayer_progressBar_args0[] = {luawt_typeToStr<WMediaPlayer>(), "int", NULL};
+static const char* WMediaPlayer_progressBar_args0[] = {luawt_typeToStr<WMediaPlayer>(), "enum", NULL};
 static const char* const* const luawt_WMediaPlayer_progressBar_args[] = {WMediaPlayer_progressBar_args0, NULL};
 
 int luawt_WMediaPlayer_progressBar(lua_State* L) {
     int index = luawt_getSuitableArgsGroup(L, luawt_WMediaPlayer_progressBar_args);
     WMediaPlayer* self = luawt_checkFromLua<WMediaPlayer>(L, 1);
     if (index == 0) {
-    Wt::WMediaPlayer::BarControlId id = static_cast<Wt::WMediaPlayer::BarControlId>(lua_tointeger(L, 2));
+    Wt::WMediaPlayer::BarControlId id = static_cast<Wt::WMediaPlayer::BarControlId>(luawt_getEnum(
+        L,
+        luawt_enum_WMediaPlayer_BarControlId_str,
+        luawt_enum_WMediaPlayer_BarControlId_val,
+        2,
+        "Wrong enum type in args of WMediaPlayer.progressBar"
+    ));
     Wt::WProgressBar * l_result = self->progressBar(id);
     luawt_toLua(L, l_result);
     return 1;
@@ -394,7 +443,7 @@ int luawt_WMediaPlayer_readyState(lua_State* L) {
     WMediaPlayer* self = luawt_checkFromLua<WMediaPlayer>(L, 1);
     if (index == 0) {
     Wt::WMediaPlayer::ReadyState l_result = self->readyState();
-    lua_pushinteger(L, l_result);
+    luawt_returnEnum(L, luawt_enum_WMediaPlayer_ReadyState_str, luawt_enum_WMediaPlayer_ReadyState_val, l_result, "WMediaPlayer::ReadyState");
     return 1;
 
     } else {
@@ -418,14 +467,20 @@ int luawt_WMediaPlayer_currentTime(lua_State* L) {
     }
 }
 
-static const char* WMediaPlayer_setProgressBar_args0[] = {luawt_typeToStr<WMediaPlayer>(), "int", luawt_typeToStr<Wt::WProgressBar>(), NULL};
+static const char* WMediaPlayer_setProgressBar_args0[] = {luawt_typeToStr<WMediaPlayer>(), "enum", luawt_typeToStr<Wt::WProgressBar>(), NULL};
 static const char* const* const luawt_WMediaPlayer_setProgressBar_args[] = {WMediaPlayer_setProgressBar_args0, NULL};
 
 int luawt_WMediaPlayer_setProgressBar(lua_State* L) {
     int index = luawt_getSuitableArgsGroup(L, luawt_WMediaPlayer_setProgressBar_args);
     WMediaPlayer* self = luawt_checkFromLua<WMediaPlayer>(L, 1);
     if (index == 0) {
-    Wt::WMediaPlayer::BarControlId id = static_cast<Wt::WMediaPlayer::BarControlId>(lua_tointeger(L, 2));
+    Wt::WMediaPlayer::BarControlId id = static_cast<Wt::WMediaPlayer::BarControlId>(luawt_getEnum(
+        L,
+        luawt_enum_WMediaPlayer_BarControlId_str,
+        luawt_enum_WMediaPlayer_BarControlId_val,
+        2,
+        "Wrong enum type in args of WMediaPlayer.setProgressBar"
+    ));
     Wt::WProgressBar* progressBar =
         luawt_checkFromLua<Wt::WProgressBar>(L, 3);
     self->setProgressBar(id, progressBar);
@@ -467,14 +522,20 @@ int luawt_WMediaPlayer_clearSources(lua_State* L) {
     }
 }
 
-static const char* WMediaPlayer_getSource_args0[] = {luawt_typeToStr<WMediaPlayer>(), "int", NULL};
+static const char* WMediaPlayer_getSource_args0[] = {luawt_typeToStr<WMediaPlayer>(), "enum", NULL};
 static const char* const* const luawt_WMediaPlayer_getSource_args[] = {WMediaPlayer_getSource_args0, NULL};
 
 int luawt_WMediaPlayer_getSource(lua_State* L) {
     int index = luawt_getSuitableArgsGroup(L, luawt_WMediaPlayer_getSource_args);
     WMediaPlayer* self = luawt_checkFromLua<WMediaPlayer>(L, 1);
     if (index == 0) {
-    Wt::WMediaPlayer::Encoding encoding = static_cast<Wt::WMediaPlayer::Encoding>(lua_tointeger(L, 2));
+    Wt::WMediaPlayer::Encoding encoding = static_cast<Wt::WMediaPlayer::Encoding>(luawt_getEnum(
+        L,
+        luawt_enum_WMediaPlayer_Encoding_str,
+        luawt_enum_WMediaPlayer_Encoding_val,
+        2,
+        "Wrong enum type in args of WMediaPlayer.getSource"
+    ));
     Wt::WLink l_result = self->getSource(encoding);
     lua_pushstring(L, l_result.url().c_str());
     return 1;

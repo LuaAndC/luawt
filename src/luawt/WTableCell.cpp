@@ -3,6 +3,7 @@
 #include <Wt/WTable>
 #include <Wt/WTableCell>
 
+#include "enums.hpp"
 #include "globals.hpp"
 
 static const char* WTableCell_rowSpan_args0[] = {luawt_typeToStr<WTableCell>(), NULL};

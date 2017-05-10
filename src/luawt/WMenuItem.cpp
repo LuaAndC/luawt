@@ -7,14 +7,15 @@
 #include <Wt/WCheckBox>
 #include <Wt/WMenu>
 
+#include "enums.hpp"
 #include "globals.hpp"
 
 static const char* WMenuItem_make_args0[] = {"char const *", NULL};
 static const char* WMenuItem_make_args1[] = {"char const *", luawt_typeToStr<Wt::WWidget>(), NULL};
-static const char* WMenuItem_make_args2[] = {"char const *", luawt_typeToStr<Wt::WWidget>(), "int", NULL};
+static const char* WMenuItem_make_args2[] = {"char const *", luawt_typeToStr<Wt::WWidget>(), "enum", NULL};
 static const char* WMenuItem_make_args3[] = {"char const *", "char const *", NULL};
 static const char* WMenuItem_make_args4[] = {"char const *", "char const *", luawt_typeToStr<Wt::WWidget>(), NULL};
-static const char* WMenuItem_make_args5[] = {"char const *", "char const *", luawt_typeToStr<Wt::WWidget>(), "int", NULL};
+static const char* WMenuItem_make_args5[] = {"char const *", "char const *", luawt_typeToStr<Wt::WWidget>(), "enum", NULL};
 static const char* const* const luawt_WMenuItem_make_args[] = {WMenuItem_make_args0, WMenuItem_make_args1, WMenuItem_make_args2, WMenuItem_make_args3, WMenuItem_make_args4, WMenuItem_make_args5, NULL};
 
 int luawt_WMenuItem_make(lua_State* L) {
@@ -54,7 +55,13 @@ int luawt_WMenuItem_make(lua_State* L) {
     Wt::WString label = Wt::WString(raw1);
     Wt::WWidget* contents =
         luawt_checkFromLua<Wt::WWidget>(L, 2);
-    Wt::WMenuItem::LoadPolicy policy = static_cast<Wt::WMenuItem::LoadPolicy>(lua_tointeger(L, 3));
+    Wt::WMenuItem::LoadPolicy policy = static_cast<Wt::WMenuItem::LoadPolicy>(luawt_getEnum(
+        L,
+        luawt_enum_WMenuItem_LoadPolicy_str,
+        luawt_enum_WMenuItem_LoadPolicy_val,
+        3,
+        "Wrong enum type in args of WMenuItem.make"
+    ));
     WMenuItem * l_result = new WMenuItem(label, contents, policy);
     MyApplication* app = MyApplication::instance();
     if (!app) {
@@ -107,7 +114,13 @@ int luawt_WMenuItem_make(lua_State* L) {
     Wt::WString label = Wt::WString(raw2);
     Wt::WWidget* contents =
         luawt_checkFromLua<Wt::WWidget>(L, 3);
-    Wt::WMenuItem::LoadPolicy policy = static_cast<Wt::WMenuItem::LoadPolicy>(lua_tointeger(L, 4));
+    Wt::WMenuItem::LoadPolicy policy = static_cast<Wt::WMenuItem::LoadPolicy>(luawt_getEnum(
+        L,
+        luawt_enum_WMenuItem_LoadPolicy_str,
+        luawt_enum_WMenuItem_LoadPolicy_val,
+        4,
+        "Wrong enum type in args of WMenuItem.make"
+    ));
     WMenuItem * l_result = new WMenuItem(iconPath, label, contents, policy);
     MyApplication* app = MyApplication::instance();
     if (!app) {
@@ -355,7 +368,7 @@ int luawt_WMenuItem_linkTarget(lua_State* L) {
     WMenuItem* self = luawt_checkFromLua<WMenuItem>(L, 1);
     if (index == 0) {
     Wt::AnchorTarget l_result = self->linkTarget();
-    lua_pushinteger(L, l_result);
+    luawt_returnEnum(L, luawt_enum_AnchorTarget_str, luawt_enum_AnchorTarget_val, l_result, "AnchorTarget");
     return 1;
 
     } else {
@@ -508,14 +521,20 @@ int luawt_WMenuItem_pathComponent(lua_State* L) {
     }
 }
 
-static const char* WMenuItem_setLinkTarget_args0[] = {luawt_typeToStr<WMenuItem>(), "int", NULL};
+static const char* WMenuItem_setLinkTarget_args0[] = {luawt_typeToStr<WMenuItem>(), "enum", NULL};
 static const char* const* const luawt_WMenuItem_setLinkTarget_args[] = {WMenuItem_setLinkTarget_args0, NULL};
 
 int luawt_WMenuItem_setLinkTarget(lua_State* L) {
     int index = luawt_getSuitableArgsGroup(L, luawt_WMenuItem_setLinkTarget_args);
     WMenuItem* self = luawt_checkFromLua<WMenuItem>(L, 1);
     if (index == 0) {
-    Wt::AnchorTarget target = static_cast<Wt::AnchorTarget>(lua_tointeger(L, 2));
+    Wt::AnchorTarget target = static_cast<Wt::AnchorTarget>(luawt_getEnum(
+        L,
+        luawt_enum_AnchorTarget_str,
+        luawt_enum_AnchorTarget_val,
+        2,
+        "Wrong enum type in args of WMenuItem.setLinkTarget"
+    ));
     self->setLinkTarget(target);
     return 0;
     

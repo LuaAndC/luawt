@@ -7,6 +7,7 @@
 #include <Wt/WContainerWidget>
 #include <Wt/WGLWidget>
 
+#include "enums.hpp"
 #include "globals.hpp"
 
 static const char* WGLWidget_make_args0[] = {luawt_typeToStr<Wt::WContainerWidget>(), NULL};
@@ -26,14 +27,20 @@ int luawt_WGLWidget_make(lua_State* L) {
     }
 }
 
-static const char* WGLWidget_activeTexture_args0[] = {luawt_typeToStr<WGLWidget>(), "int", NULL};
+static const char* WGLWidget_activeTexture_args0[] = {luawt_typeToStr<WGLWidget>(), "enum", NULL};
 static const char* const* const luawt_WGLWidget_activeTexture_args[] = {WGLWidget_activeTexture_args0, NULL};
 
 int luawt_WGLWidget_activeTexture(lua_State* L) {
     int index = luawt_getSuitableArgsGroup(L, luawt_WGLWidget_activeTexture_args);
     WGLWidget* self = luawt_checkFromLua<WGLWidget>(L, 1);
     if (index == 0) {
-    Wt::WGLWidget::GLenum texture = static_cast<Wt::WGLWidget::GLenum>(lua_tointeger(L, 2));
+    Wt::WGLWidget::GLenum texture = static_cast<Wt::WGLWidget::GLenum>(luawt_getEnum(
+        L,
+        luawt_enum_WGLWidget_GLenum_str,
+        luawt_enum_WGLWidget_GLenum_val,
+        2,
+        "Wrong enum type in args of WGLWidget.activeTexture"
+    ));
     self->activeTexture(texture);
     return 0;
     
@@ -76,14 +83,20 @@ int luawt_WGLWidget_debugger(lua_State* L) {
     }
 }
 
-static const char* WGLWidget_stencilMaskSeparate_args0[] = {luawt_typeToStr<WGLWidget>(), "int", "int", NULL};
+static const char* WGLWidget_stencilMaskSeparate_args0[] = {luawt_typeToStr<WGLWidget>(), "enum", "int", NULL};
 static const char* const* const luawt_WGLWidget_stencilMaskSeparate_args[] = {WGLWidget_stencilMaskSeparate_args0, NULL};
 
 int luawt_WGLWidget_stencilMaskSeparate(lua_State* L) {
     int index = luawt_getSuitableArgsGroup(L, luawt_WGLWidget_stencilMaskSeparate_args);
     WGLWidget* self = luawt_checkFromLua<WGLWidget>(L, 1);
     if (index == 0) {
-    Wt::WGLWidget::GLenum face = static_cast<Wt::WGLWidget::GLenum>(lua_tointeger(L, 2));
+    Wt::WGLWidget::GLenum face = static_cast<Wt::WGLWidget::GLenum>(luawt_getEnum(
+        L,
+        luawt_enum_WGLWidget_GLenum_str,
+        luawt_enum_WGLWidget_GLenum_val,
+        2,
+        "Wrong enum type in args of WGLWidget.stencilMaskSeparate"
+    ));
     unsigned int mask = lua_tointeger(L, 3);
     self->stencilMaskSeparate(face, mask);
     return 0;
@@ -108,17 +121,41 @@ int luawt_WGLWidget_finish(lua_State* L) {
     }
 }
 
-static const char* WGLWidget_blendFuncSeparate_args0[] = {luawt_typeToStr<WGLWidget>(), "int", "int", "int", "int", NULL};
+static const char* WGLWidget_blendFuncSeparate_args0[] = {luawt_typeToStr<WGLWidget>(), "enum", "enum", "enum", "enum", NULL};
 static const char* const* const luawt_WGLWidget_blendFuncSeparate_args[] = {WGLWidget_blendFuncSeparate_args0, NULL};
 
 int luawt_WGLWidget_blendFuncSeparate(lua_State* L) {
     int index = luawt_getSuitableArgsGroup(L, luawt_WGLWidget_blendFuncSeparate_args);
     WGLWidget* self = luawt_checkFromLua<WGLWidget>(L, 1);
     if (index == 0) {
-    Wt::WGLWidget::GLenum srcRGB = static_cast<Wt::WGLWidget::GLenum>(lua_tointeger(L, 2));
-    Wt::WGLWidget::GLenum dstRGB = static_cast<Wt::WGLWidget::GLenum>(lua_tointeger(L, 3));
-    Wt::WGLWidget::GLenum srcAlpha = static_cast<Wt::WGLWidget::GLenum>(lua_tointeger(L, 4));
-    Wt::WGLWidget::GLenum dstAlpha = static_cast<Wt::WGLWidget::GLenum>(lua_tointeger(L, 5));
+    Wt::WGLWidget::GLenum srcRGB = static_cast<Wt::WGLWidget::GLenum>(luawt_getEnum(
+        L,
+        luawt_enum_WGLWidget_GLenum_str,
+        luawt_enum_WGLWidget_GLenum_val,
+        2,
+        "Wrong enum type in args of WGLWidget.blendFuncSeparate"
+    ));
+    Wt::WGLWidget::GLenum dstRGB = static_cast<Wt::WGLWidget::GLenum>(luawt_getEnum(
+        L,
+        luawt_enum_WGLWidget_GLenum_str,
+        luawt_enum_WGLWidget_GLenum_val,
+        3,
+        "Wrong enum type in args of WGLWidget.blendFuncSeparate"
+    ));
+    Wt::WGLWidget::GLenum srcAlpha = static_cast<Wt::WGLWidget::GLenum>(luawt_getEnum(
+        L,
+        luawt_enum_WGLWidget_GLenum_str,
+        luawt_enum_WGLWidget_GLenum_val,
+        4,
+        "Wrong enum type in args of WGLWidget.blendFuncSeparate"
+    ));
+    Wt::WGLWidget::GLenum dstAlpha = static_cast<Wt::WGLWidget::GLenum>(luawt_getEnum(
+        L,
+        luawt_enum_WGLWidget_GLenum_str,
+        luawt_enum_WGLWidget_GLenum_val,
+        5,
+        "Wrong enum type in args of WGLWidget.blendFuncSeparate"
+    ));
     self->blendFuncSeparate(srcRGB, dstRGB, srcAlpha, dstAlpha);
     return 0;
     
@@ -127,15 +164,27 @@ int luawt_WGLWidget_blendFuncSeparate(lua_State* L) {
     }
 }
 
-static const char* WGLWidget_stencilFuncSeparate_args0[] = {luawt_typeToStr<WGLWidget>(), "int", "int", "int", "int", NULL};
+static const char* WGLWidget_stencilFuncSeparate_args0[] = {luawt_typeToStr<WGLWidget>(), "enum", "enum", "int", "int", NULL};
 static const char* const* const luawt_WGLWidget_stencilFuncSeparate_args[] = {WGLWidget_stencilFuncSeparate_args0, NULL};
 
 int luawt_WGLWidget_stencilFuncSeparate(lua_State* L) {
     int index = luawt_getSuitableArgsGroup(L, luawt_WGLWidget_stencilFuncSeparate_args);
     WGLWidget* self = luawt_checkFromLua<WGLWidget>(L, 1);
     if (index == 0) {
-    Wt::WGLWidget::GLenum face = static_cast<Wt::WGLWidget::GLenum>(lua_tointeger(L, 2));
-    Wt::WGLWidget::GLenum func = static_cast<Wt::WGLWidget::GLenum>(lua_tointeger(L, 3));
+    Wt::WGLWidget::GLenum face = static_cast<Wt::WGLWidget::GLenum>(luawt_getEnum(
+        L,
+        luawt_enum_WGLWidget_GLenum_str,
+        luawt_enum_WGLWidget_GLenum_val,
+        2,
+        "Wrong enum type in args of WGLWidget.stencilFuncSeparate"
+    ));
+    Wt::WGLWidget::GLenum func = static_cast<Wt::WGLWidget::GLenum>(luawt_getEnum(
+        L,
+        luawt_enum_WGLWidget_GLenum_str,
+        luawt_enum_WGLWidget_GLenum_val,
+        3,
+        "Wrong enum type in args of WGLWidget.stencilFuncSeparate"
+    ));
     int ref = lua_tointeger(L, 4);
     unsigned int mask = lua_tointeger(L, 5);
     self->stencilFuncSeparate(face, func, ref, mask);
@@ -161,14 +210,20 @@ int luawt_WGLWidget_flush(lua_State* L) {
     }
 }
 
-static const char* WGLWidget_pixelStorei_args0[] = {luawt_typeToStr<WGLWidget>(), "int", "int", NULL};
+static const char* WGLWidget_pixelStorei_args0[] = {luawt_typeToStr<WGLWidget>(), "enum", "int", NULL};
 static const char* const* const luawt_WGLWidget_pixelStorei_args[] = {WGLWidget_pixelStorei_args0, NULL};
 
 int luawt_WGLWidget_pixelStorei(lua_State* L) {
     int index = luawt_getSuitableArgsGroup(L, luawt_WGLWidget_pixelStorei_args);
     WGLWidget* self = luawt_checkFromLua<WGLWidget>(L, 1);
     if (index == 0) {
-    Wt::WGLWidget::GLenum pname = static_cast<Wt::WGLWidget::GLenum>(lua_tointeger(L, 2));
+    Wt::WGLWidget::GLenum pname = static_cast<Wt::WGLWidget::GLenum>(luawt_getEnum(
+        L,
+        luawt_enum_WGLWidget_GLenum_str,
+        luawt_enum_WGLWidget_GLenum_val,
+        2,
+        "Wrong enum type in args of WGLWidget.pixelStorei"
+    ));
     int param = lua_tointeger(L, 3);
     self->pixelStorei(pname, param);
     return 0;
@@ -178,14 +233,20 @@ int luawt_WGLWidget_pixelStorei(lua_State* L) {
     }
 }
 
-static const char* WGLWidget_blendEquation_args0[] = {luawt_typeToStr<WGLWidget>(), "int", NULL};
+static const char* WGLWidget_blendEquation_args0[] = {luawt_typeToStr<WGLWidget>(), "enum", NULL};
 static const char* const* const luawt_WGLWidget_blendEquation_args[] = {WGLWidget_blendEquation_args0, NULL};
 
 int luawt_WGLWidget_blendEquation(lua_State* L) {
     int index = luawt_getSuitableArgsGroup(L, luawt_WGLWidget_blendEquation_args);
     WGLWidget* self = luawt_checkFromLua<WGLWidget>(L, 1);
     if (index == 0) {
-    Wt::WGLWidget::GLenum mode = static_cast<Wt::WGLWidget::GLenum>(lua_tointeger(L, 2));
+    Wt::WGLWidget::GLenum mode = static_cast<Wt::WGLWidget::GLenum>(luawt_getEnum(
+        L,
+        luawt_enum_WGLWidget_GLenum_str,
+        luawt_enum_WGLWidget_GLenum_val,
+        2,
+        "Wrong enum type in args of WGLWidget.blendEquation"
+    ));
     self->blendEquation(mode);
     return 0;
     
@@ -227,17 +288,41 @@ int luawt_WGLWidget_injectJS(lua_State* L) {
     }
 }
 
-static const char* WGLWidget_stencilOpSeparate_args0[] = {luawt_typeToStr<WGLWidget>(), "int", "int", "int", "int", NULL};
+static const char* WGLWidget_stencilOpSeparate_args0[] = {luawt_typeToStr<WGLWidget>(), "enum", "enum", "enum", "enum", NULL};
 static const char* const* const luawt_WGLWidget_stencilOpSeparate_args[] = {WGLWidget_stencilOpSeparate_args0, NULL};
 
 int luawt_WGLWidget_stencilOpSeparate(lua_State* L) {
     int index = luawt_getSuitableArgsGroup(L, luawt_WGLWidget_stencilOpSeparate_args);
     WGLWidget* self = luawt_checkFromLua<WGLWidget>(L, 1);
     if (index == 0) {
-    Wt::WGLWidget::GLenum face = static_cast<Wt::WGLWidget::GLenum>(lua_tointeger(L, 2));
-    Wt::WGLWidget::GLenum fail = static_cast<Wt::WGLWidget::GLenum>(lua_tointeger(L, 3));
-    Wt::WGLWidget::GLenum zfail = static_cast<Wt::WGLWidget::GLenum>(lua_tointeger(L, 4));
-    Wt::WGLWidget::GLenum zpass = static_cast<Wt::WGLWidget::GLenum>(lua_tointeger(L, 5));
+    Wt::WGLWidget::GLenum face = static_cast<Wt::WGLWidget::GLenum>(luawt_getEnum(
+        L,
+        luawt_enum_WGLWidget_GLenum_str,
+        luawt_enum_WGLWidget_GLenum_val,
+        2,
+        "Wrong enum type in args of WGLWidget.stencilOpSeparate"
+    ));
+    Wt::WGLWidget::GLenum fail = static_cast<Wt::WGLWidget::GLenum>(luawt_getEnum(
+        L,
+        luawt_enum_WGLWidget_GLenum_str,
+        luawt_enum_WGLWidget_GLenum_val,
+        3,
+        "Wrong enum type in args of WGLWidget.stencilOpSeparate"
+    ));
+    Wt::WGLWidget::GLenum zfail = static_cast<Wt::WGLWidget::GLenum>(luawt_getEnum(
+        L,
+        luawt_enum_WGLWidget_GLenum_str,
+        luawt_enum_WGLWidget_GLenum_val,
+        4,
+        "Wrong enum type in args of WGLWidget.stencilOpSeparate"
+    ));
+    Wt::WGLWidget::GLenum zpass = static_cast<Wt::WGLWidget::GLenum>(luawt_getEnum(
+        L,
+        luawt_enum_WGLWidget_GLenum_str,
+        luawt_enum_WGLWidget_GLenum_val,
+        5,
+        "Wrong enum type in args of WGLWidget.stencilOpSeparate"
+    ));
     self->stencilOpSeparate(face, fail, zfail, zpass);
     return 0;
     
@@ -246,15 +331,27 @@ int luawt_WGLWidget_stencilOpSeparate(lua_State* L) {
     }
 }
 
-static const char* WGLWidget_hint_args0[] = {luawt_typeToStr<WGLWidget>(), "int", "int", NULL};
+static const char* WGLWidget_hint_args0[] = {luawt_typeToStr<WGLWidget>(), "enum", "enum", NULL};
 static const char* const* const luawt_WGLWidget_hint_args[] = {WGLWidget_hint_args0, NULL};
 
 int luawt_WGLWidget_hint(lua_State* L) {
     int index = luawt_getSuitableArgsGroup(L, luawt_WGLWidget_hint_args);
     WGLWidget* self = luawt_checkFromLua<WGLWidget>(L, 1);
     if (index == 0) {
-    Wt::WGLWidget::GLenum target = static_cast<Wt::WGLWidget::GLenum>(lua_tointeger(L, 2));
-    Wt::WGLWidget::GLenum mode = static_cast<Wt::WGLWidget::GLenum>(lua_tointeger(L, 3));
+    Wt::WGLWidget::GLenum target = static_cast<Wt::WGLWidget::GLenum>(luawt_getEnum(
+        L,
+        luawt_enum_WGLWidget_GLenum_str,
+        luawt_enum_WGLWidget_GLenum_val,
+        2,
+        "Wrong enum type in args of WGLWidget.hint"
+    ));
+    Wt::WGLWidget::GLenum mode = static_cast<Wt::WGLWidget::GLenum>(luawt_getEnum(
+        L,
+        luawt_enum_WGLWidget_GLenum_str,
+        luawt_enum_WGLWidget_GLenum_val,
+        3,
+        "Wrong enum type in args of WGLWidget.hint"
+    ));
     self->hint(target, mode);
     return 0;
     
@@ -339,14 +436,20 @@ int luawt_WGLWidget_enableClientErrorChecks(lua_State* L) {
     }
 }
 
-static const char* WGLWidget_generateMipmap_args0[] = {luawt_typeToStr<WGLWidget>(), "int", NULL};
+static const char* WGLWidget_generateMipmap_args0[] = {luawt_typeToStr<WGLWidget>(), "enum", NULL};
 static const char* const* const luawt_WGLWidget_generateMipmap_args[] = {WGLWidget_generateMipmap_args0, NULL};
 
 int luawt_WGLWidget_generateMipmap(lua_State* L) {
     int index = luawt_getSuitableArgsGroup(L, luawt_WGLWidget_generateMipmap_args);
     WGLWidget* self = luawt_checkFromLua<WGLWidget>(L, 1);
     if (index == 0) {
-    Wt::WGLWidget::GLenum target = static_cast<Wt::WGLWidget::GLenum>(lua_tointeger(L, 2));
+    Wt::WGLWidget::GLenum target = static_cast<Wt::WGLWidget::GLenum>(luawt_getEnum(
+        L,
+        luawt_enum_WGLWidget_GLenum_str,
+        luawt_enum_WGLWidget_GLenum_val,
+        2,
+        "Wrong enum type in args of WGLWidget.generateMipmap"
+    ));
     self->generateMipmap(target);
     return 0;
     
@@ -355,54 +458,144 @@ int luawt_WGLWidget_generateMipmap(lua_State* L) {
     }
 }
 
-static const char* WGLWidget_texImage2D_args0[] = {luawt_typeToStr<WGLWidget>(), "int", "int", "int", "int", "int", "int", "int", NULL};
-static const char* WGLWidget_texImage2D_args1[] = {luawt_typeToStr<WGLWidget>(), "int", "int", "int", "int", "int", luawt_typeToStr<Wt::WImage>(), NULL};
-static const char* WGLWidget_texImage2D_args2[] = {luawt_typeToStr<WGLWidget>(), "int", "int", "int", "int", "int", luawt_typeToStr<Wt::WVideo>(), NULL};
-static const char* WGLWidget_texImage2D_args3[] = {luawt_typeToStr<WGLWidget>(), "int", "int", "int", "int", "int", "char const *", NULL};
+static const char* WGLWidget_texImage2D_args0[] = {luawt_typeToStr<WGLWidget>(), "enum", "int", "enum", "int", "int", "int", "enum", NULL};
+static const char* WGLWidget_texImage2D_args1[] = {luawt_typeToStr<WGLWidget>(), "enum", "int", "enum", "enum", "enum", luawt_typeToStr<Wt::WImage>(), NULL};
+static const char* WGLWidget_texImage2D_args2[] = {luawt_typeToStr<WGLWidget>(), "enum", "int", "enum", "enum", "enum", luawt_typeToStr<Wt::WVideo>(), NULL};
+static const char* WGLWidget_texImage2D_args3[] = {luawt_typeToStr<WGLWidget>(), "enum", "int", "enum", "enum", "enum", "char const *", NULL};
 static const char* const* const luawt_WGLWidget_texImage2D_args[] = {WGLWidget_texImage2D_args0, WGLWidget_texImage2D_args1, WGLWidget_texImage2D_args2, WGLWidget_texImage2D_args3, NULL};
 
 int luawt_WGLWidget_texImage2D(lua_State* L) {
     int index = luawt_getSuitableArgsGroup(L, luawt_WGLWidget_texImage2D_args);
     WGLWidget* self = luawt_checkFromLua<WGLWidget>(L, 1);
     if (index == 0) {
-    Wt::WGLWidget::GLenum target = static_cast<Wt::WGLWidget::GLenum>(lua_tointeger(L, 2));
+    Wt::WGLWidget::GLenum target = static_cast<Wt::WGLWidget::GLenum>(luawt_getEnum(
+        L,
+        luawt_enum_WGLWidget_GLenum_str,
+        luawt_enum_WGLWidget_GLenum_val,
+        2,
+        "Wrong enum type in args of WGLWidget.texImage2D"
+    ));
     int level = lua_tointeger(L, 3);
-    Wt::WGLWidget::GLenum internalformat = static_cast<Wt::WGLWidget::GLenum>(lua_tointeger(L, 4));
+    Wt::WGLWidget::GLenum internalformat = static_cast<Wt::WGLWidget::GLenum>(luawt_getEnum(
+        L,
+        luawt_enum_WGLWidget_GLenum_str,
+        luawt_enum_WGLWidget_GLenum_val,
+        4,
+        "Wrong enum type in args of WGLWidget.texImage2D"
+    ));
     unsigned int width = lua_tointeger(L, 5);
     unsigned int height = lua_tointeger(L, 6);
     int border = lua_tointeger(L, 7);
-    Wt::WGLWidget::GLenum format = static_cast<Wt::WGLWidget::GLenum>(lua_tointeger(L, 8));
+    Wt::WGLWidget::GLenum format = static_cast<Wt::WGLWidget::GLenum>(luawt_getEnum(
+        L,
+        luawt_enum_WGLWidget_GLenum_str,
+        luawt_enum_WGLWidget_GLenum_val,
+        8,
+        "Wrong enum type in args of WGLWidget.texImage2D"
+    ));
     self->texImage2D(target, level, internalformat, width, height, border, format);
     return 0;
     
     } else if (index == 1) {
-    Wt::WGLWidget::GLenum target = static_cast<Wt::WGLWidget::GLenum>(lua_tointeger(L, 2));
+    Wt::WGLWidget::GLenum target = static_cast<Wt::WGLWidget::GLenum>(luawt_getEnum(
+        L,
+        luawt_enum_WGLWidget_GLenum_str,
+        luawt_enum_WGLWidget_GLenum_val,
+        2,
+        "Wrong enum type in args of WGLWidget.texImage2D"
+    ));
     int level = lua_tointeger(L, 3);
-    Wt::WGLWidget::GLenum internalformat = static_cast<Wt::WGLWidget::GLenum>(lua_tointeger(L, 4));
-    Wt::WGLWidget::GLenum format = static_cast<Wt::WGLWidget::GLenum>(lua_tointeger(L, 5));
-    Wt::WGLWidget::GLenum type = static_cast<Wt::WGLWidget::GLenum>(lua_tointeger(L, 6));
+    Wt::WGLWidget::GLenum internalformat = static_cast<Wt::WGLWidget::GLenum>(luawt_getEnum(
+        L,
+        luawt_enum_WGLWidget_GLenum_str,
+        luawt_enum_WGLWidget_GLenum_val,
+        4,
+        "Wrong enum type in args of WGLWidget.texImage2D"
+    ));
+    Wt::WGLWidget::GLenum format = static_cast<Wt::WGLWidget::GLenum>(luawt_getEnum(
+        L,
+        luawt_enum_WGLWidget_GLenum_str,
+        luawt_enum_WGLWidget_GLenum_val,
+        5,
+        "Wrong enum type in args of WGLWidget.texImage2D"
+    ));
+    Wt::WGLWidget::GLenum type = static_cast<Wt::WGLWidget::GLenum>(luawt_getEnum(
+        L,
+        luawt_enum_WGLWidget_GLenum_str,
+        luawt_enum_WGLWidget_GLenum_val,
+        6,
+        "Wrong enum type in args of WGLWidget.texImage2D"
+    ));
     Wt::WImage* image =
         luawt_checkFromLua<Wt::WImage>(L, 7);
     self->texImage2D(target, level, internalformat, format, type, image);
     return 0;
     
     } else if (index == 2) {
-    Wt::WGLWidget::GLenum target = static_cast<Wt::WGLWidget::GLenum>(lua_tointeger(L, 2));
+    Wt::WGLWidget::GLenum target = static_cast<Wt::WGLWidget::GLenum>(luawt_getEnum(
+        L,
+        luawt_enum_WGLWidget_GLenum_str,
+        luawt_enum_WGLWidget_GLenum_val,
+        2,
+        "Wrong enum type in args of WGLWidget.texImage2D"
+    ));
     int level = lua_tointeger(L, 3);
-    Wt::WGLWidget::GLenum internalformat = static_cast<Wt::WGLWidget::GLenum>(lua_tointeger(L, 4));
-    Wt::WGLWidget::GLenum format = static_cast<Wt::WGLWidget::GLenum>(lua_tointeger(L, 5));
-    Wt::WGLWidget::GLenum type = static_cast<Wt::WGLWidget::GLenum>(lua_tointeger(L, 6));
+    Wt::WGLWidget::GLenum internalformat = static_cast<Wt::WGLWidget::GLenum>(luawt_getEnum(
+        L,
+        luawt_enum_WGLWidget_GLenum_str,
+        luawt_enum_WGLWidget_GLenum_val,
+        4,
+        "Wrong enum type in args of WGLWidget.texImage2D"
+    ));
+    Wt::WGLWidget::GLenum format = static_cast<Wt::WGLWidget::GLenum>(luawt_getEnum(
+        L,
+        luawt_enum_WGLWidget_GLenum_str,
+        luawt_enum_WGLWidget_GLenum_val,
+        5,
+        "Wrong enum type in args of WGLWidget.texImage2D"
+    ));
+    Wt::WGLWidget::GLenum type = static_cast<Wt::WGLWidget::GLenum>(luawt_getEnum(
+        L,
+        luawt_enum_WGLWidget_GLenum_str,
+        luawt_enum_WGLWidget_GLenum_val,
+        6,
+        "Wrong enum type in args of WGLWidget.texImage2D"
+    ));
     Wt::WVideo* video =
         luawt_checkFromLua<Wt::WVideo>(L, 7);
     self->texImage2D(target, level, internalformat, format, type, video);
     return 0;
     
     } else if (index == 3) {
-    Wt::WGLWidget::GLenum target = static_cast<Wt::WGLWidget::GLenum>(lua_tointeger(L, 2));
+    Wt::WGLWidget::GLenum target = static_cast<Wt::WGLWidget::GLenum>(luawt_getEnum(
+        L,
+        luawt_enum_WGLWidget_GLenum_str,
+        luawt_enum_WGLWidget_GLenum_val,
+        2,
+        "Wrong enum type in args of WGLWidget.texImage2D"
+    ));
     int level = lua_tointeger(L, 3);
-    Wt::WGLWidget::GLenum internalformat = static_cast<Wt::WGLWidget::GLenum>(lua_tointeger(L, 4));
-    Wt::WGLWidget::GLenum format = static_cast<Wt::WGLWidget::GLenum>(lua_tointeger(L, 5));
-    Wt::WGLWidget::GLenum type = static_cast<Wt::WGLWidget::GLenum>(lua_tointeger(L, 6));
+    Wt::WGLWidget::GLenum internalformat = static_cast<Wt::WGLWidget::GLenum>(luawt_getEnum(
+        L,
+        luawt_enum_WGLWidget_GLenum_str,
+        luawt_enum_WGLWidget_GLenum_val,
+        4,
+        "Wrong enum type in args of WGLWidget.texImage2D"
+    ));
+    Wt::WGLWidget::GLenum format = static_cast<Wt::WGLWidget::GLenum>(luawt_getEnum(
+        L,
+        luawt_enum_WGLWidget_GLenum_str,
+        luawt_enum_WGLWidget_GLenum_val,
+        5,
+        "Wrong enum type in args of WGLWidget.texImage2D"
+    ));
+    Wt::WGLWidget::GLenum type = static_cast<Wt::WGLWidget::GLenum>(luawt_getEnum(
+        L,
+        luawt_enum_WGLWidget_GLenum_str,
+        luawt_enum_WGLWidget_GLenum_val,
+        6,
+        "Wrong enum type in args of WGLWidget.texImage2D"
+    ));
     char const * raw7 = lua_tostring(L, 7);
     std::string texture = std::string(raw7);
     self->texImage2D(target, level, internalformat, format, type, texture);
@@ -449,14 +642,20 @@ int luawt_WGLWidget_polygonOffset(lua_State* L) {
     }
 }
 
-static const char* WGLWidget_stencilFunc_args0[] = {luawt_typeToStr<WGLWidget>(), "int", "int", "int", NULL};
+static const char* WGLWidget_stencilFunc_args0[] = {luawt_typeToStr<WGLWidget>(), "enum", "int", "int", NULL};
 static const char* const* const luawt_WGLWidget_stencilFunc_args[] = {WGLWidget_stencilFunc_args0, NULL};
 
 int luawt_WGLWidget_stencilFunc(lua_State* L) {
     int index = luawt_getSuitableArgsGroup(L, luawt_WGLWidget_stencilFunc_args);
     WGLWidget* self = luawt_checkFromLua<WGLWidget>(L, 1);
     if (index == 0) {
-    Wt::WGLWidget::GLenum func = static_cast<Wt::WGLWidget::GLenum>(lua_tointeger(L, 2));
+    Wt::WGLWidget::GLenum func = static_cast<Wt::WGLWidget::GLenum>(luawt_getEnum(
+        L,
+        luawt_enum_WGLWidget_GLenum_str,
+        luawt_enum_WGLWidget_GLenum_val,
+        2,
+        "Wrong enum type in args of WGLWidget.stencilFunc"
+    ));
     int ref = lua_tointeger(L, 3);
     unsigned int mask = lua_tointeger(L, 4);
     self->stencilFunc(func, ref, mask);
@@ -467,15 +666,27 @@ int luawt_WGLWidget_stencilFunc(lua_State* L) {
     }
 }
 
-static const char* WGLWidget_blendEquationSeparate_args0[] = {luawt_typeToStr<WGLWidget>(), "int", "int", NULL};
+static const char* WGLWidget_blendEquationSeparate_args0[] = {luawt_typeToStr<WGLWidget>(), "enum", "enum", NULL};
 static const char* const* const luawt_WGLWidget_blendEquationSeparate_args[] = {WGLWidget_blendEquationSeparate_args0, NULL};
 
 int luawt_WGLWidget_blendEquationSeparate(lua_State* L) {
     int index = luawt_getSuitableArgsGroup(L, luawt_WGLWidget_blendEquationSeparate_args);
     WGLWidget* self = luawt_checkFromLua<WGLWidget>(L, 1);
     if (index == 0) {
-    Wt::WGLWidget::GLenum modeRGB = static_cast<Wt::WGLWidget::GLenum>(lua_tointeger(L, 2));
-    Wt::WGLWidget::GLenum modeAlpha = static_cast<Wt::WGLWidget::GLenum>(lua_tointeger(L, 3));
+    Wt::WGLWidget::GLenum modeRGB = static_cast<Wt::WGLWidget::GLenum>(luawt_getEnum(
+        L,
+        luawt_enum_WGLWidget_GLenum_str,
+        luawt_enum_WGLWidget_GLenum_val,
+        2,
+        "Wrong enum type in args of WGLWidget.blendEquationSeparate"
+    ));
+    Wt::WGLWidget::GLenum modeAlpha = static_cast<Wt::WGLWidget::GLenum>(luawt_getEnum(
+        L,
+        luawt_enum_WGLWidget_GLenum_str,
+        luawt_enum_WGLWidget_GLenum_val,
+        3,
+        "Wrong enum type in args of WGLWidget.blendEquationSeparate"
+    ));
     self->blendEquationSeparate(modeRGB, modeAlpha);
     return 0;
     
@@ -484,14 +695,20 @@ int luawt_WGLWidget_blendEquationSeparate(lua_State* L) {
     }
 }
 
-static const char* WGLWidget_repaintGL_args0[] = {luawt_typeToStr<WGLWidget>(), "int", NULL};
+static const char* WGLWidget_repaintGL_args0[] = {luawt_typeToStr<WGLWidget>(), "enum", NULL};
 static const char* const* const luawt_WGLWidget_repaintGL_args[] = {WGLWidget_repaintGL_args0, NULL};
 
 int luawt_WGLWidget_repaintGL(lua_State* L) {
     int index = luawt_getSuitableArgsGroup(L, luawt_WGLWidget_repaintGL_args);
     WGLWidget* self = luawt_checkFromLua<WGLWidget>(L, 1);
     if (index == 0) {
-    Wt::WFlags<Wt::WGLWidget::ClientSideRenderer> which = static_cast<Wt::WGLWidget::ClientSideRenderer>(lua_tointeger(L, 2));
+    Wt::WFlags<Wt::WGLWidget::ClientSideRenderer> which = static_cast<Wt::WGLWidget::ClientSideRenderer>(luawt_getEnum(
+        L,
+        luawt_enum_WGLWidget_ClientSideRenderer_str,
+        luawt_enum_WGLWidget_ClientSideRenderer_val,
+        2,
+        "Wrong enum type in args of WGLWidget.repaintGL"
+    ));
     self->repaintGL(which);
     return 0;
     
@@ -533,15 +750,27 @@ int luawt_WGLWidget_stencilMask(lua_State* L) {
     }
 }
 
-static const char* WGLWidget_blendFunc_args0[] = {luawt_typeToStr<WGLWidget>(), "int", "int", NULL};
+static const char* WGLWidget_blendFunc_args0[] = {luawt_typeToStr<WGLWidget>(), "enum", "enum", NULL};
 static const char* const* const luawt_WGLWidget_blendFunc_args[] = {WGLWidget_blendFunc_args0, NULL};
 
 int luawt_WGLWidget_blendFunc(lua_State* L) {
     int index = luawt_getSuitableArgsGroup(L, luawt_WGLWidget_blendFunc_args);
     WGLWidget* self = luawt_checkFromLua<WGLWidget>(L, 1);
     if (index == 0) {
-    Wt::WGLWidget::GLenum sfactor = static_cast<Wt::WGLWidget::GLenum>(lua_tointeger(L, 2));
-    Wt::WGLWidget::GLenum dfactor = static_cast<Wt::WGLWidget::GLenum>(lua_tointeger(L, 3));
+    Wt::WGLWidget::GLenum sfactor = static_cast<Wt::WGLWidget::GLenum>(luawt_getEnum(
+        L,
+        luawt_enum_WGLWidget_GLenum_str,
+        luawt_enum_WGLWidget_GLenum_val,
+        2,
+        "Wrong enum type in args of WGLWidget.blendFunc"
+    ));
+    Wt::WGLWidget::GLenum dfactor = static_cast<Wt::WGLWidget::GLenum>(luawt_getEnum(
+        L,
+        luawt_enum_WGLWidget_GLenum_str,
+        luawt_enum_WGLWidget_GLenum_val,
+        3,
+        "Wrong enum type in args of WGLWidget.blendFunc"
+    ));
     self->blendFunc(sfactor, dfactor);
     return 0;
     
@@ -550,14 +779,20 @@ int luawt_WGLWidget_blendFunc(lua_State* L) {
     }
 }
 
-static const char* WGLWidget_enable_args0[] = {luawt_typeToStr<WGLWidget>(), "int", NULL};
+static const char* WGLWidget_enable_args0[] = {luawt_typeToStr<WGLWidget>(), "enum", NULL};
 static const char* const* const luawt_WGLWidget_enable_args[] = {WGLWidget_enable_args0, NULL};
 
 int luawt_WGLWidget_enable(lua_State* L) {
     int index = luawt_getSuitableArgsGroup(L, luawt_WGLWidget_enable_args);
     WGLWidget* self = luawt_checkFromLua<WGLWidget>(L, 1);
     if (index == 0) {
-    Wt::WGLWidget::GLenum cap = static_cast<Wt::WGLWidget::GLenum>(lua_tointeger(L, 2));
+    Wt::WGLWidget::GLenum cap = static_cast<Wt::WGLWidget::GLenum>(luawt_getEnum(
+        L,
+        luawt_enum_WGLWidget_GLenum_str,
+        luawt_enum_WGLWidget_GLenum_val,
+        2,
+        "Wrong enum type in args of WGLWidget.enable"
+    ));
     self->enable(cap);
     return 0;
     
@@ -566,14 +801,20 @@ int luawt_WGLWidget_enable(lua_State* L) {
     }
 }
 
-static const char* WGLWidget_depthFunc_args0[] = {luawt_typeToStr<WGLWidget>(), "int", NULL};
+static const char* WGLWidget_depthFunc_args0[] = {luawt_typeToStr<WGLWidget>(), "enum", NULL};
 static const char* const* const luawt_WGLWidget_depthFunc_args[] = {WGLWidget_depthFunc_args0, NULL};
 
 int luawt_WGLWidget_depthFunc(lua_State* L) {
     int index = luawt_getSuitableArgsGroup(L, luawt_WGLWidget_depthFunc_args);
     WGLWidget* self = luawt_checkFromLua<WGLWidget>(L, 1);
     if (index == 0) {
-    Wt::WGLWidget::GLenum func = static_cast<Wt::WGLWidget::GLenum>(lua_tointeger(L, 2));
+    Wt::WGLWidget::GLenum func = static_cast<Wt::WGLWidget::GLenum>(luawt_getEnum(
+        L,
+        luawt_enum_WGLWidget_GLenum_str,
+        luawt_enum_WGLWidget_GLenum_val,
+        2,
+        "Wrong enum type in args of WGLWidget.depthFunc"
+    ));
     self->depthFunc(func);
     return 0;
     
@@ -582,16 +823,28 @@ int luawt_WGLWidget_depthFunc(lua_State* L) {
     }
 }
 
-static const char* WGLWidget_drawElements_args0[] = {luawt_typeToStr<WGLWidget>(), "int", "int", "int", "int", NULL};
+static const char* WGLWidget_drawElements_args0[] = {luawt_typeToStr<WGLWidget>(), "enum", "int", "enum", "int", NULL};
 static const char* const* const luawt_WGLWidget_drawElements_args[] = {WGLWidget_drawElements_args0, NULL};
 
 int luawt_WGLWidget_drawElements(lua_State* L) {
     int index = luawt_getSuitableArgsGroup(L, luawt_WGLWidget_drawElements_args);
     WGLWidget* self = luawt_checkFromLua<WGLWidget>(L, 1);
     if (index == 0) {
-    Wt::WGLWidget::GLenum mode = static_cast<Wt::WGLWidget::GLenum>(lua_tointeger(L, 2));
+    Wt::WGLWidget::GLenum mode = static_cast<Wt::WGLWidget::GLenum>(luawt_getEnum(
+        L,
+        luawt_enum_WGLWidget_GLenum_str,
+        luawt_enum_WGLWidget_GLenum_val,
+        2,
+        "Wrong enum type in args of WGLWidget.drawElements"
+    ));
     unsigned int count = lua_tointeger(L, 3);
-    Wt::WGLWidget::GLenum type = static_cast<Wt::WGLWidget::GLenum>(lua_tointeger(L, 4));
+    Wt::WGLWidget::GLenum type = static_cast<Wt::WGLWidget::GLenum>(luawt_getEnum(
+        L,
+        luawt_enum_WGLWidget_GLenum_str,
+        luawt_enum_WGLWidget_GLenum_val,
+        4,
+        "Wrong enum type in args of WGLWidget.drawElements"
+    ));
     unsigned int offset = lua_tointeger(L, 5);
     self->drawElements(mode, count, type, offset);
     return 0;
@@ -617,16 +870,34 @@ int luawt_WGLWidget_depthMask(lua_State* L) {
     }
 }
 
-static const char* WGLWidget_stencilOp_args0[] = {luawt_typeToStr<WGLWidget>(), "int", "int", "int", NULL};
+static const char* WGLWidget_stencilOp_args0[] = {luawt_typeToStr<WGLWidget>(), "enum", "enum", "enum", NULL};
 static const char* const* const luawt_WGLWidget_stencilOp_args[] = {WGLWidget_stencilOp_args0, NULL};
 
 int luawt_WGLWidget_stencilOp(lua_State* L) {
     int index = luawt_getSuitableArgsGroup(L, luawt_WGLWidget_stencilOp_args);
     WGLWidget* self = luawt_checkFromLua<WGLWidget>(L, 1);
     if (index == 0) {
-    Wt::WGLWidget::GLenum fail = static_cast<Wt::WGLWidget::GLenum>(lua_tointeger(L, 2));
-    Wt::WGLWidget::GLenum zfail = static_cast<Wt::WGLWidget::GLenum>(lua_tointeger(L, 3));
-    Wt::WGLWidget::GLenum zpass = static_cast<Wt::WGLWidget::GLenum>(lua_tointeger(L, 4));
+    Wt::WGLWidget::GLenum fail = static_cast<Wt::WGLWidget::GLenum>(luawt_getEnum(
+        L,
+        luawt_enum_WGLWidget_GLenum_str,
+        luawt_enum_WGLWidget_GLenum_val,
+        2,
+        "Wrong enum type in args of WGLWidget.stencilOp"
+    ));
+    Wt::WGLWidget::GLenum zfail = static_cast<Wt::WGLWidget::GLenum>(luawt_getEnum(
+        L,
+        luawt_enum_WGLWidget_GLenum_str,
+        luawt_enum_WGLWidget_GLenum_val,
+        3,
+        "Wrong enum type in args of WGLWidget.stencilOp"
+    ));
+    Wt::WGLWidget::GLenum zpass = static_cast<Wt::WGLWidget::GLenum>(luawt_getEnum(
+        L,
+        luawt_enum_WGLWidget_GLenum_str,
+        luawt_enum_WGLWidget_GLenum_val,
+        4,
+        "Wrong enum type in args of WGLWidget.stencilOp"
+    ));
     self->stencilOp(fail, zfail, zpass);
     return 0;
     
@@ -635,16 +906,28 @@ int luawt_WGLWidget_stencilOp(lua_State* L) {
     }
 }
 
-static const char* WGLWidget_copyTexImage2D_args0[] = {luawt_typeToStr<WGLWidget>(), "int", "int", "int", "int", "int", "int", "int", "int", NULL};
+static const char* WGLWidget_copyTexImage2D_args0[] = {luawt_typeToStr<WGLWidget>(), "enum", "int", "enum", "int", "int", "int", "int", "int", NULL};
 static const char* const* const luawt_WGLWidget_copyTexImage2D_args[] = {WGLWidget_copyTexImage2D_args0, NULL};
 
 int luawt_WGLWidget_copyTexImage2D(lua_State* L) {
     int index = luawt_getSuitableArgsGroup(L, luawt_WGLWidget_copyTexImage2D_args);
     WGLWidget* self = luawt_checkFromLua<WGLWidget>(L, 1);
     if (index == 0) {
-    Wt::WGLWidget::GLenum target = static_cast<Wt::WGLWidget::GLenum>(lua_tointeger(L, 2));
+    Wt::WGLWidget::GLenum target = static_cast<Wt::WGLWidget::GLenum>(luawt_getEnum(
+        L,
+        luawt_enum_WGLWidget_GLenum_str,
+        luawt_enum_WGLWidget_GLenum_val,
+        2,
+        "Wrong enum type in args of WGLWidget.copyTexImage2D"
+    ));
     int level = lua_tointeger(L, 3);
-    Wt::WGLWidget::GLenum internalformat = static_cast<Wt::WGLWidget::GLenum>(lua_tointeger(L, 4));
+    Wt::WGLWidget::GLenum internalformat = static_cast<Wt::WGLWidget::GLenum>(luawt_getEnum(
+        L,
+        luawt_enum_WGLWidget_GLenum_str,
+        luawt_enum_WGLWidget_GLenum_val,
+        4,
+        "Wrong enum type in args of WGLWidget.copyTexImage2D"
+    ));
     int x = lua_tointeger(L, 5);
     int y = lua_tointeger(L, 6);
     unsigned int width = lua_tointeger(L, 7);
@@ -658,14 +941,20 @@ int luawt_WGLWidget_copyTexImage2D(lua_State* L) {
     }
 }
 
-static const char* WGLWidget_disable_args0[] = {luawt_typeToStr<WGLWidget>(), "int", NULL};
+static const char* WGLWidget_disable_args0[] = {luawt_typeToStr<WGLWidget>(), "enum", NULL};
 static const char* const* const luawt_WGLWidget_disable_args[] = {WGLWidget_disable_args0, NULL};
 
 int luawt_WGLWidget_disable(lua_State* L) {
     int index = luawt_getSuitableArgsGroup(L, luawt_WGLWidget_disable_args);
     WGLWidget* self = luawt_checkFromLua<WGLWidget>(L, 1);
     if (index == 0) {
-    Wt::WGLWidget::GLenum cap = static_cast<Wt::WGLWidget::GLenum>(lua_tointeger(L, 2));
+    Wt::WGLWidget::GLenum cap = static_cast<Wt::WGLWidget::GLenum>(luawt_getEnum(
+        L,
+        luawt_enum_WGLWidget_GLenum_str,
+        luawt_enum_WGLWidget_GLenum_val,
+        2,
+        "Wrong enum type in args of WGLWidget.disable"
+    ));
     self->disable(cap);
     return 0;
     
@@ -726,14 +1015,20 @@ int luawt_WGLWidget_resize(lua_State* L) {
     }
 }
 
-static const char* WGLWidget_clear_args0[] = {luawt_typeToStr<WGLWidget>(), "int", NULL};
+static const char* WGLWidget_clear_args0[] = {luawt_typeToStr<WGLWidget>(), "enum", NULL};
 static const char* const* const luawt_WGLWidget_clear_args[] = {WGLWidget_clear_args0, NULL};
 
 int luawt_WGLWidget_clear(lua_State* L) {
     int index = luawt_getSuitableArgsGroup(L, luawt_WGLWidget_clear_args);
     WGLWidget* self = luawt_checkFromLua<WGLWidget>(L, 1);
     if (index == 0) {
-    Wt::WFlags<Wt::WGLWidget::GLenum> mask = static_cast<Wt::WGLWidget::GLenum>(lua_tointeger(L, 2));
+    Wt::WFlags<Wt::WGLWidget::GLenum> mask = static_cast<Wt::WGLWidget::GLenum>(luawt_getEnum(
+        L,
+        luawt_enum_WGLWidget_GLenum_str,
+        luawt_enum_WGLWidget_GLenum_val,
+        2,
+        "Wrong enum type in args of WGLWidget.clear"
+    ));
     self->clear(mask);
     return 0;
     
@@ -761,14 +1056,20 @@ int luawt_WGLWidget_scissor(lua_State* L) {
     }
 }
 
-static const char* WGLWidget_frontFace_args0[] = {luawt_typeToStr<WGLWidget>(), "int", NULL};
+static const char* WGLWidget_frontFace_args0[] = {luawt_typeToStr<WGLWidget>(), "enum", NULL};
 static const char* const* const luawt_WGLWidget_frontFace_args[] = {WGLWidget_frontFace_args0, NULL};
 
 int luawt_WGLWidget_frontFace(lua_State* L) {
     int index = luawt_getSuitableArgsGroup(L, luawt_WGLWidget_frontFace_args);
     WGLWidget* self = luawt_checkFromLua<WGLWidget>(L, 1);
     if (index == 0) {
-    Wt::WGLWidget::GLenum mode = static_cast<Wt::WGLWidget::GLenum>(lua_tointeger(L, 2));
+    Wt::WGLWidget::GLenum mode = static_cast<Wt::WGLWidget::GLenum>(luawt_getEnum(
+        L,
+        luawt_enum_WGLWidget_GLenum_str,
+        luawt_enum_WGLWidget_GLenum_val,
+        2,
+        "Wrong enum type in args of WGLWidget.frontFace"
+    ));
     self->frontFace(mode);
     return 0;
     
@@ -777,16 +1078,28 @@ int luawt_WGLWidget_frontFace(lua_State* L) {
     }
 }
 
-static const char* WGLWidget_bufferData_args0[] = {luawt_typeToStr<WGLWidget>(), "int", "int", "int", NULL};
+static const char* WGLWidget_bufferData_args0[] = {luawt_typeToStr<WGLWidget>(), "enum", "int", "enum", NULL};
 static const char* const* const luawt_WGLWidget_bufferData_args[] = {WGLWidget_bufferData_args0, NULL};
 
 int luawt_WGLWidget_bufferData(lua_State* L) {
     int index = luawt_getSuitableArgsGroup(L, luawt_WGLWidget_bufferData_args);
     WGLWidget* self = luawt_checkFromLua<WGLWidget>(L, 1);
     if (index == 0) {
-    Wt::WGLWidget::GLenum target = static_cast<Wt::WGLWidget::GLenum>(lua_tointeger(L, 2));
+    Wt::WGLWidget::GLenum target = static_cast<Wt::WGLWidget::GLenum>(luawt_getEnum(
+        L,
+        luawt_enum_WGLWidget_GLenum_str,
+        luawt_enum_WGLWidget_GLenum_val,
+        2,
+        "Wrong enum type in args of WGLWidget.bufferData"
+    ));
     int size = lua_tointeger(L, 3);
-    Wt::WGLWidget::GLenum usage = static_cast<Wt::WGLWidget::GLenum>(lua_tointeger(L, 4));
+    Wt::WGLWidget::GLenum usage = static_cast<Wt::WGLWidget::GLenum>(luawt_getEnum(
+        L,
+        luawt_enum_WGLWidget_GLenum_str,
+        luawt_enum_WGLWidget_GLenum_val,
+        4,
+        "Wrong enum type in args of WGLWidget.bufferData"
+    ));
     self->bufferData(target, size, usage);
     return 0;
     
@@ -795,15 +1108,27 @@ int luawt_WGLWidget_bufferData(lua_State* L) {
     }
 }
 
-static const char* WGLWidget_renderbufferStorage_args0[] = {luawt_typeToStr<WGLWidget>(), "int", "int", "int", "int", NULL};
+static const char* WGLWidget_renderbufferStorage_args0[] = {luawt_typeToStr<WGLWidget>(), "enum", "enum", "int", "int", NULL};
 static const char* const* const luawt_WGLWidget_renderbufferStorage_args[] = {WGLWidget_renderbufferStorage_args0, NULL};
 
 int luawt_WGLWidget_renderbufferStorage(lua_State* L) {
     int index = luawt_getSuitableArgsGroup(L, luawt_WGLWidget_renderbufferStorage_args);
     WGLWidget* self = luawt_checkFromLua<WGLWidget>(L, 1);
     if (index == 0) {
-    Wt::WGLWidget::GLenum target = static_cast<Wt::WGLWidget::GLenum>(lua_tointeger(L, 2));
-    Wt::WGLWidget::GLenum internalformat = static_cast<Wt::WGLWidget::GLenum>(lua_tointeger(L, 3));
+    Wt::WGLWidget::GLenum target = static_cast<Wt::WGLWidget::GLenum>(luawt_getEnum(
+        L,
+        luawt_enum_WGLWidget_GLenum_str,
+        luawt_enum_WGLWidget_GLenum_val,
+        2,
+        "Wrong enum type in args of WGLWidget.renderbufferStorage"
+    ));
+    Wt::WGLWidget::GLenum internalformat = static_cast<Wt::WGLWidget::GLenum>(luawt_getEnum(
+        L,
+        luawt_enum_WGLWidget_GLenum_str,
+        luawt_enum_WGLWidget_GLenum_val,
+        3,
+        "Wrong enum type in args of WGLWidget.renderbufferStorage"
+    ));
     unsigned int width = lua_tointeger(L, 4);
     unsigned int height = lua_tointeger(L, 5);
     self->renderbufferStorage(target, internalformat, width, height);
@@ -814,14 +1139,20 @@ int luawt_WGLWidget_renderbufferStorage(lua_State* L) {
     }
 }
 
-static const char* WGLWidget_cullFace_args0[] = {luawt_typeToStr<WGLWidget>(), "int", NULL};
+static const char* WGLWidget_cullFace_args0[] = {luawt_typeToStr<WGLWidget>(), "enum", NULL};
 static const char* const* const luawt_WGLWidget_cullFace_args[] = {WGLWidget_cullFace_args0, NULL};
 
 int luawt_WGLWidget_cullFace(lua_State* L) {
     int index = luawt_getSuitableArgsGroup(L, luawt_WGLWidget_cullFace_args);
     WGLWidget* self = luawt_checkFromLua<WGLWidget>(L, 1);
     if (index == 0) {
-    Wt::WGLWidget::GLenum mode = static_cast<Wt::WGLWidget::GLenum>(lua_tointeger(L, 2));
+    Wt::WGLWidget::GLenum mode = static_cast<Wt::WGLWidget::GLenum>(luawt_getEnum(
+        L,
+        luawt_enum_WGLWidget_GLenum_str,
+        luawt_enum_WGLWidget_GLenum_val,
+        2,
+        "Wrong enum type in args of WGLWidget.cullFace"
+    ));
     self->cullFace(mode);
     return 0;
     
@@ -830,16 +1161,34 @@ int luawt_WGLWidget_cullFace(lua_State* L) {
     }
 }
 
-static const char* WGLWidget_texParameteri_args0[] = {luawt_typeToStr<WGLWidget>(), "int", "int", "int", NULL};
+static const char* WGLWidget_texParameteri_args0[] = {luawt_typeToStr<WGLWidget>(), "enum", "enum", "enum", NULL};
 static const char* const* const luawt_WGLWidget_texParameteri_args[] = {WGLWidget_texParameteri_args0, NULL};
 
 int luawt_WGLWidget_texParameteri(lua_State* L) {
     int index = luawt_getSuitableArgsGroup(L, luawt_WGLWidget_texParameteri_args);
     WGLWidget* self = luawt_checkFromLua<WGLWidget>(L, 1);
     if (index == 0) {
-    Wt::WGLWidget::GLenum target = static_cast<Wt::WGLWidget::GLenum>(lua_tointeger(L, 2));
-    Wt::WGLWidget::GLenum pname = static_cast<Wt::WGLWidget::GLenum>(lua_tointeger(L, 3));
-    Wt::WGLWidget::GLenum param = static_cast<Wt::WGLWidget::GLenum>(lua_tointeger(L, 4));
+    Wt::WGLWidget::GLenum target = static_cast<Wt::WGLWidget::GLenum>(luawt_getEnum(
+        L,
+        luawt_enum_WGLWidget_GLenum_str,
+        luawt_enum_WGLWidget_GLenum_val,
+        2,
+        "Wrong enum type in args of WGLWidget.texParameteri"
+    ));
+    Wt::WGLWidget::GLenum pname = static_cast<Wt::WGLWidget::GLenum>(luawt_getEnum(
+        L,
+        luawt_enum_WGLWidget_GLenum_str,
+        luawt_enum_WGLWidget_GLenum_val,
+        3,
+        "Wrong enum type in args of WGLWidget.texParameteri"
+    ));
+    Wt::WGLWidget::GLenum param = static_cast<Wt::WGLWidget::GLenum>(luawt_getEnum(
+        L,
+        luawt_enum_WGLWidget_GLenum_str,
+        luawt_enum_WGLWidget_GLenum_val,
+        4,
+        "Wrong enum type in args of WGLWidget.texParameteri"
+    ));
     self->texParameteri(target, pname, param);
     return 0;
     
@@ -864,14 +1213,20 @@ int luawt_WGLWidget_lineWidth(lua_State* L) {
     }
 }
 
-static const char* WGLWidget_copyTexSubImage2D_args0[] = {luawt_typeToStr<WGLWidget>(), "int", "int", "int", "int", "int", "int", "int", "int", NULL};
+static const char* WGLWidget_copyTexSubImage2D_args0[] = {luawt_typeToStr<WGLWidget>(), "enum", "int", "int", "int", "int", "int", "int", "int", NULL};
 static const char* const* const luawt_WGLWidget_copyTexSubImage2D_args[] = {WGLWidget_copyTexSubImage2D_args0, NULL};
 
 int luawt_WGLWidget_copyTexSubImage2D(lua_State* L) {
     int index = luawt_getSuitableArgsGroup(L, luawt_WGLWidget_copyTexSubImage2D_args);
     WGLWidget* self = luawt_checkFromLua<WGLWidget>(L, 1);
     if (index == 0) {
-    Wt::WGLWidget::GLenum target = static_cast<Wt::WGLWidget::GLenum>(lua_tointeger(L, 2));
+    Wt::WGLWidget::GLenum target = static_cast<Wt::WGLWidget::GLenum>(luawt_getEnum(
+        L,
+        luawt_enum_WGLWidget_GLenum_str,
+        luawt_enum_WGLWidget_GLenum_val,
+        2,
+        "Wrong enum type in args of WGLWidget.copyTexSubImage2D"
+    ));
     int level = lua_tointeger(L, 3);
     int xoffset = lua_tointeger(L, 4);
     int yoffset = lua_tointeger(L, 5);
@@ -887,14 +1242,20 @@ int luawt_WGLWidget_copyTexSubImage2D(lua_State* L) {
     }
 }
 
-static const char* WGLWidget_drawArrays_args0[] = {luawt_typeToStr<WGLWidget>(), "int", "int", "int", NULL};
+static const char* WGLWidget_drawArrays_args0[] = {luawt_typeToStr<WGLWidget>(), "enum", "int", "int", NULL};
 static const char* const* const luawt_WGLWidget_drawArrays_args[] = {WGLWidget_drawArrays_args0, NULL};
 
 int luawt_WGLWidget_drawArrays(lua_State* L) {
     int index = luawt_getSuitableArgsGroup(L, luawt_WGLWidget_drawArrays_args);
     WGLWidget* self = luawt_checkFromLua<WGLWidget>(L, 1);
     if (index == 0) {
-    Wt::WGLWidget::GLenum mode = static_cast<Wt::WGLWidget::GLenum>(lua_tointeger(L, 2));
+    Wt::WGLWidget::GLenum mode = static_cast<Wt::WGLWidget::GLenum>(luawt_getEnum(
+        L,
+        luawt_enum_WGLWidget_GLenum_str,
+        luawt_enum_WGLWidget_GLenum_val,
+        2,
+        "Wrong enum type in args of WGLWidget.drawArrays"
+    ));
     int first = lua_tointeger(L, 3);
     unsigned int count = lua_tointeger(L, 4);
     self->drawArrays(mode, first, count);

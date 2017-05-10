@@ -3,6 +3,7 @@
 #include <Wt/WContainerWidget>
 #include <Wt/WBreak>
 
+#include "enums.hpp"
 #include "globals.hpp"
 
 static const char* WBreak_make_args0[] = {NULL};

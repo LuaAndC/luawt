@@ -7,6 +7,7 @@
 #include <Wt/WWebWidget>
 #include <Wt/WContainerWidget>
 
+#include "enums.hpp"
 #include "globals.hpp"
 
 static const char* WCompositeWidget_make_args0[] = {NULL};
@@ -108,7 +109,7 @@ int luawt_WCompositeWidget_floatSide(lua_State* L) {
     WCompositeWidget* self = luawt_checkFromLua<WCompositeWidget>(L, 1);
     if (index == 0) {
     Wt::Side l_result = self->floatSide();
-    lua_pushinteger(L, l_result);
+    luawt_returnEnum(L, luawt_enum_Side_str, luawt_enum_Side_val, l_result, "Side");
     return 1;
 
     } else {
@@ -313,14 +314,20 @@ int luawt_WCompositeWidget_propagateSetEnabled(lua_State* L) {
     }
 }
 
-static const char* WCompositeWidget_setClearSides_args0[] = {luawt_typeToStr<WCompositeWidget>(), "int", NULL};
+static const char* WCompositeWidget_setClearSides_args0[] = {luawt_typeToStr<WCompositeWidget>(), "enum", NULL};
 static const char* const* const luawt_WCompositeWidget_setClearSides_args[] = {WCompositeWidget_setClearSides_args0, NULL};
 
 int luawt_WCompositeWidget_setClearSides(lua_State* L) {
     int index = luawt_getSuitableArgsGroup(L, luawt_WCompositeWidget_setClearSides_args);
     WCompositeWidget* self = luawt_checkFromLua<WCompositeWidget>(L, 1);
     if (index == 0) {
-    Wt::WFlags<Wt::Side> sides = static_cast<Wt::Side>(lua_tointeger(L, 2));
+    Wt::WFlags<Wt::Side> sides = static_cast<Wt::Side>(luawt_getEnum(
+        L,
+        luawt_enum_Side_str,
+        luawt_enum_Side_val,
+        2,
+        "Wrong enum type in args of WCompositeWidget.setClearSides"
+    ));
     self->setClearSides(sides);
     return 0;
     
@@ -330,7 +337,7 @@ int luawt_WCompositeWidget_setClearSides(lua_State* L) {
 }
 
 static const char* WCompositeWidget_setOffsets_args0[] = {luawt_typeToStr<WCompositeWidget>(), "double", NULL};
-static const char* WCompositeWidget_setOffsets_args1[] = {luawt_typeToStr<WCompositeWidget>(), "double", "int", NULL};
+static const char* WCompositeWidget_setOffsets_args1[] = {luawt_typeToStr<WCompositeWidget>(), "double", "enum", NULL};
 static const char* const* const luawt_WCompositeWidget_setOffsets_args[] = {WCompositeWidget_setOffsets_args0, WCompositeWidget_setOffsets_args1, NULL};
 
 int luawt_WCompositeWidget_setOffsets(lua_State* L) {
@@ -345,7 +352,13 @@ int luawt_WCompositeWidget_setOffsets(lua_State* L) {
     } else if (index == 1) {
     double raw2 = lua_tonumber(L, 2);
     Wt::WLength offset = Wt::WLength(raw2);
-    Wt::WFlags<Wt::Side> sides = static_cast<Wt::Side>(lua_tointeger(L, 3));
+    Wt::WFlags<Wt::Side> sides = static_cast<Wt::Side>(luawt_getEnum(
+        L,
+        luawt_enum_Side_str,
+        luawt_enum_Side_val,
+        3,
+        "Wrong enum type in args of WCompositeWidget.setOffsets"
+    ));
     self->setOffsets(offset, sides);
     return 0;
     
@@ -370,14 +383,20 @@ int luawt_WCompositeWidget_setPopup(lua_State* L) {
     }
 }
 
-static const char* WCompositeWidget_setFloatSide_args0[] = {luawt_typeToStr<WCompositeWidget>(), "int", NULL};
+static const char* WCompositeWidget_setFloatSide_args0[] = {luawt_typeToStr<WCompositeWidget>(), "enum", NULL};
 static const char* const* const luawt_WCompositeWidget_setFloatSide_args[] = {WCompositeWidget_setFloatSide_args0, NULL};
 
 int luawt_WCompositeWidget_setFloatSide(lua_State* L) {
     int index = luawt_getSuitableArgsGroup(L, luawt_WCompositeWidget_setFloatSide_args);
     WCompositeWidget* self = luawt_checkFromLua<WCompositeWidget>(L, 1);
     if (index == 0) {
-    Wt::Side s = static_cast<Wt::Side>(lua_tointeger(L, 2));
+    Wt::Side s = static_cast<Wt::Side>(luawt_getEnum(
+        L,
+        luawt_enum_Side_str,
+        luawt_enum_Side_val,
+        2,
+        "Wrong enum type in args of WCompositeWidget.setFloatSide"
+    ));
     self->setFloatSide(s);
     return 0;
     
@@ -410,7 +429,7 @@ int luawt_WCompositeWidget_verticalAlignment(lua_State* L) {
     WCompositeWidget* self = luawt_checkFromLua<WCompositeWidget>(L, 1);
     if (index == 0) {
     Wt::AlignmentFlag l_result = self->verticalAlignment();
-    lua_pushinteger(L, l_result);
+    luawt_returnEnum(L, luawt_enum_AlignmentFlag_str, luawt_enum_AlignmentFlag_val, l_result, "AlignmentFlag");
     return 1;
 
     } else {
@@ -445,7 +464,7 @@ int luawt_WCompositeWidget_positionScheme(lua_State* L) {
     WCompositeWidget* self = luawt_checkFromLua<WCompositeWidget>(L, 1);
     if (index == 0) {
     Wt::PositionScheme l_result = self->positionScheme();
-    lua_pushinteger(L, l_result);
+    luawt_returnEnum(L, luawt_enum_PositionScheme_str, luawt_enum_PositionScheme_val, l_result, "PositionScheme");
     return 1;
 
     } else {
@@ -551,14 +570,20 @@ int luawt_WCompositeWidget_attributeValue(lua_State* L) {
     }
 }
 
-static const char* WCompositeWidget_setPositionScheme_args0[] = {luawt_typeToStr<WCompositeWidget>(), "int", NULL};
+static const char* WCompositeWidget_setPositionScheme_args0[] = {luawt_typeToStr<WCompositeWidget>(), "enum", NULL};
 static const char* const* const luawt_WCompositeWidget_setPositionScheme_args[] = {WCompositeWidget_setPositionScheme_args0, NULL};
 
 int luawt_WCompositeWidget_setPositionScheme(lua_State* L) {
     int index = luawt_getSuitableArgsGroup(L, luawt_WCompositeWidget_setPositionScheme_args);
     WCompositeWidget* self = luawt_checkFromLua<WCompositeWidget>(L, 1);
     if (index == 0) {
-    Wt::PositionScheme scheme = static_cast<Wt::PositionScheme>(lua_tointeger(L, 2));
+    Wt::PositionScheme scheme = static_cast<Wt::PositionScheme>(luawt_getEnum(
+        L,
+        luawt_enum_PositionScheme_str,
+        luawt_enum_PositionScheme_val,
+        2,
+        "Wrong enum type in args of WCompositeWidget.setPositionScheme"
+    ));
     self->setPositionScheme(scheme);
     return 0;
     
@@ -633,20 +658,32 @@ int luawt_WCompositeWidget_toolTip(lua_State* L) {
     }
 }
 
-static const char* WCompositeWidget_setVerticalAlignment_args0[] = {luawt_typeToStr<WCompositeWidget>(), "int", NULL};
-static const char* WCompositeWidget_setVerticalAlignment_args1[] = {luawt_typeToStr<WCompositeWidget>(), "int", "double", NULL};
+static const char* WCompositeWidget_setVerticalAlignment_args0[] = {luawt_typeToStr<WCompositeWidget>(), "enum", NULL};
+static const char* WCompositeWidget_setVerticalAlignment_args1[] = {luawt_typeToStr<WCompositeWidget>(), "enum", "double", NULL};
 static const char* const* const luawt_WCompositeWidget_setVerticalAlignment_args[] = {WCompositeWidget_setVerticalAlignment_args0, WCompositeWidget_setVerticalAlignment_args1, NULL};
 
 int luawt_WCompositeWidget_setVerticalAlignment(lua_State* L) {
     int index = luawt_getSuitableArgsGroup(L, luawt_WCompositeWidget_setVerticalAlignment_args);
     WCompositeWidget* self = luawt_checkFromLua<WCompositeWidget>(L, 1);
     if (index == 0) {
-    Wt::AlignmentFlag alignment = static_cast<Wt::AlignmentFlag>(lua_tointeger(L, 2));
+    Wt::AlignmentFlag alignment = static_cast<Wt::AlignmentFlag>(luawt_getEnum(
+        L,
+        luawt_enum_AlignmentFlag_str,
+        luawt_enum_AlignmentFlag_val,
+        2,
+        "Wrong enum type in args of WCompositeWidget.setVerticalAlignment"
+    ));
     self->setVerticalAlignment(alignment);
     return 0;
     
     } else if (index == 1) {
-    Wt::AlignmentFlag alignment = static_cast<Wt::AlignmentFlag>(lua_tointeger(L, 2));
+    Wt::AlignmentFlag alignment = static_cast<Wt::AlignmentFlag>(luawt_getEnum(
+        L,
+        luawt_enum_AlignmentFlag_str,
+        luawt_enum_AlignmentFlag_val,
+        2,
+        "Wrong enum type in args of WCompositeWidget.setVerticalAlignment"
+    ));
     double raw3 = lua_tonumber(L, 3);
     Wt::WLength length = Wt::WLength(raw3);
     self->setVerticalAlignment(alignment, length);
@@ -658,7 +695,7 @@ int luawt_WCompositeWidget_setVerticalAlignment(lua_State* L) {
 }
 
 static const char* WCompositeWidget_setMargin_args0[] = {luawt_typeToStr<WCompositeWidget>(), "double", NULL};
-static const char* WCompositeWidget_setMargin_args1[] = {luawt_typeToStr<WCompositeWidget>(), "double", "int", NULL};
+static const char* WCompositeWidget_setMargin_args1[] = {luawt_typeToStr<WCompositeWidget>(), "double", "enum", NULL};
 static const char* const* const luawt_WCompositeWidget_setMargin_args[] = {WCompositeWidget_setMargin_args0, WCompositeWidget_setMargin_args1, NULL};
 
 int luawt_WCompositeWidget_setMargin(lua_State* L) {
@@ -673,7 +710,13 @@ int luawt_WCompositeWidget_setMargin(lua_State* L) {
     } else if (index == 1) {
     double raw2 = lua_tonumber(L, 2);
     Wt::WLength margin = Wt::WLength(raw2);
-    Wt::WFlags<Wt::Side> sides = static_cast<Wt::Side>(lua_tointeger(L, 3));
+    Wt::WFlags<Wt::Side> sides = static_cast<Wt::Side>(luawt_getEnum(
+        L,
+        luawt_enum_Side_str,
+        luawt_enum_Side_val,
+        3,
+        "Wrong enum type in args of WCompositeWidget.setMargin"
+    ));
     self->setMargin(margin, sides);
     return 0;
     
@@ -698,14 +741,20 @@ int luawt_WCompositeWidget_setInline(lua_State* L) {
     }
 }
 
-static const char* WCompositeWidget_offset_args0[] = {luawt_typeToStr<WCompositeWidget>(), "int", NULL};
+static const char* WCompositeWidget_offset_args0[] = {luawt_typeToStr<WCompositeWidget>(), "enum", NULL};
 static const char* const* const luawt_WCompositeWidget_offset_args[] = {WCompositeWidget_offset_args0, NULL};
 
 int luawt_WCompositeWidget_offset(lua_State* L) {
     int index = luawt_getSuitableArgsGroup(L, luawt_WCompositeWidget_offset_args);
     WCompositeWidget* self = luawt_checkFromLua<WCompositeWidget>(L, 1);
     if (index == 0) {
-    Wt::Side s = static_cast<Wt::Side>(lua_tointeger(L, 2));
+    Wt::Side s = static_cast<Wt::Side>(luawt_getEnum(
+        L,
+        luawt_enum_Side_str,
+        luawt_enum_Side_val,
+        2,
+        "Wrong enum type in args of WCompositeWidget.offset"
+    ));
     Wt::WLength l_result = self->offset(s);
     lua_pushnumber(L, l_result.value());
     return 1;
@@ -723,7 +772,7 @@ int luawt_WCompositeWidget_clearSides(lua_State* L) {
     WCompositeWidget* self = luawt_checkFromLua<WCompositeWidget>(L, 1);
     if (index == 0) {
     Wt::WFlags<Wt::Side> l_result = self->clearSides();
-    lua_pushinteger(L, l_result);
+    luawt_returnEnum(L, luawt_enum_Side_str, luawt_enum_Side_val, l_result, "Side");
     return 1;
 
     } else {
@@ -818,7 +867,7 @@ int luawt_WCompositeWidget_maximumWidth(lua_State* L) {
 }
 
 static const char* WCompositeWidget_setToolTip_args0[] = {luawt_typeToStr<WCompositeWidget>(), "char const *", NULL};
-static const char* WCompositeWidget_setToolTip_args1[] = {luawt_typeToStr<WCompositeWidget>(), "char const *", "int", NULL};
+static const char* WCompositeWidget_setToolTip_args1[] = {luawt_typeToStr<WCompositeWidget>(), "char const *", "enum", NULL};
 static const char* const* const luawt_WCompositeWidget_setToolTip_args[] = {WCompositeWidget_setToolTip_args0, WCompositeWidget_setToolTip_args1, NULL};
 
 int luawt_WCompositeWidget_setToolTip(lua_State* L) {
@@ -833,7 +882,13 @@ int luawt_WCompositeWidget_setToolTip(lua_State* L) {
     } else if (index == 1) {
     char const * raw2 = lua_tostring(L, 2);
     Wt::WString text = Wt::WString(raw2);
-    Wt::TextFormat textFormat = static_cast<Wt::TextFormat>(lua_tointeger(L, 3));
+    Wt::TextFormat textFormat = static_cast<Wt::TextFormat>(luawt_getEnum(
+        L,
+        luawt_enum_TextFormat_str,
+        luawt_enum_TextFormat_val,
+        3,
+        "Wrong enum type in args of WCompositeWidget.setToolTip"
+    ));
     self->setToolTip(text, textFormat);
     return 0;
     
@@ -1045,14 +1100,20 @@ int luawt_WCompositeWidget_callJavaScriptMember(lua_State* L) {
     }
 }
 
-static const char* WCompositeWidget_margin_args0[] = {luawt_typeToStr<WCompositeWidget>(), "int", NULL};
+static const char* WCompositeWidget_margin_args0[] = {luawt_typeToStr<WCompositeWidget>(), "enum", NULL};
 static const char* const* const luawt_WCompositeWidget_margin_args[] = {WCompositeWidget_margin_args0, NULL};
 
 int luawt_WCompositeWidget_margin(lua_State* L) {
     int index = luawt_getSuitableArgsGroup(L, luawt_WCompositeWidget_margin_args);
     WCompositeWidget* self = luawt_checkFromLua<WCompositeWidget>(L, 1);
     if (index == 0) {
-    Wt::Side side = static_cast<Wt::Side>(lua_tointeger(L, 2));
+    Wt::Side side = static_cast<Wt::Side>(luawt_getEnum(
+        L,
+        luawt_enum_Side_str,
+        luawt_enum_Side_val,
+        2,
+        "Wrong enum type in args of WCompositeWidget.margin"
+    ));
     Wt::WLength l_result = self->margin(side);
     lua_pushnumber(L, l_result.value());
     return 1;

@@ -3,6 +3,7 @@
 #include <Wt/WContainerWidget>
 #include <Wt/WCalendar>
 
+#include "enums.hpp"
 #include "globals.hpp"
 
 static const char* WCalendar_make_args0[] = {NULL};
@@ -43,7 +44,7 @@ int luawt_WCalendar_horizontalHeaderFormat(lua_State* L) {
     WCalendar* self = luawt_checkFromLua<WCalendar>(L, 1);
     if (index == 0) {
     Wt::WCalendar::HorizontalHeaderFormat l_result = self->horizontalHeaderFormat();
-    lua_pushinteger(L, l_result);
+    luawt_returnEnum(L, luawt_enum_WCalendar_HorizontalHeaderFormat_str, luawt_enum_WCalendar_HorizontalHeaderFormat_val, l_result, "WCalendar::HorizontalHeaderFormat");
     return 1;
 
     } else {
@@ -82,14 +83,20 @@ int luawt_WCalendar_setDayOfWeekLength(lua_State* L) {
     }
 }
 
-static const char* WCalendar_setSelectionMode_args0[] = {luawt_typeToStr<WCalendar>(), "int", NULL};
+static const char* WCalendar_setSelectionMode_args0[] = {luawt_typeToStr<WCalendar>(), "enum", NULL};
 static const char* const* const luawt_WCalendar_setSelectionMode_args[] = {WCalendar_setSelectionMode_args0, NULL};
 
 int luawt_WCalendar_setSelectionMode(lua_State* L) {
     int index = luawt_getSuitableArgsGroup(L, luawt_WCalendar_setSelectionMode_args);
     WCalendar* self = luawt_checkFromLua<WCalendar>(L, 1);
     if (index == 0) {
-    Wt::SelectionMode mode = static_cast<Wt::SelectionMode>(lua_tointeger(L, 2));
+    Wt::SelectionMode mode = static_cast<Wt::SelectionMode>(luawt_getEnum(
+        L,
+        luawt_enum_SelectionMode_str,
+        luawt_enum_SelectionMode_val,
+        2,
+        "Wrong enum type in args of WCalendar.setSelectionMode"
+    ));
     self->setSelectionMode(mode);
     return 0;
     
@@ -113,14 +120,20 @@ int luawt_WCalendar_clearSelection(lua_State* L) {
     }
 }
 
-static const char* WCalendar_setHorizontalHeaderFormat_args0[] = {luawt_typeToStr<WCalendar>(), "int", NULL};
+static const char* WCalendar_setHorizontalHeaderFormat_args0[] = {luawt_typeToStr<WCalendar>(), "enum", NULL};
 static const char* const* const luawt_WCalendar_setHorizontalHeaderFormat_args[] = {WCalendar_setHorizontalHeaderFormat_args0, NULL};
 
 int luawt_WCalendar_setHorizontalHeaderFormat(lua_State* L) {
     int index = luawt_getSuitableArgsGroup(L, luawt_WCalendar_setHorizontalHeaderFormat_args);
     WCalendar* self = luawt_checkFromLua<WCalendar>(L, 1);
     if (index == 0) {
-    Wt::WCalendar::HorizontalHeaderFormat format = static_cast<Wt::WCalendar::HorizontalHeaderFormat>(lua_tointeger(L, 2));
+    Wt::WCalendar::HorizontalHeaderFormat format = static_cast<Wt::WCalendar::HorizontalHeaderFormat>(luawt_getEnum(
+        L,
+        luawt_enum_WCalendar_HorizontalHeaderFormat_str,
+        luawt_enum_WCalendar_HorizontalHeaderFormat_val,
+        2,
+        "Wrong enum type in args of WCalendar.setHorizontalHeaderFormat"
+    ));
     self->setHorizontalHeaderFormat(format);
     return 0;
     

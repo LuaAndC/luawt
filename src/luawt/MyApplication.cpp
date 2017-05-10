@@ -6,6 +6,7 @@
 #include <Wt/WLink>
 #include <Wt/WString>
 
+#include "enums.hpp"
 #include "globals.hpp"
 
 int luawt_MyApplication_make(lua_State* L) {
@@ -345,7 +346,7 @@ int luawt_MyApplication_ajaxMethod(lua_State* L) {
     MyApplication* self = luawt_checkFromLua<MyApplication>(L, 1);
     if (index == 0) {
     Wt::WApplication::AjaxMethod l_result = self->ajaxMethod();
-    lua_pushinteger(L, l_result);
+    luawt_returnEnum(L, luawt_enum_WApplication_AjaxMethod_str, luawt_enum_WApplication_AjaxMethod_val, l_result, "WApplication::AjaxMethod");
     return 1;
 
     } else {
@@ -420,20 +421,32 @@ int luawt_MyApplication_triggerUpdate(lua_State* L) {
     }
 }
 
-static const char* MyApplication_removeMetaHeader_args0[] = {luawt_typeToStr<MyApplication>(), "int", NULL};
-static const char* MyApplication_removeMetaHeader_args1[] = {luawt_typeToStr<MyApplication>(), "int", "char const *", NULL};
+static const char* MyApplication_removeMetaHeader_args0[] = {luawt_typeToStr<MyApplication>(), "enum", NULL};
+static const char* MyApplication_removeMetaHeader_args1[] = {luawt_typeToStr<MyApplication>(), "enum", "char const *", NULL};
 static const char* const* const luawt_MyApplication_removeMetaHeader_args[] = {MyApplication_removeMetaHeader_args0, MyApplication_removeMetaHeader_args1, NULL};
 
 int luawt_MyApplication_removeMetaHeader(lua_State* L) {
     int index = luawt_getSuitableArgsGroup(L, luawt_MyApplication_removeMetaHeader_args);
     MyApplication* self = luawt_checkFromLua<MyApplication>(L, 1);
     if (index == 0) {
-    Wt::MetaHeaderType type = static_cast<Wt::MetaHeaderType>(lua_tointeger(L, 2));
+    Wt::MetaHeaderType type = static_cast<Wt::MetaHeaderType>(luawt_getEnum(
+        L,
+        luawt_enum_MetaHeaderType_str,
+        luawt_enum_MetaHeaderType_val,
+        2,
+        "Wrong enum type in args of MyApplication.removeMetaHeader"
+    ));
     self->removeMetaHeader(type);
     return 0;
     
     } else if (index == 1) {
-    Wt::MetaHeaderType type = static_cast<Wt::MetaHeaderType>(lua_tointeger(L, 2));
+    Wt::MetaHeaderType type = static_cast<Wt::MetaHeaderType>(luawt_getEnum(
+        L,
+        luawt_enum_MetaHeaderType_str,
+        luawt_enum_MetaHeaderType_val,
+        2,
+        "Wrong enum type in args of MyApplication.removeMetaHeader"
+    ));
     char const * raw3 = lua_tostring(L, 3);
     std::string name = std::string(raw3);
     self->removeMetaHeader(type, name);
@@ -462,8 +475,8 @@ int luawt_MyApplication_setTwoPhaseRenderingThreshold(lua_State* L) {
 
 static const char* MyApplication_addMetaHeader_args0[] = {luawt_typeToStr<MyApplication>(), "char const *", "char const *", NULL};
 static const char* MyApplication_addMetaHeader_args1[] = {luawt_typeToStr<MyApplication>(), "char const *", "char const *", "char const *", NULL};
-static const char* MyApplication_addMetaHeader_args2[] = {luawt_typeToStr<MyApplication>(), "int", "char const *", "char const *", NULL};
-static const char* MyApplication_addMetaHeader_args3[] = {luawt_typeToStr<MyApplication>(), "int", "char const *", "char const *", "char const *", NULL};
+static const char* MyApplication_addMetaHeader_args2[] = {luawt_typeToStr<MyApplication>(), "enum", "char const *", "char const *", NULL};
+static const char* MyApplication_addMetaHeader_args3[] = {luawt_typeToStr<MyApplication>(), "enum", "char const *", "char const *", "char const *", NULL};
 static const char* const* const luawt_MyApplication_addMetaHeader_args[] = {MyApplication_addMetaHeader_args0, MyApplication_addMetaHeader_args1, MyApplication_addMetaHeader_args2, MyApplication_addMetaHeader_args3, NULL};
 
 int luawt_MyApplication_addMetaHeader(lua_State* L) {
@@ -488,7 +501,13 @@ int luawt_MyApplication_addMetaHeader(lua_State* L) {
     return 0;
     
     } else if (index == 2) {
-    Wt::MetaHeaderType type = static_cast<Wt::MetaHeaderType>(lua_tointeger(L, 2));
+    Wt::MetaHeaderType type = static_cast<Wt::MetaHeaderType>(luawt_getEnum(
+        L,
+        luawt_enum_MetaHeaderType_str,
+        luawt_enum_MetaHeaderType_val,
+        2,
+        "Wrong enum type in args of MyApplication.addMetaHeader"
+    ));
     char const * raw3 = lua_tostring(L, 3);
     std::string name = std::string(raw3);
     char const * raw4 = lua_tostring(L, 4);
@@ -497,7 +516,13 @@ int luawt_MyApplication_addMetaHeader(lua_State* L) {
     return 0;
     
     } else if (index == 3) {
-    Wt::MetaHeaderType type = static_cast<Wt::MetaHeaderType>(lua_tointeger(L, 2));
+    Wt::MetaHeaderType type = static_cast<Wt::MetaHeaderType>(luawt_getEnum(
+        L,
+        luawt_enum_MetaHeaderType_str,
+        luawt_enum_MetaHeaderType_val,
+        2,
+        "Wrong enum type in args of MyApplication.addMetaHeader"
+    ));
     char const * raw3 = lua_tostring(L, 3);
     std::string name = std::string(raw3);
     char const * raw4 = lua_tostring(L, 4);
@@ -535,7 +560,7 @@ int luawt_MyApplication_layoutDirection(lua_State* L) {
     MyApplication* self = luawt_checkFromLua<MyApplication>(L, 1);
     if (index == 0) {
     Wt::LayoutDirection l_result = self->layoutDirection();
-    lua_pushinteger(L, l_result);
+    luawt_returnEnum(L, luawt_enum_LayoutDirection_str, luawt_enum_LayoutDirection_val, l_result, "LayoutDirection");
     return 1;
 
     } else {
@@ -883,14 +908,20 @@ int luawt_MyApplication_quit(lua_State* L) {
     }
 }
 
-static const char* MyApplication_setAjaxMethod_args0[] = {luawt_typeToStr<MyApplication>(), "int", NULL};
+static const char* MyApplication_setAjaxMethod_args0[] = {luawt_typeToStr<MyApplication>(), "enum", NULL};
 static const char* const* const luawt_MyApplication_setAjaxMethod_args[] = {MyApplication_setAjaxMethod_args0, NULL};
 
 int luawt_MyApplication_setAjaxMethod(lua_State* L) {
     int index = luawt_getSuitableArgsGroup(L, luawt_MyApplication_setAjaxMethod_args);
     MyApplication* self = luawt_checkFromLua<MyApplication>(L, 1);
     if (index == 0) {
-    Wt::WApplication::AjaxMethod method = static_cast<Wt::WApplication::AjaxMethod>(lua_tointeger(L, 2));
+    Wt::WApplication::AjaxMethod method = static_cast<Wt::WApplication::AjaxMethod>(luawt_getEnum(
+        L,
+        luawt_enum_WApplication_AjaxMethod_str,
+        luawt_enum_WApplication_AjaxMethod_val,
+        2,
+        "Wrong enum type in args of MyApplication.setAjaxMethod"
+    ));
     self->setAjaxMethod(method);
     return 0;
     
@@ -1120,14 +1151,20 @@ int luawt_MyApplication_internalPathNextPart(lua_State* L) {
     }
 }
 
-static const char* MyApplication_setLayoutDirection_args0[] = {luawt_typeToStr<MyApplication>(), "int", NULL};
+static const char* MyApplication_setLayoutDirection_args0[] = {luawt_typeToStr<MyApplication>(), "enum", NULL};
 static const char* const* const luawt_MyApplication_setLayoutDirection_args[] = {MyApplication_setLayoutDirection_args0, NULL};
 
 int luawt_MyApplication_setLayoutDirection(lua_State* L) {
     int index = luawt_getSuitableArgsGroup(L, luawt_MyApplication_setLayoutDirection_args);
     MyApplication* self = luawt_checkFromLua<MyApplication>(L, 1);
     if (index == 0) {
-    Wt::LayoutDirection direction = static_cast<Wt::LayoutDirection>(lua_tointeger(L, 2));
+    Wt::LayoutDirection direction = static_cast<Wt::LayoutDirection>(luawt_getEnum(
+        L,
+        luawt_enum_LayoutDirection_str,
+        luawt_enum_LayoutDirection_val,
+        2,
+        "Wrong enum type in args of MyApplication.setLayoutDirection"
+    ));
     self->setLayoutDirection(direction);
     return 0;
     

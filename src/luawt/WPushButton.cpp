@@ -6,6 +6,7 @@
 #include <Wt/WLink>
 #include <Wt/WString>
 
+#include "enums.hpp"
 #include "globals.hpp"
 
 static const char* WPushButton_make_args0[] = {NULL};
@@ -149,14 +150,20 @@ int luawt_WPushButton_setRef(lua_State* L) {
     }
 }
 
-static const char* WPushButton_setTextFormat_args0[] = {luawt_typeToStr<WPushButton>(), "int", NULL};
+static const char* WPushButton_setTextFormat_args0[] = {luawt_typeToStr<WPushButton>(), "enum", NULL};
 static const char* const* const luawt_WPushButton_setTextFormat_args[] = {WPushButton_setTextFormat_args0, NULL};
 
 int luawt_WPushButton_setTextFormat(lua_State* L) {
     int index = luawt_getSuitableArgsGroup(L, luawt_WPushButton_setTextFormat_args);
     WPushButton* self = luawt_checkFromLua<WPushButton>(L, 1);
     if (index == 0) {
-    Wt::TextFormat format = static_cast<Wt::TextFormat>(lua_tointeger(L, 2));
+    Wt::TextFormat format = static_cast<Wt::TextFormat>(luawt_getEnum(
+        L,
+        luawt_enum_TextFormat_str,
+        luawt_enum_TextFormat_val,
+        2,
+        "Wrong enum type in args of WPushButton.setTextFormat"
+    ));
     bool l_result = self->setTextFormat(format);
     lua_pushboolean(L, l_result);
     return 1;
@@ -239,7 +246,7 @@ int luawt_WPushButton_linkTarget(lua_State* L) {
     WPushButton* self = luawt_checkFromLua<WPushButton>(L, 1);
     if (index == 0) {
     Wt::AnchorTarget l_result = self->linkTarget();
-    lua_pushinteger(L, l_result);
+    luawt_returnEnum(L, luawt_enum_AnchorTarget_str, luawt_enum_AnchorTarget_val, l_result, "AnchorTarget");
     return 1;
 
     } else {
@@ -345,14 +352,20 @@ int luawt_WPushButton_link(lua_State* L) {
     }
 }
 
-static const char* WPushButton_setLinkTarget_args0[] = {luawt_typeToStr<WPushButton>(), "int", NULL};
+static const char* WPushButton_setLinkTarget_args0[] = {luawt_typeToStr<WPushButton>(), "enum", NULL};
 static const char* const* const luawt_WPushButton_setLinkTarget_args[] = {WPushButton_setLinkTarget_args0, NULL};
 
 int luawt_WPushButton_setLinkTarget(lua_State* L) {
     int index = luawt_getSuitableArgsGroup(L, luawt_WPushButton_setLinkTarget_args);
     WPushButton* self = luawt_checkFromLua<WPushButton>(L, 1);
     if (index == 0) {
-    Wt::AnchorTarget target = static_cast<Wt::AnchorTarget>(lua_tointeger(L, 2));
+    Wt::AnchorTarget target = static_cast<Wt::AnchorTarget>(luawt_getEnum(
+        L,
+        luawt_enum_AnchorTarget_str,
+        luawt_enum_AnchorTarget_val,
+        2,
+        "Wrong enum type in args of WPushButton.setLinkTarget"
+    ));
     self->setLinkTarget(target);
     return 0;
     
@@ -450,7 +463,7 @@ int luawt_WPushButton_textFormat(lua_State* L) {
     WPushButton* self = luawt_checkFromLua<WPushButton>(L, 1);
     if (index == 0) {
     Wt::TextFormat l_result = self->textFormat();
-    lua_pushinteger(L, l_result);
+    luawt_returnEnum(L, luawt_enum_TextFormat_str, luawt_enum_TextFormat_val, l_result, "TextFormat");
     return 1;
 
     } else {

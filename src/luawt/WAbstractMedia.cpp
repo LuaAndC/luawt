@@ -4,6 +4,7 @@
 #include <Wt/WAbstractMedia>
 #include <Wt/WLink>
 
+#include "enums.hpp"
 #include "globals.hpp"
 
 static const char* WAbstractMedia_play_args0[] = {luawt_typeToStr<WAbstractMedia>(), NULL};
@@ -81,7 +82,7 @@ int luawt_WAbstractMedia_readyState(lua_State* L) {
     WAbstractMedia* self = luawt_checkFromLua<WAbstractMedia>(L, 1);
     if (index == 0) {
     Wt::WAbstractMedia::ReadyState l_result = self->readyState();
-    lua_pushinteger(L, l_result);
+    luawt_returnEnum(L, luawt_enum_WAbstractMedia_ReadyState_str, luawt_enum_WAbstractMedia_ReadyState_val, l_result, "WAbstractMedia::ReadyState");
     return 1;
 
     } else {
@@ -120,14 +121,20 @@ int luawt_WAbstractMedia_jsMediaRef(lua_State* L) {
     }
 }
 
-static const char* WAbstractMedia_setPreloadMode_args0[] = {luawt_typeToStr<WAbstractMedia>(), "int", NULL};
+static const char* WAbstractMedia_setPreloadMode_args0[] = {luawt_typeToStr<WAbstractMedia>(), "enum", NULL};
 static const char* const* const luawt_WAbstractMedia_setPreloadMode_args[] = {WAbstractMedia_setPreloadMode_args0, NULL};
 
 int luawt_WAbstractMedia_setPreloadMode(lua_State* L) {
     int index = luawt_getSuitableArgsGroup(L, luawt_WAbstractMedia_setPreloadMode_args);
     WAbstractMedia* self = luawt_checkFromLua<WAbstractMedia>(L, 1);
     if (index == 0) {
-    Wt::WAbstractMedia::PreloadMode mode = static_cast<Wt::WAbstractMedia::PreloadMode>(lua_tointeger(L, 2));
+    Wt::WAbstractMedia::PreloadMode mode = static_cast<Wt::WAbstractMedia::PreloadMode>(luawt_getEnum(
+        L,
+        luawt_enum_WAbstractMedia_PreloadMode_str,
+        luawt_enum_WAbstractMedia_PreloadMode_val,
+        2,
+        "Wrong enum type in args of WAbstractMedia.setPreloadMode"
+    ));
     self->setPreloadMode(mode);
     return 0;
     
@@ -177,7 +184,7 @@ int luawt_WAbstractMedia_getOptions(lua_State* L) {
     WAbstractMedia* self = luawt_checkFromLua<WAbstractMedia>(L, 1);
     if (index == 0) {
     Wt::WFlags<Wt::WAbstractMedia::Options> l_result = self->getOptions();
-    lua_pushinteger(L, l_result);
+    luawt_returnEnum(L, luawt_enum_WAbstractMedia_Options_str, luawt_enum_WAbstractMedia_Options_val, l_result, "WAbstractMedia::Options");
     return 1;
 
     } else {
@@ -193,7 +200,7 @@ int luawt_WAbstractMedia_preloadMode(lua_State* L) {
     WAbstractMedia* self = luawt_checkFromLua<WAbstractMedia>(L, 1);
     if (index == 0) {
     Wt::WAbstractMedia::PreloadMode l_result = self->preloadMode();
-    lua_pushinteger(L, l_result);
+    luawt_returnEnum(L, luawt_enum_WAbstractMedia_PreloadMode_str, luawt_enum_WAbstractMedia_PreloadMode_val, l_result, "WAbstractMedia::PreloadMode");
     return 1;
 
     } else {

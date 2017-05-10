@@ -6,6 +6,7 @@
 #include <Wt/WFlashObject>
 #include <Wt/WString>
 
+#include "enums.hpp"
 #include "globals.hpp"
 
 static const char* WFlashObject_make_args0[] = {"char const *", NULL};

@@ -3,6 +3,7 @@
 #include <Wt/WAbstractToggleButton>
 #include <Wt/WString>
 
+#include "enums.hpp"
 #include "globals.hpp"
 
 static const char* WAbstractToggleButton_text_args0[] = {luawt_typeToStr<WAbstractToggleButton>(), NULL};

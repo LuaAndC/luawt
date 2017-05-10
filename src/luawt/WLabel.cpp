@@ -6,6 +6,7 @@
 #include <Wt/WFormWidget>
 #include <Wt/WString>
 
+#include "enums.hpp"
 #include "globals.hpp"
 
 static const char* WLabel_make_args0[] = {NULL};
@@ -105,7 +106,7 @@ int luawt_WLabel_buddy(lua_State* L) {
 }
 
 static const char* WLabel_setImage_args0[] = {luawt_typeToStr<WLabel>(), luawt_typeToStr<Wt::WImage>(), NULL};
-static const char* WLabel_setImage_args1[] = {luawt_typeToStr<WLabel>(), luawt_typeToStr<Wt::WImage>(), "int", NULL};
+static const char* WLabel_setImage_args1[] = {luawt_typeToStr<WLabel>(), luawt_typeToStr<Wt::WImage>(), "enum", NULL};
 static const char* const* const luawt_WLabel_setImage_args[] = {WLabel_setImage_args0, WLabel_setImage_args1, NULL};
 
 int luawt_WLabel_setImage(lua_State* L) {
@@ -120,7 +121,13 @@ int luawt_WLabel_setImage(lua_State* L) {
     } else if (index == 1) {
     Wt::WImage* image =
         luawt_checkFromLua<Wt::WImage>(L, 2);
-    Wt::Side side = static_cast<Wt::Side>(lua_tointeger(L, 3));
+    Wt::Side side = static_cast<Wt::Side>(luawt_getEnum(
+        L,
+        luawt_enum_Side_str,
+        luawt_enum_Side_val,
+        3,
+        "Wrong enum type in args of WLabel.setImage"
+    ));
     self->setImage(image, side);
     return 0;
     
@@ -235,7 +242,7 @@ int luawt_WLabel_textFormat(lua_State* L) {
     WLabel* self = luawt_checkFromLua<WLabel>(L, 1);
     if (index == 0) {
     Wt::TextFormat l_result = self->textFormat();
-    lua_pushinteger(L, l_result);
+    luawt_returnEnum(L, luawt_enum_TextFormat_str, luawt_enum_TextFormat_val, l_result, "TextFormat");
     return 1;
 
     } else {
@@ -243,14 +250,20 @@ int luawt_WLabel_textFormat(lua_State* L) {
     }
 }
 
-static const char* WLabel_setTextFormat_args0[] = {luawt_typeToStr<WLabel>(), "int", NULL};
+static const char* WLabel_setTextFormat_args0[] = {luawt_typeToStr<WLabel>(), "enum", NULL};
 static const char* const* const luawt_WLabel_setTextFormat_args[] = {WLabel_setTextFormat_args0, NULL};
 
 int luawt_WLabel_setTextFormat(lua_State* L) {
     int index = luawt_getSuitableArgsGroup(L, luawt_WLabel_setTextFormat_args);
     WLabel* self = luawt_checkFromLua<WLabel>(L, 1);
     if (index == 0) {
-    Wt::TextFormat format = static_cast<Wt::TextFormat>(lua_tointeger(L, 2));
+    Wt::TextFormat format = static_cast<Wt::TextFormat>(luawt_getEnum(
+        L,
+        luawt_enum_TextFormat_str,
+        luawt_enum_TextFormat_val,
+        2,
+        "Wrong enum type in args of WLabel.setTextFormat"
+    ));
     bool l_result = self->setTextFormat(format);
     lua_pushboolean(L, l_result);
     return 1;

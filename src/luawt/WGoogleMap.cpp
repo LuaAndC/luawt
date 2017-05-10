@@ -3,10 +3,11 @@
 #include <Wt/WGoogleMap>
 #include <Wt/WContainerWidget>
 
+#include "enums.hpp"
 #include "globals.hpp"
 
-static const char* WGoogleMap_make_args0[] = {"int", NULL};
-static const char* WGoogleMap_make_args1[] = {"int", luawt_typeToStr<Wt::WContainerWidget>(), NULL};
+static const char* WGoogleMap_make_args0[] = {"enum", NULL};
+static const char* WGoogleMap_make_args1[] = {"enum", luawt_typeToStr<Wt::WContainerWidget>(), NULL};
 static const char* WGoogleMap_make_args2[] = {NULL};
 static const char* WGoogleMap_make_args3[] = {luawt_typeToStr<Wt::WContainerWidget>(), NULL};
 static const char* const* const luawt_WGoogleMap_make_args[] = {WGoogleMap_make_args0, WGoogleMap_make_args1, WGoogleMap_make_args2, WGoogleMap_make_args3, NULL};
@@ -14,7 +15,13 @@ static const char* const* const luawt_WGoogleMap_make_args[] = {WGoogleMap_make_
 int luawt_WGoogleMap_make(lua_State* L) {
     int index = luawt_getSuitableArgsGroup(L, luawt_WGoogleMap_make_args);
     if (index == 0) {
-    Wt::WGoogleMap::ApiVersion version = static_cast<Wt::WGoogleMap::ApiVersion>(lua_tointeger(L, 1));
+    Wt::WGoogleMap::ApiVersion version = static_cast<Wt::WGoogleMap::ApiVersion>(luawt_getEnum(
+        L,
+        luawt_enum_WGoogleMap_ApiVersion_str,
+        luawt_enum_WGoogleMap_ApiVersion_val,
+        1,
+        "Wrong enum type in args of WGoogleMap.make"
+    ));
     WGoogleMap * l_result = new WGoogleMap(version);
     MyApplication* app = MyApplication::instance();
     if (!app) {
@@ -27,7 +34,13 @@ int luawt_WGoogleMap_make(lua_State* L) {
     return 1;
 
     } else if (index == 1) {
-    Wt::WGoogleMap::ApiVersion version = static_cast<Wt::WGoogleMap::ApiVersion>(lua_tointeger(L, 1));
+    Wt::WGoogleMap::ApiVersion version = static_cast<Wt::WGoogleMap::ApiVersion>(luawt_getEnum(
+        L,
+        luawt_enum_WGoogleMap_ApiVersion_str,
+        luawt_enum_WGoogleMap_ApiVersion_val,
+        1,
+        "Wrong enum type in args of WGoogleMap.make"
+    ));
     Wt::WContainerWidget* parent =
         luawt_checkFromLua<Wt::WContainerWidget>(L, 2);
     WGoogleMap * l_result = new WGoogleMap(version, parent);
@@ -96,7 +109,7 @@ int luawt_WGoogleMap_apiVersion(lua_State* L) {
     WGoogleMap* self = luawt_checkFromLua<WGoogleMap>(L, 1);
     if (index == 0) {
     Wt::WGoogleMap::ApiVersion l_result = self->apiVersion();
-    lua_pushinteger(L, l_result);
+    luawt_returnEnum(L, luawt_enum_WGoogleMap_ApiVersion_str, luawt_enum_WGoogleMap_ApiVersion_val, l_result, "WGoogleMap::ApiVersion");
     return 1;
 
     } else {
@@ -165,14 +178,20 @@ int luawt_WGoogleMap_enableDragging(lua_State* L) {
     }
 }
 
-static const char* WGoogleMap_setMapTypeControl_args0[] = {luawt_typeToStr<WGoogleMap>(), "int", NULL};
+static const char* WGoogleMap_setMapTypeControl_args0[] = {luawt_typeToStr<WGoogleMap>(), "enum", NULL};
 static const char* const* const luawt_WGoogleMap_setMapTypeControl_args[] = {WGoogleMap_setMapTypeControl_args0, NULL};
 
 int luawt_WGoogleMap_setMapTypeControl(lua_State* L) {
     int index = luawt_getSuitableArgsGroup(L, luawt_WGoogleMap_setMapTypeControl_args);
     WGoogleMap* self = luawt_checkFromLua<WGoogleMap>(L, 1);
     if (index == 0) {
-    Wt::WGoogleMap::MapTypeControl type = static_cast<Wt::WGoogleMap::MapTypeControl>(lua_tointeger(L, 2));
+    Wt::WGoogleMap::MapTypeControl type = static_cast<Wt::WGoogleMap::MapTypeControl>(luawt_getEnum(
+        L,
+        luawt_enum_WGoogleMap_MapTypeControl_str,
+        luawt_enum_WGoogleMap_MapTypeControl_val,
+        2,
+        "Wrong enum type in args of WGoogleMap.setMapTypeControl"
+    ));
     self->setMapTypeControl(type);
     return 0;
     

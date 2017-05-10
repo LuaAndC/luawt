@@ -4,6 +4,7 @@
 #include <Wt/WContainerWidget>
 #include <Wt/WTableView>
 
+#include "enums.hpp"
 #include "globals.hpp"
 
 static const char* WTableView_make_args0[] = {NULL};

@@ -6,6 +6,7 @@
 #include <Wt/WIconPair>
 #include <Wt/WString>
 
+#include "enums.hpp"
 #include "globals.hpp"
 
 static const char* WPanel_make_args0[] = {NULL};

@@ -4,6 +4,7 @@
 #include <Wt/WFormWidget>
 #include <Wt/WString>
 
+#include "enums.hpp"
 #include "globals.hpp"
 
 static const char* WFormWidget_setFocus_args0[] = {luawt_typeToStr<WFormWidget>(), NULL};
@@ -140,7 +141,7 @@ int luawt_WFormWidget_setReadOnly(lua_State* L) {
 }
 
 static const char* WFormWidget_setToolTip_args0[] = {luawt_typeToStr<WFormWidget>(), "char const *", NULL};
-static const char* WFormWidget_setToolTip_args1[] = {luawt_typeToStr<WFormWidget>(), "char const *", "int", NULL};
+static const char* WFormWidget_setToolTip_args1[] = {luawt_typeToStr<WFormWidget>(), "char const *", "enum", NULL};
 static const char* const* const luawt_WFormWidget_setToolTip_args[] = {WFormWidget_setToolTip_args0, WFormWidget_setToolTip_args1, NULL};
 
 int luawt_WFormWidget_setToolTip(lua_State* L) {
@@ -155,7 +156,13 @@ int luawt_WFormWidget_setToolTip(lua_State* L) {
     } else if (index == 1) {
     char const * raw2 = lua_tostring(L, 2);
     Wt::WString text = Wt::WString(raw2);
-    Wt::TextFormat textFormat = static_cast<Wt::TextFormat>(lua_tointeger(L, 3));
+    Wt::TextFormat textFormat = static_cast<Wt::TextFormat>(luawt_getEnum(
+        L,
+        luawt_enum_TextFormat_str,
+        luawt_enum_TextFormat_val,
+        3,
+        "Wrong enum type in args of WFormWidget.setToolTip"
+    ));
     self->setToolTip(text, textFormat);
     return 0;
     
@@ -237,7 +244,7 @@ int luawt_WFormWidget_validate(lua_State* L) {
     WFormWidget* self = luawt_checkFromLua<WFormWidget>(L, 1);
     if (index == 0) {
     Wt::WValidator::State l_result = self->validate();
-    lua_pushinteger(L, l_result);
+    luawt_returnEnum(L, luawt_enum_WValidator_State_str, luawt_enum_WValidator_State_val, l_result, "WValidator::State");
     return 1;
 
     } else {

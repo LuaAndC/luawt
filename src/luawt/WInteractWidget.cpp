@@ -2,6 +2,7 @@
 
 #include <Wt/WInteractWidget>
 
+#include "enums.hpp"
 #include "globals.hpp"
 
 static const char* WInteractWidget_load_args0[] = {luawt_typeToStr<WInteractWidget>(), NULL};

@@ -4,6 +4,7 @@
 #include <Wt/WContainerWidget>
 #include <Wt/WIconPair>
 
+#include "enums.hpp"
 #include "globals.hpp"
 
 static const char* WIconPair_make_args0[] = {"char const *", "char const *", NULL};

@@ -3,6 +3,7 @@
 #include <Wt/WWidget>
 #include <Wt/WPopupWidget>
 
+#include "enums.hpp"
 #include "globals.hpp"
 
 static const char* WPopupWidget_orientation_args0[] = {luawt_typeToStr<WPopupWidget>(), NULL};
@@ -13,7 +14,7 @@ int luawt_WPopupWidget_orientation(lua_State* L) {
     WPopupWidget* self = luawt_checkFromLua<WPopupWidget>(L, 1);
     if (index == 0) {
     Wt::Orientation l_result = self->orientation();
-    lua_pushinteger(L, l_result);
+    luawt_returnEnum(L, luawt_enum_Orientation_str, luawt_enum_Orientation_val, l_result, "Orientation");
     return 1;
 
     } else {
@@ -77,7 +78,7 @@ int luawt_WPopupWidget_setTransient(lua_State* L) {
 }
 
 static const char* WPopupWidget_setAnchorWidget_args0[] = {luawt_typeToStr<WPopupWidget>(), luawt_typeToStr<Wt::WWidget>(), NULL};
-static const char* WPopupWidget_setAnchorWidget_args1[] = {luawt_typeToStr<WPopupWidget>(), luawt_typeToStr<Wt::WWidget>(), "int", NULL};
+static const char* WPopupWidget_setAnchorWidget_args1[] = {luawt_typeToStr<WPopupWidget>(), luawt_typeToStr<Wt::WWidget>(), "enum", NULL};
 static const char* const* const luawt_WPopupWidget_setAnchorWidget_args[] = {WPopupWidget_setAnchorWidget_args0, WPopupWidget_setAnchorWidget_args1, NULL};
 
 int luawt_WPopupWidget_setAnchorWidget(lua_State* L) {
@@ -92,7 +93,13 @@ int luawt_WPopupWidget_setAnchorWidget(lua_State* L) {
     } else if (index == 1) {
     Wt::WWidget* widget =
         luawt_checkFromLua<Wt::WWidget>(L, 2);
-    Wt::Orientation orientation = static_cast<Wt::Orientation>(lua_tointeger(L, 3));
+    Wt::Orientation orientation = static_cast<Wt::Orientation>(luawt_getEnum(
+        L,
+        luawt_enum_Orientation_str,
+        luawt_enum_Orientation_val,
+        3,
+        "Wrong enum type in args of WPopupWidget.setAnchorWidget"
+    ));
     self->setAnchorWidget(widget, orientation);
     return 0;
     

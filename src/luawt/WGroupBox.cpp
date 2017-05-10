@@ -4,6 +4,7 @@
 #include <Wt/WGroupBox>
 #include <Wt/WString>
 
+#include "enums.hpp"
 #include "globals.hpp"
 
 static const char* WGroupBox_make_args0[] = {NULL};

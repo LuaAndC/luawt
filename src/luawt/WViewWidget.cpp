@@ -2,6 +2,7 @@
 
 #include <Wt/WViewWidget>
 
+#include "enums.hpp"
 #include "globals.hpp"
 
 static const char* WViewWidget_load_args0[] = {luawt_typeToStr<WViewWidget>(), NULL};
@@ -49,14 +50,20 @@ int luawt_WViewWidget_update(lua_State* L) {
     }
 }
 
-static const char* WViewWidget_render_args0[] = {luawt_typeToStr<WViewWidget>(), "int", NULL};
+static const char* WViewWidget_render_args0[] = {luawt_typeToStr<WViewWidget>(), "enum", NULL};
 static const char* const* const luawt_WViewWidget_render_args[] = {WViewWidget_render_args0, NULL};
 
 int luawt_WViewWidget_render(lua_State* L) {
     int index = luawt_getSuitableArgsGroup(L, luawt_WViewWidget_render_args);
     WViewWidget* self = luawt_checkFromLua<WViewWidget>(L, 1);
     if (index == 0) {
-    Wt::WFlags<Wt::RenderFlag> flags = static_cast<Wt::RenderFlag>(lua_tointeger(L, 2));
+    Wt::WFlags<Wt::RenderFlag> flags = static_cast<Wt::RenderFlag>(luawt_getEnum(
+        L,
+        luawt_enum_RenderFlag_str,
+        luawt_enum_RenderFlag_val,
+        2,
+        "Wrong enum type in args of WViewWidget.render"
+    ));
     self->render(flags);
     return 0;
     

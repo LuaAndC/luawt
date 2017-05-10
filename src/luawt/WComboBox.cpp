@@ -4,6 +4,7 @@
 #include <Wt/WContainerWidget>
 #include <Wt/WString>
 
+#include "enums.hpp"
 #include "globals.hpp"
 
 static const char* WComboBox_make_args0[] = {NULL};
@@ -138,7 +139,7 @@ int luawt_WComboBox_addItem(lua_State* L) {
 }
 
 static const char* WComboBox_findText_args0[] = {luawt_typeToStr<WComboBox>(), "char const *", NULL};
-static const char* WComboBox_findText_args1[] = {luawt_typeToStr<WComboBox>(), "char const *", "int", NULL};
+static const char* WComboBox_findText_args1[] = {luawt_typeToStr<WComboBox>(), "char const *", "enum", NULL};
 static const char* const* const luawt_WComboBox_findText_args[] = {WComboBox_findText_args0, WComboBox_findText_args1, NULL};
 
 int luawt_WComboBox_findText(lua_State* L) {
@@ -154,7 +155,13 @@ int luawt_WComboBox_findText(lua_State* L) {
     } else if (index == 1) {
     char const * raw2 = lua_tostring(L, 2);
     Wt::WString text = Wt::WString(raw2);
-    Wt::WFlags<Wt::MatchFlag> flags = static_cast<Wt::MatchFlag>(lua_tointeger(L, 3));
+    Wt::WFlags<Wt::MatchFlag> flags = static_cast<Wt::MatchFlag>(luawt_getEnum(
+        L,
+        luawt_enum_MatchFlag_str,
+        luawt_enum_MatchFlag_val,
+        3,
+        "Wrong enum type in args of WComboBox.findText"
+    ));
     int l_result = self->findText(text, flags);
     lua_pushinteger(L, l_result);
     return 1;

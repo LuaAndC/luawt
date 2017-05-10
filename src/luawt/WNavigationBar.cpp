@@ -8,6 +8,7 @@
 #include <Wt/WMenu>
 #include <Wt/WContainerWidget>
 
+#include "enums.hpp"
 #include "globals.hpp"
 
 static const char* WNavigationBar_make_args0[] = {NULL};
@@ -41,7 +42,7 @@ int luawt_WNavigationBar_make(lua_State* L) {
 }
 
 static const char* WNavigationBar_addSearch_args0[] = {luawt_typeToStr<WNavigationBar>(), luawt_typeToStr<Wt::WLineEdit>(), NULL};
-static const char* WNavigationBar_addSearch_args1[] = {luawt_typeToStr<WNavigationBar>(), luawt_typeToStr<Wt::WLineEdit>(), "int", NULL};
+static const char* WNavigationBar_addSearch_args1[] = {luawt_typeToStr<WNavigationBar>(), luawt_typeToStr<Wt::WLineEdit>(), "enum", NULL};
 static const char* const* const luawt_WNavigationBar_addSearch_args[] = {WNavigationBar_addSearch_args0, WNavigationBar_addSearch_args1, NULL};
 
 int luawt_WNavigationBar_addSearch(lua_State* L) {
@@ -56,7 +57,13 @@ int luawt_WNavigationBar_addSearch(lua_State* L) {
     } else if (index == 1) {
     Wt::WLineEdit* field =
         luawt_checkFromLua<Wt::WLineEdit>(L, 2);
-    Wt::AlignmentFlag alignment = static_cast<Wt::AlignmentFlag>(lua_tointeger(L, 3));
+    Wt::AlignmentFlag alignment = static_cast<Wt::AlignmentFlag>(luawt_getEnum(
+        L,
+        luawt_enum_AlignmentFlag_str,
+        luawt_enum_AlignmentFlag_val,
+        3,
+        "Wrong enum type in args of WNavigationBar.addSearch"
+    ));
     self->addSearch(field, alignment);
     return 0;
     
@@ -92,7 +99,7 @@ int luawt_WNavigationBar_setTitle(lua_State* L) {
 }
 
 static const char* WNavigationBar_addMenu_args0[] = {luawt_typeToStr<WNavigationBar>(), luawt_typeToStr<Wt::WMenu>(), NULL};
-static const char* WNavigationBar_addMenu_args1[] = {luawt_typeToStr<WNavigationBar>(), luawt_typeToStr<Wt::WMenu>(), "int", NULL};
+static const char* WNavigationBar_addMenu_args1[] = {luawt_typeToStr<WNavigationBar>(), luawt_typeToStr<Wt::WMenu>(), "enum", NULL};
 static const char* const* const luawt_WNavigationBar_addMenu_args[] = {WNavigationBar_addMenu_args0, WNavigationBar_addMenu_args1, NULL};
 
 int luawt_WNavigationBar_addMenu(lua_State* L) {
@@ -107,7 +114,13 @@ int luawt_WNavigationBar_addMenu(lua_State* L) {
     } else if (index == 1) {
     Wt::WMenu* menu =
         luawt_checkFromLua<Wt::WMenu>(L, 2);
-    Wt::AlignmentFlag alignment = static_cast<Wt::AlignmentFlag>(lua_tointeger(L, 3));
+    Wt::AlignmentFlag alignment = static_cast<Wt::AlignmentFlag>(luawt_getEnum(
+        L,
+        luawt_enum_AlignmentFlag_str,
+        luawt_enum_AlignmentFlag_val,
+        3,
+        "Wrong enum type in args of WNavigationBar.addMenu"
+    ));
     self->addMenu(menu, alignment);
     return 0;
     
@@ -117,7 +130,7 @@ int luawt_WNavigationBar_addMenu(lua_State* L) {
 }
 
 static const char* WNavigationBar_addFormField_args0[] = {luawt_typeToStr<WNavigationBar>(), luawt_typeToStr<Wt::WWidget>(), NULL};
-static const char* WNavigationBar_addFormField_args1[] = {luawt_typeToStr<WNavigationBar>(), luawt_typeToStr<Wt::WWidget>(), "int", NULL};
+static const char* WNavigationBar_addFormField_args1[] = {luawt_typeToStr<WNavigationBar>(), luawt_typeToStr<Wt::WWidget>(), "enum", NULL};
 static const char* const* const luawt_WNavigationBar_addFormField_args[] = {WNavigationBar_addFormField_args0, WNavigationBar_addFormField_args1, NULL};
 
 int luawt_WNavigationBar_addFormField(lua_State* L) {
@@ -132,7 +145,13 @@ int luawt_WNavigationBar_addFormField(lua_State* L) {
     } else if (index == 1) {
     Wt::WWidget* widget =
         luawt_checkFromLua<Wt::WWidget>(L, 2);
-    Wt::AlignmentFlag alignment = static_cast<Wt::AlignmentFlag>(lua_tointeger(L, 3));
+    Wt::AlignmentFlag alignment = static_cast<Wt::AlignmentFlag>(luawt_getEnum(
+        L,
+        luawt_enum_AlignmentFlag_str,
+        luawt_enum_AlignmentFlag_val,
+        3,
+        "Wrong enum type in args of WNavigationBar.addFormField"
+    ));
     self->addFormField(widget, alignment);
     return 0;
     
@@ -142,7 +161,7 @@ int luawt_WNavigationBar_addFormField(lua_State* L) {
 }
 
 static const char* WNavigationBar_addWidget_args0[] = {luawt_typeToStr<WNavigationBar>(), luawt_typeToStr<Wt::WWidget>(), NULL};
-static const char* WNavigationBar_addWidget_args1[] = {luawt_typeToStr<WNavigationBar>(), luawt_typeToStr<Wt::WWidget>(), "int", NULL};
+static const char* WNavigationBar_addWidget_args1[] = {luawt_typeToStr<WNavigationBar>(), luawt_typeToStr<Wt::WWidget>(), "enum", NULL};
 static const char* const* const luawt_WNavigationBar_addWidget_args[] = {WNavigationBar_addWidget_args0, WNavigationBar_addWidget_args1, NULL};
 
 int luawt_WNavigationBar_addWidget(lua_State* L) {
@@ -157,7 +176,13 @@ int luawt_WNavigationBar_addWidget(lua_State* L) {
     } else if (index == 1) {
     Wt::WWidget* widget =
         luawt_checkFromLua<Wt::WWidget>(L, 2);
-    Wt::AlignmentFlag alignment = static_cast<Wt::AlignmentFlag>(lua_tointeger(L, 3));
+    Wt::AlignmentFlag alignment = static_cast<Wt::AlignmentFlag>(luawt_getEnum(
+        L,
+        luawt_enum_AlignmentFlag_str,
+        luawt_enum_AlignmentFlag_val,
+        3,
+        "Wrong enum type in args of WNavigationBar.addWidget"
+    ));
     self->addWidget(widget, alignment);
     return 0;
     

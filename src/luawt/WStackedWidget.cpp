@@ -4,6 +4,7 @@
 #include <Wt/WWidget>
 #include <Wt/WContainerWidget>
 
+#include "enums.hpp"
 #include "globals.hpp"
 
 static const char* WStackedWidget_make_args0[] = {NULL};
