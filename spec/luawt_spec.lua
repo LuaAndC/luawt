@@ -96,26 +96,29 @@ describe("luawt", function()
         test.clear(server, wt_config, false)
     end)
 
-    pending("provides different ways for using #enums", function()
+    it("provides different ways for using #enums", function()
+        local luawt = require 'luawt'
         local code = [[
             local app, env = ...
             local luawt = require 'luawt'
-            app:root():setContentAlignment(4)
-            local alignment = app:root():contentAlignment()
-            luawt.Shared.alignment = alignment
-            luawt.Shared.alignment_val =
-                luawt.enums.AlignmentFlag[alignment]
-            app:root():setContentAlignment('AlignLeft')
-            alignment = app:root():contentAlignment()
-            luawt.Shared.alignment2 = alignment
-            luawt.Shared.alignment_val2 =
-                luawt.enums.AlignmentFlag[alignment]
+            local google_map = luawt.WGoogleMap(1)
+            local api_version = google_map:apiVersion()
+            luawt.Shared.api_version = api_version
+            luawt.Shared.api_version_val =
+                luawt.enums.WGoogleMap_ApiVersion[api_version]
+            local google_map2 = luawt.WGoogleMap('Version2')
+            api_version = google_map2:apiVersion()
+            luawt.Shared.api_version2 = api_version
+            luawt.Shared.api_version_val2 =
+                luawt.enums.WGoogleMap_ApiVersion[api_version]
         ]]
         local server, wt_config, data = test.getData(code)
-        assert.truthy(luawt.Shared.alignment == "AlignCenter")
-        assert.truthy(luawt.Shared.alignment_val == 4)
-        assert.truthy(luawt.Shared.alignment2 == "AlignLeft")
-        assert.truthy(luawt.Shared.alignment_val2 == 1)
+        assert.truthy(luawt.Shared.api_version == "Version3")
+        assert.truthy(tonumber(luawt.Shared.api_version_val) == 1)
+        assert.truthy(luawt.Shared.api_version2 == "Version2")
+        assert.truthy(tonumber(luawt.Shared.api_version_val2) == 0)
+        test.clear(server, wt_config, false)
+    end)
         test.clear(server, wt_config, false)
     end)
 
