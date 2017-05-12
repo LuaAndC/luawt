@@ -119,6 +119,38 @@ describe("luawt", function()
         assert.truthy(tonumber(luawt.Shared.api_version_val2) == 0)
         test.clear(server, wt_config, false)
     end)
+
+    it("provides facilities for handling #special_enums", function()
+        local luawt = require 'luawt'
+        local code = [[
+            local app, env = ...
+            local luawt = require 'luawt'
+            local test = require 'luawt.test'
+            local button = luawt.WPushButton(app:root())
+            button:setVerticalAlignment('AlignTop')
+            local align1 = button:verticalAlignment()
+            luawt.Shared.align1_size = test.sizeOf(align1)
+            luawt.Shared.align1_el1 = align1['AlignTop']
+            button:setVerticalAlignment({'AlignTop', 'AlignSub'})
+            local align2 = button:verticalAlignment()
+            luawt.Shared.align2_size = test.sizeOf(align2)
+            luawt.Shared.align2_el1 = align2['AlignTop']
+            luawt.Shared.align2_el2 = align2['AlignSub']
+            button:setVerticalAlignment(192)
+            local align3 = button:verticalAlignment()
+            luawt.Shared.align3_size = test.sizeOf(align3)
+            luawt.Shared.align3_el1 = align3['AlignTop']
+            luawt.Shared.align3_el2 = align3['AlignSuper']
+        ]]
+        local server, wt_config, data = test.getData(code)
+        assert.truthy(tonumber(luawt.Shared.align1_size) == 1)
+        assert.truthy(tonumber(luawt.Shared.align1_el1) == 128)
+        assert.truthy(tonumber(luawt.Shared.align2_size) == 2)
+        assert.truthy(tonumber(luawt.Shared.align2_el1) == 128)
+        assert.truthy(tonumber(luawt.Shared.align2_el2) == 32)
+        assert.truthy(tonumber(luawt.Shared.align3_size) == 2)
+        assert.truthy(tonumber(luawt.Shared.align3_el1) == 128)
+        assert.truthy(tonumber(luawt.Shared.align3_el2) == 64)
         test.clear(server, wt_config, false)
     end)
 
