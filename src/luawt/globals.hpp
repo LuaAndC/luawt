@@ -712,10 +712,17 @@ inline lint luawt_getEnum(
     }
 }
 
-/* Check whether `enum_name` is in global set of special enums or not.
+/* Check whether `enum_name` is in global registry of special enums.
 */
 inline bool luawt_isSpecialEnum(const char* enum_name) {
-    return luawt_SpecialEnums.find(enum_name) != luawt_SpecialEnums.end();
+    int index = 0;
+    while (luawt_SpecialEnums_arr[index] != NULL) {
+        if (!strcmp(enum_name, luawt_SpecialEnums_arr[index])) {
+            return true;
+        }
+        index++;
+    }
+    return false;
 }
 
 /* Return enum in the form of string or table([str] -> val).

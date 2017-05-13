@@ -1399,6 +1399,5 @@ static const char* const luawt_SpecialEnums_arr[] = {
 
     NULL
 };
-static StrsSet luawt_SpecialEnums(luawt_SpecialEnums_arr, luawt_SpecialEnums_arr + 22);
 
 #endif
