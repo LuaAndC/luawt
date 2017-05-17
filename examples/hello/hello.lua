@@ -17,7 +17,7 @@ function mainApp()
     -- specified by WServer's options.
     app:useStyleSheet('./common.css')
     -- Enums are treated as numbers. 4 corresponds to AlignCenter.
-    app:root():setContentAlignment(4)
+    app:root():setContentAlignment('AlignCenter')
     -- Create widgets.
     local text = luawt.WText('Your name, please?')
     breakTheLine()
