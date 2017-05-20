@@ -12,7 +12,11 @@ app:setTitle('luacheck')
 -- specified by WServer's options.
 app:useStyleSheet('./common.css')
 
+-- Set AlignmentFlag enum in the form of string.
 app:root():setContentAlignment('AlignCenter')
+-- Enums can be represented in many ways, see docs/enums.md
+-- for more information.
+
 -- Create widgets.
 local textarea = luawt.WTextArea(app:root())
 app:root():addWidget(luawt.WBreak())
