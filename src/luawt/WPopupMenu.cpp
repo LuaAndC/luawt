@@ -7,6 +7,7 @@
 #include <Wt/WStackedWidget>
 #include <Wt/WPopupMenu>
 
+#include "enums.hpp"
 #include "globals.hpp"
 
 static const char* WPopupMenu_make_args0[] = {NULL};
@@ -47,7 +48,7 @@ int luawt_WPopupMenu_make(lua_State* L) {
 }
 
 static const char* WPopupMenu_popup_args0[] = {luawt_typeToStr<WPopupMenu>(), luawt_typeToStr<Wt::WWidget>(), NULL};
-static const char* WPopupMenu_popup_args1[] = {luawt_typeToStr<WPopupMenu>(), luawt_typeToStr<Wt::WWidget>(), "int", NULL};
+static const char* WPopupMenu_popup_args1[] = {luawt_typeToStr<WPopupMenu>(), luawt_typeToStr<Wt::WWidget>(), "enum", NULL};
 static const char* const* const luawt_WPopupMenu_popup_args[] = {WPopupMenu_popup_args0, WPopupMenu_popup_args1, NULL};
 
 int luawt_WPopupMenu_popup(lua_State* L) {
@@ -62,7 +63,13 @@ int luawt_WPopupMenu_popup(lua_State* L) {
     } else if (index == 1) {
     Wt::WWidget* location =
         luawt_checkFromLua<Wt::WWidget>(L, 2);
-    Wt::Orientation orientation = static_cast<Wt::Orientation>(lua_tointeger(L, 3));
+    Wt::Orientation orientation = static_cast<Wt::Orientation>(luawt_getEnum(
+        L,
+        luawt_enum_Orientation_str,
+        luawt_enum_Orientation_val,
+        3,
+        "Wrong enum type in args of WPopupMenu.popup"
+    ));
     self->popup(location, orientation);
     return 0;
     
@@ -89,7 +96,7 @@ int luawt_WPopupMenu_setButton(lua_State* L) {
 }
 
 static const char* WPopupMenu_exec_args0[] = {luawt_typeToStr<WPopupMenu>(), luawt_typeToStr<Wt::WWidget>(), NULL};
-static const char* WPopupMenu_exec_args1[] = {luawt_typeToStr<WPopupMenu>(), luawt_typeToStr<Wt::WWidget>(), "int", NULL};
+static const char* WPopupMenu_exec_args1[] = {luawt_typeToStr<WPopupMenu>(), luawt_typeToStr<Wt::WWidget>(), "enum", NULL};
 static const char* const* const luawt_WPopupMenu_exec_args[] = {WPopupMenu_exec_args0, WPopupMenu_exec_args1, NULL};
 
 int luawt_WPopupMenu_exec(lua_State* L) {
@@ -105,7 +112,13 @@ int luawt_WPopupMenu_exec(lua_State* L) {
     } else if (index == 1) {
     Wt::WWidget* location =
         luawt_checkFromLua<Wt::WWidget>(L, 2);
-    Wt::Orientation orientation = static_cast<Wt::Orientation>(lua_tointeger(L, 3));
+    Wt::Orientation orientation = static_cast<Wt::Orientation>(luawt_getEnum(
+        L,
+        luawt_enum_Orientation_str,
+        luawt_enum_Orientation_val,
+        3,
+        "Wrong enum type in args of WPopupMenu.exec"
+    ));
     Wt::WMenuItem * l_result = self->exec(location, orientation);
     luawt_toLua(L, l_result);
     return 1;

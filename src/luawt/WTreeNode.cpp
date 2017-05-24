@@ -6,6 +6,7 @@
 #include <Wt/WTreeNode>
 #include <Wt/WText>
 
+#include "enums.hpp"
 #include "globals.hpp"
 
 static const char* WTreeNode_make_args0[] = {"char const *", NULL};
@@ -117,14 +118,20 @@ int luawt_WTreeNode_addChildNode(lua_State* L) {
     }
 }
 
-static const char* WTreeNode_setChildCountPolicy_args0[] = {luawt_typeToStr<WTreeNode>(), "int", NULL};
+static const char* WTreeNode_setChildCountPolicy_args0[] = {luawt_typeToStr<WTreeNode>(), "enum", NULL};
 static const char* const* const luawt_WTreeNode_setChildCountPolicy_args[] = {WTreeNode_setChildCountPolicy_args0, NULL};
 
 int luawt_WTreeNode_setChildCountPolicy(lua_State* L) {
     int index = luawt_getSuitableArgsGroup(L, luawt_WTreeNode_setChildCountPolicy_args);
     WTreeNode* self = luawt_checkFromLua<WTreeNode>(L, 1);
     if (index == 0) {
-    Wt::WTreeNode::ChildCountPolicy policy = static_cast<Wt::WTreeNode::ChildCountPolicy>(lua_tointeger(L, 2));
+    Wt::WTreeNode::ChildCountPolicy policy = static_cast<Wt::WTreeNode::ChildCountPolicy>(luawt_getEnum(
+        L,
+        luawt_enum_WTreeNode_ChildCountPolicy_str,
+        luawt_enum_WTreeNode_ChildCountPolicy_val,
+        2,
+        "Wrong enum type in args of WTreeNode.setChildCountPolicy"
+    ));
     self->setChildCountPolicy(policy);
     return 0;
     
@@ -206,7 +213,7 @@ int luawt_WTreeNode_childCountPolicy(lua_State* L) {
     WTreeNode* self = luawt_checkFromLua<WTreeNode>(L, 1);
     if (index == 0) {
     Wt::WTreeNode::ChildCountPolicy l_result = self->childCountPolicy();
-    lua_pushinteger(L, l_result);
+    luawt_returnEnum(L, luawt_enum_WTreeNode_ChildCountPolicy_str, luawt_enum_WTreeNode_ChildCountPolicy_val, l_result, "WTreeNode::ChildCountPolicy");
     return 1;
 
     } else {
@@ -326,14 +333,20 @@ int luawt_WTreeNode_expand(lua_State* L) {
     }
 }
 
-static const char* WTreeNode_setLoadPolicy_args0[] = {luawt_typeToStr<WTreeNode>(), "int", NULL};
+static const char* WTreeNode_setLoadPolicy_args0[] = {luawt_typeToStr<WTreeNode>(), "enum", NULL};
 static const char* const* const luawt_WTreeNode_setLoadPolicy_args[] = {WTreeNode_setLoadPolicy_args0, NULL};
 
 int luawt_WTreeNode_setLoadPolicy(lua_State* L) {
     int index = luawt_getSuitableArgsGroup(L, luawt_WTreeNode_setLoadPolicy_args);
     WTreeNode* self = luawt_checkFromLua<WTreeNode>(L, 1);
     if (index == 0) {
-    Wt::WTreeNode::LoadPolicy loadPolicy = static_cast<Wt::WTreeNode::LoadPolicy>(lua_tointeger(L, 2));
+    Wt::WTreeNode::LoadPolicy loadPolicy = static_cast<Wt::WTreeNode::LoadPolicy>(luawt_getEnum(
+        L,
+        luawt_enum_WTreeNode_LoadPolicy_str,
+        luawt_enum_WTreeNode_LoadPolicy_val,
+        2,
+        "Wrong enum type in args of WTreeNode.setLoadPolicy"
+    ));
     self->setLoadPolicy(loadPolicy);
     return 0;
     

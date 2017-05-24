@@ -4,6 +4,7 @@
 #include <Wt/WDefaultLoadingIndicator>
 #include <Wt/WString>
 
+#include "enums.hpp"
 #include "globals.hpp"
 
 static const char* WDefaultLoadingIndicator_make_args0[] = {NULL};

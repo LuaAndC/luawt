@@ -5,6 +5,7 @@
 #include <Wt/WLink>
 #include <Wt/WString>
 
+#include "enums.hpp"
 #include "globals.hpp"
 
 static const char* WImage_make_args0[] = {NULL};

@@ -3,6 +3,7 @@
 #include <Wt/WSpinBox>
 #include <Wt/WContainerWidget>
 
+#include "enums.hpp"
 #include "globals.hpp"
 
 static const char* WSpinBox_make_args0[] = {NULL};

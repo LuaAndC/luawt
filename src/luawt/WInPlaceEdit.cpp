@@ -7,6 +7,7 @@
 #include <Wt/WContainerWidget>
 #include <Wt/WText>
 
+#include "enums.hpp"
 #include "globals.hpp"
 
 static const char* WInPlaceEdit_make_args0[] = {"char const *", NULL};

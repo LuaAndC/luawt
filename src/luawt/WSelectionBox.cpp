@@ -3,6 +3,7 @@
 #include <Wt/WSelectionBox>
 #include <Wt/WContainerWidget>
 
+#include "enums.hpp"
 #include "globals.hpp"
 
 static const char* WSelectionBox_make_args0[] = {NULL};
@@ -58,7 +59,7 @@ int luawt_WSelectionBox_selectionMode(lua_State* L) {
     WSelectionBox* self = luawt_checkFromLua<WSelectionBox>(L, 1);
     if (index == 0) {
     Wt::SelectionMode l_result = self->selectionMode();
-    lua_pushinteger(L, l_result);
+    luawt_returnEnum(L, luawt_enum_SelectionMode_str, luawt_enum_SelectionMode_val, l_result, "SelectionMode");
     return 1;
 
     } else {
@@ -98,14 +99,20 @@ int luawt_WSelectionBox_setVerticalSize(lua_State* L) {
     }
 }
 
-static const char* WSelectionBox_setSelectionMode_args0[] = {luawt_typeToStr<WSelectionBox>(), "int", NULL};
+static const char* WSelectionBox_setSelectionMode_args0[] = {luawt_typeToStr<WSelectionBox>(), "enum", NULL};
 static const char* const* const luawt_WSelectionBox_setSelectionMode_args[] = {WSelectionBox_setSelectionMode_args0, NULL};
 
 int luawt_WSelectionBox_setSelectionMode(lua_State* L) {
     int index = luawt_getSuitableArgsGroup(L, luawt_WSelectionBox_setSelectionMode_args);
     WSelectionBox* self = luawt_checkFromLua<WSelectionBox>(L, 1);
     if (index == 0) {
-    Wt::SelectionMode mode = static_cast<Wt::SelectionMode>(lua_tointeger(L, 2));
+    Wt::SelectionMode mode = static_cast<Wt::SelectionMode>(luawt_getEnum(
+        L,
+        luawt_enum_SelectionMode_str,
+        luawt_enum_SelectionMode_val,
+        2,
+        "Wrong enum type in args of WSelectionBox.setSelectionMode"
+    ));
     self->setSelectionMode(mode);
     return 0;
     

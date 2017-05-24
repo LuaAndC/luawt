@@ -4,6 +4,7 @@
 #include <Wt/WRadioButton>
 #include <Wt/WString>
 
+#include "enums.hpp"
 #include "globals.hpp"
 
 static const char* WRadioButton_make_args0[] = {NULL};

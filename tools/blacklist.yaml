@@ -151,6 +151,10 @@ WMessageBox:
   signatures:
   - addButton(StandardButton)
   - addButton(WPushButton*,StandardButton)
+WMenu:
+  signatures:
+  - addItem(WMenuItem*)
+  - insertItem(int,WMenuItem*)
 WSuggestionPopup:
   methods:
   - currentItem

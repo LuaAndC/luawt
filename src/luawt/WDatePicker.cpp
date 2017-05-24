@@ -7,6 +7,7 @@
 #include <Wt/WDatePicker>
 #include <Wt/WContainerWidget>
 
+#include "enums.hpp"
 #include "globals.hpp"
 
 static const char* WDatePicker_make_args0[] = {NULL};

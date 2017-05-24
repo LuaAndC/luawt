@@ -4,6 +4,7 @@
 #include <Wt/WWidget>
 #include <Wt/WContainerWidget>
 
+#include "enums.hpp"
 #include "globals.hpp"
 
 static const char* WToolBar_make_args0[] = {NULL};

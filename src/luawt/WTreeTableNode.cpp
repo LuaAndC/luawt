@@ -7,6 +7,7 @@
 #include <Wt/WTreeTableNode>
 #include <Wt/WTreeTable>
 
+#include "enums.hpp"
 #include "globals.hpp"
 
 static const char* WTreeTableNode_make_args0[] = {"char const *", NULL};

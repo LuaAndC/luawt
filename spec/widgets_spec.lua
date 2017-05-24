@@ -7,6 +7,9 @@ local test = require 'luawt.test'
 describe("luawt widgets", function()
 
     -- List of widgets tests
+    it("creates WMenu", function()
+        test.testWidget("WMenu", true)
+    end)
     it("creates WBreak", function()
         test.testWidget("WBreak", true)
     end)

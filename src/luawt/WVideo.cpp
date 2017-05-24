@@ -4,6 +4,7 @@
 #include <Wt/WVideo>
 #include <Wt/WContainerWidget>
 
+#include "enums.hpp"
 #include "globals.hpp"
 
 static const char* WVideo_make_args0[] = {NULL};

@@ -4,6 +4,7 @@
 #include <Wt/WLength>
 #include <Wt/WContainerWidget>
 
+#include "enums.hpp"
 #include "globals.hpp"
 
 static const char* WContainerWidget_make_args0[] = {NULL};
@@ -52,14 +53,20 @@ int luawt_WContainerWidget_count(lua_State* L) {
     }
 }
 
-static const char* WContainerWidget_padding_args0[] = {luawt_typeToStr<WContainerWidget>(), "int", NULL};
+static const char* WContainerWidget_padding_args0[] = {luawt_typeToStr<WContainerWidget>(), "enum", NULL};
 static const char* const* const luawt_WContainerWidget_padding_args[] = {WContainerWidget_padding_args0, NULL};
 
 int luawt_WContainerWidget_padding(lua_State* L) {
     int index = luawt_getSuitableArgsGroup(L, luawt_WContainerWidget_padding_args);
     WContainerWidget* self = luawt_checkFromLua<WContainerWidget>(L, 1);
     if (index == 0) {
-    Wt::Side side = static_cast<Wt::Side>(lua_tointeger(L, 2));
+    Wt::Side side = static_cast<Wt::Side>(luawt_getEnum(
+        L,
+        luawt_enum_Side_str,
+        luawt_enum_Side_val,
+        2,
+        "Wrong enum type in args of WContainerWidget.padding"
+    ));
     Wt::WLength l_result = self->padding(side);
     lua_pushnumber(L, l_result.value());
     return 1;
@@ -228,21 +235,39 @@ int luawt_WContainerWidget_isList(lua_State* L) {
     }
 }
 
-static const char* WContainerWidget_setOverflow_args0[] = {luawt_typeToStr<WContainerWidget>(), "int", NULL};
-static const char* WContainerWidget_setOverflow_args1[] = {luawt_typeToStr<WContainerWidget>(), "int", "int", NULL};
+static const char* WContainerWidget_setOverflow_args0[] = {luawt_typeToStr<WContainerWidget>(), "enum", NULL};
+static const char* WContainerWidget_setOverflow_args1[] = {luawt_typeToStr<WContainerWidget>(), "enum", "enum", NULL};
 static const char* const* const luawt_WContainerWidget_setOverflow_args[] = {WContainerWidget_setOverflow_args0, WContainerWidget_setOverflow_args1, NULL};
 
 int luawt_WContainerWidget_setOverflow(lua_State* L) {
     int index = luawt_getSuitableArgsGroup(L, luawt_WContainerWidget_setOverflow_args);
     WContainerWidget* self = luawt_checkFromLua<WContainerWidget>(L, 1);
     if (index == 0) {
-    Wt::WContainerWidget::Overflow overflow = static_cast<Wt::WContainerWidget::Overflow>(lua_tointeger(L, 2));
+    Wt::WContainerWidget::Overflow overflow = static_cast<Wt::WContainerWidget::Overflow>(luawt_getEnum(
+        L,
+        luawt_enum_WContainerWidget_Overflow_str,
+        luawt_enum_WContainerWidget_Overflow_val,
+        2,
+        "Wrong enum type in args of WContainerWidget.setOverflow"
+    ));
     self->setOverflow(overflow);
     return 0;
     
     } else if (index == 1) {
-    Wt::WContainerWidget::Overflow overflow = static_cast<Wt::WContainerWidget::Overflow>(lua_tointeger(L, 2));
-    Wt::WFlags<Wt::Orientation> orientation = static_cast<Wt::Orientation>(lua_tointeger(L, 3));
+    Wt::WContainerWidget::Overflow overflow = static_cast<Wt::WContainerWidget::Overflow>(luawt_getEnum(
+        L,
+        luawt_enum_WContainerWidget_Overflow_str,
+        luawt_enum_WContainerWidget_Overflow_val,
+        2,
+        "Wrong enum type in args of WContainerWidget.setOverflow"
+    ));
+    Wt::WFlags<Wt::Orientation> orientation = static_cast<Wt::Orientation>(luawt_getEnum(
+        L,
+        luawt_enum_Orientation_str,
+        luawt_enum_Orientation_val,
+        3,
+        "Wrong enum type in args of WContainerWidget.setOverflow"
+    ));
     self->setOverflow(overflow, orientation);
     return 0;
     
@@ -268,14 +293,20 @@ int luawt_WContainerWidget_addWidget(lua_State* L) {
     }
 }
 
-static const char* WContainerWidget_setContentAlignment_args0[] = {luawt_typeToStr<WContainerWidget>(), "int", NULL};
+static const char* WContainerWidget_setContentAlignment_args0[] = {luawt_typeToStr<WContainerWidget>(), "enum", NULL};
 static const char* const* const luawt_WContainerWidget_setContentAlignment_args[] = {WContainerWidget_setContentAlignment_args0, NULL};
 
 int luawt_WContainerWidget_setContentAlignment(lua_State* L) {
     int index = luawt_getSuitableArgsGroup(L, luawt_WContainerWidget_setContentAlignment_args);
     WContainerWidget* self = luawt_checkFromLua<WContainerWidget>(L, 1);
     if (index == 0) {
-    Wt::WFlags<Wt::AlignmentFlag> contentAlignment = static_cast<Wt::AlignmentFlag>(lua_tointeger(L, 2));
+    Wt::WFlags<Wt::AlignmentFlag> contentAlignment = static_cast<Wt::AlignmentFlag>(luawt_getEnum(
+        L,
+        luawt_enum_AlignmentFlag_str,
+        luawt_enum_AlignmentFlag_val,
+        2,
+        "Wrong enum type in args of WContainerWidget.setContentAlignment"
+    ));
     self->setContentAlignment(contentAlignment);
     return 0;
     
@@ -292,7 +323,7 @@ int luawt_WContainerWidget_contentAlignment(lua_State* L) {
     WContainerWidget* self = luawt_checkFromLua<WContainerWidget>(L, 1);
     if (index == 0) {
     Wt::WFlags<Wt::AlignmentFlag> l_result = self->contentAlignment();
-    lua_pushinteger(L, l_result);
+    luawt_returnEnum(L, luawt_enum_AlignmentFlag_str, luawt_enum_AlignmentFlag_val, l_result, "AlignmentFlag");
     return 1;
 
     } else {
@@ -317,7 +348,7 @@ int luawt_WContainerWidget_isUnorderedList(lua_State* L) {
 }
 
 static const char* WContainerWidget_setPadding_args0[] = {luawt_typeToStr<WContainerWidget>(), "double", NULL};
-static const char* WContainerWidget_setPadding_args1[] = {luawt_typeToStr<WContainerWidget>(), "double", "int", NULL};
+static const char* WContainerWidget_setPadding_args1[] = {luawt_typeToStr<WContainerWidget>(), "double", "enum", NULL};
 static const char* const* const luawt_WContainerWidget_setPadding_args[] = {WContainerWidget_setPadding_args0, WContainerWidget_setPadding_args1, NULL};
 
 int luawt_WContainerWidget_setPadding(lua_State* L) {
@@ -332,7 +363,13 @@ int luawt_WContainerWidget_setPadding(lua_State* L) {
     } else if (index == 1) {
     double raw2 = lua_tonumber(L, 2);
     Wt::WLength padding = Wt::WLength(raw2);
-    Wt::WFlags<Wt::Side> sides = static_cast<Wt::Side>(lua_tointeger(L, 3));
+    Wt::WFlags<Wt::Side> sides = static_cast<Wt::Side>(luawt_getEnum(
+        L,
+        luawt_enum_Side_str,
+        luawt_enum_Side_val,
+        3,
+        "Wrong enum type in args of WContainerWidget.setPadding"
+    ));
     self->setPadding(padding, sides);
     return 0;
     

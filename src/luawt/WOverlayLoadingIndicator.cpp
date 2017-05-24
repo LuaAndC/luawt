@@ -4,6 +4,7 @@
 #include <Wt/WOverlayLoadingIndicator>
 #include <Wt/WString>
 
+#include "enums.hpp"
 #include "globals.hpp"
 
 static const char* WOverlayLoadingIndicator_make_args0[] = {NULL};

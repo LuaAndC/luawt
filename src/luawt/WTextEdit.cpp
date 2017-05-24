@@ -5,6 +5,7 @@
 #include <Wt/WContainerWidget>
 #include <Wt/WTextEdit>
 
+#include "enums.hpp"
 #include "globals.hpp"
 
 static const char* WTextEdit_make_args0[] = {NULL};

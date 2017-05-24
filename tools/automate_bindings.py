@@ -15,6 +15,8 @@ import shutil
 import pygccxml
 import yaml
 
+GLOBAL_ENUMS_REGISTRY = {}
+
 BUILTIN_TYPES_CONVERTERS = {
     'int': ('lua_tointeger', 'lua_pushinteger'),
     'bool': ('lua_toboolean', 'lua_pushboolean'),
@@ -74,15 +76,11 @@ def loadAdditionalChunk(module_str):
     else:
         raise Exception('Unable to load module called %s' % module_str)
 
-def isTemplate(method_name, decl_str):
+def isTemplate(method_name, decl_obj, namespace):
     # Luawt doesn't support C++ templates.
-    if pygccxml.declarations.templates.is_instantiation(decl_str):
-        name = pygccxml.declarations.templates.name(decl_str)
-        temp_args = pygccxml.declarations.templates.args(decl_str)
-        if (len(temp_args) == 1) and (name == 'Wt::WFlags'):
+    if pygccxml.declarations.templates.is_instantiation(str(decl_obj)):
+        if not getEnumStr(decl_obj):
             # WFlags<enum> is an exception. Treated as enum.
-            addEnumByStr(decl_str, temp_args[0])
-        else:
             logging.warning(
                 "Its impossible to bind method %s because luawt " +
                 "doesn't support C++ templates",
@@ -142,7 +140,7 @@ def isBaseOrItsDescendant(child, base_name, Wt):
     return False
 
 def checkArgumentType(method_name, arg_type, Wt):
-    if isTemplate(method_name, str(arg_type)):
+    if isTemplate(method_name, arg_type, Wt):
         return False
     # Is built-in or problematic
     if getBuiltinType(str(arg_type)):
@@ -178,7 +176,7 @@ def checkArgumentType(method_name, arg_type, Wt):
 
 def checkReturnType(method_name, raw_return_type, Wt):
     # Special cases.
-    if isTemplate(method_name, str(raw_return_type)):
+    if isTemplate(method_name, raw_return_type, Wt):
         return False
     if str(raw_return_type) == 'void':
         return True
@@ -200,17 +198,74 @@ def checkReturnType(method_name, raw_return_type, Wt):
     )
     return False
 
-def addEnumByStr(type_str, enum_str):
-    enum_converters = (
-        'static_cast<%s>(lua_tointeger' % enum_str,
-        'lua_pushinteger',
-    )
-    BUILTIN_TYPES_CONVERTERS[type_str] = enum_converters
+def getInternalNamespace(decl_str):
+    chunks = decl_str.split('::')
+    if len(chunks) == 2:
+        # Decl has internal namespace, e.g. Namespace::Enum.
+        try:
+            return loadAdditionalChunk(chunks[0])
+        except:
+            return None
+    return None
 
-def addEnum(type_obj):
+def enumObjFromNamespace(enum_str, namespace):
+    try:
+        return namespace.enumeration(name=enum_str)
+    except:
+        return None
+
+def getEnumObj(enum_str, default_namespace):
+    chunks = enum_str.split('::')
+    if len(chunks) == 2:
+        # Namespace::Enum --> Enum
+        enum_str = chunks[1]
+    enum_obj = enumObjFromNamespace(enum_str, default_namespace)
+    if not enum_obj:
+        # Not found: enum isn't declared in the given module.
+        # Check other options: WGlobal and internal namespace.
+        glob = loadAdditionalChunk('WGlobal')
+        internal = getInternalNamespace(enum_str)
+        # Try WGlobal.
+        enum_obj = enumObjFromNamespace(enum_str, glob)
+        if not enum_obj and internal:
+            # Try internal namespace.
+            enum_obj = enumObjFromNamespace(enum_str, internal)
+    if not enum_obj:
+        raise Exception('Unable to find enum %s' % enum_str)
+    return enum_obj
+
+def getEnumStr(type_obj):
+    decl_str = str(type_obj)
+    if pygccxml.declarations.templates.is_instantiation(decl_str):
+        name = pygccxml.declarations.templates.name(decl_str)
+        temp_args = pygccxml.declarations.templates.args(decl_str)
+        if (len(temp_args) == 1) and (name == 'Wt::WFlags'):
+            # WFlags<enum> is an exception. Treated as enum.
+            return temp_args[0]
     if pygccxml.declarations.is_enum(type_obj):
-        enum_str = str(clearType(type_obj))
-        addEnumByStr(enum_str, enum_str)
+        return str(clearType(type_obj))
+    return ''
+
+def getEnumName(full_type):
+    return getClassStr(getEnumStr(full_type))
+
+def getEnumArrName(enum_name, end):
+    return 'luawt_enum_' + enum_name.replace('::', '_') + end
+
+def addEnum(type_obj, namespace):
+    enum_str = getEnumStr(type_obj)
+    type_str = str(type_obj)
+    if enum_str:
+        enum_converters = (
+            'static_cast<%s>' % enum_str,
+            'lua_pushstring',
+        )
+        BUILTIN_TYPES_CONVERTERS[type_str] = enum_converters
+        enum_obj = getEnumObj(getClassStr(enum_str), namespace)
+        GLOBAL_ENUMS_REGISTRY[type_str] = (getEnumName(type_obj), [])
+        for val in enum_obj.values:
+            GLOBAL_ENUMS_REGISTRY[type_str][1].append((val[1], val[0]))
+        GLOBAL_ENUMS_REGISTRY[type_str][1].sort()
 
 def getArgType(arg):
     # For compatibility with pygccxml v1.7.1
@@ -220,15 +275,13 @@ def getArgType(arg):
 def checkWtFunction(is_constructor, func, Wt):
     if func.access_type != 'public':
         return False
-    #if isTemplate(func.name, func.decl_string):
-    #    return False
     for arg in func.arguments:
         arg_field = getArgType(arg)
-        addEnum(arg_field)
+        addEnum(arg_field, Wt)
         if not checkArgumentType(func.name, arg_field, Wt):
             return False
     if not is_constructor:
-        addEnum(func.return_type)
+        addEnum(func.return_type, Wt)
         if not checkReturnType(func.name, func.return_type, Wt):
            return False
     # OK, all checks've passed.
@@ -402,6 +455,7 @@ INCLUDES_TEMPLATE = r'''
 
 %s
 
+#include "enums.hpp"
 #include "globals.hpp"
 
 '''
@@ -491,9 +545,14 @@ def getBuiltinTypeArgument(options):
     get_builtin_arg_template = r'''
     %(argument_type)s %(argument_name)s = %(func)s(L, %(index)s);
     '''
-    # Enum: need to close static_cast
     get_enum_arg_template = r'''
-    %(argument_type)s %(argument_name)s = %(func)s(L, %(index)s));
+    %(argument_type)s %(argument_name)s = %(func)s(luawt_getEnum(
+        L,
+        %(enum_str_arr)s,
+        %(enum_val_arr)s,
+        %(index)s,
+        "Wrong enum type in args of %(module)s.%(method)s"
+    ));
     '''
     problematic_type = findCorrespondingKeyInDict(
         PROBLEMATIC_TO_BUILTIN_CONVERSIONS,
@@ -509,8 +568,8 @@ def getBuiltinTypeArgument(options):
         ).lstrip()
         return code
     else:
-        # Enum
         if 'static_cast' in options['func']:
+            # Enum
             return get_enum_arg_template.lstrip() % options
         else:
             return get_builtin_arg_template.lstrip() % options
@@ -575,6 +634,11 @@ RETURN_CALLS_TEMPLATE = r'''
     return 1;
 '''
 
+RETURN_ENUM_TEMPLATE = r'''
+    luawt_returnEnum(L, %s, %s, l_result, "%s");
+    return 1;
+'''
+
 def getBuiltinTypeFromProblematic(problematic_type):
     next_type = problematic_type
     convert_f = ''
@@ -609,7 +673,16 @@ def returnValue(return_type):
         )
         if problematic_type:
             convert_f = getBuiltinTypeFromProblematic(problematic_type)
-        return RETURN_CALLS_TEMPLATE % (func_name, ref_str, convert_f)
+        if return_type in GLOBAL_ENUMS_REGISTRY:
+            # Enum.
+            enum_name = GLOBAL_ENUMS_REGISTRY[return_type][0]
+            return RETURN_ENUM_TEMPLATE % (
+                getEnumArrName(enum_name, '_str'),
+                getEnumArrName(enum_name, '_val'),
+                enum_name,
+            )
+        else:
+            return RETURN_CALLS_TEMPLATE % (func_name, ref_str, convert_f)
 
 def getBuiltinType(full_type):
     builtin_type = findCorrespondingKeyInDict(
@@ -632,9 +705,9 @@ static const char* const* const luawt_%(module)s_%(func)s_args[] = {%(body)s};
 '''
 
 def handleEnum(type_o):
-    _, detector = BUILTIN_TYPES_CONVERTERS[type_o]
-    if detector == 'lua_pushinteger':
-        return 'int'
+    detector, _ = BUILTIN_TYPES_CONVERTERS[type_o]
+    if 'static_cast' in detector:
+        return 'enum'
     return type_o
 
 def generateArgsArray(args_groups, module_name, func_name, is_constructor):
@@ -660,9 +733,9 @@ def generateArgsArray(args_groups, module_name, func_name, is_constructor):
         args_arrs += 'NULL};\n'
     body += 'NULL'
     options = {
-        'module': module_name,
-        'func': func_name,
         'body' : body,
+        'func' : func_name,
+        'module' : module_name,
     }
     return args_arrs + ARGS_ARRAY_TEMPLATE.strip() % options
 
@@ -707,7 +780,11 @@ def implementLuaCFunction(
             options = {
                 'argument_name' : arg.name,
                 'argument_type' : arg_field,
+                'enum_str_arr' : getEnumArrName(getEnumName(arg_field), '_str'),
+                'enum_val_arr' : getEnumArrName(getEnumName(arg_field), '_val'),
                 'index' : i + arg_index_offset,
+                'method' : method_name,
+                'module' : module_name,
             }
             arg_type = getBuiltinType(str(arg_field))
             if arg_type:
@@ -790,10 +867,10 @@ def generateModuleFunc(module_name, base, is_not_abstract):
     else:
         make = '0'
     options = {
-        'module_name' : module_name,
-        'make' : make,
         'base' : base,
         'get_base_str' : get_base,
+        'make' : make,
+        'module_name' : module_name,
     }
     return MODULE_FUNC_TEMPLATE.lstrip() % options
 
@@ -818,12 +895,96 @@ def generateSignals(signals, module_name):
         if len(events) != 1:
             continue
         options = {
-            'name' : signal.name,
-            'module' : module_name,
             'event' : events[0],
+            'module' : module_name,
+            'name' : signal.name,
         }
         sig_code.append(SIG_TEMPLATE % options)
     return ''.join(sig_code)
+
+# Check if all values of the given enum are bitwise different.
+def isSpecialEnum(enum_key):
+    enum_pairs = GLOBAL_ENUMS_REGISTRY[enum_key][1]
+    values_sum = 0
+    pairs_n = 0
+    for enum_pair in enum_pairs:
+        enum_val = enum_pair[0]
+        pairs_n += (enum_val != 0)
+        if values_sum & enum_val:
+            return False
+        values_sum = values_sum | enum_val
+    if pairs_n <= 1:
+        return False
+    return True
+
+ENUM_STRING_ARRAY_TEMPLATE = r'''
+static const char* const %s[] = {
+%s
+    NULL
+};
+'''
+
+ENUM_VALUE_ARRAY_TEMPLATE = r'''
+static const lint %s[] = {
+%s
+};
+'''
+
+def generateSpecialEnumsSet(special_enums):
+    code = ''
+    body = ''
+    for special_enum in special_enums:
+        body += '    ' + '"' + special_enum + '"' + ',\n'
+    name = 'luawt_SpecialEnums_arr'
+    end = '%s + %s' % (name, len(special_enums))
+    code += ENUM_STRING_ARRAY_TEMPLATE % (name, body)
+    return code
+
+def generateEnumArrays():
+    code = ''
+    names = []
+    # 'Special' enums (with bitwise different values).
+    special_enums = []
+    for enum_key in GLOBAL_ENUMS_REGISTRY:
+        enum_name = GLOBAL_ENUMS_REGISTRY[enum_key][0]
+        name_str = getEnumArrName(enum_name, '_str')
+        name_val = getEnumArrName(enum_name, '_val')
+        if enum_name in names:
+            continue
+        else:
+            names.append(enum_name)
+        body_str = ''
+        body_val = ''
+        for i, val in enumerate(GLOBAL_ENUMS_REGISTRY[enum_key][1]):
+            body_str += '    ' + '"' + val[1] + '"' + ','
+            body_val += '    ' + str(val[0])
+            if i != len(GLOBAL_ENUMS_REGISTRY[enum_key][1]) - 1:
+                body_str += '\n'
+                body_val += ',\n'
+        code += ENUM_STRING_ARRAY_TEMPLATE % (name_str, body_str)
+        code += ENUM_VALUE_ARRAY_TEMPLATE % (name_val, body_val)
+        if isSpecialEnum(enum_key):
+            special_enums.append(enum_name)
+    code += generateSpecialEnumsSet(special_enums)
+    return code, names
+
+SET_ENUMS_FUNC_TEMPLATE = r'''
+/* Sets all the enums tables, code is generated by script. */
+inline void luawt_setEnumsTables(lua_State* L) {
+    luawt_setEnumsTable(L);
+    %s
+}
+
+'''
+
+def generateSetEnumsCalls(enum_names):
+    call_template = r'''
+    CALL_SET_ENUM_TABLE(%s)
+    '''
+    body = ''
+    for enum_name in enum_names:
+        body += call_template.rstrip() % enum_name.replace('::', '_')
+    return SET_ENUMS_FUNC_TEMPLATE.lstrip() % body
 
 def generateModule(module_name, methods, base, constructors, signals):
     source = []
@@ -874,10 +1035,17 @@ def getClassNameFromModuleStr(module_str):
     class_name = class_name.strip()
     return class_name
 
-def addItem(pattern, added_str, content, module_name, Wt = None):
+def addItem(
+    pattern,
+    added_str,
+    content,
+    insert_before_match = None,
+    module_name = None,
+    Wt = None
+):
     first, last = getMatchRange(pattern, content)
-    # init.cpp, special condition: base must be before descendant.
     if pattern == r'MODULE\([a-zA-Z]+\),':
+        # init.cpp, special condition: base must be before descendant.
         curr_index = last
         curr_class = getClassNameFromModuleStr(content[curr_index])
         while not isDescendantOf(module_name, curr_class, Wt):
@@ -886,8 +1054,10 @@ def addItem(pattern, added_str, content, module_name, Wt = None):
             if curr_index < first:
                 break
         curr_index += 1
-    # Lexicographical order.
+    elif insert_before_match:
+        curr_index = first
     else:
+        # Lexicographical order.
         curr_index = first
         while added_str > content[curr_index]:
             curr_index += 1
@@ -905,7 +1075,7 @@ def readFile(filename):
         return f.readlines()
 
 def writeSourceToFile(module_name, source):
-    writeToFile('src/luawt/%s.cpp' % module_name, source)
+    writeToFile('src/luawt/%s' % module_name, source)
 
 def addItemToFiles(parameters, module_name, Wt = None):
     for parameter in parameters:
@@ -914,6 +1084,7 @@ def addItemToFiles(parameters, module_name, Wt = None):
             parameter['pattern'],
             parameter['module_str'],
             content,
+            False,
             module_name,
             Wt,
         ))
@@ -959,8 +1130,8 @@ def addTest(module_name, constructors_type):
     else:
         has_args = (constructors_type == 2)
         options = {
-            'module_name' : module_name,
             'has_args' : str(has_args).lower(),
+            'module_name' : module_name,
         }
         module_str = '    ' + TEST_FRAME.lstrip() % options
         parameters = [
@@ -972,7 +1143,16 @@ def addTest(module_name, constructors_type):
         ]
         addItemToFiles(parameters, module_name)
 
-def bind(modules, module_only, blacklist):
+ENUMS_DIRECTIVES_TEMPLATE = r'''
+#ifndef ENUMS_HPP_
+#define ENUMS_HPP_
+
+#include "boost-xtime.hpp"
+
+#include "Global.hpp"
+'''
+
+def bind(modules, module_only, blacklist, gen_enums=False):
     for module in modules:
         try:
             global_namespace = parse(module)
@@ -1001,12 +1181,23 @@ def bind(modules, module_only, blacklist):
             if constructors:
                 # Is not abstract
                 addTest(module_name, constructors_type)
-            writeSourceToFile(module_name, source)
+            writeSourceToFile(module_name + '.cpp', source)
         except Exception as e:
             if len(modules) == 1:
                 raise
             else:
                 logging.warning('Unable to bind %s: %s', module, e)
+    if gen_enums:
+        enum_arrays, enum_names = generateEnumArrays()
+        close_dirs = '\n#endif'
+        code = ENUMS_DIRECTIVES_TEMPLATE + enum_arrays + close_dirs
+        writeSourceToFile('enums.hpp', code)
+        writeToFile('src/luawt/globals.hpp', addItem(
+            '/* Get enum string corresponding',
+            generateSetEnumsCalls(enum_names),
+            readFile('src/luawt/globals.hpp'),
+            True
+        ))
 
 def collectMembers(path):
     if os.path.exists(XML_CACHE):
@@ -1119,6 +1310,12 @@ def main():
         required=False,
     )
     parser.add_argument(
+        '--gen-enums',
+        help='Generate file enums.hpp (fill with enums arrays)',
+        action='store_true',
+        required=False,
+    )
+    parser.add_argument(
         '--module-only',
         help='Do not change globals.hpp, init.cpp and rockspec',
         action='store_true',
@@ -1139,7 +1336,7 @@ def main():
     if args.bind:
         bind([args.bind], args.module_only, blacklist)
     elif args.bind_all:
-        bind(getAllModules(), args.module_only, blacklist)
+        bind(getAllModules(), args.module_only, blacklist, args.gen_enums)
     elif args.gen_members:
         print(yaml.dump(
             collectMembers(args.gen_members),

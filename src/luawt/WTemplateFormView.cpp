@@ -4,6 +4,7 @@
 #include <Wt/WTemplateFormView>
 #include <Wt/WString>
 
+#include "enums.hpp"
 #include "globals.hpp"
 
 static const char* WTemplateFormView_make_args0[] = {NULL};

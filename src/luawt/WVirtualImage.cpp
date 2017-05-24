@@ -3,6 +3,7 @@
 #include <Wt/WContainerWidget>
 #include <Wt/WVirtualImage>
 
+#include "enums.hpp"
 #include "globals.hpp"
 
 static const char* WVirtualImage_make_args0[] = {"int", "int", "int", "int", NULL};

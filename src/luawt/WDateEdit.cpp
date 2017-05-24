@@ -5,6 +5,7 @@
 #include <Wt/WDateEdit>
 #include <Wt/WString>
 
+#include "enums.hpp"
 #include "globals.hpp"
 
 static const char* WDateEdit_make_args0[] = {NULL};

@@ -16,8 +16,11 @@ function mainApp()
     -- Use CSS style sheet file. Note that it should be in docroot
     -- specified by WServer's options.
     app:useStyleSheet('./common.css')
-    -- Enums are treated as numbers. 4 corresponds to AlignCenter.
-    app:root():setContentAlignment(4)
+    -- Set AlignmentFlag enum in the form of string.
+    app:root():setContentAlignment('AlignCenter')
+    -- Enums can be represented in many ways, see docs/enums.md
+    -- for more information.
+
     -- Create widgets.
     local text = luawt.WText('Your name, please?')
     breakTheLine()

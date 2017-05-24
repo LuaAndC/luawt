@@ -96,4 +96,62 @@ describe("luawt", function()
         test.clear(server, wt_config, false)
     end)
 
+    it("provides different ways for using #enums", function()
+        local luawt = require 'luawt'
+        local code = [[
+            local app, env = ...
+            local luawt = require 'luawt'
+            local google_map = luawt.WGoogleMap(1)
+            local api_version = google_map:apiVersion()
+            luawt.Shared.api_version = api_version
+            luawt.Shared.api_version_val =
+                luawt.enums.WGoogleMap_ApiVersion[api_version]
+            local google_map2 = luawt.WGoogleMap('Version2')
+            api_version = google_map2:apiVersion()
+            luawt.Shared.api_version2 = api_version
+            luawt.Shared.api_version_val2 =
+                luawt.enums.WGoogleMap_ApiVersion[api_version]
+        ]]
+        local server, wt_config, data = test.getData(code)
+        assert.truthy(luawt.Shared.api_version == "Version3")
+        assert.truthy(tonumber(luawt.Shared.api_version_val) == 1)
+        assert.truthy(luawt.Shared.api_version2 == "Version2")
+        assert.truthy(tonumber(luawt.Shared.api_version_val2) == 0)
+        test.clear(server, wt_config, false)
+    end)
+
+    it("provides facilities for handling #special_enums", function()
+        local luawt = require 'luawt'
+        local code = [[
+            local app, env = ...
+            local luawt = require 'luawt'
+            local test = require 'luawt.test'
+            local button = luawt.WPushButton(app:root())
+            button:setVerticalAlignment('AlignTop')
+            local align1 = button:verticalAlignment()
+            luawt.Shared.align1_size = test.sizeOf(align1)
+            luawt.Shared.align1_el1 = align1['AlignTop']
+            button:setVerticalAlignment({'AlignTop', 'AlignSub'})
+            local align2 = button:verticalAlignment()
+            luawt.Shared.align2_size = test.sizeOf(align2)
+            luawt.Shared.align2_el1 = align2['AlignTop']
+            luawt.Shared.align2_el2 = align2['AlignSub']
+            button:setVerticalAlignment(192)
+            local align3 = button:verticalAlignment()
+            luawt.Shared.align3_size = test.sizeOf(align3)
+            luawt.Shared.align3_el1 = align3['AlignTop']
+            luawt.Shared.align3_el2 = align3['AlignSuper']
+        ]]
+        local server, wt_config, data = test.getData(code)
+        assert.truthy(tonumber(luawt.Shared.align1_size) == 1)
+        assert.truthy(tonumber(luawt.Shared.align1_el1) == 128)
+        assert.truthy(tonumber(luawt.Shared.align2_size) == 2)
+        assert.truthy(tonumber(luawt.Shared.align2_el1) == 128)
+        assert.truthy(tonumber(luawt.Shared.align2_el2) == 32)
+        assert.truthy(tonumber(luawt.Shared.align3_size) == 2)
+        assert.truthy(tonumber(luawt.Shared.align3_el1) == 128)
+        assert.truthy(tonumber(luawt.Shared.align3_el2) == 64)
+        test.clear(server, wt_config, false)
+    end)
+
 end)

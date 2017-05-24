@@ -4,6 +4,7 @@
 #include <Wt/WFormWidget>
 #include <Wt/WSuggestionPopup>
 
+#include "enums.hpp"
 #include "globals.hpp"
 
 static const char* WSuggestionPopup_setGlobalPopup_args0[] = {luawt_typeToStr<WSuggestionPopup>(), "bool", NULL};
@@ -49,7 +50,7 @@ int luawt_WSuggestionPopup_addSuggestion(lua_State* L) {
 }
 
 static const char* WSuggestionPopup_forEdit_args0[] = {luawt_typeToStr<WSuggestionPopup>(), luawt_typeToStr<Wt::WFormWidget>(), NULL};
-static const char* WSuggestionPopup_forEdit_args1[] = {luawt_typeToStr<WSuggestionPopup>(), luawt_typeToStr<Wt::WFormWidget>(), "int", NULL};
+static const char* WSuggestionPopup_forEdit_args1[] = {luawt_typeToStr<WSuggestionPopup>(), luawt_typeToStr<Wt::WFormWidget>(), "enum", NULL};
 static const char* const* const luawt_WSuggestionPopup_forEdit_args[] = {WSuggestionPopup_forEdit_args0, WSuggestionPopup_forEdit_args1, NULL};
 
 int luawt_WSuggestionPopup_forEdit(lua_State* L) {
@@ -64,7 +65,13 @@ int luawt_WSuggestionPopup_forEdit(lua_State* L) {
     } else if (index == 1) {
     Wt::WFormWidget* edit =
         luawt_checkFromLua<Wt::WFormWidget>(L, 2);
-    Wt::WFlags<Wt::WSuggestionPopup::PopupTrigger> popupTriggers = static_cast<Wt::WSuggestionPopup::PopupTrigger>(lua_tointeger(L, 3));
+    Wt::WFlags<Wt::WSuggestionPopup::PopupTrigger> popupTriggers = static_cast<Wt::WSuggestionPopup::PopupTrigger>(luawt_getEnum(
+        L,
+        luawt_enum_WSuggestionPopup_PopupTrigger_str,
+        luawt_enum_WSuggestionPopup_PopupTrigger_val,
+        3,
+        "Wrong enum type in args of WSuggestionPopup.forEdit"
+    ));
     self->forEdit(edit, popupTriggers);
     return 0;
     

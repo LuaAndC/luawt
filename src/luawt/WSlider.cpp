@@ -5,12 +5,13 @@
 #include <Wt/WContainerWidget>
 #include <Wt/WString>
 
+#include "enums.hpp"
 #include "globals.hpp"
 
 static const char* WSlider_make_args0[] = {NULL};
 static const char* WSlider_make_args1[] = {luawt_typeToStr<Wt::WContainerWidget>(), NULL};
-static const char* WSlider_make_args2[] = {"int", NULL};
-static const char* WSlider_make_args3[] = {"int", luawt_typeToStr<Wt::WContainerWidget>(), NULL};
+static const char* WSlider_make_args2[] = {"enum", NULL};
+static const char* WSlider_make_args3[] = {"enum", luawt_typeToStr<Wt::WContainerWidget>(), NULL};
 static const char* const* const luawt_WSlider_make_args[] = {WSlider_make_args0, WSlider_make_args1, WSlider_make_args2, WSlider_make_args3, NULL};
 
 int luawt_WSlider_make(lua_State* L) {
@@ -35,7 +36,13 @@ int luawt_WSlider_make(lua_State* L) {
     return 1;
 
     } else if (index == 2) {
-    Wt::Orientation orientation = static_cast<Wt::Orientation>(lua_tointeger(L, 1));
+    Wt::Orientation orientation = static_cast<Wt::Orientation>(luawt_getEnum(
+        L,
+        luawt_enum_Orientation_str,
+        luawt_enum_Orientation_val,
+        1,
+        "Wrong enum type in args of WSlider.make"
+    ));
     WSlider * l_result = new WSlider(orientation);
     MyApplication* app = MyApplication::instance();
     if (!app) {
@@ -48,7 +55,13 @@ int luawt_WSlider_make(lua_State* L) {
     return 1;
 
     } else if (index == 3) {
-    Wt::Orientation orientation = static_cast<Wt::Orientation>(lua_tointeger(L, 1));
+    Wt::Orientation orientation = static_cast<Wt::Orientation>(luawt_getEnum(
+        L,
+        luawt_enum_Orientation_str,
+        luawt_enum_Orientation_val,
+        1,
+        "Wrong enum type in args of WSlider.make"
+    ));
     Wt::WContainerWidget* parent =
         luawt_checkFromLua<Wt::WContainerWidget>(L, 2);
     WSlider * l_result = new WSlider(orientation, parent);
@@ -60,14 +73,20 @@ int luawt_WSlider_make(lua_State* L) {
     }
 }
 
-static const char* WSlider_setOrientation_args0[] = {luawt_typeToStr<WSlider>(), "int", NULL};
+static const char* WSlider_setOrientation_args0[] = {luawt_typeToStr<WSlider>(), "enum", NULL};
 static const char* const* const luawt_WSlider_setOrientation_args[] = {WSlider_setOrientation_args0, NULL};
 
 int luawt_WSlider_setOrientation(lua_State* L) {
     int index = luawt_getSuitableArgsGroup(L, luawt_WSlider_setOrientation_args);
     WSlider* self = luawt_checkFromLua<WSlider>(L, 1);
     if (index == 0) {
-    Wt::Orientation orientation = static_cast<Wt::Orientation>(lua_tointeger(L, 2));
+    Wt::Orientation orientation = static_cast<Wt::Orientation>(luawt_getEnum(
+        L,
+        luawt_enum_Orientation_str,
+        luawt_enum_Orientation_val,
+        2,
+        "Wrong enum type in args of WSlider.setOrientation"
+    ));
     self->setOrientation(orientation);
     return 0;
     
@@ -132,7 +151,7 @@ int luawt_WSlider_orientation(lua_State* L) {
     WSlider* self = luawt_checkFromLua<WSlider>(L, 1);
     if (index == 0) {
     Wt::Orientation l_result = self->orientation();
-    lua_pushinteger(L, l_result);
+    luawt_returnEnum(L, luawt_enum_Orientation_str, luawt_enum_Orientation_val, l_result, "Orientation");
     return 1;
 
     } else {
@@ -256,14 +275,20 @@ int luawt_WSlider_setValueText(lua_State* L) {
     }
 }
 
-static const char* WSlider_setTickPosition_args0[] = {luawt_typeToStr<WSlider>(), "int", NULL};
+static const char* WSlider_setTickPosition_args0[] = {luawt_typeToStr<WSlider>(), "enum", NULL};
 static const char* const* const luawt_WSlider_setTickPosition_args[] = {WSlider_setTickPosition_args0, NULL};
 
 int luawt_WSlider_setTickPosition(lua_State* L) {
     int index = luawt_getSuitableArgsGroup(L, luawt_WSlider_setTickPosition_args);
     WSlider* self = luawt_checkFromLua<WSlider>(L, 1);
     if (index == 0) {
-    Wt::WFlags<Wt::WSlider::TickPosition> tickPosition = static_cast<Wt::WSlider::TickPosition>(lua_tointeger(L, 2));
+    Wt::WFlags<Wt::WSlider::TickPosition> tickPosition = static_cast<Wt::WSlider::TickPosition>(luawt_getEnum(
+        L,
+        luawt_enum_WSlider_TickPosition_str,
+        luawt_enum_WSlider_TickPosition_val,
+        2,
+        "Wrong enum type in args of WSlider.setTickPosition"
+    ));
     self->setTickPosition(tickPosition);
     return 0;
     
@@ -312,7 +337,7 @@ int luawt_WSlider_tickPosition(lua_State* L) {
     WSlider* self = luawt_checkFromLua<WSlider>(L, 1);
     if (index == 0) {
     Wt::WFlags<Wt::WSlider::TickPosition> l_result = self->tickPosition();
-    lua_pushinteger(L, l_result);
+    luawt_returnEnum(L, luawt_enum_WSlider_TickPosition_str, luawt_enum_WSlider_TickPosition_val, l_result, "WSlider::TickPosition");
     return 1;
 
     } else {

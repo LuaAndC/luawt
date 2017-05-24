@@ -4,6 +4,7 @@
 #include <Wt/WContainerWidget>
 #include <Wt/WString>
 
+#include "enums.hpp"
 #include "globals.hpp"
 
 static const char* WCheckBox_make_args0[] = {NULL};
@@ -61,14 +62,20 @@ int luawt_WCheckBox_make(lua_State* L) {
     }
 }
 
-static const char* WCheckBox_setCheckState_args0[] = {luawt_typeToStr<WCheckBox>(), "int", NULL};
+static const char* WCheckBox_setCheckState_args0[] = {luawt_typeToStr<WCheckBox>(), "enum", NULL};
 static const char* const* const luawt_WCheckBox_setCheckState_args[] = {WCheckBox_setCheckState_args0, NULL};
 
 int luawt_WCheckBox_setCheckState(lua_State* L) {
     int index = luawt_getSuitableArgsGroup(L, luawt_WCheckBox_setCheckState_args);
     WCheckBox* self = luawt_checkFromLua<WCheckBox>(L, 1);
     if (index == 0) {
-    Wt::CheckState state = static_cast<Wt::CheckState>(lua_tointeger(L, 2));
+    Wt::CheckState state = static_cast<Wt::CheckState>(luawt_getEnum(
+        L,
+        luawt_enum_CheckState_str,
+        luawt_enum_CheckState_val,
+        2,
+        "Wrong enum type in args of WCheckBox.setCheckState"
+    ));
     self->setCheckState(state);
     return 0;
     
@@ -122,7 +129,7 @@ int luawt_WCheckBox_checkState(lua_State* L) {
     WCheckBox* self = luawt_checkFromLua<WCheckBox>(L, 1);
     if (index == 0) {
     Wt::CheckState l_result = self->checkState();
-    lua_pushinteger(L, l_result);
+    luawt_returnEnum(L, luawt_enum_CheckState_str, luawt_enum_CheckState_val, l_result, "CheckState");
     return 1;
 
     } else {

@@ -3,6 +3,7 @@
 #include <Wt/WAbstractSpinBox>
 #include <Wt/WString>
 
+#include "enums.hpp"
 #include "globals.hpp"
 
 static const char* WAbstractSpinBox_setNativeControl_args0[] = {luawt_typeToStr<WAbstractSpinBox>(), "bool", NULL};
@@ -111,7 +112,7 @@ int luawt_WAbstractSpinBox_validate(lua_State* L) {
     WAbstractSpinBox* self = luawt_checkFromLua<WAbstractSpinBox>(L, 1);
     if (index == 0) {
     Wt::WValidator::State l_result = self->validate();
-    lua_pushinteger(L, l_result);
+    luawt_returnEnum(L, luawt_enum_WValidator_State_str, luawt_enum_WValidator_State_val, l_result, "WValidator::State");
     return 1;
 
     } else {

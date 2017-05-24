@@ -2,6 +2,7 @@
 
 #include <Wt/WTimerWidget>
 
+#include "enums.hpp"
 #include "globals.hpp"
 
 static const char* WTimerWidget_timerStart_args0[] = {luawt_typeToStr<WTimerWidget>(), "bool", NULL};

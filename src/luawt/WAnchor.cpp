@@ -6,6 +6,7 @@
 #include <Wt/WLink>
 #include <Wt/WString>
 
+#include "enums.hpp"
 #include "globals.hpp"
 
 static const char* WAnchor_make_args0[] = {NULL};
@@ -220,14 +221,20 @@ int luawt_WAnchor_setLink(lua_State* L) {
     }
 }
 
-static const char* WAnchor_setTarget_args0[] = {luawt_typeToStr<WAnchor>(), "int", NULL};
+static const char* WAnchor_setTarget_args0[] = {luawt_typeToStr<WAnchor>(), "enum", NULL};
 static const char* const* const luawt_WAnchor_setTarget_args[] = {WAnchor_setTarget_args0, NULL};
 
 int luawt_WAnchor_setTarget(lua_State* L) {
     int index = luawt_getSuitableArgsGroup(L, luawt_WAnchor_setTarget_args);
     WAnchor* self = luawt_checkFromLua<WAnchor>(L, 1);
     if (index == 0) {
-    Wt::AnchorTarget target = static_cast<Wt::AnchorTarget>(lua_tointeger(L, 2));
+    Wt::AnchorTarget target = static_cast<Wt::AnchorTarget>(luawt_getEnum(
+        L,
+        luawt_enum_AnchorTarget_str,
+        luawt_enum_AnchorTarget_val,
+        2,
+        "Wrong enum type in args of WAnchor.setTarget"
+    ));
     self->setTarget(target);
     return 0;
     
@@ -310,7 +317,7 @@ int luawt_WAnchor_textFormat(lua_State* L) {
     WAnchor* self = luawt_checkFromLua<WAnchor>(L, 1);
     if (index == 0) {
     Wt::TextFormat l_result = self->textFormat();
-    lua_pushinteger(L, l_result);
+    luawt_returnEnum(L, luawt_enum_TextFormat_str, luawt_enum_TextFormat_val, l_result, "TextFormat");
     return 1;
 
     } else {
@@ -318,14 +325,20 @@ int luawt_WAnchor_textFormat(lua_State* L) {
     }
 }
 
-static const char* WAnchor_setTextFormat_args0[] = {luawt_typeToStr<WAnchor>(), "int", NULL};
+static const char* WAnchor_setTextFormat_args0[] = {luawt_typeToStr<WAnchor>(), "enum", NULL};
 static const char* const* const luawt_WAnchor_setTextFormat_args[] = {WAnchor_setTextFormat_args0, NULL};
 
 int luawt_WAnchor_setTextFormat(lua_State* L) {
     int index = luawt_getSuitableArgsGroup(L, luawt_WAnchor_setTextFormat_args);
     WAnchor* self = luawt_checkFromLua<WAnchor>(L, 1);
     if (index == 0) {
-    Wt::TextFormat format = static_cast<Wt::TextFormat>(lua_tointeger(L, 2));
+    Wt::TextFormat format = static_cast<Wt::TextFormat>(luawt_getEnum(
+        L,
+        luawt_enum_TextFormat_str,
+        luawt_enum_TextFormat_val,
+        2,
+        "Wrong enum type in args of WAnchor.setTextFormat"
+    ));
     self->setTextFormat(format);
     return 0;
     
@@ -342,7 +355,7 @@ int luawt_WAnchor_target(lua_State* L) {
     WAnchor* self = luawt_checkFromLua<WAnchor>(L, 1);
     if (index == 0) {
     Wt::AnchorTarget l_result = self->target();
-    lua_pushinteger(L, l_result);
+    luawt_returnEnum(L, luawt_enum_AnchorTarget_str, luawt_enum_AnchorTarget_val, l_result, "AnchorTarget");
     return 1;
 
     } else {

@@ -4,6 +4,7 @@
 #include <Wt/WContainerWidget>
 #include <Wt/WTableCell>
 
+#include "enums.hpp"
 #include "globals.hpp"
 
 static const char* WTable_make_args0[] = {NULL};
@@ -53,7 +54,7 @@ int luawt_WTable_columnCount(lua_State* L) {
 }
 
 static const char* WTable_setHeaderCount_args0[] = {luawt_typeToStr<WTable>(), "int", NULL};
-static const char* WTable_setHeaderCount_args1[] = {luawt_typeToStr<WTable>(), "int", "int", NULL};
+static const char* WTable_setHeaderCount_args1[] = {luawt_typeToStr<WTable>(), "int", "enum", NULL};
 static const char* const* const luawt_WTable_setHeaderCount_args[] = {WTable_setHeaderCount_args0, WTable_setHeaderCount_args1, NULL};
 
 int luawt_WTable_setHeaderCount(lua_State* L) {
@@ -66,7 +67,13 @@ int luawt_WTable_setHeaderCount(lua_State* L) {
     
     } else if (index == 1) {
     int count = lua_tointeger(L, 2);
-    Wt::Orientation orientation = static_cast<Wt::Orientation>(lua_tointeger(L, 3));
+    Wt::Orientation orientation = static_cast<Wt::Orientation>(luawt_getEnum(
+        L,
+        luawt_enum_Orientation_str,
+        luawt_enum_Orientation_val,
+        3,
+        "Wrong enum type in args of WTable.setHeaderCount"
+    ));
     self->setHeaderCount(count, orientation);
     return 0;
     
@@ -111,7 +118,7 @@ int luawt_WTable_moveRow(lua_State* L) {
 }
 
 static const char* WTable_headerCount_args0[] = {luawt_typeToStr<WTable>(), NULL};
-static const char* WTable_headerCount_args1[] = {luawt_typeToStr<WTable>(), "int", NULL};
+static const char* WTable_headerCount_args1[] = {luawt_typeToStr<WTable>(), "enum", NULL};
 static const char* const* const luawt_WTable_headerCount_args[] = {WTable_headerCount_args0, WTable_headerCount_args1, NULL};
 
 int luawt_WTable_headerCount(lua_State* L) {
@@ -123,7 +130,13 @@ int luawt_WTable_headerCount(lua_State* L) {
     return 1;
 
     } else if (index == 1) {
-    Wt::Orientation orientation = static_cast<Wt::Orientation>(lua_tointeger(L, 2));
+    Wt::Orientation orientation = static_cast<Wt::Orientation>(luawt_getEnum(
+        L,
+        luawt_enum_Orientation_str,
+        luawt_enum_Orientation_val,
+        2,
+        "Wrong enum type in args of WTable.headerCount"
+    ));
     int l_result = self->headerCount(orientation);
     lua_pushinteger(L, l_result);
     return 1;

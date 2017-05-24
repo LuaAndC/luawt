@@ -5,6 +5,7 @@
 #include <Wt/WContainerWidget>
 #include <Wt/WString>
 
+#include "enums.hpp"
 #include "globals.hpp"
 
 static const char* WTemplate_make_args0[] = {NULL};
@@ -99,7 +100,7 @@ int luawt_WTemplate_setCondition(lua_State* L) {
 }
 
 static const char* WTemplate_setTemplateText_args0[] = {luawt_typeToStr<WTemplate>(), "char const *", NULL};
-static const char* WTemplate_setTemplateText_args1[] = {luawt_typeToStr<WTemplate>(), "char const *", "int", NULL};
+static const char* WTemplate_setTemplateText_args1[] = {luawt_typeToStr<WTemplate>(), "char const *", "enum", NULL};
 static const char* const* const luawt_WTemplate_setTemplateText_args[] = {WTemplate_setTemplateText_args0, WTemplate_setTemplateText_args1, NULL};
 
 int luawt_WTemplate_setTemplateText(lua_State* L) {
@@ -114,7 +115,13 @@ int luawt_WTemplate_setTemplateText(lua_State* L) {
     } else if (index == 1) {
     char const * raw2 = lua_tostring(L, 2);
     Wt::WString text = Wt::WString(raw2);
-    Wt::TextFormat textFormat = static_cast<Wt::TextFormat>(lua_tointeger(L, 3));
+    Wt::TextFormat textFormat = static_cast<Wt::TextFormat>(luawt_getEnum(
+        L,
+        luawt_enum_TextFormat_str,
+        luawt_enum_TextFormat_val,
+        3,
+        "Wrong enum type in args of WTemplate.setTemplateText"
+    ));
     self->setTemplateText(text, textFormat);
     return 0;
     
@@ -188,7 +195,7 @@ int luawt_WTemplate_clear(lua_State* L) {
 }
 
 static const char* WTemplate_bindString_args0[] = {luawt_typeToStr<WTemplate>(), "char const *", "char const *", NULL};
-static const char* WTemplate_bindString_args1[] = {luawt_typeToStr<WTemplate>(), "char const *", "char const *", "int", NULL};
+static const char* WTemplate_bindString_args1[] = {luawt_typeToStr<WTemplate>(), "char const *", "char const *", "enum", NULL};
 static const char* const* const luawt_WTemplate_bindString_args[] = {WTemplate_bindString_args0, WTemplate_bindString_args1, NULL};
 
 int luawt_WTemplate_bindString(lua_State* L) {
@@ -207,7 +214,13 @@ int luawt_WTemplate_bindString(lua_State* L) {
     std::string varName = std::string(raw2);
     char const * raw3 = lua_tostring(L, 3);
     Wt::WString value = Wt::WString(raw3);
-    Wt::TextFormat textFormat = static_cast<Wt::TextFormat>(lua_tointeger(L, 4));
+    Wt::TextFormat textFormat = static_cast<Wt::TextFormat>(luawt_getEnum(
+        L,
+        luawt_enum_TextFormat_str,
+        luawt_enum_TextFormat_val,
+        4,
+        "Wrong enum type in args of WTemplate.bindString"
+    ));
     self->bindString(varName, value, textFormat);
     return 0;
     

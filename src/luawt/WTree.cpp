@@ -4,6 +4,7 @@
 #include <Wt/WContainerWidget>
 #include <Wt/WTreeNode>
 
+#include "enums.hpp"
 #include "globals.hpp"
 
 static const char* WTree_make_args0[] = {NULL};
@@ -51,14 +52,20 @@ int luawt_WTree_clearSelection(lua_State* L) {
     }
 }
 
-static const char* WTree_setSelectionMode_args0[] = {luawt_typeToStr<WTree>(), "int", NULL};
+static const char* WTree_setSelectionMode_args0[] = {luawt_typeToStr<WTree>(), "enum", NULL};
 static const char* const* const luawt_WTree_setSelectionMode_args[] = {WTree_setSelectionMode_args0, NULL};
 
 int luawt_WTree_setSelectionMode(lua_State* L) {
     int index = luawt_getSuitableArgsGroup(L, luawt_WTree_setSelectionMode_args);
     WTree* self = luawt_checkFromLua<WTree>(L, 1);
     if (index == 0) {
-    Wt::SelectionMode mode = static_cast<Wt::SelectionMode>(lua_tointeger(L, 2));
+    Wt::SelectionMode mode = static_cast<Wt::SelectionMode>(luawt_getEnum(
+        L,
+        luawt_enum_SelectionMode_str,
+        luawt_enum_SelectionMode_val,
+        2,
+        "Wrong enum type in args of WTree.setSelectionMode"
+    ));
     self->setSelectionMode(mode);
     return 0;
     
@@ -126,7 +133,7 @@ int luawt_WTree_selectionMode(lua_State* L) {
     WTree* self = luawt_checkFromLua<WTree>(L, 1);
     if (index == 0) {
     Wt::SelectionMode l_result = self->selectionMode();
-    lua_pushinteger(L, l_result);
+    luawt_returnEnum(L, luawt_enum_SelectionMode_str, luawt_enum_SelectionMode_val, l_result, "SelectionMode");
     return 1;
 
     } else {

@@ -9,6 +9,7 @@
 #include <Wt/WContainerWidget>
 #include <Wt/WText>
 
+#include "enums.hpp"
 #include "globals.hpp"
 
 static const char* WTreeTable_make_args0[] = {NULL};

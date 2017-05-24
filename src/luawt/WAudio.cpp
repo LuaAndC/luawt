@@ -3,6 +3,7 @@
 #include <Wt/WContainerWidget>
 #include <Wt/WAudio>
 
+#include "enums.hpp"
 #include "globals.hpp"
 
 static const char* WAudio_make_args0[] = {NULL};

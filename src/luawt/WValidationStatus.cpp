@@ -5,6 +5,7 @@
 #include <Wt/WValidationStatus>
 #include <Wt/WFormWidget>
 
+#include "enums.hpp"
 #include "globals.hpp"
 
 static const char* WValidationStatus_make_args0[] = {luawt_typeToStr<Wt::WFormWidget>(), NULL};

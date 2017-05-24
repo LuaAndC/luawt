@@ -5,14 +5,15 @@
 #include <Wt/WContainerWidget>
 #include <Wt/WText>
 
+#include "enums.hpp"
 #include "globals.hpp"
 
 static const char* WText_make_args0[] = {NULL};
 static const char* WText_make_args1[] = {luawt_typeToStr<Wt::WContainerWidget>(), NULL};
 static const char* WText_make_args2[] = {"char const *", NULL};
 static const char* WText_make_args3[] = {"char const *", luawt_typeToStr<Wt::WContainerWidget>(), NULL};
-static const char* WText_make_args4[] = {"char const *", "int", NULL};
-static const char* WText_make_args5[] = {"char const *", "int", luawt_typeToStr<Wt::WContainerWidget>(), NULL};
+static const char* WText_make_args4[] = {"char const *", "enum", NULL};
+static const char* WText_make_args5[] = {"char const *", "enum", luawt_typeToStr<Wt::WContainerWidget>(), NULL};
 static const char* const* const luawt_WText_make_args[] = {WText_make_args0, WText_make_args1, WText_make_args2, WText_make_args3, WText_make_args4, WText_make_args5, NULL};
 
 int luawt_WText_make(lua_State* L) {
@@ -62,7 +63,13 @@ int luawt_WText_make(lua_State* L) {
     } else if (index == 4) {
     char const * raw1 = lua_tostring(L, 1);
     Wt::WString text = Wt::WString(raw1);
-    Wt::TextFormat textFormat = static_cast<Wt::TextFormat>(lua_tointeger(L, 2));
+    Wt::TextFormat textFormat = static_cast<Wt::TextFormat>(luawt_getEnum(
+        L,
+        luawt_enum_TextFormat_str,
+        luawt_enum_TextFormat_val,
+        2,
+        "Wrong enum type in args of WText.make"
+    ));
     WText * l_result = new WText(text, textFormat);
     MyApplication* app = MyApplication::instance();
     if (!app) {
@@ -77,7 +84,13 @@ int luawt_WText_make(lua_State* L) {
     } else if (index == 5) {
     char const * raw1 = lua_tostring(L, 1);
     Wt::WString text = Wt::WString(raw1);
-    Wt::TextFormat textFormat = static_cast<Wt::TextFormat>(lua_tointeger(L, 2));
+    Wt::TextFormat textFormat = static_cast<Wt::TextFormat>(luawt_getEnum(
+        L,
+        luawt_enum_TextFormat_str,
+        luawt_enum_TextFormat_val,
+        2,
+        "Wrong enum type in args of WText.make"
+    ));
     Wt::WContainerWidget* parent =
         luawt_checkFromLua<Wt::WContainerWidget>(L, 3);
     WText * l_result = new WText(text, textFormat, parent);
@@ -155,7 +168,7 @@ int luawt_WText_refresh(lua_State* L) {
 }
 
 static const char* WText_setPadding_args0[] = {luawt_typeToStr<WText>(), "double", NULL};
-static const char* WText_setPadding_args1[] = {luawt_typeToStr<WText>(), "double", "int", NULL};
+static const char* WText_setPadding_args1[] = {luawt_typeToStr<WText>(), "double", "enum", NULL};
 static const char* const* const luawt_WText_setPadding_args[] = {WText_setPadding_args0, WText_setPadding_args1, NULL};
 
 int luawt_WText_setPadding(lua_State* L) {
@@ -170,7 +183,13 @@ int luawt_WText_setPadding(lua_State* L) {
     } else if (index == 1) {
     double raw2 = lua_tonumber(L, 2);
     Wt::WLength padding = Wt::WLength(raw2);
-    Wt::WFlags<Wt::Side> sides = static_cast<Wt::Side>(lua_tointeger(L, 3));
+    Wt::WFlags<Wt::Side> sides = static_cast<Wt::Side>(luawt_getEnum(
+        L,
+        luawt_enum_Side_str,
+        luawt_enum_Side_val,
+        3,
+        "Wrong enum type in args of WText.setPadding"
+    ));
     self->setPadding(padding, sides);
     return 0;
     
@@ -179,14 +198,20 @@ int luawt_WText_setPadding(lua_State* L) {
     }
 }
 
-static const char* WText_padding_args0[] = {luawt_typeToStr<WText>(), "int", NULL};
+static const char* WText_padding_args0[] = {luawt_typeToStr<WText>(), "enum", NULL};
 static const char* const* const luawt_WText_padding_args[] = {WText_padding_args0, NULL};
 
 int luawt_WText_padding(lua_State* L) {
     int index = luawt_getSuitableArgsGroup(L, luawt_WText_padding_args);
     WText* self = luawt_checkFromLua<WText>(L, 1);
     if (index == 0) {
-    Wt::Side side = static_cast<Wt::Side>(lua_tointeger(L, 2));
+    Wt::Side side = static_cast<Wt::Side>(luawt_getEnum(
+        L,
+        luawt_enum_Side_str,
+        luawt_enum_Side_val,
+        2,
+        "Wrong enum type in args of WText.padding"
+    ));
     Wt::WLength l_result = self->padding(side);
     lua_pushnumber(L, l_result.value());
     return 1;
@@ -236,7 +261,7 @@ int luawt_WText_textFormat(lua_State* L) {
     WText* self = luawt_checkFromLua<WText>(L, 1);
     if (index == 0) {
     Wt::TextFormat l_result = self->textFormat();
-    lua_pushinteger(L, l_result);
+    luawt_returnEnum(L, luawt_enum_TextFormat_str, luawt_enum_TextFormat_val, l_result, "TextFormat");
     return 1;
 
     } else {
@@ -244,14 +269,20 @@ int luawt_WText_textFormat(lua_State* L) {
     }
 }
 
-static const char* WText_setTextFormat_args0[] = {luawt_typeToStr<WText>(), "int", NULL};
+static const char* WText_setTextFormat_args0[] = {luawt_typeToStr<WText>(), "enum", NULL};
 static const char* const* const luawt_WText_setTextFormat_args[] = {WText_setTextFormat_args0, NULL};
 
 int luawt_WText_setTextFormat(lua_State* L) {
     int index = luawt_getSuitableArgsGroup(L, luawt_WText_setTextFormat_args);
     WText* self = luawt_checkFromLua<WText>(L, 1);
     if (index == 0) {
-    Wt::TextFormat format = static_cast<Wt::TextFormat>(lua_tointeger(L, 2));
+    Wt::TextFormat format = static_cast<Wt::TextFormat>(luawt_getEnum(
+        L,
+        luawt_enum_TextFormat_str,
+        luawt_enum_TextFormat_val,
+        2,
+        "Wrong enum type in args of WText.setTextFormat"
+    ));
     bool l_result = self->setTextFormat(format);
     lua_pushboolean(L, l_result);
     return 1;

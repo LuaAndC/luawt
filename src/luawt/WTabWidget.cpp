@@ -7,6 +7,7 @@
 #include <Wt/WStackedWidget>
 #include <Wt/WContainerWidget>
 
+#include "enums.hpp"
 #include "globals.hpp"
 
 static const char* WTabWidget_make_args0[] = {NULL};
@@ -279,7 +280,7 @@ int luawt_WTabWidget_tabText(lua_State* L) {
 }
 
 static const char* WTabWidget_addTab_args0[] = {luawt_typeToStr<WTabWidget>(), luawt_typeToStr<Wt::WWidget>(), "char const *", NULL};
-static const char* WTabWidget_addTab_args1[] = {luawt_typeToStr<WTabWidget>(), luawt_typeToStr<Wt::WWidget>(), "char const *", "int", NULL};
+static const char* WTabWidget_addTab_args1[] = {luawt_typeToStr<WTabWidget>(), luawt_typeToStr<Wt::WWidget>(), "char const *", "enum", NULL};
 static const char* const* const luawt_WTabWidget_addTab_args[] = {WTabWidget_addTab_args0, WTabWidget_addTab_args1, NULL};
 
 int luawt_WTabWidget_addTab(lua_State* L) {
@@ -299,7 +300,13 @@ int luawt_WTabWidget_addTab(lua_State* L) {
         luawt_checkFromLua<Wt::WWidget>(L, 2);
     char const * raw3 = lua_tostring(L, 3);
     Wt::WString label = Wt::WString(raw3);
-    Wt::WTabWidget::LoadPolicy arg2 = static_cast<Wt::WTabWidget::LoadPolicy>(lua_tointeger(L, 4));
+    Wt::WTabWidget::LoadPolicy arg2 = static_cast<Wt::WTabWidget::LoadPolicy>(luawt_getEnum(
+        L,
+        luawt_enum_WTabWidget_LoadPolicy_str,
+        luawt_enum_WTabWidget_LoadPolicy_val,
+        4,
+        "Wrong enum type in args of WTabWidget.addTab"
+    ));
     Wt::WMenuItem * l_result = self->addTab(child, label, arg2);
     luawt_toLua(L, l_result);
     return 1;

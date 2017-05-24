@@ -5,6 +5,7 @@
 #include <Wt/WWidget>
 #include <Wt/WString>
 
+#include "enums.hpp"
 #include "globals.hpp"
 
 static const char* WWebWidget_load_args0[] = {luawt_typeToStr<WWebWidget>(), NULL};
@@ -98,7 +99,7 @@ int luawt_WWebWidget_floatSide(lua_State* L) {
     WWebWidget* self = luawt_checkFromLua<WWebWidget>(L, 1);
     if (index == 0) {
     Wt::Side l_result = self->floatSide();
-    lua_pushinteger(L, l_result);
+    luawt_returnEnum(L, luawt_enum_Side_str, luawt_enum_Side_val, l_result, "Side");
     return 1;
 
     } else {
@@ -289,14 +290,20 @@ int luawt_WWebWidget_canOptimizeUpdates(lua_State* L) {
     }
 }
 
-static const char* WWebWidget_setClearSides_args0[] = {luawt_typeToStr<WWebWidget>(), "int", NULL};
+static const char* WWebWidget_setClearSides_args0[] = {luawt_typeToStr<WWebWidget>(), "enum", NULL};
 static const char* const* const luawt_WWebWidget_setClearSides_args[] = {WWebWidget_setClearSides_args0, NULL};
 
 int luawt_WWebWidget_setClearSides(lua_State* L) {
     int index = luawt_getSuitableArgsGroup(L, luawt_WWebWidget_setClearSides_args);
     WWebWidget* self = luawt_checkFromLua<WWebWidget>(L, 1);
     if (index == 0) {
-    Wt::WFlags<Wt::Side> sides = static_cast<Wt::Side>(lua_tointeger(L, 2));
+    Wt::WFlags<Wt::Side> sides = static_cast<Wt::Side>(luawt_getEnum(
+        L,
+        luawt_enum_Side_str,
+        luawt_enum_Side_val,
+        2,
+        "Wrong enum type in args of WWebWidget.setClearSides"
+    ));
     self->setClearSides(sides);
     return 0;
     
@@ -322,7 +329,7 @@ int luawt_WWebWidget_isRendered(lua_State* L) {
 }
 
 static const char* WWebWidget_setOffsets_args0[] = {luawt_typeToStr<WWebWidget>(), "double", NULL};
-static const char* WWebWidget_setOffsets_args1[] = {luawt_typeToStr<WWebWidget>(), "double", "int", NULL};
+static const char* WWebWidget_setOffsets_args1[] = {luawt_typeToStr<WWebWidget>(), "double", "enum", NULL};
 static const char* const* const luawt_WWebWidget_setOffsets_args[] = {WWebWidget_setOffsets_args0, WWebWidget_setOffsets_args1, NULL};
 
 int luawt_WWebWidget_setOffsets(lua_State* L) {
@@ -337,7 +344,13 @@ int luawt_WWebWidget_setOffsets(lua_State* L) {
     } else if (index == 1) {
     double raw2 = lua_tonumber(L, 2);
     Wt::WLength offset = Wt::WLength(raw2);
-    Wt::WFlags<Wt::Side> sides = static_cast<Wt::Side>(lua_tointeger(L, 3));
+    Wt::WFlags<Wt::Side> sides = static_cast<Wt::Side>(luawt_getEnum(
+        L,
+        luawt_enum_Side_str,
+        luawt_enum_Side_val,
+        3,
+        "Wrong enum type in args of WWebWidget.setOffsets"
+    ));
     self->setOffsets(offset, sides);
     return 0;
     
@@ -362,14 +375,20 @@ int luawt_WWebWidget_setPopup(lua_State* L) {
     }
 }
 
-static const char* WWebWidget_setFloatSide_args0[] = {luawt_typeToStr<WWebWidget>(), "int", NULL};
+static const char* WWebWidget_setFloatSide_args0[] = {luawt_typeToStr<WWebWidget>(), "enum", NULL};
 static const char* const* const luawt_WWebWidget_setFloatSide_args[] = {WWebWidget_setFloatSide_args0, NULL};
 
 int luawt_WWebWidget_setFloatSide(lua_State* L) {
     int index = luawt_getSuitableArgsGroup(L, luawt_WWebWidget_setFloatSide_args);
     WWebWidget* self = luawt_checkFromLua<WWebWidget>(L, 1);
     if (index == 0) {
-    Wt::Side s = static_cast<Wt::Side>(lua_tointeger(L, 2));
+    Wt::Side s = static_cast<Wt::Side>(luawt_getEnum(
+        L,
+        luawt_enum_Side_str,
+        luawt_enum_Side_val,
+        2,
+        "Wrong enum type in args of WWebWidget.setFloatSide"
+    ));
     self->setFloatSide(s);
     return 0;
     
@@ -402,7 +421,7 @@ int luawt_WWebWidget_verticalAlignment(lua_State* L) {
     WWebWidget* self = luawt_checkFromLua<WWebWidget>(L, 1);
     if (index == 0) {
     Wt::AlignmentFlag l_result = self->verticalAlignment();
-    lua_pushinteger(L, l_result);
+    luawt_returnEnum(L, luawt_enum_AlignmentFlag_str, luawt_enum_AlignmentFlag_val, l_result, "AlignmentFlag");
     return 1;
 
     } else {
@@ -437,7 +456,7 @@ int luawt_WWebWidget_positionScheme(lua_State* L) {
     WWebWidget* self = luawt_checkFromLua<WWebWidget>(L, 1);
     if (index == 0) {
     Wt::PositionScheme l_result = self->positionScheme();
-    lua_pushinteger(L, l_result);
+    luawt_returnEnum(L, luawt_enum_PositionScheme_str, luawt_enum_PositionScheme_val, l_result, "PositionScheme");
     return 1;
 
     } else {
@@ -567,7 +586,7 @@ int luawt_WWebWidget_domElementType(lua_State* L) {
     WWebWidget* self = luawt_checkFromLua<WWebWidget>(L, 1);
     if (index == 0) {
     Wt::DomElementType l_result = self->domElementType();
-    lua_pushinteger(L, l_result);
+    luawt_returnEnum(L, luawt_enum_DomElementType_str, luawt_enum_DomElementType_val, l_result, "DomElementType");
     return 1;
 
     } else {
@@ -575,14 +594,20 @@ int luawt_WWebWidget_domElementType(lua_State* L) {
     }
 }
 
-static const char* WWebWidget_setPositionScheme_args0[] = {luawt_typeToStr<WWebWidget>(), "int", NULL};
+static const char* WWebWidget_setPositionScheme_args0[] = {luawt_typeToStr<WWebWidget>(), "enum", NULL};
 static const char* const* const luawt_WWebWidget_setPositionScheme_args[] = {WWebWidget_setPositionScheme_args0, NULL};
 
 int luawt_WWebWidget_setPositionScheme(lua_State* L) {
     int index = luawt_getSuitableArgsGroup(L, luawt_WWebWidget_setPositionScheme_args);
     WWebWidget* self = luawt_checkFromLua<WWebWidget>(L, 1);
     if (index == 0) {
-    Wt::PositionScheme scheme = static_cast<Wt::PositionScheme>(lua_tointeger(L, 2));
+    Wt::PositionScheme scheme = static_cast<Wt::PositionScheme>(luawt_getEnum(
+        L,
+        luawt_enum_PositionScheme_str,
+        luawt_enum_PositionScheme_val,
+        2,
+        "Wrong enum type in args of WWebWidget.setPositionScheme"
+    ));
     self->setPositionScheme(scheme);
     return 0;
     
@@ -673,20 +698,32 @@ int luawt_WWebWidget_zIndex(lua_State* L) {
     }
 }
 
-static const char* WWebWidget_setVerticalAlignment_args0[] = {luawt_typeToStr<WWebWidget>(), "int", NULL};
-static const char* WWebWidget_setVerticalAlignment_args1[] = {luawt_typeToStr<WWebWidget>(), "int", "double", NULL};
+static const char* WWebWidget_setVerticalAlignment_args0[] = {luawt_typeToStr<WWebWidget>(), "enum", NULL};
+static const char* WWebWidget_setVerticalAlignment_args1[] = {luawt_typeToStr<WWebWidget>(), "enum", "double", NULL};
 static const char* const* const luawt_WWebWidget_setVerticalAlignment_args[] = {WWebWidget_setVerticalAlignment_args0, WWebWidget_setVerticalAlignment_args1, NULL};
 
 int luawt_WWebWidget_setVerticalAlignment(lua_State* L) {
     int index = luawt_getSuitableArgsGroup(L, luawt_WWebWidget_setVerticalAlignment_args);
     WWebWidget* self = luawt_checkFromLua<WWebWidget>(L, 1);
     if (index == 0) {
-    Wt::AlignmentFlag alignment = static_cast<Wt::AlignmentFlag>(lua_tointeger(L, 2));
+    Wt::AlignmentFlag alignment = static_cast<Wt::AlignmentFlag>(luawt_getEnum(
+        L,
+        luawt_enum_AlignmentFlag_str,
+        luawt_enum_AlignmentFlag_val,
+        2,
+        "Wrong enum type in args of WWebWidget.setVerticalAlignment"
+    ));
     self->setVerticalAlignment(alignment);
     return 0;
     
     } else if (index == 1) {
-    Wt::AlignmentFlag alignment = static_cast<Wt::AlignmentFlag>(lua_tointeger(L, 2));
+    Wt::AlignmentFlag alignment = static_cast<Wt::AlignmentFlag>(luawt_getEnum(
+        L,
+        luawt_enum_AlignmentFlag_str,
+        luawt_enum_AlignmentFlag_val,
+        2,
+        "Wrong enum type in args of WWebWidget.setVerticalAlignment"
+    ));
     double raw3 = lua_tonumber(L, 3);
     Wt::WLength length = Wt::WLength(raw3);
     self->setVerticalAlignment(alignment, length);
@@ -698,7 +735,7 @@ int luawt_WWebWidget_setVerticalAlignment(lua_State* L) {
 }
 
 static const char* WWebWidget_setMargin_args0[] = {luawt_typeToStr<WWebWidget>(), "double", NULL};
-static const char* WWebWidget_setMargin_args1[] = {luawt_typeToStr<WWebWidget>(), "double", "int", NULL};
+static const char* WWebWidget_setMargin_args1[] = {luawt_typeToStr<WWebWidget>(), "double", "enum", NULL};
 static const char* const* const luawt_WWebWidget_setMargin_args[] = {WWebWidget_setMargin_args0, WWebWidget_setMargin_args1, NULL};
 
 int luawt_WWebWidget_setMargin(lua_State* L) {
@@ -713,7 +750,13 @@ int luawt_WWebWidget_setMargin(lua_State* L) {
     } else if (index == 1) {
     double raw2 = lua_tonumber(L, 2);
     Wt::WLength margin = Wt::WLength(raw2);
-    Wt::WFlags<Wt::Side> sides = static_cast<Wt::Side>(lua_tointeger(L, 3));
+    Wt::WFlags<Wt::Side> sides = static_cast<Wt::Side>(luawt_getEnum(
+        L,
+        luawt_enum_Side_str,
+        luawt_enum_Side_val,
+        3,
+        "Wrong enum type in args of WWebWidget.setMargin"
+    ));
     self->setMargin(margin, sides);
     return 0;
     
@@ -754,14 +797,20 @@ int luawt_WWebWidget_setInline(lua_State* L) {
     }
 }
 
-static const char* WWebWidget_offset_args0[] = {luawt_typeToStr<WWebWidget>(), "int", NULL};
+static const char* WWebWidget_offset_args0[] = {luawt_typeToStr<WWebWidget>(), "enum", NULL};
 static const char* const* const luawt_WWebWidget_offset_args[] = {WWebWidget_offset_args0, NULL};
 
 int luawt_WWebWidget_offset(lua_State* L) {
     int index = luawt_getSuitableArgsGroup(L, luawt_WWebWidget_offset_args);
     WWebWidget* self = luawt_checkFromLua<WWebWidget>(L, 1);
     if (index == 0) {
-    Wt::Side s = static_cast<Wt::Side>(lua_tointeger(L, 2));
+    Wt::Side s = static_cast<Wt::Side>(luawt_getEnum(
+        L,
+        luawt_enum_Side_str,
+        luawt_enum_Side_val,
+        2,
+        "Wrong enum type in args of WWebWidget.offset"
+    ));
     Wt::WLength l_result = self->offset(s);
     lua_pushnumber(L, l_result.value());
     return 1;
@@ -779,7 +828,7 @@ int luawt_WWebWidget_clearSides(lua_State* L) {
     WWebWidget* self = luawt_checkFromLua<WWebWidget>(L, 1);
     if (index == 0) {
     Wt::WFlags<Wt::Side> l_result = self->clearSides();
-    lua_pushinteger(L, l_result);
+    luawt_returnEnum(L, luawt_enum_Side_str, luawt_enum_Side_val, l_result, "Side");
     return 1;
 
     } else {
@@ -874,7 +923,7 @@ int luawt_WWebWidget_maximumWidth(lua_State* L) {
 }
 
 static const char* WWebWidget_setToolTip_args0[] = {luawt_typeToStr<WWebWidget>(), "char const *", NULL};
-static const char* WWebWidget_setToolTip_args1[] = {luawt_typeToStr<WWebWidget>(), "char const *", "int", NULL};
+static const char* WWebWidget_setToolTip_args1[] = {luawt_typeToStr<WWebWidget>(), "char const *", "enum", NULL};
 static const char* const* const luawt_WWebWidget_setToolTip_args[] = {WWebWidget_setToolTip_args0, WWebWidget_setToolTip_args1, NULL};
 
 int luawt_WWebWidget_setToolTip(lua_State* L) {
@@ -889,7 +938,13 @@ int luawt_WWebWidget_setToolTip(lua_State* L) {
     } else if (index == 1) {
     char const * raw2 = lua_tostring(L, 2);
     Wt::WString text = Wt::WString(raw2);
-    Wt::TextFormat textFormat = static_cast<Wt::TextFormat>(lua_tointeger(L, 3));
+    Wt::TextFormat textFormat = static_cast<Wt::TextFormat>(luawt_getEnum(
+        L,
+        luawt_enum_TextFormat_str,
+        luawt_enum_TextFormat_val,
+        3,
+        "Wrong enum type in args of WWebWidget.setToolTip"
+    ));
     self->setToolTip(text, textFormat);
     return 0;
     
@@ -1128,14 +1183,20 @@ int luawt_WWebWidget_callJavaScriptMember(lua_State* L) {
     }
 }
 
-static const char* WWebWidget_margin_args0[] = {luawt_typeToStr<WWebWidget>(), "int", NULL};
+static const char* WWebWidget_margin_args0[] = {luawt_typeToStr<WWebWidget>(), "enum", NULL};
 static const char* const* const luawt_WWebWidget_margin_args[] = {WWebWidget_margin_args0, NULL};
 
 int luawt_WWebWidget_margin(lua_State* L) {
     int index = luawt_getSuitableArgsGroup(L, luawt_WWebWidget_margin_args);
     WWebWidget* self = luawt_checkFromLua<WWebWidget>(L, 1);
     if (index == 0) {
-    Wt::Side side = static_cast<Wt::Side>(lua_tointeger(L, 2));
+    Wt::Side side = static_cast<Wt::Side>(luawt_getEnum(
+        L,
+        luawt_enum_Side_str,
+        luawt_enum_Side_val,
+        2,
+        "Wrong enum type in args of WWebWidget.margin"
+    ));
     Wt::WLength l_result = self->margin(side);
     lua_pushnumber(L, l_result.value());
     return 1;

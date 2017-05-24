@@ -4,6 +4,14 @@
 
 local test = {}
 
+function test.sizeOf(table)
+    local count = 0
+    for k in pairs(table) do
+        count = count + 1
+    end
+    return count
+end
+
 function test.socketRequest(port)
     local http_client = require 'socket.http'
     local data = http_client.request('http://127.0.0.1:' .. port)

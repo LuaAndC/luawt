@@ -4,6 +4,7 @@
 #include <Wt/WContainerWidget>
 #include <Wt/WString>
 
+#include "enums.hpp"
 #include "globals.hpp"
 
 static const char* WLineEdit_make_args0[] = {NULL};
@@ -93,14 +94,20 @@ int luawt_WLineEdit_textSize(lua_State* L) {
     }
 }
 
-static const char* WLineEdit_setEchoMode_args0[] = {luawt_typeToStr<WLineEdit>(), "int", NULL};
+static const char* WLineEdit_setEchoMode_args0[] = {luawt_typeToStr<WLineEdit>(), "enum", NULL};
 static const char* const* const luawt_WLineEdit_setEchoMode_args[] = {WLineEdit_setEchoMode_args0, NULL};
 
 int luawt_WLineEdit_setEchoMode(lua_State* L) {
     int index = luawt_getSuitableArgsGroup(L, luawt_WLineEdit_setEchoMode_args);
     WLineEdit* self = luawt_checkFromLua<WLineEdit>(L, 1);
     if (index == 0) {
-    Wt::WLineEdit::EchoMode echoMode = static_cast<Wt::WLineEdit::EchoMode>(lua_tointeger(L, 2));
+    Wt::WLineEdit::EchoMode echoMode = static_cast<Wt::WLineEdit::EchoMode>(luawt_getEnum(
+        L,
+        luawt_enum_WLineEdit_EchoMode_str,
+        luawt_enum_WLineEdit_EchoMode_val,
+        2,
+        "Wrong enum type in args of WLineEdit.setEchoMode"
+    ));
     self->setEchoMode(echoMode);
     return 0;
     
@@ -150,7 +157,7 @@ int luawt_WLineEdit_echoMode(lua_State* L) {
     WLineEdit* self = luawt_checkFromLua<WLineEdit>(L, 1);
     if (index == 0) {
     Wt::WLineEdit::EchoMode l_result = self->echoMode();
-    lua_pushinteger(L, l_result);
+    luawt_returnEnum(L, luawt_enum_WLineEdit_EchoMode_str, luawt_enum_WLineEdit_EchoMode_val, l_result, "WLineEdit::EchoMode");
     return 1;
 
     } else {

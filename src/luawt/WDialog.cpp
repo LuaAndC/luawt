@@ -6,10 +6,11 @@
 #include <Wt/WDialog>
 #include <Wt/WString>
 
+#include "enums.hpp"
 #include "globals.hpp"
 
 static const char* WDialog_positionAt_args0[] = {luawt_typeToStr<WDialog>(), luawt_typeToStr<Wt::WWidget>(), NULL};
-static const char* WDialog_positionAt_args1[] = {luawt_typeToStr<WDialog>(), luawt_typeToStr<Wt::WWidget>(), "int", NULL};
+static const char* WDialog_positionAt_args1[] = {luawt_typeToStr<WDialog>(), luawt_typeToStr<Wt::WWidget>(), "enum", NULL};
 static const char* const* const luawt_WDialog_positionAt_args[] = {WDialog_positionAt_args0, WDialog_positionAt_args1, NULL};
 
 int luawt_WDialog_positionAt(lua_State* L) {
@@ -24,7 +25,13 @@ int luawt_WDialog_positionAt(lua_State* L) {
     } else if (index == 1) {
     Wt::WWidget* widget =
         luawt_checkFromLua<Wt::WWidget>(L, 2);
-    Wt::Orientation orientation = static_cast<Wt::Orientation>(lua_tointeger(L, 3));
+    Wt::Orientation orientation = static_cast<Wt::Orientation>(luawt_getEnum(
+        L,
+        luawt_enum_Orientation_str,
+        luawt_enum_Orientation_val,
+        3,
+        "Wrong enum type in args of WDialog.positionAt"
+    ));
     self->positionAt(widget, orientation);
     return 0;
     
@@ -67,14 +74,20 @@ int luawt_WDialog_accept(lua_State* L) {
     }
 }
 
-static const char* WDialog_done_args0[] = {luawt_typeToStr<WDialog>(), "int", NULL};
+static const char* WDialog_done_args0[] = {luawt_typeToStr<WDialog>(), "enum", NULL};
 static const char* const* const luawt_WDialog_done_args[] = {WDialog_done_args0, NULL};
 
 int luawt_WDialog_done(lua_State* L) {
     int index = luawt_getSuitableArgsGroup(L, luawt_WDialog_done_args);
     WDialog* self = luawt_checkFromLua<WDialog>(L, 1);
     if (index == 0) {
-    Wt::WDialog::DialogCode r = static_cast<Wt::WDialog::DialogCode>(lua_tointeger(L, 2));
+    Wt::WDialog::DialogCode r = static_cast<Wt::WDialog::DialogCode>(luawt_getEnum(
+        L,
+        luawt_enum_WDialog_DialogCode_str,
+        luawt_enum_WDialog_DialogCode_val,
+        2,
+        "Wrong enum type in args of WDialog.done"
+    ));
     self->done(r);
     return 0;
     
@@ -91,7 +104,7 @@ int luawt_WDialog_result(lua_State* L) {
     WDialog* self = luawt_checkFromLua<WDialog>(L, 1);
     if (index == 0) {
     Wt::WDialog::DialogCode l_result = self->result();
-    lua_pushinteger(L, l_result);
+    luawt_returnEnum(L, luawt_enum_WDialog_DialogCode_str, luawt_enum_WDialog_DialogCode_val, l_result, "WDialog::DialogCode");
     return 1;
 
     } else {
