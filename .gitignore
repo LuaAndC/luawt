@@ -10,3 +10,6 @@
 *.gcda
 *.gcno
 *.gcov
+
+# astyle
+*.orig
