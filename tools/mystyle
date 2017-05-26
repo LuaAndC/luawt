@@ -1,0 +1,51 @@
+#!/bin/bash
+files=$@
+if [[ $files == "" ]] ; then
+    files="`find * -name '*.?pp'` `find * -name '*.?xx'`"
+fi
+
+astyle --style=java --add-brackets --lineend=linux --align-pointer=type \
+    --delete-empty-lines --convert-tabs --pad-header --pad-oper --unpad-paren \
+    --indent-col1-comments \
+    --indent-after-parens \
+    --indent-continuation=1 \
+    --quiet $files
+
+# add empty line after each function or class
+sed '/^};\?$/,+1s/^\([^}#].\+\)/\n\1/' -i $files
+
+# remove double empty lines
+sed '/^$/N;/^\n$/D' -i $files
+
+# remove empty line (after }) before \endcode (doxygen examples)
+sed ':begin;$!N;s@^\n\\endcode@\\endcode@;tbegin;P;D' -i $files
+
+# FOREACH (void * p, b) --> FOREACH (void* p, b)
+sed '/\(FOREACH\)/s/\(\w\) \([*&]\)/\1\2/' -i $files
+sed '/^\(\s*foreach\)/s/\(\w\) \([*&]\)/\1\2/' -i $files
+
+# FOREACH(a, b) --> FOREACH (a, b)
+sed '/define/!s/\(FOREACH\)(/\1 (/' -i $files
+sed '/define/!s/^\(\s*foreach\)(/\1 (/' -i $files
+
+# BOOST_AUTO_TEST_CASE(test) --> BOOST_AUTO_TEST_CASE (test)
+sed '/define/!s/\(^\s*[A-Z0-9_]\+\)(\(.\+\)) {$/\1 (\2) {/' -i $files
+
+# remove extra space before ;
+sed 's@ ;@;@g' -i $files
+
+# remove double spaces
+sed '/\<param\>/!s@\>  \<@ @g' -i $files
+
+# append new line to the last line
+#sed '$s@\(.\+\)@\1\n@g' -i $files
+# remove new line after the last line
+#sed '${/^$/D}' -i $files
+
+# fix indentation of "for (int a : b)"
+sed ':begin;$!N;s@^\(\s\+\)\([^\n]\+\)\nfor@\1\2\n\1for@;tbegin;P;D' -i $files
+
+# #include<iostream> -> #include <iostream>
+sed 's/^#include</#include </' -i $files
+sed 's/^#include"/#include "/' -i $files
+
