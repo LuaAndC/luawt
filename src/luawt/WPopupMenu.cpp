@@ -17,31 +17,27 @@ static const char* const* const luawt_WPopupMenu_make_args[] = {WPopupMenu_make_
 int luawt_WPopupMenu_make(lua_State* L) {
     int index = luawt_getSuitableArgsGroup(L, luawt_WPopupMenu_make_args);
     if (index == 0) {
-    WPopupMenu * l_result = new WPopupMenu();
-    MyApplication* app = MyApplication::instance();
-    if (!app) {
-        delete l_result;
-        throw std::logic_error("No WApplication when creating WPopupMenu");
-    }
-    app->root()->addWidget(l_result);
-    
-    luawt_toLua(L, l_result);
-    return 1;
-
+        WPopupMenu* l_result = new WPopupMenu();
+        MyApplication* app = MyApplication::instance();
+        if (!app) {
+            delete l_result;
+            throw std::logic_error("No WApplication when creating WPopupMenu");
+        }
+        app->root()->addWidget(l_result);
+        luawt_toLua(L, l_result);
+        return 1;
     } else if (index == 1) {
-    Wt::WStackedWidget* contentsStack =
-        luawt_checkFromLua<Wt::WStackedWidget>(L, 1);
-    WPopupMenu * l_result = new WPopupMenu(contentsStack);
-    MyApplication* app = MyApplication::instance();
-    if (!app) {
-        delete l_result;
-        throw std::logic_error("No WApplication when creating WPopupMenu");
-    }
-    app->root()->addWidget(l_result);
-    
-    luawt_toLua(L, l_result);
-    return 1;
-
+        Wt::WStackedWidget* contentsStack =
+            luawt_checkFromLua<Wt::WStackedWidget>(L, 1);
+        WPopupMenu* l_result = new WPopupMenu(contentsStack);
+        MyApplication* app = MyApplication::instance();
+        if (!app) {
+            delete l_result;
+            throw std::logic_error("No WApplication when creating WPopupMenu");
+        }
+        app->root()->addWidget(l_result);
+        luawt_toLua(L, l_result);
+        return 1;
     } else {
         return luaL_error(L, "Wrong arguments for WPopupMenu.make");
     }
@@ -55,24 +51,22 @@ int luawt_WPopupMenu_popup(lua_State* L) {
     int index = luawt_getSuitableArgsGroup(L, luawt_WPopupMenu_popup_args);
     WPopupMenu* self = luawt_checkFromLua<WPopupMenu>(L, 1);
     if (index == 0) {
-    Wt::WWidget* location =
-        luawt_checkFromLua<Wt::WWidget>(L, 2);
-    self->popup(location);
-    return 0;
-    
+        Wt::WWidget* location =
+            luawt_checkFromLua<Wt::WWidget>(L, 2);
+        self->popup(location);
+        return 0;
     } else if (index == 1) {
-    Wt::WWidget* location =
-        luawt_checkFromLua<Wt::WWidget>(L, 2);
-    Wt::Orientation orientation = static_cast<Wt::Orientation>(luawt_getEnum(
-        L,
-        luawt_enum_Orientation_str,
-        luawt_enum_Orientation_val,
-        3,
-        "Wrong enum type in args of WPopupMenu.popup"
-    ));
-    self->popup(location, orientation);
-    return 0;
-    
+        Wt::WWidget* location =
+            luawt_checkFromLua<Wt::WWidget>(L, 2);
+        Wt::Orientation orientation = static_cast<Wt::Orientation>(luawt_getEnum(
+                    L,
+                    luawt_enum_Orientation_str,
+                    luawt_enum_Orientation_val,
+                    3,
+                    "Wrong enum type in args of WPopupMenu.popup"
+                ));
+        self->popup(location, orientation);
+        return 0;
     } else {
         return luaL_error(L, "Wrong arguments for WPopupMenu.popup");
     }
@@ -85,11 +79,10 @@ int luawt_WPopupMenu_setButton(lua_State* L) {
     int index = luawt_getSuitableArgsGroup(L, luawt_WPopupMenu_setButton_args);
     WPopupMenu* self = luawt_checkFromLua<WPopupMenu>(L, 1);
     if (index == 0) {
-    Wt::WInteractWidget* button =
-        luawt_checkFromLua<Wt::WInteractWidget>(L, 2);
-    self->setButton(button);
-    return 0;
-    
+        Wt::WInteractWidget* button =
+            luawt_checkFromLua<Wt::WInteractWidget>(L, 2);
+        self->setButton(button);
+        return 0;
     } else {
         return luaL_error(L, "Wrong arguments for WPopupMenu.setButton");
     }
@@ -103,26 +96,24 @@ int luawt_WPopupMenu_exec(lua_State* L) {
     int index = luawt_getSuitableArgsGroup(L, luawt_WPopupMenu_exec_args);
     WPopupMenu* self = luawt_checkFromLua<WPopupMenu>(L, 1);
     if (index == 0) {
-    Wt::WWidget* location =
-        luawt_checkFromLua<Wt::WWidget>(L, 2);
-    Wt::WMenuItem * l_result = self->exec(location);
-    luawt_toLua(L, l_result);
-    return 1;
-
+        Wt::WWidget* location =
+            luawt_checkFromLua<Wt::WWidget>(L, 2);
+        Wt::WMenuItem* l_result = self->exec(location);
+        luawt_toLua(L, l_result);
+        return 1;
     } else if (index == 1) {
-    Wt::WWidget* location =
-        luawt_checkFromLua<Wt::WWidget>(L, 2);
-    Wt::Orientation orientation = static_cast<Wt::Orientation>(luawt_getEnum(
-        L,
-        luawt_enum_Orientation_str,
-        luawt_enum_Orientation_val,
-        3,
-        "Wrong enum type in args of WPopupMenu.exec"
-    ));
-    Wt::WMenuItem * l_result = self->exec(location, orientation);
-    luawt_toLua(L, l_result);
-    return 1;
-
+        Wt::WWidget* location =
+            luawt_checkFromLua<Wt::WWidget>(L, 2);
+        Wt::Orientation orientation = static_cast<Wt::Orientation>(luawt_getEnum(
+                    L,
+                    luawt_enum_Orientation_str,
+                    luawt_enum_Orientation_val,
+                    3,
+                    "Wrong enum type in args of WPopupMenu.exec"
+                ));
+        Wt::WMenuItem* l_result = self->exec(location, orientation);
+        luawt_toLua(L, l_result);
+        return 1;
     } else {
         return luaL_error(L, "Wrong arguments for WPopupMenu.exec");
     }
@@ -135,13 +126,12 @@ int luawt_WPopupMenu_setMinimumSize(lua_State* L) {
     int index = luawt_getSuitableArgsGroup(L, luawt_WPopupMenu_setMinimumSize_args);
     WPopupMenu* self = luawt_checkFromLua<WPopupMenu>(L, 1);
     if (index == 0) {
-    double raw2 = lua_tonumber(L, 2);
-    Wt::WLength width = Wt::WLength(raw2);
-    double raw3 = lua_tonumber(L, 3);
-    Wt::WLength height = Wt::WLength(raw3);
-    self->setMinimumSize(width, height);
-    return 0;
-    
+        double raw2 = lua_tonumber(L, 2);
+        Wt::WLength width = Wt::WLength(raw2);
+        double raw3 = lua_tonumber(L, 3);
+        Wt::WLength height = Wt::WLength(raw3);
+        self->setMinimumSize(width, height);
+        return 0;
     } else {
         return luaL_error(L, "Wrong arguments for WPopupMenu.setMinimumSize");
     }
@@ -154,10 +144,9 @@ int luawt_WPopupMenu_result(lua_State* L) {
     int index = luawt_getSuitableArgsGroup(L, luawt_WPopupMenu_result_args);
     WPopupMenu* self = luawt_checkFromLua<WPopupMenu>(L, 1);
     if (index == 0) {
-    Wt::WMenuItem * l_result = self->result();
-    luawt_toLua(L, l_result);
-    return 1;
-
+        Wt::WMenuItem* l_result = self->result();
+        luawt_toLua(L, l_result);
+        return 1;
     } else {
         return luaL_error(L, "Wrong arguments for WPopupMenu.result");
     }
@@ -171,16 +160,14 @@ int luawt_WPopupMenu_setAutoHide(lua_State* L) {
     int index = luawt_getSuitableArgsGroup(L, luawt_WPopupMenu_setAutoHide_args);
     WPopupMenu* self = luawt_checkFromLua<WPopupMenu>(L, 1);
     if (index == 0) {
-    bool enabled = lua_toboolean(L, 2);
-    self->setAutoHide(enabled);
-    return 0;
-    
+        bool enabled = lua_toboolean(L, 2);
+        self->setAutoHide(enabled);
+        return 0;
     } else if (index == 1) {
-    bool enabled = lua_toboolean(L, 2);
-    int autoHideDelay = lua_tointeger(L, 3);
-    self->setAutoHide(enabled, autoHideDelay);
-    return 0;
-    
+        bool enabled = lua_toboolean(L, 2);
+        int autoHideDelay = lua_tointeger(L, 3);
+        self->setAutoHide(enabled, autoHideDelay);
+        return 0;
     } else {
         return luaL_error(L, "Wrong arguments for WPopupMenu.setAutoHide");
     }
@@ -193,18 +180,16 @@ int luawt_WPopupMenu_setMaximumSize(lua_State* L) {
     int index = luawt_getSuitableArgsGroup(L, luawt_WPopupMenu_setMaximumSize_args);
     WPopupMenu* self = luawt_checkFromLua<WPopupMenu>(L, 1);
     if (index == 0) {
-    double raw2 = lua_tonumber(L, 2);
-    Wt::WLength width = Wt::WLength(raw2);
-    double raw3 = lua_tonumber(L, 3);
-    Wt::WLength height = Wt::WLength(raw3);
-    self->setMaximumSize(width, height);
-    return 0;
-    
+        double raw2 = lua_tonumber(L, 2);
+        Wt::WLength width = Wt::WLength(raw2);
+        double raw3 = lua_tonumber(L, 3);
+        Wt::WLength height = Wt::WLength(raw3);
+        self->setMaximumSize(width, height);
+        return 0;
     } else {
         return luaL_error(L, "Wrong arguments for WPopupMenu.setMaximumSize");
     }
 }
-
 
 static const luaL_Reg luawt_WPopupMenu_methods[] = {
     METHOD(WPopupMenu, setButton),

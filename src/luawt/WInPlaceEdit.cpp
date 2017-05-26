@@ -17,28 +17,25 @@ static const char* const* const luawt_WInPlaceEdit_make_args[] = {WInPlaceEdit_m
 int luawt_WInPlaceEdit_make(lua_State* L) {
     int index = luawt_getSuitableArgsGroup(L, luawt_WInPlaceEdit_make_args);
     if (index == 0) {
-    char const * raw1 = lua_tostring(L, 1);
-    Wt::WString text = Wt::WString(raw1);
-    WInPlaceEdit * l_result = new WInPlaceEdit(text);
-    MyApplication* app = MyApplication::instance();
-    if (!app) {
-        delete l_result;
-        throw std::logic_error("No WApplication when creating WInPlaceEdit");
-    }
-    app->root()->addWidget(l_result);
-    
-    luawt_toLua(L, l_result);
-    return 1;
-
+        char const* raw1 = lua_tostring(L, 1);
+        Wt::WString text = Wt::WString(raw1);
+        WInPlaceEdit* l_result = new WInPlaceEdit(text);
+        MyApplication* app = MyApplication::instance();
+        if (!app) {
+            delete l_result;
+            throw std::logic_error("No WApplication when creating WInPlaceEdit");
+        }
+        app->root()->addWidget(l_result);
+        luawt_toLua(L, l_result);
+        return 1;
     } else if (index == 1) {
-    char const * raw1 = lua_tostring(L, 1);
-    Wt::WString text = Wt::WString(raw1);
-    Wt::WContainerWidget* parent =
-        luawt_checkFromLua<Wt::WContainerWidget>(L, 2);
-    WInPlaceEdit * l_result = new WInPlaceEdit(text, parent);
-    luawt_toLua(L, l_result);
-    return 1;
-
+        char const* raw1 = lua_tostring(L, 1);
+        Wt::WString text = Wt::WString(raw1);
+        Wt::WContainerWidget* parent =
+            luawt_checkFromLua<Wt::WContainerWidget>(L, 2);
+        WInPlaceEdit* l_result = new WInPlaceEdit(text, parent);
+        luawt_toLua(L, l_result);
+        return 1;
     } else {
         return luaL_error(L, "Wrong arguments for WInPlaceEdit.make");
     }
@@ -52,14 +49,12 @@ int luawt_WInPlaceEdit_setButtonsEnabled(lua_State* L) {
     int index = luawt_getSuitableArgsGroup(L, luawt_WInPlaceEdit_setButtonsEnabled_args);
     WInPlaceEdit* self = luawt_checkFromLua<WInPlaceEdit>(L, 1);
     if (index == 0) {
-    self->setButtonsEnabled();
-    return 0;
-    
+        self->setButtonsEnabled();
+        return 0;
     } else if (index == 1) {
-    bool enabled = lua_toboolean(L, 2);
-    self->setButtonsEnabled(enabled);
-    return 0;
-    
+        bool enabled = lua_toboolean(L, 2);
+        self->setButtonsEnabled(enabled);
+        return 0;
     } else {
         return luaL_error(L, "Wrong arguments for WInPlaceEdit.setButtonsEnabled");
     }
@@ -72,10 +67,9 @@ int luawt_WInPlaceEdit_text(lua_State* L) {
     int index = luawt_getSuitableArgsGroup(L, luawt_WInPlaceEdit_text_args);
     WInPlaceEdit* self = luawt_checkFromLua<WInPlaceEdit>(L, 1);
     if (index == 0) {
-    Wt::WString const & l_result = self->text();
-    lua_pushstring(L, l_result.toUTF8().c_str());
-    return 1;
-
+        Wt::WString const& l_result = self->text();
+        lua_pushstring(L, l_result.toUTF8().c_str());
+        return 1;
     } else {
         return luaL_error(L, "Wrong arguments for WInPlaceEdit.text");
     }
@@ -88,11 +82,10 @@ int luawt_WInPlaceEdit_setText(lua_State* L) {
     int index = luawt_getSuitableArgsGroup(L, luawt_WInPlaceEdit_setText_args);
     WInPlaceEdit* self = luawt_checkFromLua<WInPlaceEdit>(L, 1);
     if (index == 0) {
-    char const * raw2 = lua_tostring(L, 2);
-    Wt::WString text = Wt::WString(raw2);
-    self->setText(text);
-    return 0;
-    
+        char const* raw2 = lua_tostring(L, 2);
+        Wt::WString text = Wt::WString(raw2);
+        self->setText(text);
+        return 0;
     } else {
         return luaL_error(L, "Wrong arguments for WInPlaceEdit.setText");
     }
@@ -105,10 +98,9 @@ int luawt_WInPlaceEdit_cancelButton(lua_State* L) {
     int index = luawt_getSuitableArgsGroup(L, luawt_WInPlaceEdit_cancelButton_args);
     WInPlaceEdit* self = luawt_checkFromLua<WInPlaceEdit>(L, 1);
     if (index == 0) {
-    Wt::WPushButton * l_result = self->cancelButton();
-    luawt_toLua(L, l_result);
-    return 1;
-
+        Wt::WPushButton* l_result = self->cancelButton();
+        luawt_toLua(L, l_result);
+        return 1;
     } else {
         return luaL_error(L, "Wrong arguments for WInPlaceEdit.cancelButton");
     }
@@ -121,10 +113,9 @@ int luawt_WInPlaceEdit_textWidget(lua_State* L) {
     int index = luawt_getSuitableArgsGroup(L, luawt_WInPlaceEdit_textWidget_args);
     WInPlaceEdit* self = luawt_checkFromLua<WInPlaceEdit>(L, 1);
     if (index == 0) {
-    Wt::WText * l_result = self->textWidget();
-    luawt_toLua(L, l_result);
-    return 1;
-
+        Wt::WText* l_result = self->textWidget();
+        luawt_toLua(L, l_result);
+        return 1;
     } else {
         return luaL_error(L, "Wrong arguments for WInPlaceEdit.textWidget");
     }
@@ -137,10 +128,9 @@ int luawt_WInPlaceEdit_saveButton(lua_State* L) {
     int index = luawt_getSuitableArgsGroup(L, luawt_WInPlaceEdit_saveButton_args);
     WInPlaceEdit* self = luawt_checkFromLua<WInPlaceEdit>(L, 1);
     if (index == 0) {
-    Wt::WPushButton * l_result = self->saveButton();
-    luawt_toLua(L, l_result);
-    return 1;
-
+        Wt::WPushButton* l_result = self->saveButton();
+        luawt_toLua(L, l_result);
+        return 1;
     } else {
         return luaL_error(L, "Wrong arguments for WInPlaceEdit.saveButton");
     }
@@ -153,10 +143,9 @@ int luawt_WInPlaceEdit_lineEdit(lua_State* L) {
     int index = luawt_getSuitableArgsGroup(L, luawt_WInPlaceEdit_lineEdit_args);
     WInPlaceEdit* self = luawt_checkFromLua<WInPlaceEdit>(L, 1);
     if (index == 0) {
-    Wt::WLineEdit * l_result = self->lineEdit();
-    luawt_toLua(L, l_result);
-    return 1;
-
+        Wt::WLineEdit* l_result = self->lineEdit();
+        luawt_toLua(L, l_result);
+        return 1;
     } else {
         return luaL_error(L, "Wrong arguments for WInPlaceEdit.lineEdit");
     }
@@ -169,10 +158,9 @@ int luawt_WInPlaceEdit_emptyText(lua_State* L) {
     int index = luawt_getSuitableArgsGroup(L, luawt_WInPlaceEdit_emptyText_args);
     WInPlaceEdit* self = luawt_checkFromLua<WInPlaceEdit>(L, 1);
     if (index == 0) {
-    Wt::WString const & l_result = self->emptyText();
-    lua_pushstring(L, l_result.toUTF8().c_str());
-    return 1;
-
+        Wt::WString const& l_result = self->emptyText();
+        lua_pushstring(L, l_result.toUTF8().c_str());
+        return 1;
     } else {
         return luaL_error(L, "Wrong arguments for WInPlaceEdit.emptyText");
     }
@@ -185,16 +173,14 @@ int luawt_WInPlaceEdit_setEmptyText(lua_State* L) {
     int index = luawt_getSuitableArgsGroup(L, luawt_WInPlaceEdit_setEmptyText_args);
     WInPlaceEdit* self = luawt_checkFromLua<WInPlaceEdit>(L, 1);
     if (index == 0) {
-    char const * raw2 = lua_tostring(L, 2);
-    Wt::WString emptyText = Wt::WString(raw2);
-    self->setEmptyText(emptyText);
-    return 0;
-    
+        char const* raw2 = lua_tostring(L, 2);
+        Wt::WString emptyText = Wt::WString(raw2);
+        self->setEmptyText(emptyText);
+        return 0;
     } else {
         return luaL_error(L, "Wrong arguments for WInPlaceEdit.setEmptyText");
     }
 }
-
 
 static const luaL_Reg luawt_WInPlaceEdit_methods[] = {
     METHOD(WInPlaceEdit, text),

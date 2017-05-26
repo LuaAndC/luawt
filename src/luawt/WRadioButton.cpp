@@ -16,47 +16,41 @@ static const char* const* const luawt_WRadioButton_make_args[] = {WRadioButton_m
 int luawt_WRadioButton_make(lua_State* L) {
     int index = luawt_getSuitableArgsGroup(L, luawt_WRadioButton_make_args);
     if (index == 0) {
-    WRadioButton * l_result = new WRadioButton();
-    MyApplication* app = MyApplication::instance();
-    if (!app) {
-        delete l_result;
-        throw std::logic_error("No WApplication when creating WRadioButton");
-    }
-    app->root()->addWidget(l_result);
-    
-    luawt_toLua(L, l_result);
-    return 1;
-
+        WRadioButton* l_result = new WRadioButton();
+        MyApplication* app = MyApplication::instance();
+        if (!app) {
+            delete l_result;
+            throw std::logic_error("No WApplication when creating WRadioButton");
+        }
+        app->root()->addWidget(l_result);
+        luawt_toLua(L, l_result);
+        return 1;
     } else if (index == 1) {
-    Wt::WContainerWidget* parent =
-        luawt_checkFromLua<Wt::WContainerWidget>(L, 1);
-    WRadioButton * l_result = new WRadioButton(parent);
-    luawt_toLua(L, l_result);
-    return 1;
-
+        Wt::WContainerWidget* parent =
+            luawt_checkFromLua<Wt::WContainerWidget>(L, 1);
+        WRadioButton* l_result = new WRadioButton(parent);
+        luawt_toLua(L, l_result);
+        return 1;
     } else if (index == 2) {
-    char const * raw1 = lua_tostring(L, 1);
-    Wt::WString text = Wt::WString(raw1);
-    WRadioButton * l_result = new WRadioButton(text);
-    MyApplication* app = MyApplication::instance();
-    if (!app) {
-        delete l_result;
-        throw std::logic_error("No WApplication when creating WRadioButton");
-    }
-    app->root()->addWidget(l_result);
-    
-    luawt_toLua(L, l_result);
-    return 1;
-
+        char const* raw1 = lua_tostring(L, 1);
+        Wt::WString text = Wt::WString(raw1);
+        WRadioButton* l_result = new WRadioButton(text);
+        MyApplication* app = MyApplication::instance();
+        if (!app) {
+            delete l_result;
+            throw std::logic_error("No WApplication when creating WRadioButton");
+        }
+        app->root()->addWidget(l_result);
+        luawt_toLua(L, l_result);
+        return 1;
     } else if (index == 3) {
-    char const * raw1 = lua_tostring(L, 1);
-    Wt::WString text = Wt::WString(raw1);
-    Wt::WContainerWidget* parent =
-        luawt_checkFromLua<Wt::WContainerWidget>(L, 2);
-    WRadioButton * l_result = new WRadioButton(text, parent);
-    luawt_toLua(L, l_result);
-    return 1;
-
+        char const* raw1 = lua_tostring(L, 1);
+        Wt::WString text = Wt::WString(raw1);
+        Wt::WContainerWidget* parent =
+            luawt_checkFromLua<Wt::WContainerWidget>(L, 2);
+        WRadioButton* l_result = new WRadioButton(text, parent);
+        luawt_toLua(L, l_result);
+        return 1;
     } else {
         return luaL_error(L, "Wrong arguments for WRadioButton.make");
     }

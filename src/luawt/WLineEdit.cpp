@@ -16,47 +16,41 @@ static const char* const* const luawt_WLineEdit_make_args[] = {WLineEdit_make_ar
 int luawt_WLineEdit_make(lua_State* L) {
     int index = luawt_getSuitableArgsGroup(L, luawt_WLineEdit_make_args);
     if (index == 0) {
-    WLineEdit * l_result = new WLineEdit();
-    MyApplication* app = MyApplication::instance();
-    if (!app) {
-        delete l_result;
-        throw std::logic_error("No WApplication when creating WLineEdit");
-    }
-    app->root()->addWidget(l_result);
-    
-    luawt_toLua(L, l_result);
-    return 1;
-
+        WLineEdit* l_result = new WLineEdit();
+        MyApplication* app = MyApplication::instance();
+        if (!app) {
+            delete l_result;
+            throw std::logic_error("No WApplication when creating WLineEdit");
+        }
+        app->root()->addWidget(l_result);
+        luawt_toLua(L, l_result);
+        return 1;
     } else if (index == 1) {
-    Wt::WContainerWidget* parent =
-        luawt_checkFromLua<Wt::WContainerWidget>(L, 1);
-    WLineEdit * l_result = new WLineEdit(parent);
-    luawt_toLua(L, l_result);
-    return 1;
-
+        Wt::WContainerWidget* parent =
+            luawt_checkFromLua<Wt::WContainerWidget>(L, 1);
+        WLineEdit* l_result = new WLineEdit(parent);
+        luawt_toLua(L, l_result);
+        return 1;
     } else if (index == 2) {
-    char const * raw1 = lua_tostring(L, 1);
-    Wt::WString content = Wt::WString(raw1);
-    WLineEdit * l_result = new WLineEdit(content);
-    MyApplication* app = MyApplication::instance();
-    if (!app) {
-        delete l_result;
-        throw std::logic_error("No WApplication when creating WLineEdit");
-    }
-    app->root()->addWidget(l_result);
-    
-    luawt_toLua(L, l_result);
-    return 1;
-
+        char const* raw1 = lua_tostring(L, 1);
+        Wt::WString content = Wt::WString(raw1);
+        WLineEdit* l_result = new WLineEdit(content);
+        MyApplication* app = MyApplication::instance();
+        if (!app) {
+            delete l_result;
+            throw std::logic_error("No WApplication when creating WLineEdit");
+        }
+        app->root()->addWidget(l_result);
+        luawt_toLua(L, l_result);
+        return 1;
     } else if (index == 3) {
-    char const * raw1 = lua_tostring(L, 1);
-    Wt::WString content = Wt::WString(raw1);
-    Wt::WContainerWidget* parent =
-        luawt_checkFromLua<Wt::WContainerWidget>(L, 2);
-    WLineEdit * l_result = new WLineEdit(content, parent);
-    luawt_toLua(L, l_result);
-    return 1;
-
+        char const* raw1 = lua_tostring(L, 1);
+        Wt::WString content = Wt::WString(raw1);
+        Wt::WContainerWidget* parent =
+            luawt_checkFromLua<Wt::WContainerWidget>(L, 2);
+        WLineEdit* l_result = new WLineEdit(content, parent);
+        luawt_toLua(L, l_result);
+        return 1;
     } else {
         return luaL_error(L, "Wrong arguments for WLineEdit.make");
     }
@@ -69,10 +63,9 @@ int luawt_WLineEdit_setTextSize(lua_State* L) {
     int index = luawt_getSuitableArgsGroup(L, luawt_WLineEdit_setTextSize_args);
     WLineEdit* self = luawt_checkFromLua<WLineEdit>(L, 1);
     if (index == 0) {
-    int chars = lua_tointeger(L, 2);
-    self->setTextSize(chars);
-    return 0;
-    
+        int chars = lua_tointeger(L, 2);
+        self->setTextSize(chars);
+        return 0;
     } else {
         return luaL_error(L, "Wrong arguments for WLineEdit.setTextSize");
     }
@@ -85,10 +78,9 @@ int luawt_WLineEdit_textSize(lua_State* L) {
     int index = luawt_getSuitableArgsGroup(L, luawt_WLineEdit_textSize_args);
     WLineEdit* self = luawt_checkFromLua<WLineEdit>(L, 1);
     if (index == 0) {
-    int l_result = self->textSize();
-    lua_pushinteger(L, l_result);
-    return 1;
-
+        int l_result = self->textSize();
+        lua_pushinteger(L, l_result);
+        return 1;
     } else {
         return luaL_error(L, "Wrong arguments for WLineEdit.textSize");
     }
@@ -101,16 +93,15 @@ int luawt_WLineEdit_setEchoMode(lua_State* L) {
     int index = luawt_getSuitableArgsGroup(L, luawt_WLineEdit_setEchoMode_args);
     WLineEdit* self = luawt_checkFromLua<WLineEdit>(L, 1);
     if (index == 0) {
-    Wt::WLineEdit::EchoMode echoMode = static_cast<Wt::WLineEdit::EchoMode>(luawt_getEnum(
-        L,
-        luawt_enum_WLineEdit_EchoMode_str,
-        luawt_enum_WLineEdit_EchoMode_val,
-        2,
-        "Wrong enum type in args of WLineEdit.setEchoMode"
-    ));
-    self->setEchoMode(echoMode);
-    return 0;
-    
+        Wt::WLineEdit::EchoMode echoMode = static_cast<Wt::WLineEdit::EchoMode>(luawt_getEnum(
+                    L,
+                    luawt_enum_WLineEdit_EchoMode_str,
+                    luawt_enum_WLineEdit_EchoMode_val,
+                    2,
+                    "Wrong enum type in args of WLineEdit.setEchoMode"
+                ));
+        self->setEchoMode(echoMode);
+        return 0;
     } else {
         return luaL_error(L, "Wrong arguments for WLineEdit.setEchoMode");
     }
@@ -123,10 +114,9 @@ int luawt_WLineEdit_text(lua_State* L) {
     int index = luawt_getSuitableArgsGroup(L, luawt_WLineEdit_text_args);
     WLineEdit* self = luawt_checkFromLua<WLineEdit>(L, 1);
     if (index == 0) {
-    Wt::WString const & l_result = self->text();
-    lua_pushstring(L, l_result.toUTF8().c_str());
-    return 1;
-
+        Wt::WString const& l_result = self->text();
+        lua_pushstring(L, l_result.toUTF8().c_str());
+        return 1;
     } else {
         return luaL_error(L, "Wrong arguments for WLineEdit.text");
     }
@@ -139,11 +129,10 @@ int luawt_WLineEdit_setText(lua_State* L) {
     int index = luawt_getSuitableArgsGroup(L, luawt_WLineEdit_setText_args);
     WLineEdit* self = luawt_checkFromLua<WLineEdit>(L, 1);
     if (index == 0) {
-    char const * raw2 = lua_tostring(L, 2);
-    Wt::WString text = Wt::WString(raw2);
-    self->setText(text);
-    return 0;
-    
+        char const* raw2 = lua_tostring(L, 2);
+        Wt::WString text = Wt::WString(raw2);
+        self->setText(text);
+        return 0;
     } else {
         return luaL_error(L, "Wrong arguments for WLineEdit.setText");
     }
@@ -156,10 +145,9 @@ int luawt_WLineEdit_echoMode(lua_State* L) {
     int index = luawt_getSuitableArgsGroup(L, luawt_WLineEdit_echoMode_args);
     WLineEdit* self = luawt_checkFromLua<WLineEdit>(L, 1);
     if (index == 0) {
-    Wt::WLineEdit::EchoMode l_result = self->echoMode();
-    luawt_returnEnum(L, luawt_enum_WLineEdit_EchoMode_str, luawt_enum_WLineEdit_EchoMode_val, l_result, "WLineEdit::EchoMode");
-    return 1;
-
+        Wt::WLineEdit::EchoMode l_result = self->echoMode();
+        luawt_returnEnum(L, luawt_enum_WLineEdit_EchoMode_str, luawt_enum_WLineEdit_EchoMode_val, l_result, "WLineEdit::EchoMode");
+        return 1;
     } else {
         return luaL_error(L, "Wrong arguments for WLineEdit.echoMode");
     }
@@ -172,10 +160,9 @@ int luawt_WLineEdit_setMaxLength(lua_State* L) {
     int index = luawt_getSuitableArgsGroup(L, luawt_WLineEdit_setMaxLength_args);
     WLineEdit* self = luawt_checkFromLua<WLineEdit>(L, 1);
     if (index == 0) {
-    int length = lua_tointeger(L, 2);
-    self->setMaxLength(length);
-    return 0;
-    
+        int length = lua_tointeger(L, 2);
+        self->setMaxLength(length);
+        return 0;
     } else {
         return luaL_error(L, "Wrong arguments for WLineEdit.setMaxLength");
     }
@@ -188,10 +175,9 @@ int luawt_WLineEdit_selectionStart(lua_State* L) {
     int index = luawt_getSuitableArgsGroup(L, luawt_WLineEdit_selectionStart_args);
     WLineEdit* self = luawt_checkFromLua<WLineEdit>(L, 1);
     if (index == 0) {
-    int l_result = self->selectionStart();
-    lua_pushinteger(L, l_result);
-    return 1;
-
+        int l_result = self->selectionStart();
+        lua_pushinteger(L, l_result);
+        return 1;
     } else {
         return luaL_error(L, "Wrong arguments for WLineEdit.selectionStart");
     }
@@ -204,10 +190,9 @@ int luawt_WLineEdit_maxLength(lua_State* L) {
     int index = luawt_getSuitableArgsGroup(L, luawt_WLineEdit_maxLength_args);
     WLineEdit* self = luawt_checkFromLua<WLineEdit>(L, 1);
     if (index == 0) {
-    int l_result = self->maxLength();
-    lua_pushinteger(L, l_result);
-    return 1;
-
+        int l_result = self->maxLength();
+        lua_pushinteger(L, l_result);
+        return 1;
     } else {
         return luaL_error(L, "Wrong arguments for WLineEdit.maxLength");
     }
@@ -220,10 +205,9 @@ int luawt_WLineEdit_selectedText(lua_State* L) {
     int index = luawt_getSuitableArgsGroup(L, luawt_WLineEdit_selectedText_args);
     WLineEdit* self = luawt_checkFromLua<WLineEdit>(L, 1);
     if (index == 0) {
-    Wt::WString l_result = self->selectedText();
-    lua_pushstring(L, l_result.toUTF8().c_str());
-    return 1;
-
+        Wt::WString l_result = self->selectedText();
+        lua_pushstring(L, l_result.toUTF8().c_str());
+        return 1;
     } else {
         return luaL_error(L, "Wrong arguments for WLineEdit.selectedText");
     }
@@ -236,10 +220,9 @@ int luawt_WLineEdit_hasSelectedText(lua_State* L) {
     int index = luawt_getSuitableArgsGroup(L, luawt_WLineEdit_hasSelectedText_args);
     WLineEdit* self = luawt_checkFromLua<WLineEdit>(L, 1);
     if (index == 0) {
-    bool l_result = self->hasSelectedText();
-    lua_pushboolean(L, l_result);
-    return 1;
-
+        bool l_result = self->hasSelectedText();
+        lua_pushboolean(L, l_result);
+        return 1;
     } else {
         return luaL_error(L, "Wrong arguments for WLineEdit.hasSelectedText");
     }
@@ -252,11 +235,10 @@ int luawt_WLineEdit_setValueText(lua_State* L) {
     int index = luawt_getSuitableArgsGroup(L, luawt_WLineEdit_setValueText_args);
     WLineEdit* self = luawt_checkFromLua<WLineEdit>(L, 1);
     if (index == 0) {
-    char const * raw2 = lua_tostring(L, 2);
-    Wt::WString value = Wt::WString(raw2);
-    self->setValueText(value);
-    return 0;
-    
+        char const* raw2 = lua_tostring(L, 2);
+        Wt::WString value = Wt::WString(raw2);
+        self->setValueText(value);
+        return 0;
     } else {
         return luaL_error(L, "Wrong arguments for WLineEdit.setValueText");
     }
@@ -269,10 +251,9 @@ int luawt_WLineEdit_cursorPosition(lua_State* L) {
     int index = luawt_getSuitableArgsGroup(L, luawt_WLineEdit_cursorPosition_args);
     WLineEdit* self = luawt_checkFromLua<WLineEdit>(L, 1);
     if (index == 0) {
-    int l_result = self->cursorPosition();
-    lua_pushinteger(L, l_result);
-    return 1;
-
+        int l_result = self->cursorPosition();
+        lua_pushinteger(L, l_result);
+        return 1;
     } else {
         return luaL_error(L, "Wrong arguments for WLineEdit.cursorPosition");
     }
@@ -285,10 +266,9 @@ int luawt_WLineEdit_valueText(lua_State* L) {
     int index = luawt_getSuitableArgsGroup(L, luawt_WLineEdit_valueText_args);
     WLineEdit* self = luawt_checkFromLua<WLineEdit>(L, 1);
     if (index == 0) {
-    Wt::WString l_result = self->valueText();
-    lua_pushstring(L, l_result.toUTF8().c_str());
-    return 1;
-
+        Wt::WString l_result = self->valueText();
+        lua_pushstring(L, l_result.toUTF8().c_str());
+        return 1;
     } else {
         return luaL_error(L, "Wrong arguments for WLineEdit.valueText");
     }

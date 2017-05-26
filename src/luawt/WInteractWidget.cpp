@@ -12,9 +12,8 @@ int luawt_WInteractWidget_load(lua_State* L) {
     int index = luawt_getSuitableArgsGroup(L, luawt_WInteractWidget_load_args);
     WInteractWidget* self = luawt_checkFromLua<WInteractWidget>(L, 1);
     if (index == 0) {
-    self->load();
-    return 0;
-    
+        self->load();
+        return 0;
     } else {
         return luaL_error(L, "Wrong arguments for WInteractWidget.load");
     }
@@ -27,10 +26,9 @@ int luawt_WInteractWidget_mouseOverDelay(lua_State* L) {
     int index = luawt_getSuitableArgsGroup(L, luawt_WInteractWidget_mouseOverDelay_args);
     WInteractWidget* self = luawt_checkFromLua<WInteractWidget>(L, 1);
     if (index == 0) {
-    int l_result = self->mouseOverDelay();
-    lua_pushinteger(L, l_result);
-    return 1;
-
+        int l_result = self->mouseOverDelay();
+        lua_pushinteger(L, l_result);
+        return 1;
     } else {
         return luaL_error(L, "Wrong arguments for WInteractWidget.mouseOverDelay");
     }
@@ -43,10 +41,9 @@ int luawt_WInteractWidget_isEnabled(lua_State* L) {
     int index = luawt_getSuitableArgsGroup(L, luawt_WInteractWidget_isEnabled_args);
     WInteractWidget* self = luawt_checkFromLua<WInteractWidget>(L, 1);
     if (index == 0) {
-    bool l_result = self->isEnabled();
-    lua_pushboolean(L, l_result);
-    return 1;
-
+        bool l_result = self->isEnabled();
+        lua_pushboolean(L, l_result);
+        return 1;
     } else {
         return luaL_error(L, "Wrong arguments for WInteractWidget.isEnabled");
     }
@@ -59,10 +56,9 @@ int luawt_WInteractWidget_setMouseOverDelay(lua_State* L) {
     int index = luawt_getSuitableArgsGroup(L, luawt_WInteractWidget_setMouseOverDelay_args);
     WInteractWidget* self = luawt_checkFromLua<WInteractWidget>(L, 1);
     if (index == 0) {
-    int delay = lua_tointeger(L, 2);
-    self->setMouseOverDelay(delay);
-    return 0;
-    
+        int delay = lua_tointeger(L, 2);
+        self->setMouseOverDelay(delay);
+        return 0;
     } else {
         return luaL_error(L, "Wrong arguments for WInteractWidget.setMouseOverDelay");
     }

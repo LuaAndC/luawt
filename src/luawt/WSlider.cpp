@@ -17,57 +17,51 @@ static const char* const* const luawt_WSlider_make_args[] = {WSlider_make_args0,
 int luawt_WSlider_make(lua_State* L) {
     int index = luawt_getSuitableArgsGroup(L, luawt_WSlider_make_args);
     if (index == 0) {
-    WSlider * l_result = new WSlider();
-    MyApplication* app = MyApplication::instance();
-    if (!app) {
-        delete l_result;
-        throw std::logic_error("No WApplication when creating WSlider");
-    }
-    app->root()->addWidget(l_result);
-    
-    luawt_toLua(L, l_result);
-    return 1;
-
+        WSlider* l_result = new WSlider();
+        MyApplication* app = MyApplication::instance();
+        if (!app) {
+            delete l_result;
+            throw std::logic_error("No WApplication when creating WSlider");
+        }
+        app->root()->addWidget(l_result);
+        luawt_toLua(L, l_result);
+        return 1;
     } else if (index == 1) {
-    Wt::WContainerWidget* parent =
-        luawt_checkFromLua<Wt::WContainerWidget>(L, 1);
-    WSlider * l_result = new WSlider(parent);
-    luawt_toLua(L, l_result);
-    return 1;
-
+        Wt::WContainerWidget* parent =
+            luawt_checkFromLua<Wt::WContainerWidget>(L, 1);
+        WSlider* l_result = new WSlider(parent);
+        luawt_toLua(L, l_result);
+        return 1;
     } else if (index == 2) {
-    Wt::Orientation orientation = static_cast<Wt::Orientation>(luawt_getEnum(
-        L,
-        luawt_enum_Orientation_str,
-        luawt_enum_Orientation_val,
-        1,
-        "Wrong enum type in args of WSlider.make"
-    ));
-    WSlider * l_result = new WSlider(orientation);
-    MyApplication* app = MyApplication::instance();
-    if (!app) {
-        delete l_result;
-        throw std::logic_error("No WApplication when creating WSlider");
-    }
-    app->root()->addWidget(l_result);
-    
-    luawt_toLua(L, l_result);
-    return 1;
-
+        Wt::Orientation orientation = static_cast<Wt::Orientation>(luawt_getEnum(
+                    L,
+                    luawt_enum_Orientation_str,
+                    luawt_enum_Orientation_val,
+                    1,
+                    "Wrong enum type in args of WSlider.make"
+                ));
+        WSlider* l_result = new WSlider(orientation);
+        MyApplication* app = MyApplication::instance();
+        if (!app) {
+            delete l_result;
+            throw std::logic_error("No WApplication when creating WSlider");
+        }
+        app->root()->addWidget(l_result);
+        luawt_toLua(L, l_result);
+        return 1;
     } else if (index == 3) {
-    Wt::Orientation orientation = static_cast<Wt::Orientation>(luawt_getEnum(
-        L,
-        luawt_enum_Orientation_str,
-        luawt_enum_Orientation_val,
-        1,
-        "Wrong enum type in args of WSlider.make"
-    ));
-    Wt::WContainerWidget* parent =
-        luawt_checkFromLua<Wt::WContainerWidget>(L, 2);
-    WSlider * l_result = new WSlider(orientation, parent);
-    luawt_toLua(L, l_result);
-    return 1;
-
+        Wt::Orientation orientation = static_cast<Wt::Orientation>(luawt_getEnum(
+                    L,
+                    luawt_enum_Orientation_str,
+                    luawt_enum_Orientation_val,
+                    1,
+                    "Wrong enum type in args of WSlider.make"
+                ));
+        Wt::WContainerWidget* parent =
+            luawt_checkFromLua<Wt::WContainerWidget>(L, 2);
+        WSlider* l_result = new WSlider(orientation, parent);
+        luawt_toLua(L, l_result);
+        return 1;
     } else {
         return luaL_error(L, "Wrong arguments for WSlider.make");
     }
@@ -80,16 +74,15 @@ int luawt_WSlider_setOrientation(lua_State* L) {
     int index = luawt_getSuitableArgsGroup(L, luawt_WSlider_setOrientation_args);
     WSlider* self = luawt_checkFromLua<WSlider>(L, 1);
     if (index == 0) {
-    Wt::Orientation orientation = static_cast<Wt::Orientation>(luawt_getEnum(
-        L,
-        luawt_enum_Orientation_str,
-        luawt_enum_Orientation_val,
-        2,
-        "Wrong enum type in args of WSlider.setOrientation"
-    ));
-    self->setOrientation(orientation);
-    return 0;
-    
+        Wt::Orientation orientation = static_cast<Wt::Orientation>(luawt_getEnum(
+                    L,
+                    luawt_enum_Orientation_str,
+                    luawt_enum_Orientation_val,
+                    2,
+                    "Wrong enum type in args of WSlider.setOrientation"
+                ));
+        self->setOrientation(orientation);
+        return 0;
     } else {
         return luaL_error(L, "Wrong arguments for WSlider.setOrientation");
     }
@@ -102,10 +95,9 @@ int luawt_WSlider_setMaximum(lua_State* L) {
     int index = luawt_getSuitableArgsGroup(L, luawt_WSlider_setMaximum_args);
     WSlider* self = luawt_checkFromLua<WSlider>(L, 1);
     if (index == 0) {
-    int maximum = lua_tointeger(L, 2);
-    self->setMaximum(maximum);
-    return 0;
-    
+        int maximum = lua_tointeger(L, 2);
+        self->setMaximum(maximum);
+        return 0;
     } else {
         return luaL_error(L, "Wrong arguments for WSlider.setMaximum");
     }
@@ -118,10 +110,9 @@ int luawt_WSlider_setValue(lua_State* L) {
     int index = luawt_getSuitableArgsGroup(L, luawt_WSlider_setValue_args);
     WSlider* self = luawt_checkFromLua<WSlider>(L, 1);
     if (index == 0) {
-    int value = lua_tointeger(L, 2);
-    self->setValue(value);
-    return 0;
-    
+        int value = lua_tointeger(L, 2);
+        self->setValue(value);
+        return 0;
     } else {
         return luaL_error(L, "Wrong arguments for WSlider.setValue");
     }
@@ -134,10 +125,9 @@ int luawt_WSlider_setNativeControl(lua_State* L) {
     int index = luawt_getSuitableArgsGroup(L, luawt_WSlider_setNativeControl_args);
     WSlider* self = luawt_checkFromLua<WSlider>(L, 1);
     if (index == 0) {
-    bool nativeControl = lua_toboolean(L, 2);
-    self->setNativeControl(nativeControl);
-    return 0;
-    
+        bool nativeControl = lua_toboolean(L, 2);
+        self->setNativeControl(nativeControl);
+        return 0;
     } else {
         return luaL_error(L, "Wrong arguments for WSlider.setNativeControl");
     }
@@ -150,10 +140,9 @@ int luawt_WSlider_orientation(lua_State* L) {
     int index = luawt_getSuitableArgsGroup(L, luawt_WSlider_orientation_args);
     WSlider* self = luawt_checkFromLua<WSlider>(L, 1);
     if (index == 0) {
-    Wt::Orientation l_result = self->orientation();
-    luawt_returnEnum(L, luawt_enum_Orientation_str, luawt_enum_Orientation_val, l_result, "Orientation");
-    return 1;
-
+        Wt::Orientation l_result = self->orientation();
+        luawt_returnEnum(L, luawt_enum_Orientation_str, luawt_enum_Orientation_val, l_result, "Orientation");
+        return 1;
     } else {
         return luaL_error(L, "Wrong arguments for WSlider.orientation");
     }
@@ -166,10 +155,9 @@ int luawt_WSlider_valueText(lua_State* L) {
     int index = luawt_getSuitableArgsGroup(L, luawt_WSlider_valueText_args);
     WSlider* self = luawt_checkFromLua<WSlider>(L, 1);
     if (index == 0) {
-    Wt::WString l_result = self->valueText();
-    lua_pushstring(L, l_result.toUTF8().c_str());
-    return 1;
-
+        Wt::WString l_result = self->valueText();
+        lua_pushstring(L, l_result.toUTF8().c_str());
+        return 1;
     } else {
         return luaL_error(L, "Wrong arguments for WSlider.valueText");
     }
@@ -182,10 +170,9 @@ int luawt_WSlider_maximum(lua_State* L) {
     int index = luawt_getSuitableArgsGroup(L, luawt_WSlider_maximum_args);
     WSlider* self = luawt_checkFromLua<WSlider>(L, 1);
     if (index == 0) {
-    int l_result = self->maximum();
-    lua_pushinteger(L, l_result);
-    return 1;
-
+        int l_result = self->maximum();
+        lua_pushinteger(L, l_result);
+        return 1;
     } else {
         return luaL_error(L, "Wrong arguments for WSlider.maximum");
     }
@@ -198,10 +185,9 @@ int luawt_WSlider_value(lua_State* L) {
     int index = luawt_getSuitableArgsGroup(L, luawt_WSlider_value_args);
     WSlider* self = luawt_checkFromLua<WSlider>(L, 1);
     if (index == 0) {
-    int l_result = self->value();
-    lua_pushinteger(L, l_result);
-    return 1;
-
+        int l_result = self->value();
+        lua_pushinteger(L, l_result);
+        return 1;
     } else {
         return luaL_error(L, "Wrong arguments for WSlider.value");
     }
@@ -214,10 +200,9 @@ int luawt_WSlider_setDisabled(lua_State* L) {
     int index = luawt_getSuitableArgsGroup(L, luawt_WSlider_setDisabled_args);
     WSlider* self = luawt_checkFromLua<WSlider>(L, 1);
     if (index == 0) {
-    bool disabled = lua_toboolean(L, 2);
-    self->setDisabled(disabled);
-    return 0;
-    
+        bool disabled = lua_toboolean(L, 2);
+        self->setDisabled(disabled);
+        return 0;
     } else {
         return luaL_error(L, "Wrong arguments for WSlider.setDisabled");
     }
@@ -230,10 +215,9 @@ int luawt_WSlider_minimum(lua_State* L) {
     int index = luawt_getSuitableArgsGroup(L, luawt_WSlider_minimum_args);
     WSlider* self = luawt_checkFromLua<WSlider>(L, 1);
     if (index == 0) {
-    int l_result = self->minimum();
-    lua_pushinteger(L, l_result);
-    return 1;
-
+        int l_result = self->minimum();
+        lua_pushinteger(L, l_result);
+        return 1;
     } else {
         return luaL_error(L, "Wrong arguments for WSlider.minimum");
     }
@@ -246,13 +230,12 @@ int luawt_WSlider_resize(lua_State* L) {
     int index = luawt_getSuitableArgsGroup(L, luawt_WSlider_resize_args);
     WSlider* self = luawt_checkFromLua<WSlider>(L, 1);
     if (index == 0) {
-    double raw2 = lua_tonumber(L, 2);
-    Wt::WLength width = Wt::WLength(raw2);
-    double raw3 = lua_tonumber(L, 3);
-    Wt::WLength height = Wt::WLength(raw3);
-    self->resize(width, height);
-    return 0;
-    
+        double raw2 = lua_tonumber(L, 2);
+        Wt::WLength width = Wt::WLength(raw2);
+        double raw3 = lua_tonumber(L, 3);
+        Wt::WLength height = Wt::WLength(raw3);
+        self->resize(width, height);
+        return 0;
     } else {
         return luaL_error(L, "Wrong arguments for WSlider.resize");
     }
@@ -265,11 +248,10 @@ int luawt_WSlider_setValueText(lua_State* L) {
     int index = luawt_getSuitableArgsGroup(L, luawt_WSlider_setValueText_args);
     WSlider* self = luawt_checkFromLua<WSlider>(L, 1);
     if (index == 0) {
-    char const * raw2 = lua_tostring(L, 2);
-    Wt::WString value = Wt::WString(raw2);
-    self->setValueText(value);
-    return 0;
-    
+        char const* raw2 = lua_tostring(L, 2);
+        Wt::WString value = Wt::WString(raw2);
+        self->setValueText(value);
+        return 0;
     } else {
         return luaL_error(L, "Wrong arguments for WSlider.setValueText");
     }
@@ -282,16 +264,15 @@ int luawt_WSlider_setTickPosition(lua_State* L) {
     int index = luawt_getSuitableArgsGroup(L, luawt_WSlider_setTickPosition_args);
     WSlider* self = luawt_checkFromLua<WSlider>(L, 1);
     if (index == 0) {
-    Wt::WFlags<Wt::WSlider::TickPosition> tickPosition = static_cast<Wt::WSlider::TickPosition>(luawt_getEnum(
-        L,
-        luawt_enum_WSlider_TickPosition_str,
-        luawt_enum_WSlider_TickPosition_val,
-        2,
-        "Wrong enum type in args of WSlider.setTickPosition"
-    ));
-    self->setTickPosition(tickPosition);
-    return 0;
-    
+        Wt::WFlags<Wt::WSlider::TickPosition> tickPosition = static_cast<Wt::WSlider::TickPosition>(luawt_getEnum(
+                    L,
+                    luawt_enum_WSlider_TickPosition_str,
+                    luawt_enum_WSlider_TickPosition_val,
+                    2,
+                    "Wrong enum type in args of WSlider.setTickPosition"
+                ));
+        self->setTickPosition(tickPosition);
+        return 0;
     } else {
         return luaL_error(L, "Wrong arguments for WSlider.setTickPosition");
     }
@@ -304,10 +285,9 @@ int luawt_WSlider_setHandleWidth(lua_State* L) {
     int index = luawt_getSuitableArgsGroup(L, luawt_WSlider_setHandleWidth_args);
     WSlider* self = luawt_checkFromLua<WSlider>(L, 1);
     if (index == 0) {
-    int width = lua_tointeger(L, 2);
-    self->setHandleWidth(width);
-    return 0;
-    
+        int width = lua_tointeger(L, 2);
+        self->setHandleWidth(width);
+        return 0;
     } else {
         return luaL_error(L, "Wrong arguments for WSlider.setHandleWidth");
     }
@@ -320,10 +300,9 @@ int luawt_WSlider_nativeControl(lua_State* L) {
     int index = luawt_getSuitableArgsGroup(L, luawt_WSlider_nativeControl_args);
     WSlider* self = luawt_checkFromLua<WSlider>(L, 1);
     if (index == 0) {
-    bool l_result = self->nativeControl();
-    lua_pushboolean(L, l_result);
-    return 1;
-
+        bool l_result = self->nativeControl();
+        lua_pushboolean(L, l_result);
+        return 1;
     } else {
         return luaL_error(L, "Wrong arguments for WSlider.nativeControl");
     }
@@ -336,10 +315,9 @@ int luawt_WSlider_tickPosition(lua_State* L) {
     int index = luawt_getSuitableArgsGroup(L, luawt_WSlider_tickPosition_args);
     WSlider* self = luawt_checkFromLua<WSlider>(L, 1);
     if (index == 0) {
-    Wt::WFlags<Wt::WSlider::TickPosition> l_result = self->tickPosition();
-    luawt_returnEnum(L, luawt_enum_WSlider_TickPosition_str, luawt_enum_WSlider_TickPosition_val, l_result, "WSlider::TickPosition");
-    return 1;
-
+        Wt::WFlags<Wt::WSlider::TickPosition> l_result = self->tickPosition();
+        luawt_returnEnum(L, luawt_enum_WSlider_TickPosition_str, luawt_enum_WSlider_TickPosition_val, l_result, "WSlider::TickPosition");
+        return 1;
     } else {
         return luaL_error(L, "Wrong arguments for WSlider.tickPosition");
     }
@@ -352,11 +330,10 @@ int luawt_WSlider_setRange(lua_State* L) {
     int index = luawt_getSuitableArgsGroup(L, luawt_WSlider_setRange_args);
     WSlider* self = luawt_checkFromLua<WSlider>(L, 1);
     if (index == 0) {
-    int minimum = lua_tointeger(L, 2);
-    int maximum = lua_tointeger(L, 3);
-    self->setRange(minimum, maximum);
-    return 0;
-    
+        int minimum = lua_tointeger(L, 2);
+        int maximum = lua_tointeger(L, 3);
+        self->setRange(minimum, maximum);
+        return 0;
     } else {
         return luaL_error(L, "Wrong arguments for WSlider.setRange");
     }
@@ -369,10 +346,9 @@ int luawt_WSlider_tickInterval(lua_State* L) {
     int index = luawt_getSuitableArgsGroup(L, luawt_WSlider_tickInterval_args);
     WSlider* self = luawt_checkFromLua<WSlider>(L, 1);
     if (index == 0) {
-    int l_result = self->tickInterval();
-    lua_pushinteger(L, l_result);
-    return 1;
-
+        int l_result = self->tickInterval();
+        lua_pushinteger(L, l_result);
+        return 1;
     } else {
         return luaL_error(L, "Wrong arguments for WSlider.tickInterval");
     }
@@ -385,10 +361,9 @@ int luawt_WSlider_handleWidth(lua_State* L) {
     int index = luawt_getSuitableArgsGroup(L, luawt_WSlider_handleWidth_args);
     WSlider* self = luawt_checkFromLua<WSlider>(L, 1);
     if (index == 0) {
-    int l_result = self->handleWidth();
-    lua_pushinteger(L, l_result);
-    return 1;
-
+        int l_result = self->handleWidth();
+        lua_pushinteger(L, l_result);
+        return 1;
     } else {
         return luaL_error(L, "Wrong arguments for WSlider.handleWidth");
     }
@@ -401,10 +376,9 @@ int luawt_WSlider_setMinimum(lua_State* L) {
     int index = luawt_getSuitableArgsGroup(L, luawt_WSlider_setMinimum_args);
     WSlider* self = luawt_checkFromLua<WSlider>(L, 1);
     if (index == 0) {
-    int minimum = lua_tointeger(L, 2);
-    self->setMinimum(minimum);
-    return 0;
-    
+        int minimum = lua_tointeger(L, 2);
+        self->setMinimum(minimum);
+        return 0;
     } else {
         return luaL_error(L, "Wrong arguments for WSlider.setMinimum");
     }
@@ -417,10 +391,9 @@ int luawt_WSlider_setTickInterval(lua_State* L) {
     int index = luawt_getSuitableArgsGroup(L, luawt_WSlider_setTickInterval_args);
     WSlider* self = luawt_checkFromLua<WSlider>(L, 1);
     if (index == 0) {
-    int tickInterval = lua_tointeger(L, 2);
-    self->setTickInterval(tickInterval);
-    return 0;
-    
+        int tickInterval = lua_tointeger(L, 2);
+        self->setTickInterval(tickInterval);
+        return 0;
     } else {
         return luaL_error(L, "Wrong arguments for WSlider.setTickInterval");
     }

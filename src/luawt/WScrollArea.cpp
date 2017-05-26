@@ -14,24 +14,21 @@ static const char* const* const luawt_WScrollArea_make_args[] = {WScrollArea_mak
 int luawt_WScrollArea_make(lua_State* L) {
     int index = luawt_getSuitableArgsGroup(L, luawt_WScrollArea_make_args);
     if (index == 0) {
-    WScrollArea * l_result = new WScrollArea();
-    MyApplication* app = MyApplication::instance();
-    if (!app) {
-        delete l_result;
-        throw std::logic_error("No WApplication when creating WScrollArea");
-    }
-    app->root()->addWidget(l_result);
-    
-    luawt_toLua(L, l_result);
-    return 1;
-
+        WScrollArea* l_result = new WScrollArea();
+        MyApplication* app = MyApplication::instance();
+        if (!app) {
+            delete l_result;
+            throw std::logic_error("No WApplication when creating WScrollArea");
+        }
+        app->root()->addWidget(l_result);
+        luawt_toLua(L, l_result);
+        return 1;
     } else if (index == 1) {
-    Wt::WContainerWidget* parent =
-        luawt_checkFromLua<Wt::WContainerWidget>(L, 1);
-    WScrollArea * l_result = new WScrollArea(parent);
-    luawt_toLua(L, l_result);
-    return 1;
-
+        Wt::WContainerWidget* parent =
+            luawt_checkFromLua<Wt::WContainerWidget>(L, 1);
+        WScrollArea* l_result = new WScrollArea(parent);
+        luawt_toLua(L, l_result);
+        return 1;
     } else {
         return luaL_error(L, "Wrong arguments for WScrollArea.make");
     }
@@ -44,10 +41,9 @@ int luawt_WScrollArea_widget(lua_State* L) {
     int index = luawt_getSuitableArgsGroup(L, luawt_WScrollArea_widget_args);
     WScrollArea* self = luawt_checkFromLua<WScrollArea>(L, 1);
     if (index == 0) {
-    Wt::WWidget * l_result = self->widget();
-    luawt_toLua(L, l_result);
-    return 1;
-
+        Wt::WWidget* l_result = self->widget();
+        luawt_toLua(L, l_result);
+        return 1;
     } else {
         return luaL_error(L, "Wrong arguments for WScrollArea.widget");
     }
@@ -60,10 +56,9 @@ int luawt_WScrollArea_verticalScrollBarPolicy(lua_State* L) {
     int index = luawt_getSuitableArgsGroup(L, luawt_WScrollArea_verticalScrollBarPolicy_args);
     WScrollArea* self = luawt_checkFromLua<WScrollArea>(L, 1);
     if (index == 0) {
-    Wt::WScrollArea::ScrollBarPolicy l_result = self->verticalScrollBarPolicy();
-    luawt_returnEnum(L, luawt_enum_WScrollArea_ScrollBarPolicy_str, luawt_enum_WScrollArea_ScrollBarPolicy_val, l_result, "WScrollArea::ScrollBarPolicy");
-    return 1;
-
+        Wt::WScrollArea::ScrollBarPolicy l_result = self->verticalScrollBarPolicy();
+        luawt_returnEnum(L, luawt_enum_WScrollArea_ScrollBarPolicy_str, luawt_enum_WScrollArea_ScrollBarPolicy_val, l_result, "WScrollArea::ScrollBarPolicy");
+        return 1;
     } else {
         return luaL_error(L, "Wrong arguments for WScrollArea.verticalScrollBarPolicy");
     }
@@ -76,16 +71,15 @@ int luawt_WScrollArea_setVerticalScrollBarPolicy(lua_State* L) {
     int index = luawt_getSuitableArgsGroup(L, luawt_WScrollArea_setVerticalScrollBarPolicy_args);
     WScrollArea* self = luawt_checkFromLua<WScrollArea>(L, 1);
     if (index == 0) {
-    Wt::WScrollArea::ScrollBarPolicy scrollBarPolicy = static_cast<Wt::WScrollArea::ScrollBarPolicy>(luawt_getEnum(
-        L,
-        luawt_enum_WScrollArea_ScrollBarPolicy_str,
-        luawt_enum_WScrollArea_ScrollBarPolicy_val,
-        2,
-        "Wrong enum type in args of WScrollArea.setVerticalScrollBarPolicy"
-    ));
-    self->setVerticalScrollBarPolicy(scrollBarPolicy);
-    return 0;
-    
+        Wt::WScrollArea::ScrollBarPolicy scrollBarPolicy = static_cast<Wt::WScrollArea::ScrollBarPolicy>(luawt_getEnum(
+                    L,
+                    luawt_enum_WScrollArea_ScrollBarPolicy_str,
+                    luawt_enum_WScrollArea_ScrollBarPolicy_val,
+                    2,
+                    "Wrong enum type in args of WScrollArea.setVerticalScrollBarPolicy"
+                ));
+        self->setVerticalScrollBarPolicy(scrollBarPolicy);
+        return 0;
     } else {
         return luaL_error(L, "Wrong arguments for WScrollArea.setVerticalScrollBarPolicy");
     }
@@ -98,10 +92,9 @@ int luawt_WScrollArea_horizontalScrollBarPolicy(lua_State* L) {
     int index = luawt_getSuitableArgsGroup(L, luawt_WScrollArea_horizontalScrollBarPolicy_args);
     WScrollArea* self = luawt_checkFromLua<WScrollArea>(L, 1);
     if (index == 0) {
-    Wt::WScrollArea::ScrollBarPolicy l_result = self->horizontalScrollBarPolicy();
-    luawt_returnEnum(L, luawt_enum_WScrollArea_ScrollBarPolicy_str, luawt_enum_WScrollArea_ScrollBarPolicy_val, l_result, "WScrollArea::ScrollBarPolicy");
-    return 1;
-
+        Wt::WScrollArea::ScrollBarPolicy l_result = self->horizontalScrollBarPolicy();
+        luawt_returnEnum(L, luawt_enum_WScrollArea_ScrollBarPolicy_str, luawt_enum_WScrollArea_ScrollBarPolicy_val, l_result, "WScrollArea::ScrollBarPolicy");
+        return 1;
     } else {
         return luaL_error(L, "Wrong arguments for WScrollArea.horizontalScrollBarPolicy");
     }
@@ -114,16 +107,15 @@ int luawt_WScrollArea_setHorizontalScrollBarPolicy(lua_State* L) {
     int index = luawt_getSuitableArgsGroup(L, luawt_WScrollArea_setHorizontalScrollBarPolicy_args);
     WScrollArea* self = luawt_checkFromLua<WScrollArea>(L, 1);
     if (index == 0) {
-    Wt::WScrollArea::ScrollBarPolicy scrollBarPolicy = static_cast<Wt::WScrollArea::ScrollBarPolicy>(luawt_getEnum(
-        L,
-        luawt_enum_WScrollArea_ScrollBarPolicy_str,
-        luawt_enum_WScrollArea_ScrollBarPolicy_val,
-        2,
-        "Wrong enum type in args of WScrollArea.setHorizontalScrollBarPolicy"
-    ));
-    self->setHorizontalScrollBarPolicy(scrollBarPolicy);
-    return 0;
-    
+        Wt::WScrollArea::ScrollBarPolicy scrollBarPolicy = static_cast<Wt::WScrollArea::ScrollBarPolicy>(luawt_getEnum(
+                    L,
+                    luawt_enum_WScrollArea_ScrollBarPolicy_str,
+                    luawt_enum_WScrollArea_ScrollBarPolicy_val,
+                    2,
+                    "Wrong enum type in args of WScrollArea.setHorizontalScrollBarPolicy"
+                ));
+        self->setHorizontalScrollBarPolicy(scrollBarPolicy);
+        return 0;
     } else {
         return luaL_error(L, "Wrong arguments for WScrollArea.setHorizontalScrollBarPolicy");
     }
@@ -136,11 +128,10 @@ int luawt_WScrollArea_setWidget(lua_State* L) {
     int index = luawt_getSuitableArgsGroup(L, luawt_WScrollArea_setWidget_args);
     WScrollArea* self = luawt_checkFromLua<WScrollArea>(L, 1);
     if (index == 0) {
-    Wt::WWidget* widget =
-        luawt_checkFromLua<Wt::WWidget>(L, 2);
-    self->setWidget(widget);
-    return 0;
-    
+        Wt::WWidget* widget =
+            luawt_checkFromLua<Wt::WWidget>(L, 2);
+        self->setWidget(widget);
+        return 0;
     } else {
         return luaL_error(L, "Wrong arguments for WScrollArea.setWidget");
     }
@@ -153,16 +144,15 @@ int luawt_WScrollArea_setScrollBarPolicy(lua_State* L) {
     int index = luawt_getSuitableArgsGroup(L, luawt_WScrollArea_setScrollBarPolicy_args);
     WScrollArea* self = luawt_checkFromLua<WScrollArea>(L, 1);
     if (index == 0) {
-    Wt::WScrollArea::ScrollBarPolicy scrollBarPolicy = static_cast<Wt::WScrollArea::ScrollBarPolicy>(luawt_getEnum(
-        L,
-        luawt_enum_WScrollArea_ScrollBarPolicy_str,
-        luawt_enum_WScrollArea_ScrollBarPolicy_val,
-        2,
-        "Wrong enum type in args of WScrollArea.setScrollBarPolicy"
-    ));
-    self->setScrollBarPolicy(scrollBarPolicy);
-    return 0;
-    
+        Wt::WScrollArea::ScrollBarPolicy scrollBarPolicy = static_cast<Wt::WScrollArea::ScrollBarPolicy>(luawt_getEnum(
+                    L,
+                    luawt_enum_WScrollArea_ScrollBarPolicy_str,
+                    luawt_enum_WScrollArea_ScrollBarPolicy_val,
+                    2,
+                    "Wrong enum type in args of WScrollArea.setScrollBarPolicy"
+                ));
+        self->setScrollBarPolicy(scrollBarPolicy);
+        return 0;
     } else {
         return luaL_error(L, "Wrong arguments for WScrollArea.setScrollBarPolicy");
     }
@@ -175,15 +165,13 @@ int luawt_WScrollArea_takeWidget(lua_State* L) {
     int index = luawt_getSuitableArgsGroup(L, luawt_WScrollArea_takeWidget_args);
     WScrollArea* self = luawt_checkFromLua<WScrollArea>(L, 1);
     if (index == 0) {
-    Wt::WWidget * l_result = self->takeWidget();
-    luawt_toLua(L, l_result);
-    return 1;
-
+        Wt::WWidget* l_result = self->takeWidget();
+        luawt_toLua(L, l_result);
+        return 1;
     } else {
         return luaL_error(L, "Wrong arguments for WScrollArea.takeWidget");
     }
 }
-
 
 static const luaL_Reg luawt_WScrollArea_methods[] = {
     METHOD(WScrollArea, setWidget),

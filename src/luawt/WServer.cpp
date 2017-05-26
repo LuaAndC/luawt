@@ -25,7 +25,7 @@ public:
             new MyApplication(0, shared_, env)
         );
         int status = luaL_loadstring(app->L(),
-                                     code_.c_str());
+                code_.c_str());
         checkPcallStatus(app->L(), status);
         luawt_toLua<MyApplication>(app->L(), &(*app));
         WEnvironment& env_nonconst =
@@ -89,8 +89,8 @@ int luawt_WServer_make(lua_State* L) {
     }
     opt.push_back(0);
     WServer* server = reinterpret_cast<WServer*>(
-        lua_newuserdata(L, sizeof(WServer))
-    );
+            lua_newuserdata(L, sizeof(WServer))
+        );
     int argc = opt.size() - 1;
     char** argv = const_cast<char**>(&opt[0]);
     new (server) WServer();
@@ -109,8 +109,8 @@ int luawt_WServer_make(lua_State* L) {
 
 int luawt_WServer_start(lua_State* L) {
     WServer* server = reinterpret_cast<WServer*>(
-        luaL_checkudata(L, 1, "luawt_WServer")
-    );
+            luaL_checkudata(L, 1, "luawt_WServer")
+        );
     bool ok = server->start();
     lua_pushboolean(L, ok);
     return 1;
@@ -118,8 +118,8 @@ int luawt_WServer_start(lua_State* L) {
 
 int luawt_WServer_stop(lua_State* L) {
     WServer* s = reinterpret_cast<WServer*>(
-        luaL_checkudata(L, 1, "luawt_WServer")
-    );
+            luaL_checkudata(L, 1, "luawt_WServer")
+        );
     bool force = lua_toboolean(L, 2);
     if (force) {
         s->ioService().boost::asio::io_service::stop();
@@ -130,16 +130,16 @@ int luawt_WServer_stop(lua_State* L) {
 
 int luawt_WServer_waitForShutdown(lua_State* L) {
     WServer* s = reinterpret_cast<WServer*>(
-        luaL_checkudata(L, 1, "luawt_WServer")
-    );
+            luaL_checkudata(L, 1, "luawt_WServer")
+        );
     s->waitForShutdown();
     return 0;
 }
 
 int luawt_WServer_gc(lua_State* L) {
     WServer* s = reinterpret_cast<WServer*>(
-        luaL_checkudata(L, 1, "luawt_WServer")
-    );
+            luaL_checkudata(L, 1, "luawt_WServer")
+        );
     s->WServer::~WServer();
     return 0;
 }

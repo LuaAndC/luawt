@@ -12,9 +12,8 @@ int luawt_WViewWidget_load(lua_State* L) {
     int index = luawt_getSuitableArgsGroup(L, luawt_WViewWidget_load_args);
     WViewWidget* self = luawt_checkFromLua<WViewWidget>(L, 1);
     if (index == 0) {
-    self->load();
-    return 0;
-    
+        self->load();
+        return 0;
     } else {
         return luaL_error(L, "Wrong arguments for WViewWidget.load");
     }
@@ -27,9 +26,8 @@ int luawt_WViewWidget_refresh(lua_State* L) {
     int index = luawt_getSuitableArgsGroup(L, luawt_WViewWidget_refresh_args);
     WViewWidget* self = luawt_checkFromLua<WViewWidget>(L, 1);
     if (index == 0) {
-    self->refresh();
-    return 0;
-    
+        self->refresh();
+        return 0;
     } else {
         return luaL_error(L, "Wrong arguments for WViewWidget.refresh");
     }
@@ -42,9 +40,8 @@ int luawt_WViewWidget_update(lua_State* L) {
     int index = luawt_getSuitableArgsGroup(L, luawt_WViewWidget_update_args);
     WViewWidget* self = luawt_checkFromLua<WViewWidget>(L, 1);
     if (index == 0) {
-    self->update();
-    return 0;
-    
+        self->update();
+        return 0;
     } else {
         return luaL_error(L, "Wrong arguments for WViewWidget.update");
     }
@@ -57,21 +54,19 @@ int luawt_WViewWidget_render(lua_State* L) {
     int index = luawt_getSuitableArgsGroup(L, luawt_WViewWidget_render_args);
     WViewWidget* self = luawt_checkFromLua<WViewWidget>(L, 1);
     if (index == 0) {
-    Wt::WFlags<Wt::RenderFlag> flags = static_cast<Wt::RenderFlag>(luawt_getEnum(
-        L,
-        luawt_enum_RenderFlag_str,
-        luawt_enum_RenderFlag_val,
-        2,
-        "Wrong enum type in args of WViewWidget.render"
-    ));
-    self->render(flags);
-    return 0;
-    
+        Wt::WFlags<Wt::RenderFlag> flags = static_cast<Wt::RenderFlag>(luawt_getEnum(
+                    L,
+                    luawt_enum_RenderFlag_str,
+                    luawt_enum_RenderFlag_val,
+                    2,
+                    "Wrong enum type in args of WViewWidget.render"
+                ));
+        self->render(flags);
+        return 0;
     } else {
         return luaL_error(L, "Wrong arguments for WViewWidget.render");
     }
 }
-
 
 static const luaL_Reg luawt_WViewWidget_methods[] = {
     METHOD(WViewWidget, update),

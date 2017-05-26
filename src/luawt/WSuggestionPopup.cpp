@@ -14,10 +14,9 @@ int luawt_WSuggestionPopup_setGlobalPopup(lua_State* L) {
     int index = luawt_getSuitableArgsGroup(L, luawt_WSuggestionPopup_setGlobalPopup_args);
     WSuggestionPopup* self = luawt_checkFromLua<WSuggestionPopup>(L, 1);
     if (index == 0) {
-    bool global = lua_toboolean(L, 2);
-    self->setGlobalPopup(global);
-    return 0;
-    
+        bool global = lua_toboolean(L, 2);
+        self->setGlobalPopup(global);
+        return 0;
     } else {
         return luaL_error(L, "Wrong arguments for WSuggestionPopup.setGlobalPopup");
     }
@@ -31,19 +30,17 @@ int luawt_WSuggestionPopup_addSuggestion(lua_State* L) {
     int index = luawt_getSuitableArgsGroup(L, luawt_WSuggestionPopup_addSuggestion_args);
     WSuggestionPopup* self = luawt_checkFromLua<WSuggestionPopup>(L, 1);
     if (index == 0) {
-    char const * raw2 = lua_tostring(L, 2);
-    Wt::WString suggestionText = Wt::WString(raw2);
-    self->addSuggestion(suggestionText);
-    return 0;
-    
+        char const* raw2 = lua_tostring(L, 2);
+        Wt::WString suggestionText = Wt::WString(raw2);
+        self->addSuggestion(suggestionText);
+        return 0;
     } else if (index == 1) {
-    char const * raw2 = lua_tostring(L, 2);
-    Wt::WString suggestionText = Wt::WString(raw2);
-    char const * raw3 = lua_tostring(L, 3);
-    Wt::WString suggestionValue = Wt::WString(raw3);
-    self->addSuggestion(suggestionText, suggestionValue);
-    return 0;
-    
+        char const* raw2 = lua_tostring(L, 2);
+        Wt::WString suggestionText = Wt::WString(raw2);
+        char const* raw3 = lua_tostring(L, 3);
+        Wt::WString suggestionValue = Wt::WString(raw3);
+        self->addSuggestion(suggestionText, suggestionValue);
+        return 0;
     } else {
         return luaL_error(L, "Wrong arguments for WSuggestionPopup.addSuggestion");
     }
@@ -57,24 +54,22 @@ int luawt_WSuggestionPopup_forEdit(lua_State* L) {
     int index = luawt_getSuitableArgsGroup(L, luawt_WSuggestionPopup_forEdit_args);
     WSuggestionPopup* self = luawt_checkFromLua<WSuggestionPopup>(L, 1);
     if (index == 0) {
-    Wt::WFormWidget* edit =
-        luawt_checkFromLua<Wt::WFormWidget>(L, 2);
-    self->forEdit(edit);
-    return 0;
-    
+        Wt::WFormWidget* edit =
+            luawt_checkFromLua<Wt::WFormWidget>(L, 2);
+        self->forEdit(edit);
+        return 0;
     } else if (index == 1) {
-    Wt::WFormWidget* edit =
-        luawt_checkFromLua<Wt::WFormWidget>(L, 2);
-    Wt::WFlags<Wt::WSuggestionPopup::PopupTrigger> popupTriggers = static_cast<Wt::WSuggestionPopup::PopupTrigger>(luawt_getEnum(
-        L,
-        luawt_enum_WSuggestionPopup_PopupTrigger_str,
-        luawt_enum_WSuggestionPopup_PopupTrigger_val,
-        3,
-        "Wrong enum type in args of WSuggestionPopup.forEdit"
-    ));
-    self->forEdit(edit, popupTriggers);
-    return 0;
-    
+        Wt::WFormWidget* edit =
+            luawt_checkFromLua<Wt::WFormWidget>(L, 2);
+        Wt::WFlags<Wt::WSuggestionPopup::PopupTrigger> popupTriggers = static_cast<Wt::WSuggestionPopup::PopupTrigger>(luawt_getEnum(
+                    L,
+                    luawt_enum_WSuggestionPopup_PopupTrigger_str,
+                    luawt_enum_WSuggestionPopup_PopupTrigger_val,
+                    3,
+                    "Wrong enum type in args of WSuggestionPopup.forEdit"
+                ));
+        self->forEdit(edit, popupTriggers);
+        return 0;
     } else {
         return luaL_error(L, "Wrong arguments for WSuggestionPopup.forEdit");
     }
@@ -87,9 +82,8 @@ int luawt_WSuggestionPopup_clearSuggestions(lua_State* L) {
     int index = luawt_getSuitableArgsGroup(L, luawt_WSuggestionPopup_clearSuggestions_args);
     WSuggestionPopup* self = luawt_checkFromLua<WSuggestionPopup>(L, 1);
     if (index == 0) {
-    self->clearSuggestions();
-    return 0;
-    
+        self->clearSuggestions();
+        return 0;
     } else {
         return luaL_error(L, "Wrong arguments for WSuggestionPopup.clearSuggestions");
     }
@@ -102,11 +96,10 @@ int luawt_WSuggestionPopup_showAt(lua_State* L) {
     int index = luawt_getSuitableArgsGroup(L, luawt_WSuggestionPopup_showAt_args);
     WSuggestionPopup* self = luawt_checkFromLua<WSuggestionPopup>(L, 1);
     if (index == 0) {
-    Wt::WFormWidget* edit =
-        luawt_checkFromLua<Wt::WFormWidget>(L, 2);
-    self->showAt(edit);
-    return 0;
-    
+        Wt::WFormWidget* edit =
+            luawt_checkFromLua<Wt::WFormWidget>(L, 2);
+        self->showAt(edit);
+        return 0;
     } else {
         return luaL_error(L, "Wrong arguments for WSuggestionPopup.showAt");
     }
@@ -119,11 +112,10 @@ int luawt_WSuggestionPopup_removeEdit(lua_State* L) {
     int index = luawt_getSuitableArgsGroup(L, luawt_WSuggestionPopup_removeEdit_args);
     WSuggestionPopup* self = luawt_checkFromLua<WSuggestionPopup>(L, 1);
     if (index == 0) {
-    Wt::WFormWidget* edit =
-        luawt_checkFromLua<Wt::WFormWidget>(L, 2);
-    self->removeEdit(edit);
-    return 0;
-    
+        Wt::WFormWidget* edit =
+            luawt_checkFromLua<Wt::WFormWidget>(L, 2);
+        self->removeEdit(edit);
+        return 0;
     } else {
         return luaL_error(L, "Wrong arguments for WSuggestionPopup.removeEdit");
     }
@@ -136,10 +128,9 @@ int luawt_WSuggestionPopup_setFilterLength(lua_State* L) {
     int index = luawt_getSuitableArgsGroup(L, luawt_WSuggestionPopup_setFilterLength_args);
     WSuggestionPopup* self = luawt_checkFromLua<WSuggestionPopup>(L, 1);
     if (index == 0) {
-    int count = lua_tointeger(L, 2);
-    self->setFilterLength(count);
-    return 0;
-    
+        int count = lua_tointeger(L, 2);
+        self->setFilterLength(count);
+        return 0;
     } else {
         return luaL_error(L, "Wrong arguments for WSuggestionPopup.setFilterLength");
     }
@@ -152,10 +143,9 @@ int luawt_WSuggestionPopup_filterLength(lua_State* L) {
     int index = luawt_getSuitableArgsGroup(L, luawt_WSuggestionPopup_filterLength_args);
     WSuggestionPopup* self = luawt_checkFromLua<WSuggestionPopup>(L, 1);
     if (index == 0) {
-    int l_result = self->filterLength();
-    lua_pushinteger(L, l_result);
-    return 1;
-
+        int l_result = self->filterLength();
+        lua_pushinteger(L, l_result);
+        return 1;
     } else {
         return luaL_error(L, "Wrong arguments for WSuggestionPopup.filterLength");
     }
@@ -168,10 +158,9 @@ int luawt_WSuggestionPopup_setModelColumn(lua_State* L) {
     int index = luawt_getSuitableArgsGroup(L, luawt_WSuggestionPopup_setModelColumn_args);
     WSuggestionPopup* self = luawt_checkFromLua<WSuggestionPopup>(L, 1);
     if (index == 0) {
-    int index = lua_tointeger(L, 2);
-    self->setModelColumn(index);
-    return 0;
-    
+        int index = lua_tointeger(L, 2);
+        self->setModelColumn(index);
+        return 0;
     } else {
         return luaL_error(L, "Wrong arguments for WSuggestionPopup.setModelColumn");
     }
@@ -184,10 +173,9 @@ int luawt_WSuggestionPopup_defaultIndex(lua_State* L) {
     int index = luawt_getSuitableArgsGroup(L, luawt_WSuggestionPopup_defaultIndex_args);
     WSuggestionPopup* self = luawt_checkFromLua<WSuggestionPopup>(L, 1);
     if (index == 0) {
-    int l_result = self->defaultIndex();
-    lua_pushinteger(L, l_result);
-    return 1;
-
+        int l_result = self->defaultIndex();
+        lua_pushinteger(L, l_result);
+        return 1;
     } else {
         return luaL_error(L, "Wrong arguments for WSuggestionPopup.defaultIndex");
     }
@@ -200,15 +188,13 @@ int luawt_WSuggestionPopup_setDefaultIndex(lua_State* L) {
     int index = luawt_getSuitableArgsGroup(L, luawt_WSuggestionPopup_setDefaultIndex_args);
     WSuggestionPopup* self = luawt_checkFromLua<WSuggestionPopup>(L, 1);
     if (index == 0) {
-    int row = lua_tointeger(L, 2);
-    self->setDefaultIndex(row);
-    return 0;
-    
+        int row = lua_tointeger(L, 2);
+        self->setDefaultIndex(row);
+        return 0;
     } else {
         return luaL_error(L, "Wrong arguments for WSuggestionPopup.setDefaultIndex");
     }
 }
-
 
 static const luaL_Reg luawt_WSuggestionPopup_methods[] = {
     METHOD(WSuggestionPopup, forEdit),

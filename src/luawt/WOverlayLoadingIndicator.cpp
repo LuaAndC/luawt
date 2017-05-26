@@ -16,65 +16,57 @@ static const char* const* const luawt_WOverlayLoadingIndicator_make_args[] = {WO
 int luawt_WOverlayLoadingIndicator_make(lua_State* L) {
     int index = luawt_getSuitableArgsGroup(L, luawt_WOverlayLoadingIndicator_make_args);
     if (index == 0) {
-    WOverlayLoadingIndicator * l_result = new WOverlayLoadingIndicator();
-    MyApplication* app = MyApplication::instance();
-    if (!app) {
-        delete l_result;
-        throw std::logic_error("No WApplication when creating WOverlayLoadingIndicator");
-    }
-    app->root()->addWidget(l_result);
-    
-    luawt_toLua(L, l_result);
-    return 1;
-
+        WOverlayLoadingIndicator* l_result = new WOverlayLoadingIndicator();
+        MyApplication* app = MyApplication::instance();
+        if (!app) {
+            delete l_result;
+            throw std::logic_error("No WApplication when creating WOverlayLoadingIndicator");
+        }
+        app->root()->addWidget(l_result);
+        luawt_toLua(L, l_result);
+        return 1;
     } else if (index == 1) {
-    char const * raw1 = lua_tostring(L, 1);
-    Wt::WString styleClass = Wt::WString(raw1);
-    WOverlayLoadingIndicator * l_result = new WOverlayLoadingIndicator(styleClass);
-    MyApplication* app = MyApplication::instance();
-    if (!app) {
-        delete l_result;
-        throw std::logic_error("No WApplication when creating WOverlayLoadingIndicator");
-    }
-    app->root()->addWidget(l_result);
-    
-    luawt_toLua(L, l_result);
-    return 1;
-
+        char const* raw1 = lua_tostring(L, 1);
+        Wt::WString styleClass = Wt::WString(raw1);
+        WOverlayLoadingIndicator* l_result = new WOverlayLoadingIndicator(styleClass);
+        MyApplication* app = MyApplication::instance();
+        if (!app) {
+            delete l_result;
+            throw std::logic_error("No WApplication when creating WOverlayLoadingIndicator");
+        }
+        app->root()->addWidget(l_result);
+        luawt_toLua(L, l_result);
+        return 1;
     } else if (index == 2) {
-    char const * raw1 = lua_tostring(L, 1);
-    Wt::WString styleClass = Wt::WString(raw1);
-    char const * raw2 = lua_tostring(L, 2);
-    Wt::WString backgroundStyleClass = Wt::WString(raw2);
-    WOverlayLoadingIndicator * l_result = new WOverlayLoadingIndicator(styleClass, backgroundStyleClass);
-    MyApplication* app = MyApplication::instance();
-    if (!app) {
-        delete l_result;
-        throw std::logic_error("No WApplication when creating WOverlayLoadingIndicator");
-    }
-    app->root()->addWidget(l_result);
-    
-    luawt_toLua(L, l_result);
-    return 1;
-
+        char const* raw1 = lua_tostring(L, 1);
+        Wt::WString styleClass = Wt::WString(raw1);
+        char const* raw2 = lua_tostring(L, 2);
+        Wt::WString backgroundStyleClass = Wt::WString(raw2);
+        WOverlayLoadingIndicator* l_result = new WOverlayLoadingIndicator(styleClass, backgroundStyleClass);
+        MyApplication* app = MyApplication::instance();
+        if (!app) {
+            delete l_result;
+            throw std::logic_error("No WApplication when creating WOverlayLoadingIndicator");
+        }
+        app->root()->addWidget(l_result);
+        luawt_toLua(L, l_result);
+        return 1;
     } else if (index == 3) {
-    char const * raw1 = lua_tostring(L, 1);
-    Wt::WString styleClass = Wt::WString(raw1);
-    char const * raw2 = lua_tostring(L, 2);
-    Wt::WString backgroundStyleClass = Wt::WString(raw2);
-    char const * raw3 = lua_tostring(L, 3);
-    Wt::WString textStyleClass = Wt::WString(raw3);
-    WOverlayLoadingIndicator * l_result = new WOverlayLoadingIndicator(styleClass, backgroundStyleClass, textStyleClass);
-    MyApplication* app = MyApplication::instance();
-    if (!app) {
-        delete l_result;
-        throw std::logic_error("No WApplication when creating WOverlayLoadingIndicator");
-    }
-    app->root()->addWidget(l_result);
-    
-    luawt_toLua(L, l_result);
-    return 1;
-
+        char const* raw1 = lua_tostring(L, 1);
+        Wt::WString styleClass = Wt::WString(raw1);
+        char const* raw2 = lua_tostring(L, 2);
+        Wt::WString backgroundStyleClass = Wt::WString(raw2);
+        char const* raw3 = lua_tostring(L, 3);
+        Wt::WString textStyleClass = Wt::WString(raw3);
+        WOverlayLoadingIndicator* l_result = new WOverlayLoadingIndicator(styleClass, backgroundStyleClass, textStyleClass);
+        MyApplication* app = MyApplication::instance();
+        if (!app) {
+            delete l_result;
+            throw std::logic_error("No WApplication when creating WOverlayLoadingIndicator");
+        }
+        app->root()->addWidget(l_result);
+        luawt_toLua(L, l_result);
+        return 1;
     } else {
         return luaL_error(L, "Wrong arguments for WOverlayLoadingIndicator.make");
     }
@@ -87,10 +79,9 @@ int luawt_WOverlayLoadingIndicator_widget(lua_State* L) {
     int index = luawt_getSuitableArgsGroup(L, luawt_WOverlayLoadingIndicator_widget_args);
     WOverlayLoadingIndicator* self = luawt_checkFromLua<WOverlayLoadingIndicator>(L, 1);
     if (index == 0) {
-    Wt::WWidget * l_result = self->widget();
-    luawt_toLua(L, l_result);
-    return 1;
-
+        Wt::WWidget* l_result = self->widget();
+        luawt_toLua(L, l_result);
+        return 1;
     } else {
         return luaL_error(L, "Wrong arguments for WOverlayLoadingIndicator.widget");
     }
@@ -103,11 +94,10 @@ int luawt_WOverlayLoadingIndicator_setMessage(lua_State* L) {
     int index = luawt_getSuitableArgsGroup(L, luawt_WOverlayLoadingIndicator_setMessage_args);
     WOverlayLoadingIndicator* self = luawt_checkFromLua<WOverlayLoadingIndicator>(L, 1);
     if (index == 0) {
-    char const * raw2 = lua_tostring(L, 2);
-    Wt::WString text = Wt::WString(raw2);
-    self->setMessage(text);
-    return 0;
-    
+        char const* raw2 = lua_tostring(L, 2);
+        Wt::WString text = Wt::WString(raw2);
+        self->setMessage(text);
+        return 0;
     } else {
         return luaL_error(L, "Wrong arguments for WOverlayLoadingIndicator.setMessage");
     }

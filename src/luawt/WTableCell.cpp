@@ -13,10 +13,9 @@ int luawt_WTableCell_rowSpan(lua_State* L) {
     int index = luawt_getSuitableArgsGroup(L, luawt_WTableCell_rowSpan_args);
     WTableCell* self = luawt_checkFromLua<WTableCell>(L, 1);
     if (index == 0) {
-    int l_result = self->rowSpan();
-    lua_pushinteger(L, l_result);
-    return 1;
-
+        int l_result = self->rowSpan();
+        lua_pushinteger(L, l_result);
+        return 1;
     } else {
         return luaL_error(L, "Wrong arguments for WTableCell.rowSpan");
     }
@@ -29,10 +28,9 @@ int luawt_WTableCell_column(lua_State* L) {
     int index = luawt_getSuitableArgsGroup(L, luawt_WTableCell_column_args);
     WTableCell* self = luawt_checkFromLua<WTableCell>(L, 1);
     if (index == 0) {
-    int l_result = self->column();
-    lua_pushinteger(L, l_result);
-    return 1;
-
+        int l_result = self->column();
+        lua_pushinteger(L, l_result);
+        return 1;
     } else {
         return luaL_error(L, "Wrong arguments for WTableCell.column");
     }
@@ -45,10 +43,9 @@ int luawt_WTableCell_setRowSpan(lua_State* L) {
     int index = luawt_getSuitableArgsGroup(L, luawt_WTableCell_setRowSpan_args);
     WTableCell* self = luawt_checkFromLua<WTableCell>(L, 1);
     if (index == 0) {
-    int rowSpan = lua_tointeger(L, 2);
-    self->setRowSpan(rowSpan);
-    return 0;
-    
+        int rowSpan = lua_tointeger(L, 2);
+        self->setRowSpan(rowSpan);
+        return 0;
     } else {
         return luaL_error(L, "Wrong arguments for WTableCell.setRowSpan");
     }
@@ -61,10 +58,9 @@ int luawt_WTableCell_setColumnSpan(lua_State* L) {
     int index = luawt_getSuitableArgsGroup(L, luawt_WTableCell_setColumnSpan_args);
     WTableCell* self = luawt_checkFromLua<WTableCell>(L, 1);
     if (index == 0) {
-    int colSpan = lua_tointeger(L, 2);
-    self->setColumnSpan(colSpan);
-    return 0;
-    
+        int colSpan = lua_tointeger(L, 2);
+        self->setColumnSpan(colSpan);
+        return 0;
     } else {
         return luaL_error(L, "Wrong arguments for WTableCell.setColumnSpan");
     }
@@ -77,10 +73,9 @@ int luawt_WTableCell_columnSpan(lua_State* L) {
     int index = luawt_getSuitableArgsGroup(L, luawt_WTableCell_columnSpan_args);
     WTableCell* self = luawt_checkFromLua<WTableCell>(L, 1);
     if (index == 0) {
-    int l_result = self->columnSpan();
-    lua_pushinteger(L, l_result);
-    return 1;
-
+        int l_result = self->columnSpan();
+        lua_pushinteger(L, l_result);
+        return 1;
     } else {
         return luaL_error(L, "Wrong arguments for WTableCell.columnSpan");
     }
@@ -93,10 +88,9 @@ int luawt_WTableCell_table(lua_State* L) {
     int index = luawt_getSuitableArgsGroup(L, luawt_WTableCell_table_args);
     WTableCell* self = luawt_checkFromLua<WTableCell>(L, 1);
     if (index == 0) {
-    Wt::WTable * l_result = self->table();
-    luawt_toLua(L, l_result);
-    return 1;
-
+        Wt::WTable* l_result = self->table();
+        luawt_toLua(L, l_result);
+        return 1;
     } else {
         return luaL_error(L, "Wrong arguments for WTableCell.table");
     }
@@ -109,10 +103,9 @@ int luawt_WTableCell_row(lua_State* L) {
     int index = luawt_getSuitableArgsGroup(L, luawt_WTableCell_row_args);
     WTableCell* self = luawt_checkFromLua<WTableCell>(L, 1);
     if (index == 0) {
-    int l_result = self->row();
-    lua_pushinteger(L, l_result);
-    return 1;
-
+        int l_result = self->row();
+        lua_pushinteger(L, l_result);
+        return 1;
     } else {
         return luaL_error(L, "Wrong arguments for WTableCell.row");
     }

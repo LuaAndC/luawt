@@ -13,29 +13,25 @@ static const char* const* const luawt_WBreak_make_args[] = {WBreak_make_args0, W
 int luawt_WBreak_make(lua_State* L) {
     int index = luawt_getSuitableArgsGroup(L, luawt_WBreak_make_args);
     if (index == 0) {
-    WBreak * l_result = new WBreak();
-    MyApplication* app = MyApplication::instance();
-    if (!app) {
-        delete l_result;
-        throw std::logic_error("No WApplication when creating WBreak");
-    }
-    app->root()->addWidget(l_result);
-    
-    luawt_toLua(L, l_result);
-    return 1;
-
+        WBreak* l_result = new WBreak();
+        MyApplication* app = MyApplication::instance();
+        if (!app) {
+            delete l_result;
+            throw std::logic_error("No WApplication when creating WBreak");
+        }
+        app->root()->addWidget(l_result);
+        luawt_toLua(L, l_result);
+        return 1;
     } else if (index == 1) {
-    Wt::WContainerWidget* parent =
-        luawt_checkFromLua<Wt::WContainerWidget>(L, 1);
-    WBreak * l_result = new WBreak(parent);
-    luawt_toLua(L, l_result);
-    return 1;
-
+        Wt::WContainerWidget* parent =
+            luawt_checkFromLua<Wt::WContainerWidget>(L, 1);
+        WBreak* l_result = new WBreak(parent);
+        luawt_toLua(L, l_result);
+        return 1;
     } else {
         return luaL_error(L, "Wrong arguments for WBreak.make");
     }
 }
-
 
 static const luaL_Reg luawt_WBreak_methods[] = {
     {NULL, NULL},

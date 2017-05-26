@@ -14,24 +14,21 @@ static const char* const* const luawt_WVideo_make_args[] = {WVideo_make_args0, W
 int luawt_WVideo_make(lua_State* L) {
     int index = luawt_getSuitableArgsGroup(L, luawt_WVideo_make_args);
     if (index == 0) {
-    WVideo * l_result = new WVideo();
-    MyApplication* app = MyApplication::instance();
-    if (!app) {
-        delete l_result;
-        throw std::logic_error("No WApplication when creating WVideo");
-    }
-    app->root()->addWidget(l_result);
-    
-    luawt_toLua(L, l_result);
-    return 1;
-
+        WVideo* l_result = new WVideo();
+        MyApplication* app = MyApplication::instance();
+        if (!app) {
+            delete l_result;
+            throw std::logic_error("No WApplication when creating WVideo");
+        }
+        app->root()->addWidget(l_result);
+        luawt_toLua(L, l_result);
+        return 1;
     } else if (index == 1) {
-    Wt::WContainerWidget* parent =
-        luawt_checkFromLua<Wt::WContainerWidget>(L, 1);
-    WVideo * l_result = new WVideo(parent);
-    luawt_toLua(L, l_result);
-    return 1;
-
+        Wt::WContainerWidget* parent =
+            luawt_checkFromLua<Wt::WContainerWidget>(L, 1);
+        WVideo* l_result = new WVideo(parent);
+        luawt_toLua(L, l_result);
+        return 1;
     } else {
         return luaL_error(L, "Wrong arguments for WVideo.make");
     }
@@ -44,10 +41,9 @@ int luawt_WVideo_jsVideoRef(lua_State* L) {
     int index = luawt_getSuitableArgsGroup(L, luawt_WVideo_jsVideoRef_args);
     WVideo* self = luawt_checkFromLua<WVideo>(L, 1);
     if (index == 0) {
-    std::string l_result = self->jsVideoRef();
-    lua_pushstring(L, l_result.c_str());
-    return 1;
-
+        std::string l_result = self->jsVideoRef();
+        lua_pushstring(L, l_result.c_str());
+        return 1;
     } else {
         return luaL_error(L, "Wrong arguments for WVideo.jsVideoRef");
     }
@@ -60,13 +56,12 @@ int luawt_WVideo_resize(lua_State* L) {
     int index = luawt_getSuitableArgsGroup(L, luawt_WVideo_resize_args);
     WVideo* self = luawt_checkFromLua<WVideo>(L, 1);
     if (index == 0) {
-    double raw2 = lua_tonumber(L, 2);
-    Wt::WLength width = Wt::WLength(raw2);
-    double raw3 = lua_tonumber(L, 3);
-    Wt::WLength height = Wt::WLength(raw3);
-    self->resize(width, height);
-    return 0;
-    
+        double raw2 = lua_tonumber(L, 2);
+        Wt::WLength width = Wt::WLength(raw2);
+        double raw3 = lua_tonumber(L, 3);
+        Wt::WLength height = Wt::WLength(raw3);
+        self->resize(width, height);
+        return 0;
     } else {
         return luaL_error(L, "Wrong arguments for WVideo.resize");
     }
@@ -79,11 +74,10 @@ int luawt_WVideo_setPoster(lua_State* L) {
     int index = luawt_getSuitableArgsGroup(L, luawt_WVideo_setPoster_args);
     WVideo* self = luawt_checkFromLua<WVideo>(L, 1);
     if (index == 0) {
-    char const * raw2 = lua_tostring(L, 2);
-    std::string url = std::string(raw2);
-    self->setPoster(url);
-    return 0;
-    
+        char const* raw2 = lua_tostring(L, 2);
+        std::string url = std::string(raw2);
+        self->setPoster(url);
+        return 0;
     } else {
         return luaL_error(L, "Wrong arguments for WVideo.setPoster");
     }

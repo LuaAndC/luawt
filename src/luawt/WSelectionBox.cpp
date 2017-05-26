@@ -13,24 +13,21 @@ static const char* const* const luawt_WSelectionBox_make_args[] = {WSelectionBox
 int luawt_WSelectionBox_make(lua_State* L) {
     int index = luawt_getSuitableArgsGroup(L, luawt_WSelectionBox_make_args);
     if (index == 0) {
-    WSelectionBox * l_result = new WSelectionBox();
-    MyApplication* app = MyApplication::instance();
-    if (!app) {
-        delete l_result;
-        throw std::logic_error("No WApplication when creating WSelectionBox");
-    }
-    app->root()->addWidget(l_result);
-    
-    luawt_toLua(L, l_result);
-    return 1;
-
+        WSelectionBox* l_result = new WSelectionBox();
+        MyApplication* app = MyApplication::instance();
+        if (!app) {
+            delete l_result;
+            throw std::logic_error("No WApplication when creating WSelectionBox");
+        }
+        app->root()->addWidget(l_result);
+        luawt_toLua(L, l_result);
+        return 1;
     } else if (index == 1) {
-    Wt::WContainerWidget* parent =
-        luawt_checkFromLua<Wt::WContainerWidget>(L, 1);
-    WSelectionBox * l_result = new WSelectionBox(parent);
-    luawt_toLua(L, l_result);
-    return 1;
-
+        Wt::WContainerWidget* parent =
+            luawt_checkFromLua<Wt::WContainerWidget>(L, 1);
+        WSelectionBox* l_result = new WSelectionBox(parent);
+        luawt_toLua(L, l_result);
+        return 1;
     } else {
         return luaL_error(L, "Wrong arguments for WSelectionBox.make");
     }
@@ -43,9 +40,8 @@ int luawt_WSelectionBox_clearSelection(lua_State* L) {
     int index = luawt_getSuitableArgsGroup(L, luawt_WSelectionBox_clearSelection_args);
     WSelectionBox* self = luawt_checkFromLua<WSelectionBox>(L, 1);
     if (index == 0) {
-    self->clearSelection();
-    return 0;
-    
+        self->clearSelection();
+        return 0;
     } else {
         return luaL_error(L, "Wrong arguments for WSelectionBox.clearSelection");
     }
@@ -58,10 +54,9 @@ int luawt_WSelectionBox_selectionMode(lua_State* L) {
     int index = luawt_getSuitableArgsGroup(L, luawt_WSelectionBox_selectionMode_args);
     WSelectionBox* self = luawt_checkFromLua<WSelectionBox>(L, 1);
     if (index == 0) {
-    Wt::SelectionMode l_result = self->selectionMode();
-    luawt_returnEnum(L, luawt_enum_SelectionMode_str, luawt_enum_SelectionMode_val, l_result, "SelectionMode");
-    return 1;
-
+        Wt::SelectionMode l_result = self->selectionMode();
+        luawt_returnEnum(L, luawt_enum_SelectionMode_str, luawt_enum_SelectionMode_val, l_result, "SelectionMode");
+        return 1;
     } else {
         return luaL_error(L, "Wrong arguments for WSelectionBox.selectionMode");
     }
@@ -74,10 +69,9 @@ int luawt_WSelectionBox_verticalSize(lua_State* L) {
     int index = luawt_getSuitableArgsGroup(L, luawt_WSelectionBox_verticalSize_args);
     WSelectionBox* self = luawt_checkFromLua<WSelectionBox>(L, 1);
     if (index == 0) {
-    int l_result = self->verticalSize();
-    lua_pushinteger(L, l_result);
-    return 1;
-
+        int l_result = self->verticalSize();
+        lua_pushinteger(L, l_result);
+        return 1;
     } else {
         return luaL_error(L, "Wrong arguments for WSelectionBox.verticalSize");
     }
@@ -90,10 +84,9 @@ int luawt_WSelectionBox_setVerticalSize(lua_State* L) {
     int index = luawt_getSuitableArgsGroup(L, luawt_WSelectionBox_setVerticalSize_args);
     WSelectionBox* self = luawt_checkFromLua<WSelectionBox>(L, 1);
     if (index == 0) {
-    int items = lua_tointeger(L, 2);
-    self->setVerticalSize(items);
-    return 0;
-    
+        int items = lua_tointeger(L, 2);
+        self->setVerticalSize(items);
+        return 0;
     } else {
         return luaL_error(L, "Wrong arguments for WSelectionBox.setVerticalSize");
     }
@@ -106,16 +99,15 @@ int luawt_WSelectionBox_setSelectionMode(lua_State* L) {
     int index = luawt_getSuitableArgsGroup(L, luawt_WSelectionBox_setSelectionMode_args);
     WSelectionBox* self = luawt_checkFromLua<WSelectionBox>(L, 1);
     if (index == 0) {
-    Wt::SelectionMode mode = static_cast<Wt::SelectionMode>(luawt_getEnum(
-        L,
-        luawt_enum_SelectionMode_str,
-        luawt_enum_SelectionMode_val,
-        2,
-        "Wrong enum type in args of WSelectionBox.setSelectionMode"
-    ));
-    self->setSelectionMode(mode);
-    return 0;
-    
+        Wt::SelectionMode mode = static_cast<Wt::SelectionMode>(luawt_getEnum(
+                    L,
+                    luawt_enum_SelectionMode_str,
+                    luawt_enum_SelectionMode_val,
+                    2,
+                    "Wrong enum type in args of WSelectionBox.setSelectionMode"
+                ));
+        self->setSelectionMode(mode);
+        return 0;
     } else {
         return luaL_error(L, "Wrong arguments for WSelectionBox.setSelectionMode");
     }

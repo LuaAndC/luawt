@@ -13,24 +13,21 @@ static const char* const* const luawt_WDoubleSpinBox_make_args[] = {WDoubleSpinB
 int luawt_WDoubleSpinBox_make(lua_State* L) {
     int index = luawt_getSuitableArgsGroup(L, luawt_WDoubleSpinBox_make_args);
     if (index == 0) {
-    WDoubleSpinBox * l_result = new WDoubleSpinBox();
-    MyApplication* app = MyApplication::instance();
-    if (!app) {
-        delete l_result;
-        throw std::logic_error("No WApplication when creating WDoubleSpinBox");
-    }
-    app->root()->addWidget(l_result);
-    
-    luawt_toLua(L, l_result);
-    return 1;
-
+        WDoubleSpinBox* l_result = new WDoubleSpinBox();
+        MyApplication* app = MyApplication::instance();
+        if (!app) {
+            delete l_result;
+            throw std::logic_error("No WApplication when creating WDoubleSpinBox");
+        }
+        app->root()->addWidget(l_result);
+        luawt_toLua(L, l_result);
+        return 1;
     } else if (index == 1) {
-    Wt::WContainerWidget* parent =
-        luawt_checkFromLua<Wt::WContainerWidget>(L, 1);
-    WDoubleSpinBox * l_result = new WDoubleSpinBox(parent);
-    luawt_toLua(L, l_result);
-    return 1;
-
+        Wt::WContainerWidget* parent =
+            luawt_checkFromLua<Wt::WContainerWidget>(L, 1);
+        WDoubleSpinBox* l_result = new WDoubleSpinBox(parent);
+        luawt_toLua(L, l_result);
+        return 1;
     } else {
         return luaL_error(L, "Wrong arguments for WDoubleSpinBox.make");
     }
@@ -43,10 +40,9 @@ int luawt_WDoubleSpinBox_setMaximum(lua_State* L) {
     int index = luawt_getSuitableArgsGroup(L, luawt_WDoubleSpinBox_setMaximum_args);
     WDoubleSpinBox* self = luawt_checkFromLua<WDoubleSpinBox>(L, 1);
     if (index == 0) {
-    double maximum = lua_tonumber(L, 2);
-    self->setMaximum(maximum);
-    return 0;
-    
+        double maximum = lua_tonumber(L, 2);
+        self->setMaximum(maximum);
+        return 0;
     } else {
         return luaL_error(L, "Wrong arguments for WDoubleSpinBox.setMaximum");
     }
@@ -59,10 +55,9 @@ int luawt_WDoubleSpinBox_setValue(lua_State* L) {
     int index = luawt_getSuitableArgsGroup(L, luawt_WDoubleSpinBox_setValue_args);
     WDoubleSpinBox* self = luawt_checkFromLua<WDoubleSpinBox>(L, 1);
     if (index == 0) {
-    double value = lua_tonumber(L, 2);
-    self->setValue(value);
-    return 0;
-    
+        double value = lua_tonumber(L, 2);
+        self->setValue(value);
+        return 0;
     } else {
         return luaL_error(L, "Wrong arguments for WDoubleSpinBox.setValue");
     }
@@ -75,10 +70,9 @@ int luawt_WDoubleSpinBox_maximum(lua_State* L) {
     int index = luawt_getSuitableArgsGroup(L, luawt_WDoubleSpinBox_maximum_args);
     WDoubleSpinBox* self = luawt_checkFromLua<WDoubleSpinBox>(L, 1);
     if (index == 0) {
-    double l_result = self->maximum();
-    lua_pushnumber(L, l_result);
-    return 1;
-
+        double l_result = self->maximum();
+        lua_pushnumber(L, l_result);
+        return 1;
     } else {
         return luaL_error(L, "Wrong arguments for WDoubleSpinBox.maximum");
     }
@@ -91,10 +85,9 @@ int luawt_WDoubleSpinBox_value(lua_State* L) {
     int index = luawt_getSuitableArgsGroup(L, luawt_WDoubleSpinBox_value_args);
     WDoubleSpinBox* self = luawt_checkFromLua<WDoubleSpinBox>(L, 1);
     if (index == 0) {
-    double l_result = self->value();
-    lua_pushnumber(L, l_result);
-    return 1;
-
+        double l_result = self->value();
+        lua_pushnumber(L, l_result);
+        return 1;
     } else {
         return luaL_error(L, "Wrong arguments for WDoubleSpinBox.value");
     }
@@ -107,10 +100,9 @@ int luawt_WDoubleSpinBox_singleStep(lua_State* L) {
     int index = luawt_getSuitableArgsGroup(L, luawt_WDoubleSpinBox_singleStep_args);
     WDoubleSpinBox* self = luawt_checkFromLua<WDoubleSpinBox>(L, 1);
     if (index == 0) {
-    double l_result = self->singleStep();
-    lua_pushnumber(L, l_result);
-    return 1;
-
+        double l_result = self->singleStep();
+        lua_pushnumber(L, l_result);
+        return 1;
     } else {
         return luaL_error(L, "Wrong arguments for WDoubleSpinBox.singleStep");
     }
@@ -123,10 +115,9 @@ int luawt_WDoubleSpinBox_minimum(lua_State* L) {
     int index = luawt_getSuitableArgsGroup(L, luawt_WDoubleSpinBox_minimum_args);
     WDoubleSpinBox* self = luawt_checkFromLua<WDoubleSpinBox>(L, 1);
     if (index == 0) {
-    double l_result = self->minimum();
-    lua_pushnumber(L, l_result);
-    return 1;
-
+        double l_result = self->minimum();
+        lua_pushnumber(L, l_result);
+        return 1;
     } else {
         return luaL_error(L, "Wrong arguments for WDoubleSpinBox.minimum");
     }
@@ -139,10 +130,9 @@ int luawt_WDoubleSpinBox_setSingleStep(lua_State* L) {
     int index = luawt_getSuitableArgsGroup(L, luawt_WDoubleSpinBox_setSingleStep_args);
     WDoubleSpinBox* self = luawt_checkFromLua<WDoubleSpinBox>(L, 1);
     if (index == 0) {
-    double step = lua_tonumber(L, 2);
-    self->setSingleStep(step);
-    return 0;
-    
+        double step = lua_tonumber(L, 2);
+        self->setSingleStep(step);
+        return 0;
     } else {
         return luaL_error(L, "Wrong arguments for WDoubleSpinBox.setSingleStep");
     }
@@ -155,10 +145,9 @@ int luawt_WDoubleSpinBox_setDecimals(lua_State* L) {
     int index = luawt_getSuitableArgsGroup(L, luawt_WDoubleSpinBox_setDecimals_args);
     WDoubleSpinBox* self = luawt_checkFromLua<WDoubleSpinBox>(L, 1);
     if (index == 0) {
-    int precision = lua_tointeger(L, 2);
-    self->setDecimals(precision);
-    return 0;
-    
+        int precision = lua_tointeger(L, 2);
+        self->setDecimals(precision);
+        return 0;
     } else {
         return luaL_error(L, "Wrong arguments for WDoubleSpinBox.setDecimals");
     }
@@ -171,10 +160,9 @@ int luawt_WDoubleSpinBox_decimals(lua_State* L) {
     int index = luawt_getSuitableArgsGroup(L, luawt_WDoubleSpinBox_decimals_args);
     WDoubleSpinBox* self = luawt_checkFromLua<WDoubleSpinBox>(L, 1);
     if (index == 0) {
-    int l_result = self->decimals();
-    lua_pushinteger(L, l_result);
-    return 1;
-
+        int l_result = self->decimals();
+        lua_pushinteger(L, l_result);
+        return 1;
     } else {
         return luaL_error(L, "Wrong arguments for WDoubleSpinBox.decimals");
     }
@@ -187,10 +175,9 @@ int luawt_WDoubleSpinBox_setMinimum(lua_State* L) {
     int index = luawt_getSuitableArgsGroup(L, luawt_WDoubleSpinBox_setMinimum_args);
     WDoubleSpinBox* self = luawt_checkFromLua<WDoubleSpinBox>(L, 1);
     if (index == 0) {
-    double minimum = lua_tonumber(L, 2);
-    self->setMinimum(minimum);
-    return 0;
-    
+        double minimum = lua_tonumber(L, 2);
+        self->setMinimum(minimum);
+        return 0;
     } else {
         return luaL_error(L, "Wrong arguments for WDoubleSpinBox.setMinimum");
     }
@@ -203,11 +190,10 @@ int luawt_WDoubleSpinBox_setRange(lua_State* L) {
     int index = luawt_getSuitableArgsGroup(L, luawt_WDoubleSpinBox_setRange_args);
     WDoubleSpinBox* self = luawt_checkFromLua<WDoubleSpinBox>(L, 1);
     if (index == 0) {
-    double minimum = lua_tonumber(L, 2);
-    double maximum = lua_tonumber(L, 3);
-    self->setRange(minimum, maximum);
-    return 0;
-    
+        double minimum = lua_tonumber(L, 2);
+        double maximum = lua_tonumber(L, 3);
+        self->setRange(minimum, maximum);
+        return 0;
     } else {
         return luaL_error(L, "Wrong arguments for WDoubleSpinBox.setRange");
     }

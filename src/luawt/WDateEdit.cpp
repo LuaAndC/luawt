@@ -15,24 +15,21 @@ static const char* const* const luawt_WDateEdit_make_args[] = {WDateEdit_make_ar
 int luawt_WDateEdit_make(lua_State* L) {
     int index = luawt_getSuitableArgsGroup(L, luawt_WDateEdit_make_args);
     if (index == 0) {
-    WDateEdit * l_result = new WDateEdit();
-    MyApplication* app = MyApplication::instance();
-    if (!app) {
-        delete l_result;
-        throw std::logic_error("No WApplication when creating WDateEdit");
-    }
-    app->root()->addWidget(l_result);
-    
-    luawt_toLua(L, l_result);
-    return 1;
-
+        WDateEdit* l_result = new WDateEdit();
+        MyApplication* app = MyApplication::instance();
+        if (!app) {
+            delete l_result;
+            throw std::logic_error("No WApplication when creating WDateEdit");
+        }
+        app->root()->addWidget(l_result);
+        luawt_toLua(L, l_result);
+        return 1;
     } else if (index == 1) {
-    Wt::WContainerWidget* parent =
-        luawt_checkFromLua<Wt::WContainerWidget>(L, 1);
-    WDateEdit * l_result = new WDateEdit(parent);
-    luawt_toLua(L, l_result);
-    return 1;
-
+        Wt::WContainerWidget* parent =
+            luawt_checkFromLua<Wt::WContainerWidget>(L, 1);
+        WDateEdit* l_result = new WDateEdit(parent);
+        luawt_toLua(L, l_result);
+        return 1;
     } else {
         return luaL_error(L, "Wrong arguments for WDateEdit.make");
     }
@@ -45,11 +42,10 @@ int luawt_WDateEdit_setFormat(lua_State* L) {
     int index = luawt_getSuitableArgsGroup(L, luawt_WDateEdit_setFormat_args);
     WDateEdit* self = luawt_checkFromLua<WDateEdit>(L, 1);
     if (index == 0) {
-    char const * raw2 = lua_tostring(L, 2);
-    Wt::WString format = Wt::WString(raw2);
-    self->setFormat(format);
-    return 0;
-    
+        char const* raw2 = lua_tostring(L, 2);
+        Wt::WString format = Wt::WString(raw2);
+        self->setFormat(format);
+        return 0;
     } else {
         return luaL_error(L, "Wrong arguments for WDateEdit.setFormat");
     }
@@ -62,10 +58,9 @@ int luawt_WDateEdit_calendar(lua_State* L) {
     int index = luawt_getSuitableArgsGroup(L, luawt_WDateEdit_calendar_args);
     WDateEdit* self = luawt_checkFromLua<WDateEdit>(L, 1);
     if (index == 0) {
-    Wt::WCalendar * l_result = self->calendar();
-    luawt_toLua(L, l_result);
-    return 1;
-
+        Wt::WCalendar* l_result = self->calendar();
+        luawt_toLua(L, l_result);
+        return 1;
     } else {
         return luaL_error(L, "Wrong arguments for WDateEdit.calendar");
     }
@@ -78,10 +73,9 @@ int luawt_WDateEdit_format(lua_State* L) {
     int index = luawt_getSuitableArgsGroup(L, luawt_WDateEdit_format_args);
     WDateEdit* self = luawt_checkFromLua<WDateEdit>(L, 1);
     if (index == 0) {
-    Wt::WString l_result = self->format();
-    lua_pushstring(L, l_result.toUTF8().c_str());
-    return 1;
-
+        Wt::WString l_result = self->format();
+        lua_pushstring(L, l_result.toUTF8().c_str());
+        return 1;
     } else {
         return luaL_error(L, "Wrong arguments for WDateEdit.format");
     }

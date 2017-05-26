@@ -13,10 +13,9 @@ int luawt_WAbstractItemView_sortColumn(lua_State* L) {
     int index = luawt_getSuitableArgsGroup(L, luawt_WAbstractItemView_sortColumn_args);
     WAbstractItemView* self = luawt_checkFromLua<WAbstractItemView>(L, 1);
     if (index == 0) {
-    int l_result = self->sortColumn();
-    lua_pushinteger(L, l_result);
-    return 1;
-
+        int l_result = self->sortColumn();
+        lua_pushinteger(L, l_result);
+        return 1;
     } else {
         return luaL_error(L, "Wrong arguments for WAbstractItemView.sortColumn");
     }
@@ -29,11 +28,10 @@ int luawt_WAbstractItemView_setRowHeight(lua_State* L) {
     int index = luawt_getSuitableArgsGroup(L, luawt_WAbstractItemView_setRowHeight_args);
     WAbstractItemView* self = luawt_checkFromLua<WAbstractItemView>(L, 1);
     if (index == 0) {
-    double raw2 = lua_tonumber(L, 2);
-    Wt::WLength rowHeight = Wt::WLength(raw2);
-    self->setRowHeight(rowHeight);
-    return 0;
-    
+        double raw2 = lua_tonumber(L, 2);
+        Wt::WLength rowHeight = Wt::WLength(raw2);
+        self->setRowHeight(rowHeight);
+        return 0;
     } else {
         return luaL_error(L, "Wrong arguments for WAbstractItemView.setRowHeight");
     }
@@ -46,10 +44,9 @@ int luawt_WAbstractItemView_editOptions(lua_State* L) {
     int index = luawt_getSuitableArgsGroup(L, luawt_WAbstractItemView_editOptions_args);
     WAbstractItemView* self = luawt_checkFromLua<WAbstractItemView>(L, 1);
     if (index == 0) {
-    Wt::WFlags<Wt::WAbstractItemView::EditOption> l_result = self->editOptions();
-    luawt_returnEnum(L, luawt_enum_WAbstractItemView_EditOption_str, luawt_enum_WAbstractItemView_EditOption_val, l_result, "WAbstractItemView::EditOption");
-    return 1;
-
+        Wt::WFlags<Wt::WAbstractItemView::EditOption> l_result = self->editOptions();
+        luawt_returnEnum(L, luawt_enum_WAbstractItemView_EditOption_str, luawt_enum_WAbstractItemView_EditOption_val, l_result, "WAbstractItemView::EditOption");
+        return 1;
     } else {
         return luaL_error(L, "Wrong arguments for WAbstractItemView.editOptions");
     }
@@ -62,10 +59,9 @@ int luawt_WAbstractItemView_pageSize(lua_State* L) {
     int index = luawt_getSuitableArgsGroup(L, luawt_WAbstractItemView_pageSize_args);
     WAbstractItemView* self = luawt_checkFromLua<WAbstractItemView>(L, 1);
     if (index == 0) {
-    int l_result = self->pageSize();
-    lua_pushinteger(L, l_result);
-    return 1;
-
+        int l_result = self->pageSize();
+        lua_pushinteger(L, l_result);
+        return 1;
     } else {
         return luaL_error(L, "Wrong arguments for WAbstractItemView.pageSize");
     }
@@ -78,10 +74,9 @@ int luawt_WAbstractItemView_pageCount(lua_State* L) {
     int index = luawt_getSuitableArgsGroup(L, luawt_WAbstractItemView_pageCount_args);
     WAbstractItemView* self = luawt_checkFromLua<WAbstractItemView>(L, 1);
     if (index == 0) {
-    int l_result = self->pageCount();
-    lua_pushinteger(L, l_result);
-    return 1;
-
+        int l_result = self->pageCount();
+        lua_pushinteger(L, l_result);
+        return 1;
     } else {
         return luaL_error(L, "Wrong arguments for WAbstractItemView.pageCount");
     }
@@ -94,10 +89,9 @@ int luawt_WAbstractItemView_setRowHeaderCount(lua_State* L) {
     int index = luawt_getSuitableArgsGroup(L, luawt_WAbstractItemView_setRowHeaderCount_args);
     WAbstractItemView* self = luawt_checkFromLua<WAbstractItemView>(L, 1);
     if (index == 0) {
-    int count = lua_tointeger(L, 2);
-    self->setRowHeaderCount(count);
-    return 0;
-    
+        int count = lua_tointeger(L, 2);
+        self->setRowHeaderCount(count);
+        return 0;
     } else {
         return luaL_error(L, "Wrong arguments for WAbstractItemView.setRowHeaderCount");
     }
@@ -110,11 +104,10 @@ int luawt_WAbstractItemView_columnAlignment(lua_State* L) {
     int index = luawt_getSuitableArgsGroup(L, luawt_WAbstractItemView_columnAlignment_args);
     WAbstractItemView* self = luawt_checkFromLua<WAbstractItemView>(L, 1);
     if (index == 0) {
-    int column = lua_tointeger(L, 2);
-    Wt::AlignmentFlag l_result = self->columnAlignment(column);
-    luawt_returnEnum(L, luawt_enum_AlignmentFlag_str, luawt_enum_AlignmentFlag_val, l_result, "AlignmentFlag");
-    return 1;
-
+        int column = lua_tointeger(L, 2);
+        Wt::AlignmentFlag l_result = self->columnAlignment(column);
+        luawt_returnEnum(L, luawt_enum_AlignmentFlag_str, luawt_enum_AlignmentFlag_val, l_result, "AlignmentFlag");
+        return 1;
     } else {
         return luaL_error(L, "Wrong arguments for WAbstractItemView.columnAlignment");
     }
@@ -127,10 +120,9 @@ int luawt_WAbstractItemView_setDragEnabled(lua_State* L) {
     int index = luawt_getSuitableArgsGroup(L, luawt_WAbstractItemView_setDragEnabled_args);
     WAbstractItemView* self = luawt_checkFromLua<WAbstractItemView>(L, 1);
     if (index == 0) {
-    bool enable = lua_toboolean(L, 2);
-    self->setDragEnabled(enable);
-    return 0;
-    
+        bool enable = lua_toboolean(L, 2);
+        self->setDragEnabled(enable);
+        return 0;
     } else {
         return luaL_error(L, "Wrong arguments for WAbstractItemView.setDragEnabled");
     }
@@ -143,12 +135,11 @@ int luawt_WAbstractItemView_setColumnWidth(lua_State* L) {
     int index = luawt_getSuitableArgsGroup(L, luawt_WAbstractItemView_setColumnWidth_args);
     WAbstractItemView* self = luawt_checkFromLua<WAbstractItemView>(L, 1);
     if (index == 0) {
-    int column = lua_tointeger(L, 2);
-    double raw3 = lua_tonumber(L, 3);
-    Wt::WLength width = Wt::WLength(raw3);
-    self->setColumnWidth(column, width);
-    return 0;
-    
+        int column = lua_tointeger(L, 2);
+        double raw3 = lua_tonumber(L, 3);
+        Wt::WLength width = Wt::WLength(raw3);
+        self->setColumnWidth(column, width);
+        return 0;
     } else {
         return luaL_error(L, "Wrong arguments for WAbstractItemView.setColumnWidth");
     }
@@ -161,10 +152,9 @@ int luawt_WAbstractItemView_isEditing(lua_State* L) {
     int index = luawt_getSuitableArgsGroup(L, luawt_WAbstractItemView_isEditing_args);
     WAbstractItemView* self = luawt_checkFromLua<WAbstractItemView>(L, 1);
     if (index == 0) {
-    bool l_result = self->isEditing();
-    lua_pushboolean(L, l_result);
-    return 1;
-
+        bool l_result = self->isEditing();
+        lua_pushboolean(L, l_result);
+        return 1;
     } else {
         return luaL_error(L, "Wrong arguments for WAbstractItemView.isEditing");
     }
@@ -177,10 +167,9 @@ int luawt_WAbstractItemView_setColumn1Fixed(lua_State* L) {
     int index = luawt_getSuitableArgsGroup(L, luawt_WAbstractItemView_setColumn1Fixed_args);
     WAbstractItemView* self = luawt_checkFromLua<WAbstractItemView>(L, 1);
     if (index == 0) {
-    bool enable = lua_toboolean(L, 2);
-    self->setColumn1Fixed(enable);
-    return 0;
-    
+        bool enable = lua_toboolean(L, 2);
+        self->setColumn1Fixed(enable);
+        return 0;
     } else {
         return luaL_error(L, "Wrong arguments for WAbstractItemView.setColumn1Fixed");
     }
@@ -193,16 +182,15 @@ int luawt_WAbstractItemView_setSelectionBehavior(lua_State* L) {
     int index = luawt_getSuitableArgsGroup(L, luawt_WAbstractItemView_setSelectionBehavior_args);
     WAbstractItemView* self = luawt_checkFromLua<WAbstractItemView>(L, 1);
     if (index == 0) {
-    Wt::SelectionBehavior behavior = static_cast<Wt::SelectionBehavior>(luawt_getEnum(
-        L,
-        luawt_enum_SelectionBehavior_str,
-        luawt_enum_SelectionBehavior_val,
-        2,
-        "Wrong enum type in args of WAbstractItemView.setSelectionBehavior"
-    ));
-    self->setSelectionBehavior(behavior);
-    return 0;
-    
+        Wt::SelectionBehavior behavior = static_cast<Wt::SelectionBehavior>(luawt_getEnum(
+                    L,
+                    luawt_enum_SelectionBehavior_str,
+                    luawt_enum_SelectionBehavior_val,
+                    2,
+                    "Wrong enum type in args of WAbstractItemView.setSelectionBehavior"
+                ));
+        self->setSelectionBehavior(behavior);
+        return 0;
     } else {
         return luaL_error(L, "Wrong arguments for WAbstractItemView.setSelectionBehavior");
     }
@@ -215,11 +203,10 @@ int luawt_WAbstractItemView_setHeaderWordWrap(lua_State* L) {
     int index = luawt_getSuitableArgsGroup(L, luawt_WAbstractItemView_setHeaderWordWrap_args);
     WAbstractItemView* self = luawt_checkFromLua<WAbstractItemView>(L, 1);
     if (index == 0) {
-    int column = lua_tointeger(L, 2);
-    bool enabled = lua_toboolean(L, 3);
-    self->setHeaderWordWrap(column, enabled);
-    return 0;
-    
+        int column = lua_tointeger(L, 2);
+        bool enabled = lua_toboolean(L, 3);
+        self->setHeaderWordWrap(column, enabled);
+        return 0;
     } else {
         return luaL_error(L, "Wrong arguments for WAbstractItemView.setHeaderWordWrap");
     }
@@ -232,16 +219,15 @@ int luawt_WAbstractItemView_setEditOptions(lua_State* L) {
     int index = luawt_getSuitableArgsGroup(L, luawt_WAbstractItemView_setEditOptions_args);
     WAbstractItemView* self = luawt_checkFromLua<WAbstractItemView>(L, 1);
     if (index == 0) {
-    Wt::WFlags<Wt::WAbstractItemView::EditOption> options = static_cast<Wt::WAbstractItemView::EditOption>(luawt_getEnum(
-        L,
-        luawt_enum_WAbstractItemView_EditOption_str,
-        luawt_enum_WAbstractItemView_EditOption_val,
-        2,
-        "Wrong enum type in args of WAbstractItemView.setEditOptions"
-    ));
-    self->setEditOptions(options);
-    return 0;
-    
+        Wt::WFlags<Wt::WAbstractItemView::EditOption> options = static_cast<Wt::WAbstractItemView::EditOption>(luawt_getEnum(
+                    L,
+                    luawt_enum_WAbstractItemView_EditOption_str,
+                    luawt_enum_WAbstractItemView_EditOption_val,
+                    2,
+                    "Wrong enum type in args of WAbstractItemView.setEditOptions"
+                ));
+        self->setEditOptions(options);
+        return 0;
     } else {
         return luaL_error(L, "Wrong arguments for WAbstractItemView.setEditOptions");
     }
@@ -254,10 +240,9 @@ int luawt_WAbstractItemView_hideColumn(lua_State* L) {
     int index = luawt_getSuitableArgsGroup(L, luawt_WAbstractItemView_hideColumn_args);
     WAbstractItemView* self = luawt_checkFromLua<WAbstractItemView>(L, 1);
     if (index == 0) {
-    int column = lua_tointeger(L, 2);
-    self->hideColumn(column);
-    return 0;
-    
+        int column = lua_tointeger(L, 2);
+        self->hideColumn(column);
+        return 0;
     } else {
         return luaL_error(L, "Wrong arguments for WAbstractItemView.hideColumn");
     }
@@ -270,11 +255,10 @@ int luawt_WAbstractItemView_headerAlignment(lua_State* L) {
     int index = luawt_getSuitableArgsGroup(L, luawt_WAbstractItemView_headerAlignment_args);
     WAbstractItemView* self = luawt_checkFromLua<WAbstractItemView>(L, 1);
     if (index == 0) {
-    int column = lua_tointeger(L, 2);
-    Wt::AlignmentFlag l_result = self->headerAlignment(column);
-    luawt_returnEnum(L, luawt_enum_AlignmentFlag_str, luawt_enum_AlignmentFlag_val, l_result, "AlignmentFlag");
-    return 1;
-
+        int column = lua_tointeger(L, 2);
+        Wt::AlignmentFlag l_result = self->headerAlignment(column);
+        luawt_returnEnum(L, luawt_enum_AlignmentFlag_str, luawt_enum_AlignmentFlag_val, l_result, "AlignmentFlag");
+        return 1;
     } else {
         return luaL_error(L, "Wrong arguments for WAbstractItemView.headerAlignment");
     }
@@ -287,11 +271,10 @@ int luawt_WAbstractItemView_setColumnHidden(lua_State* L) {
     int index = luawt_getSuitableArgsGroup(L, luawt_WAbstractItemView_setColumnHidden_args);
     WAbstractItemView* self = luawt_checkFromLua<WAbstractItemView>(L, 1);
     if (index == 0) {
-    int column = lua_tointeger(L, 2);
-    bool hide = lua_toboolean(L, 3);
-    self->setColumnHidden(column, hide);
-    return 0;
-    
+        int column = lua_tointeger(L, 2);
+        bool hide = lua_toboolean(L, 3);
+        self->setColumnHidden(column, hide);
+        return 0;
     } else {
         return luaL_error(L, "Wrong arguments for WAbstractItemView.setColumnHidden");
     }
@@ -304,10 +287,9 @@ int luawt_WAbstractItemView_setAlternatingRowColors(lua_State* L) {
     int index = luawt_getSuitableArgsGroup(L, luawt_WAbstractItemView_setAlternatingRowColors_args);
     WAbstractItemView* self = luawt_checkFromLua<WAbstractItemView>(L, 1);
     if (index == 0) {
-    bool enable = lua_toboolean(L, 2);
-    self->setAlternatingRowColors(enable);
-    return 0;
-    
+        bool enable = lua_toboolean(L, 2);
+        self->setAlternatingRowColors(enable);
+        return 0;
     } else {
         return luaL_error(L, "Wrong arguments for WAbstractItemView.setAlternatingRowColors");
     }
@@ -320,11 +302,10 @@ int luawt_WAbstractItemView_isColumnHidden(lua_State* L) {
     int index = luawt_getSuitableArgsGroup(L, luawt_WAbstractItemView_isColumnHidden_args);
     WAbstractItemView* self = luawt_checkFromLua<WAbstractItemView>(L, 1);
     if (index == 0) {
-    int column = lua_tointeger(L, 2);
-    bool l_result = self->isColumnHidden(column);
-    lua_pushboolean(L, l_result);
-    return 1;
-
+        int column = lua_tointeger(L, 2);
+        bool l_result = self->isColumnHidden(column);
+        lua_pushboolean(L, l_result);
+        return 1;
     } else {
         return luaL_error(L, "Wrong arguments for WAbstractItemView.isColumnHidden");
     }
@@ -337,10 +318,9 @@ int luawt_WAbstractItemView_sortOrder(lua_State* L) {
     int index = luawt_getSuitableArgsGroup(L, luawt_WAbstractItemView_sortOrder_args);
     WAbstractItemView* self = luawt_checkFromLua<WAbstractItemView>(L, 1);
     if (index == 0) {
-    Wt::SortOrder l_result = self->sortOrder();
-    luawt_returnEnum(L, luawt_enum_SortOrder_str, luawt_enum_SortOrder_val, l_result, "SortOrder");
-    return 1;
-
+        Wt::SortOrder l_result = self->sortOrder();
+        luawt_returnEnum(L, luawt_enum_SortOrder_str, luawt_enum_SortOrder_val, l_result, "SortOrder");
+        return 1;
     } else {
         return luaL_error(L, "Wrong arguments for WAbstractItemView.sortOrder");
     }
@@ -353,10 +333,9 @@ int luawt_WAbstractItemView_rowHeaderCount(lua_State* L) {
     int index = luawt_getSuitableArgsGroup(L, luawt_WAbstractItemView_rowHeaderCount_args);
     WAbstractItemView* self = luawt_checkFromLua<WAbstractItemView>(L, 1);
     if (index == 0) {
-    int l_result = self->rowHeaderCount();
-    lua_pushinteger(L, l_result);
-    return 1;
-
+        int l_result = self->rowHeaderCount();
+        lua_pushinteger(L, l_result);
+        return 1;
     } else {
         return luaL_error(L, "Wrong arguments for WAbstractItemView.rowHeaderCount");
     }
@@ -369,17 +348,16 @@ int luawt_WAbstractItemView_setColumnAlignment(lua_State* L) {
     int index = luawt_getSuitableArgsGroup(L, luawt_WAbstractItemView_setColumnAlignment_args);
     WAbstractItemView* self = luawt_checkFromLua<WAbstractItemView>(L, 1);
     if (index == 0) {
-    int column = lua_tointeger(L, 2);
-    Wt::AlignmentFlag alignment = static_cast<Wt::AlignmentFlag>(luawt_getEnum(
-        L,
-        luawt_enum_AlignmentFlag_str,
-        luawt_enum_AlignmentFlag_val,
-        3,
-        "Wrong enum type in args of WAbstractItemView.setColumnAlignment"
-    ));
-    self->setColumnAlignment(column, alignment);
-    return 0;
-    
+        int column = lua_tointeger(L, 2);
+        Wt::AlignmentFlag alignment = static_cast<Wt::AlignmentFlag>(luawt_getEnum(
+                    L,
+                    luawt_enum_AlignmentFlag_str,
+                    luawt_enum_AlignmentFlag_val,
+                    3,
+                    "Wrong enum type in args of WAbstractItemView.setColumnAlignment"
+                ));
+        self->setColumnAlignment(column, alignment);
+        return 0;
     } else {
         return luaL_error(L, "Wrong arguments for WAbstractItemView.setColumnAlignment");
     }
@@ -392,10 +370,9 @@ int luawt_WAbstractItemView_currentPage(lua_State* L) {
     int index = luawt_getSuitableArgsGroup(L, luawt_WAbstractItemView_currentPage_args);
     WAbstractItemView* self = luawt_checkFromLua<WAbstractItemView>(L, 1);
     if (index == 0) {
-    int l_result = self->currentPage();
-    lua_pushinteger(L, l_result);
-    return 1;
-
+        int l_result = self->currentPage();
+        lua_pushinteger(L, l_result);
+        return 1;
     } else {
         return luaL_error(L, "Wrong arguments for WAbstractItemView.currentPage");
     }
@@ -408,10 +385,9 @@ int luawt_WAbstractItemView_headerHeight(lua_State* L) {
     int index = luawt_getSuitableArgsGroup(L, luawt_WAbstractItemView_headerHeight_args);
     WAbstractItemView* self = luawt_checkFromLua<WAbstractItemView>(L, 1);
     if (index == 0) {
-    Wt::WLength const & l_result = self->headerHeight();
-    lua_pushnumber(L, l_result.value());
-    return 1;
-
+        Wt::WLength const& l_result = self->headerHeight();
+        lua_pushnumber(L, l_result.value());
+        return 1;
     } else {
         return luaL_error(L, "Wrong arguments for WAbstractItemView.headerHeight");
     }
@@ -424,10 +400,9 @@ int luawt_WAbstractItemView_showColumn(lua_State* L) {
     int index = luawt_getSuitableArgsGroup(L, luawt_WAbstractItemView_showColumn_args);
     WAbstractItemView* self = luawt_checkFromLua<WAbstractItemView>(L, 1);
     if (index == 0) {
-    int column = lua_tointeger(L, 2);
-    self->showColumn(column);
-    return 0;
-    
+        int column = lua_tointeger(L, 2);
+        self->showColumn(column);
+        return 0;
     } else {
         return luaL_error(L, "Wrong arguments for WAbstractItemView.showColumn");
     }
@@ -440,11 +415,10 @@ int luawt_WAbstractItemView_verticalHeaderAlignment(lua_State* L) {
     int index = luawt_getSuitableArgsGroup(L, luawt_WAbstractItemView_verticalHeaderAlignment_args);
     WAbstractItemView* self = luawt_checkFromLua<WAbstractItemView>(L, 1);
     if (index == 0) {
-    int column = lua_tointeger(L, 2);
-    Wt::AlignmentFlag l_result = self->verticalHeaderAlignment(column);
-    luawt_returnEnum(L, luawt_enum_AlignmentFlag_str, luawt_enum_AlignmentFlag_val, l_result, "AlignmentFlag");
-    return 1;
-
+        int column = lua_tointeger(L, 2);
+        Wt::AlignmentFlag l_result = self->verticalHeaderAlignment(column);
+        luawt_returnEnum(L, luawt_enum_AlignmentFlag_str, luawt_enum_AlignmentFlag_val, l_result, "AlignmentFlag");
+        return 1;
     } else {
         return luaL_error(L, "Wrong arguments for WAbstractItemView.verticalHeaderAlignment");
     }
@@ -458,16 +432,14 @@ int luawt_WAbstractItemView_isSortingEnabled(lua_State* L) {
     int index = luawt_getSuitableArgsGroup(L, luawt_WAbstractItemView_isSortingEnabled_args);
     WAbstractItemView* self = luawt_checkFromLua<WAbstractItemView>(L, 1);
     if (index == 0) {
-    bool l_result = self->isSortingEnabled();
-    lua_pushboolean(L, l_result);
-    return 1;
-
+        bool l_result = self->isSortingEnabled();
+        lua_pushboolean(L, l_result);
+        return 1;
     } else if (index == 1) {
-    int column = lua_tointeger(L, 2);
-    bool l_result = self->isSortingEnabled(column);
-    lua_pushboolean(L, l_result);
-    return 1;
-
+        int column = lua_tointeger(L, 2);
+        bool l_result = self->isSortingEnabled(column);
+        lua_pushboolean(L, l_result);
+        return 1;
     } else {
         return luaL_error(L, "Wrong arguments for WAbstractItemView.isSortingEnabled");
     }
@@ -480,10 +452,9 @@ int luawt_WAbstractItemView_alternatingRowColors(lua_State* L) {
     int index = luawt_getSuitableArgsGroup(L, luawt_WAbstractItemView_alternatingRowColors_args);
     WAbstractItemView* self = luawt_checkFromLua<WAbstractItemView>(L, 1);
     if (index == 0) {
-    bool l_result = self->alternatingRowColors();
-    lua_pushboolean(L, l_result);
-    return 1;
-
+        bool l_result = self->alternatingRowColors();
+        lua_pushboolean(L, l_result);
+        return 1;
     } else {
         return luaL_error(L, "Wrong arguments for WAbstractItemView.alternatingRowColors");
     }
@@ -497,14 +468,12 @@ int luawt_WAbstractItemView_closeEditors(lua_State* L) {
     int index = luawt_getSuitableArgsGroup(L, luawt_WAbstractItemView_closeEditors_args);
     WAbstractItemView* self = luawt_checkFromLua<WAbstractItemView>(L, 1);
     if (index == 0) {
-    self->closeEditors();
-    return 0;
-    
+        self->closeEditors();
+        return 0;
     } else if (index == 1) {
-    bool saveData = lua_toboolean(L, 2);
-    self->closeEditors(saveData);
-    return 0;
-    
+        bool saveData = lua_toboolean(L, 2);
+        self->closeEditors(saveData);
+        return 0;
     } else {
         return luaL_error(L, "Wrong arguments for WAbstractItemView.closeEditors");
     }
@@ -517,10 +486,9 @@ int luawt_WAbstractItemView_editTriggers(lua_State* L) {
     int index = luawt_getSuitableArgsGroup(L, luawt_WAbstractItemView_editTriggers_args);
     WAbstractItemView* self = luawt_checkFromLua<WAbstractItemView>(L, 1);
     if (index == 0) {
-    Wt::WFlags<Wt::WAbstractItemView::EditTrigger> l_result = self->editTriggers();
-    luawt_returnEnum(L, luawt_enum_WAbstractItemView_EditTrigger_str, luawt_enum_WAbstractItemView_EditTrigger_val, l_result, "WAbstractItemView::EditTrigger");
-    return 1;
-
+        Wt::WFlags<Wt::WAbstractItemView::EditTrigger> l_result = self->editTriggers();
+        luawt_returnEnum(L, luawt_enum_WAbstractItemView_EditTrigger_str, luawt_enum_WAbstractItemView_EditTrigger_val, l_result, "WAbstractItemView::EditTrigger");
+        return 1;
     } else {
         return luaL_error(L, "Wrong arguments for WAbstractItemView.editTriggers");
     }
@@ -533,17 +501,16 @@ int luawt_WAbstractItemView_setHeaderAlignment(lua_State* L) {
     int index = luawt_getSuitableArgsGroup(L, luawt_WAbstractItemView_setHeaderAlignment_args);
     WAbstractItemView* self = luawt_checkFromLua<WAbstractItemView>(L, 1);
     if (index == 0) {
-    int column = lua_tointeger(L, 2);
-    Wt::WFlags<Wt::AlignmentFlag> alignment = static_cast<Wt::AlignmentFlag>(luawt_getEnum(
-        L,
-        luawt_enum_AlignmentFlag_str,
-        luawt_enum_AlignmentFlag_val,
-        3,
-        "Wrong enum type in args of WAbstractItemView.setHeaderAlignment"
-    ));
-    self->setHeaderAlignment(column, alignment);
-    return 0;
-    
+        int column = lua_tointeger(L, 2);
+        Wt::WFlags<Wt::AlignmentFlag> alignment = static_cast<Wt::AlignmentFlag>(luawt_getEnum(
+                    L,
+                    luawt_enum_AlignmentFlag_str,
+                    luawt_enum_AlignmentFlag_val,
+                    3,
+                    "Wrong enum type in args of WAbstractItemView.setHeaderAlignment"
+                ));
+        self->setHeaderAlignment(column, alignment);
+        return 0;
     } else {
         return luaL_error(L, "Wrong arguments for WAbstractItemView.setHeaderAlignment");
     }
@@ -557,18 +524,16 @@ int luawt_WAbstractItemView_setHeaderHeight(lua_State* L) {
     int index = luawt_getSuitableArgsGroup(L, luawt_WAbstractItemView_setHeaderHeight_args);
     WAbstractItemView* self = luawt_checkFromLua<WAbstractItemView>(L, 1);
     if (index == 0) {
-    double raw2 = lua_tonumber(L, 2);
-    Wt::WLength height = Wt::WLength(raw2);
-    self->setHeaderHeight(height);
-    return 0;
-    
+        double raw2 = lua_tonumber(L, 2);
+        Wt::WLength height = Wt::WLength(raw2);
+        self->setHeaderHeight(height);
+        return 0;
     } else if (index == 1) {
-    double raw2 = lua_tonumber(L, 2);
-    Wt::WLength height = Wt::WLength(raw2);
-    bool multiLine = lua_toboolean(L, 3);
-    self->setHeaderHeight(height, multiLine);
-    return 0;
-    
+        double raw2 = lua_tonumber(L, 2);
+        Wt::WLength height = Wt::WLength(raw2);
+        bool multiLine = lua_toboolean(L, 3);
+        self->setHeaderHeight(height, multiLine);
+        return 0;
     } else {
         return luaL_error(L, "Wrong arguments for WAbstractItemView.setHeaderHeight");
     }
@@ -581,10 +546,9 @@ int luawt_WAbstractItemView_selectionMode(lua_State* L) {
     int index = luawt_getSuitableArgsGroup(L, luawt_WAbstractItemView_selectionMode_args);
     WAbstractItemView* self = luawt_checkFromLua<WAbstractItemView>(L, 1);
     if (index == 0) {
-    Wt::SelectionMode l_result = self->selectionMode();
-    luawt_returnEnum(L, luawt_enum_SelectionMode_str, luawt_enum_SelectionMode_val, l_result, "SelectionMode");
-    return 1;
-
+        Wt::SelectionMode l_result = self->selectionMode();
+        luawt_returnEnum(L, luawt_enum_SelectionMode_str, luawt_enum_SelectionMode_val, l_result, "SelectionMode");
+        return 1;
     } else {
         return luaL_error(L, "Wrong arguments for WAbstractItemView.selectionMode");
     }
@@ -597,10 +561,9 @@ int luawt_WAbstractItemView_setCurrentPage(lua_State* L) {
     int index = luawt_getSuitableArgsGroup(L, luawt_WAbstractItemView_setCurrentPage_args);
     WAbstractItemView* self = luawt_checkFromLua<WAbstractItemView>(L, 1);
     if (index == 0) {
-    int page = lua_tointeger(L, 2);
-    self->setCurrentPage(page);
-    return 0;
-    
+        int page = lua_tointeger(L, 2);
+        self->setCurrentPage(page);
+        return 0;
     } else {
         return luaL_error(L, "Wrong arguments for WAbstractItemView.setCurrentPage");
     }
@@ -613,10 +576,9 @@ int luawt_WAbstractItemView_column1Fixed(lua_State* L) {
     int index = luawt_getSuitableArgsGroup(L, luawt_WAbstractItemView_column1Fixed_args);
     WAbstractItemView* self = luawt_checkFromLua<WAbstractItemView>(L, 1);
     if (index == 0) {
-    bool l_result = self->column1Fixed();
-    lua_pushboolean(L, l_result);
-    return 1;
-
+        bool l_result = self->column1Fixed();
+        lua_pushboolean(L, l_result);
+        return 1;
     } else {
         return luaL_error(L, "Wrong arguments for WAbstractItemView.column1Fixed");
     }
@@ -629,16 +591,15 @@ int luawt_WAbstractItemView_setEditTriggers(lua_State* L) {
     int index = luawt_getSuitableArgsGroup(L, luawt_WAbstractItemView_setEditTriggers_args);
     WAbstractItemView* self = luawt_checkFromLua<WAbstractItemView>(L, 1);
     if (index == 0) {
-    Wt::WFlags<Wt::WAbstractItemView::EditTrigger> editTriggers = static_cast<Wt::WAbstractItemView::EditTrigger>(luawt_getEnum(
-        L,
-        luawt_enum_WAbstractItemView_EditTrigger_str,
-        luawt_enum_WAbstractItemView_EditTrigger_val,
-        2,
-        "Wrong enum type in args of WAbstractItemView.setEditTriggers"
-    ));
-    self->setEditTriggers(editTriggers);
-    return 0;
-    
+        Wt::WFlags<Wt::WAbstractItemView::EditTrigger> editTriggers = static_cast<Wt::WAbstractItemView::EditTrigger>(luawt_getEnum(
+                    L,
+                    luawt_enum_WAbstractItemView_EditTrigger_str,
+                    luawt_enum_WAbstractItemView_EditTrigger_val,
+                    2,
+                    "Wrong enum type in args of WAbstractItemView.setEditTriggers"
+                ));
+        self->setEditTriggers(editTriggers);
+        return 0;
     } else {
         return luaL_error(L, "Wrong arguments for WAbstractItemView.setEditTriggers");
     }
@@ -651,11 +612,10 @@ int luawt_WAbstractItemView_horizontalHeaderAlignment(lua_State* L) {
     int index = luawt_getSuitableArgsGroup(L, luawt_WAbstractItemView_horizontalHeaderAlignment_args);
     WAbstractItemView* self = luawt_checkFromLua<WAbstractItemView>(L, 1);
     if (index == 0) {
-    int column = lua_tointeger(L, 2);
-    Wt::AlignmentFlag l_result = self->horizontalHeaderAlignment(column);
-    luawt_returnEnum(L, luawt_enum_AlignmentFlag_str, luawt_enum_AlignmentFlag_val, l_result, "AlignmentFlag");
-    return 1;
-
+        int column = lua_tointeger(L, 2);
+        Wt::AlignmentFlag l_result = self->horizontalHeaderAlignment(column);
+        luawt_returnEnum(L, luawt_enum_AlignmentFlag_str, luawt_enum_AlignmentFlag_val, l_result, "AlignmentFlag");
+        return 1;
     } else {
         return luaL_error(L, "Wrong arguments for WAbstractItemView.horizontalHeaderAlignment");
     }
@@ -668,10 +628,9 @@ int luawt_WAbstractItemView_rowHeight(lua_State* L) {
     int index = luawt_getSuitableArgsGroup(L, luawt_WAbstractItemView_rowHeight_args);
     WAbstractItemView* self = luawt_checkFromLua<WAbstractItemView>(L, 1);
     if (index == 0) {
-    Wt::WLength const & l_result = self->rowHeight();
-    lua_pushnumber(L, l_result.value());
-    return 1;
-
+        Wt::WLength const& l_result = self->rowHeight();
+        lua_pushnumber(L, l_result.value());
+        return 1;
     } else {
         return luaL_error(L, "Wrong arguments for WAbstractItemView.rowHeight");
     }
@@ -684,16 +643,15 @@ int luawt_WAbstractItemView_setSelectionMode(lua_State* L) {
     int index = luawt_getSuitableArgsGroup(L, luawt_WAbstractItemView_setSelectionMode_args);
     WAbstractItemView* self = luawt_checkFromLua<WAbstractItemView>(L, 1);
     if (index == 0) {
-    Wt::SelectionMode mode = static_cast<Wt::SelectionMode>(luawt_getEnum(
-        L,
-        luawt_enum_SelectionMode_str,
-        luawt_enum_SelectionMode_val,
-        2,
-        "Wrong enum type in args of WAbstractItemView.setSelectionMode"
-    ));
-    self->setSelectionMode(mode);
-    return 0;
-    
+        Wt::SelectionMode mode = static_cast<Wt::SelectionMode>(luawt_getEnum(
+                    L,
+                    luawt_enum_SelectionMode_str,
+                    luawt_enum_SelectionMode_val,
+                    2,
+                    "Wrong enum type in args of WAbstractItemView.setSelectionMode"
+                ));
+        self->setSelectionMode(mode);
+        return 0;
     } else {
         return luaL_error(L, "Wrong arguments for WAbstractItemView.setSelectionMode");
     }
@@ -706,11 +664,10 @@ int luawt_WAbstractItemView_columnWidth(lua_State* L) {
     int index = luawt_getSuitableArgsGroup(L, luawt_WAbstractItemView_columnWidth_args);
     WAbstractItemView* self = luawt_checkFromLua<WAbstractItemView>(L, 1);
     if (index == 0) {
-    int column = lua_tointeger(L, 2);
-    Wt::WLength l_result = self->columnWidth(column);
-    lua_pushnumber(L, l_result.value());
-    return 1;
-
+        int column = lua_tointeger(L, 2);
+        Wt::WLength l_result = self->columnWidth(column);
+        lua_pushnumber(L, l_result.value());
+        return 1;
     } else {
         return luaL_error(L, "Wrong arguments for WAbstractItemView.columnWidth");
     }
@@ -723,10 +680,9 @@ int luawt_WAbstractItemView_validateEditors(lua_State* L) {
     int index = luawt_getSuitableArgsGroup(L, luawt_WAbstractItemView_validateEditors_args);
     WAbstractItemView* self = luawt_checkFromLua<WAbstractItemView>(L, 1);
     if (index == 0) {
-    Wt::WValidator::State l_result = self->validateEditors();
-    luawt_returnEnum(L, luawt_enum_WValidator_State_str, luawt_enum_WValidator_State_val, l_result, "WValidator::State");
-    return 1;
-
+        Wt::WValidator::State l_result = self->validateEditors();
+        luawt_returnEnum(L, luawt_enum_WValidator_State_str, luawt_enum_WValidator_State_val, l_result, "WValidator::State");
+        return 1;
     } else {
         return luaL_error(L, "Wrong arguments for WAbstractItemView.validateEditors");
     }
@@ -739,17 +695,16 @@ int luawt_WAbstractItemView_sortByColumn(lua_State* L) {
     int index = luawt_getSuitableArgsGroup(L, luawt_WAbstractItemView_sortByColumn_args);
     WAbstractItemView* self = luawt_checkFromLua<WAbstractItemView>(L, 1);
     if (index == 0) {
-    int column = lua_tointeger(L, 2);
-    Wt::SortOrder order = static_cast<Wt::SortOrder>(luawt_getEnum(
-        L,
-        luawt_enum_SortOrder_str,
-        luawt_enum_SortOrder_val,
-        3,
-        "Wrong enum type in args of WAbstractItemView.sortByColumn"
-    ));
-    self->sortByColumn(column, order);
-    return 0;
-    
+        int column = lua_tointeger(L, 2);
+        Wt::SortOrder order = static_cast<Wt::SortOrder>(luawt_getEnum(
+                    L,
+                    luawt_enum_SortOrder_str,
+                    luawt_enum_SortOrder_val,
+                    3,
+                    "Wrong enum type in args of WAbstractItemView.sortByColumn"
+                ));
+        self->sortByColumn(column, order);
+        return 0;
     } else {
         return luaL_error(L, "Wrong arguments for WAbstractItemView.sortByColumn");
     }
@@ -763,16 +718,14 @@ int luawt_WAbstractItemView_setSortingEnabled(lua_State* L) {
     int index = luawt_getSuitableArgsGroup(L, luawt_WAbstractItemView_setSortingEnabled_args);
     WAbstractItemView* self = luawt_checkFromLua<WAbstractItemView>(L, 1);
     if (index == 0) {
-    bool enabled = lua_toboolean(L, 2);
-    self->setSortingEnabled(enabled);
-    return 0;
-    
+        bool enabled = lua_toboolean(L, 2);
+        self->setSortingEnabled(enabled);
+        return 0;
     } else if (index == 1) {
-    int column = lua_tointeger(L, 2);
-    bool enabled = lua_toboolean(L, 3);
-    self->setSortingEnabled(column, enabled);
-    return 0;
-    
+        int column = lua_tointeger(L, 2);
+        bool enabled = lua_toboolean(L, 3);
+        self->setSortingEnabled(column, enabled);
+        return 0;
     } else {
         return luaL_error(L, "Wrong arguments for WAbstractItemView.setSortingEnabled");
     }
@@ -785,10 +738,9 @@ int luawt_WAbstractItemView_setDropsEnabled(lua_State* L) {
     int index = luawt_getSuitableArgsGroup(L, luawt_WAbstractItemView_setDropsEnabled_args);
     WAbstractItemView* self = luawt_checkFromLua<WAbstractItemView>(L, 1);
     if (index == 0) {
-    bool enable = lua_toboolean(L, 2);
-    self->setDropsEnabled(enable);
-    return 0;
-    
+        bool enable = lua_toboolean(L, 2);
+        self->setDropsEnabled(enable);
+        return 0;
     } else {
         return luaL_error(L, "Wrong arguments for WAbstractItemView.setDropsEnabled");
     }
@@ -801,10 +753,9 @@ int luawt_WAbstractItemView_isColumnResizeEnabled(lua_State* L) {
     int index = luawt_getSuitableArgsGroup(L, luawt_WAbstractItemView_isColumnResizeEnabled_args);
     WAbstractItemView* self = luawt_checkFromLua<WAbstractItemView>(L, 1);
     if (index == 0) {
-    bool l_result = self->isColumnResizeEnabled();
-    lua_pushboolean(L, l_result);
-    return 1;
-
+        bool l_result = self->isColumnResizeEnabled();
+        lua_pushboolean(L, l_result);
+        return 1;
     } else {
         return luaL_error(L, "Wrong arguments for WAbstractItemView.isColumnResizeEnabled");
     }
@@ -817,10 +768,9 @@ int luawt_WAbstractItemView_selectionBehavior(lua_State* L) {
     int index = luawt_getSuitableArgsGroup(L, luawt_WAbstractItemView_selectionBehavior_args);
     WAbstractItemView* self = luawt_checkFromLua<WAbstractItemView>(L, 1);
     if (index == 0) {
-    Wt::SelectionBehavior l_result = self->selectionBehavior();
-    luawt_returnEnum(L, luawt_enum_SelectionBehavior_str, luawt_enum_SelectionBehavior_val, l_result, "SelectionBehavior");
-    return 1;
-
+        Wt::SelectionBehavior l_result = self->selectionBehavior();
+        luawt_returnEnum(L, luawt_enum_SelectionBehavior_str, luawt_enum_SelectionBehavior_val, l_result, "SelectionBehavior");
+        return 1;
     } else {
         return luaL_error(L, "Wrong arguments for WAbstractItemView.selectionBehavior");
     }
@@ -833,15 +783,13 @@ int luawt_WAbstractItemView_setColumnResizeEnabled(lua_State* L) {
     int index = luawt_getSuitableArgsGroup(L, luawt_WAbstractItemView_setColumnResizeEnabled_args);
     WAbstractItemView* self = luawt_checkFromLua<WAbstractItemView>(L, 1);
     if (index == 0) {
-    bool enabled = lua_toboolean(L, 2);
-    self->setColumnResizeEnabled(enabled);
-    return 0;
-    
+        bool enabled = lua_toboolean(L, 2);
+        self->setColumnResizeEnabled(enabled);
+        return 0;
     } else {
         return luaL_error(L, "Wrong arguments for WAbstractItemView.setColumnResizeEnabled");
     }
 }
-
 
 static const luaL_Reg luawt_WAbstractItemView_methods[] = {
     METHOD(WAbstractItemView, setColumnAlignment),
