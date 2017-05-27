@@ -21,117 +21,105 @@ static const char* const* const luawt_WMenuItem_make_args[] = {WMenuItem_make_ar
 int luawt_WMenuItem_make(lua_State* L) {
     int index = luawt_getSuitableArgsGroup(L, luawt_WMenuItem_make_args);
     if (index == 0) {
-    char const * raw1 = lua_tostring(L, 1);
-    Wt::WString label = Wt::WString(raw1);
-    WMenuItem * l_result = new WMenuItem(label);
-    MyApplication* app = MyApplication::instance();
-    if (!app) {
-        delete l_result;
-        throw std::logic_error("No WApplication when creating WMenuItem");
-    }
-    app->root()->addWidget(l_result);
-    
-    luawt_toLua(L, l_result);
-    return 1;
-
+        char const* raw1 = lua_tostring(L, 1);
+        Wt::WString label = Wt::WString(raw1);
+        WMenuItem* l_result = new WMenuItem(label);
+        MyApplication* app = MyApplication::instance();
+        if (!app) {
+            delete l_result;
+            throw std::logic_error("No WApplication when creating WMenuItem");
+        }
+        app->root()->addWidget(l_result);
+        luawt_toLua(L, l_result);
+        return 1;
     } else if (index == 1) {
-    char const * raw1 = lua_tostring(L, 1);
-    Wt::WString label = Wt::WString(raw1);
-    Wt::WWidget* contents =
-        luawt_checkFromLua<Wt::WWidget>(L, 2);
-    WMenuItem * l_result = new WMenuItem(label, contents);
-    MyApplication* app = MyApplication::instance();
-    if (!app) {
-        delete l_result;
-        throw std::logic_error("No WApplication when creating WMenuItem");
-    }
-    app->root()->addWidget(l_result);
-    
-    luawt_toLua(L, l_result);
-    return 1;
-
+        char const* raw1 = lua_tostring(L, 1);
+        Wt::WString label = Wt::WString(raw1);
+        Wt::WWidget* contents =
+            luawt_checkFromLua<Wt::WWidget>(L, 2);
+        WMenuItem* l_result = new WMenuItem(label, contents);
+        MyApplication* app = MyApplication::instance();
+        if (!app) {
+            delete l_result;
+            throw std::logic_error("No WApplication when creating WMenuItem");
+        }
+        app->root()->addWidget(l_result);
+        luawt_toLua(L, l_result);
+        return 1;
     } else if (index == 2) {
-    char const * raw1 = lua_tostring(L, 1);
-    Wt::WString label = Wt::WString(raw1);
-    Wt::WWidget* contents =
-        luawt_checkFromLua<Wt::WWidget>(L, 2);
-    Wt::WMenuItem::LoadPolicy policy = static_cast<Wt::WMenuItem::LoadPolicy>(luawt_getEnum(
-        L,
-        luawt_enum_WMenuItem_LoadPolicy_str,
-        luawt_enum_WMenuItem_LoadPolicy_val,
-        3,
-        "Wrong enum type in args of WMenuItem.make"
-    ));
-    WMenuItem * l_result = new WMenuItem(label, contents, policy);
-    MyApplication* app = MyApplication::instance();
-    if (!app) {
-        delete l_result;
-        throw std::logic_error("No WApplication when creating WMenuItem");
-    }
-    app->root()->addWidget(l_result);
-    
-    luawt_toLua(L, l_result);
-    return 1;
-
+        char const* raw1 = lua_tostring(L, 1);
+        Wt::WString label = Wt::WString(raw1);
+        Wt::WWidget* contents =
+            luawt_checkFromLua<Wt::WWidget>(L, 2);
+        Wt::WMenuItem::LoadPolicy policy = static_cast<Wt::WMenuItem::LoadPolicy>(luawt_getEnum(
+                    L,
+                    luawt_enum_WMenuItem_LoadPolicy_str,
+                    luawt_enum_WMenuItem_LoadPolicy_val,
+                    3,
+                    "Wrong enum type in args of WMenuItem.make"
+                ));
+        WMenuItem* l_result = new WMenuItem(label, contents, policy);
+        MyApplication* app = MyApplication::instance();
+        if (!app) {
+            delete l_result;
+            throw std::logic_error("No WApplication when creating WMenuItem");
+        }
+        app->root()->addWidget(l_result);
+        luawt_toLua(L, l_result);
+        return 1;
     } else if (index == 3) {
-    char const * raw1 = lua_tostring(L, 1);
-    std::string iconPath = std::string(raw1);
-    char const * raw2 = lua_tostring(L, 2);
-    Wt::WString label = Wt::WString(raw2);
-    WMenuItem * l_result = new WMenuItem(iconPath, label);
-    MyApplication* app = MyApplication::instance();
-    if (!app) {
-        delete l_result;
-        throw std::logic_error("No WApplication when creating WMenuItem");
-    }
-    app->root()->addWidget(l_result);
-    
-    luawt_toLua(L, l_result);
-    return 1;
-
+        char const* raw1 = lua_tostring(L, 1);
+        std::string iconPath = std::string(raw1);
+        char const* raw2 = lua_tostring(L, 2);
+        Wt::WString label = Wt::WString(raw2);
+        WMenuItem* l_result = new WMenuItem(iconPath, label);
+        MyApplication* app = MyApplication::instance();
+        if (!app) {
+            delete l_result;
+            throw std::logic_error("No WApplication when creating WMenuItem");
+        }
+        app->root()->addWidget(l_result);
+        luawt_toLua(L, l_result);
+        return 1;
     } else if (index == 4) {
-    char const * raw1 = lua_tostring(L, 1);
-    std::string iconPath = std::string(raw1);
-    char const * raw2 = lua_tostring(L, 2);
-    Wt::WString label = Wt::WString(raw2);
-    Wt::WWidget* contents =
-        luawt_checkFromLua<Wt::WWidget>(L, 3);
-    WMenuItem * l_result = new WMenuItem(iconPath, label, contents);
-    MyApplication* app = MyApplication::instance();
-    if (!app) {
-        delete l_result;
-        throw std::logic_error("No WApplication when creating WMenuItem");
-    }
-    app->root()->addWidget(l_result);
-    
-    luawt_toLua(L, l_result);
-    return 1;
-
+        char const* raw1 = lua_tostring(L, 1);
+        std::string iconPath = std::string(raw1);
+        char const* raw2 = lua_tostring(L, 2);
+        Wt::WString label = Wt::WString(raw2);
+        Wt::WWidget* contents =
+            luawt_checkFromLua<Wt::WWidget>(L, 3);
+        WMenuItem* l_result = new WMenuItem(iconPath, label, contents);
+        MyApplication* app = MyApplication::instance();
+        if (!app) {
+            delete l_result;
+            throw std::logic_error("No WApplication when creating WMenuItem");
+        }
+        app->root()->addWidget(l_result);
+        luawt_toLua(L, l_result);
+        return 1;
     } else if (index == 5) {
-    char const * raw1 = lua_tostring(L, 1);
-    std::string iconPath = std::string(raw1);
-    char const * raw2 = lua_tostring(L, 2);
-    Wt::WString label = Wt::WString(raw2);
-    Wt::WWidget* contents =
-        luawt_checkFromLua<Wt::WWidget>(L, 3);
-    Wt::WMenuItem::LoadPolicy policy = static_cast<Wt::WMenuItem::LoadPolicy>(luawt_getEnum(
-        L,
-        luawt_enum_WMenuItem_LoadPolicy_str,
-        luawt_enum_WMenuItem_LoadPolicy_val,
-        4,
-        "Wrong enum type in args of WMenuItem.make"
-    ));
-    WMenuItem * l_result = new WMenuItem(iconPath, label, contents, policy);
-    MyApplication* app = MyApplication::instance();
-    if (!app) {
-        delete l_result;
-        throw std::logic_error("No WApplication when creating WMenuItem");
-    }
-    app->root()->addWidget(l_result);
-    
-    luawt_toLua(L, l_result);
-    return 1;
-
+        char const* raw1 = lua_tostring(L, 1);
+        std::string iconPath = std::string(raw1);
+        char const* raw2 = lua_tostring(L, 2);
+        Wt::WString label = Wt::WString(raw2);
+        Wt::WWidget* contents =
+            luawt_checkFromLua<Wt::WWidget>(L, 3);
+        Wt::WMenuItem::LoadPolicy policy = static_cast<Wt::WMenuItem::LoadPolicy>(luawt_getEnum(
+                    L,
+                    luawt_enum_WMenuItem_LoadPolicy_str,
+                    luawt_enum_WMenuItem_LoadPolicy_val,
+                    4,
+                    "Wrong enum type in args of WMenuItem.make"
+                ));
+        WMenuItem* l_result = new WMenuItem(iconPath, label, contents, policy);
+        MyApplication* app = MyApplication::instance();
+        if (!app) {
+            delete l_result;
+            throw std::logic_error("No WApplication when creating WMenuItem");
+        }
+        app->root()->addWidget(l_result);
+        luawt_toLua(L, l_result);
+        return 1;
     } else {
         return luaL_error(L, "Wrong arguments for WMenuItem.make");
     }
@@ -144,10 +132,9 @@ int luawt_WMenuItem_setChecked(lua_State* L) {
     int index = luawt_getSuitableArgsGroup(L, luawt_WMenuItem_setChecked_args);
     WMenuItem* self = luawt_checkFromLua<WMenuItem>(L, 1);
     if (index == 0) {
-    bool checked = lua_toboolean(L, 2);
-    self->setChecked(checked);
-    return 0;
-    
+        bool checked = lua_toboolean(L, 2);
+        self->setChecked(checked);
+        return 0;
     } else {
         return luaL_error(L, "Wrong arguments for WMenuItem.setChecked");
     }
@@ -160,11 +147,10 @@ int luawt_WMenuItem_setMenu(lua_State* L) {
     int index = luawt_getSuitableArgsGroup(L, luawt_WMenuItem_setMenu_args);
     WMenuItem* self = luawt_checkFromLua<WMenuItem>(L, 1);
     if (index == 0) {
-    Wt::WMenu* menu =
-        luawt_checkFromLua<Wt::WMenu>(L, 2);
-    self->setMenu(menu);
-    return 0;
-    
+        Wt::WMenu* menu =
+            luawt_checkFromLua<Wt::WMenu>(L, 2);
+        self->setMenu(menu);
+        return 0;
     } else {
         return luaL_error(L, "Wrong arguments for WMenuItem.setMenu");
     }
@@ -177,10 +163,9 @@ int luawt_WMenuItem_renderSelected(lua_State* L) {
     int index = luawt_getSuitableArgsGroup(L, luawt_WMenuItem_renderSelected_args);
     WMenuItem* self = luawt_checkFromLua<WMenuItem>(L, 1);
     if (index == 0) {
-    bool selected = lua_toboolean(L, 2);
-    self->renderSelected(selected);
-    return 0;
-    
+        bool selected = lua_toboolean(L, 2);
+        self->renderSelected(selected);
+        return 0;
     } else {
         return luaL_error(L, "Wrong arguments for WMenuItem.renderSelected");
     }
@@ -193,9 +178,8 @@ int luawt_WMenuItem_enableAjax(lua_State* L) {
     int index = luawt_getSuitableArgsGroup(L, luawt_WMenuItem_enableAjax_args);
     WMenuItem* self = luawt_checkFromLua<WMenuItem>(L, 1);
     if (index == 0) {
-    self->enableAjax();
-    return 0;
-    
+        self->enableAjax();
+        return 0;
     } else {
         return luaL_error(L, "Wrong arguments for WMenuItem.enableAjax");
     }
@@ -208,10 +192,9 @@ int luawt_WMenuItem_isCheckable(lua_State* L) {
     int index = luawt_getSuitableArgsGroup(L, luawt_WMenuItem_isCheckable_args);
     WMenuItem* self = luawt_checkFromLua<WMenuItem>(L, 1);
     if (index == 0) {
-    bool l_result = self->isCheckable();
-    lua_pushboolean(L, l_result);
-    return 1;
-
+        bool l_result = self->isCheckable();
+        lua_pushboolean(L, l_result);
+        return 1;
     } else {
         return luaL_error(L, "Wrong arguments for WMenuItem.isCheckable");
     }
@@ -224,10 +207,9 @@ int luawt_WMenuItem_isSelectable(lua_State* L) {
     int index = luawt_getSuitableArgsGroup(L, luawt_WMenuItem_isSelectable_args);
     WMenuItem* self = luawt_checkFromLua<WMenuItem>(L, 1);
     if (index == 0) {
-    bool l_result = self->isSelectable();
-    lua_pushboolean(L, l_result);
-    return 1;
-
+        bool l_result = self->isSelectable();
+        lua_pushboolean(L, l_result);
+        return 1;
     } else {
         return luaL_error(L, "Wrong arguments for WMenuItem.isSelectable");
     }
@@ -240,10 +222,9 @@ int luawt_WMenuItem_itemWidget(lua_State* L) {
     int index = luawt_getSuitableArgsGroup(L, luawt_WMenuItem_itemWidget_args);
     WMenuItem* self = luawt_checkFromLua<WMenuItem>(L, 1);
     if (index == 0) {
-    Wt::WWidget * l_result = self->itemWidget();
-    luawt_toLua(L, l_result);
-    return 1;
-
+        Wt::WWidget* l_result = self->itemWidget();
+        luawt_toLua(L, l_result);
+        return 1;
     } else {
         return luaL_error(L, "Wrong arguments for WMenuItem.itemWidget");
     }
@@ -256,9 +237,8 @@ int luawt_WMenuItem_close(lua_State* L) {
     int index = luawt_getSuitableArgsGroup(L, luawt_WMenuItem_close_args);
     WMenuItem* self = luawt_checkFromLua<WMenuItem>(L, 1);
     if (index == 0) {
-    self->close();
-    return 0;
-    
+        self->close();
+        return 0;
     } else {
         return luaL_error(L, "Wrong arguments for WMenuItem.close");
     }
@@ -271,10 +251,9 @@ int luawt_WMenuItem_contents(lua_State* L) {
     int index = luawt_getSuitableArgsGroup(L, luawt_WMenuItem_contents_args);
     WMenuItem* self = luawt_checkFromLua<WMenuItem>(L, 1);
     if (index == 0) {
-    Wt::WWidget * l_result = self->contents();
-    luawt_toLua(L, l_result);
-    return 1;
-
+        Wt::WWidget* l_result = self->contents();
+        luawt_toLua(L, l_result);
+        return 1;
     } else {
         return luaL_error(L, "Wrong arguments for WMenuItem.contents");
     }
@@ -287,10 +266,9 @@ int luawt_WMenuItem_menu(lua_State* L) {
     int index = luawt_getSuitableArgsGroup(L, luawt_WMenuItem_menu_args);
     WMenuItem* self = luawt_checkFromLua<WMenuItem>(L, 1);
     if (index == 0) {
-    Wt::WMenu * l_result = self->menu();
-    luawt_toLua(L, l_result);
-    return 1;
-
+        Wt::WMenu* l_result = self->menu();
+        luawt_toLua(L, l_result);
+        return 1;
     } else {
         return luaL_error(L, "Wrong arguments for WMenuItem.menu");
     }
@@ -303,11 +281,10 @@ int luawt_WMenuItem_setSubMenu(lua_State* L) {
     int index = luawt_getSuitableArgsGroup(L, luawt_WMenuItem_setSubMenu_args);
     WMenuItem* self = luawt_checkFromLua<WMenuItem>(L, 1);
     if (index == 0) {
-    Wt::WMenu* menu =
-        luawt_checkFromLua<Wt::WMenu>(L, 2);
-    self->setSubMenu(menu);
-    return 0;
-    
+        Wt::WMenu* menu =
+            luawt_checkFromLua<Wt::WMenu>(L, 2);
+        self->setSubMenu(menu);
+        return 0;
     } else {
         return luaL_error(L, "Wrong arguments for WMenuItem.setSubMenu");
     }
@@ -320,10 +297,9 @@ int luawt_WMenuItem_isChecked(lua_State* L) {
     int index = luawt_getSuitableArgsGroup(L, luawt_WMenuItem_isChecked_args);
     WMenuItem* self = luawt_checkFromLua<WMenuItem>(L, 1);
     if (index == 0) {
-    bool l_result = self->isChecked();
-    lua_pushboolean(L, l_result);
-    return 1;
-
+        bool l_result = self->isChecked();
+        lua_pushboolean(L, l_result);
+        return 1;
     } else {
         return luaL_error(L, "Wrong arguments for WMenuItem.isChecked");
     }
@@ -336,9 +312,8 @@ int luawt_WMenuItem_select(lua_State* L) {
     int index = luawt_getSuitableArgsGroup(L, luawt_WMenuItem_select_args);
     WMenuItem* self = luawt_checkFromLua<WMenuItem>(L, 1);
     if (index == 0) {
-    self->select();
-    return 0;
-    
+        self->select();
+        return 0;
     } else {
         return luaL_error(L, "Wrong arguments for WMenuItem.select");
     }
@@ -351,10 +326,9 @@ int luawt_WMenuItem_text(lua_State* L) {
     int index = luawt_getSuitableArgsGroup(L, luawt_WMenuItem_text_args);
     WMenuItem* self = luawt_checkFromLua<WMenuItem>(L, 1);
     if (index == 0) {
-    Wt::WString const & l_result = self->text();
-    lua_pushstring(L, l_result.toUTF8().c_str());
-    return 1;
-
+        Wt::WString const& l_result = self->text();
+        lua_pushstring(L, l_result.toUTF8().c_str());
+        return 1;
     } else {
         return luaL_error(L, "Wrong arguments for WMenuItem.text");
     }
@@ -367,10 +341,9 @@ int luawt_WMenuItem_linkTarget(lua_State* L) {
     int index = luawt_getSuitableArgsGroup(L, luawt_WMenuItem_linkTarget_args);
     WMenuItem* self = luawt_checkFromLua<WMenuItem>(L, 1);
     if (index == 0) {
-    Wt::AnchorTarget l_result = self->linkTarget();
-    luawt_returnEnum(L, luawt_enum_AnchorTarget_str, luawt_enum_AnchorTarget_val, l_result, "AnchorTarget");
-    return 1;
-
+        Wt::AnchorTarget l_result = self->linkTarget();
+        luawt_returnEnum(L, luawt_enum_AnchorTarget_str, luawt_enum_AnchorTarget_val, l_result, "AnchorTarget");
+        return 1;
     } else {
         return luaL_error(L, "Wrong arguments for WMenuItem.linkTarget");
     }
@@ -383,10 +356,9 @@ int luawt_WMenuItem_takeContents(lua_State* L) {
     int index = luawt_getSuitableArgsGroup(L, luawt_WMenuItem_takeContents_args);
     WMenuItem* self = luawt_checkFromLua<WMenuItem>(L, 1);
     if (index == 0) {
-    Wt::WWidget * l_result = self->takeContents();
-    luawt_toLua(L, l_result);
-    return 1;
-
+        Wt::WWidget* l_result = self->takeContents();
+        luawt_toLua(L, l_result);
+        return 1;
     } else {
         return luaL_error(L, "Wrong arguments for WMenuItem.takeContents");
     }
@@ -399,10 +371,9 @@ int luawt_WMenuItem_setCheckable(lua_State* L) {
     int index = luawt_getSuitableArgsGroup(L, luawt_WMenuItem_setCheckable_args);
     WMenuItem* self = luawt_checkFromLua<WMenuItem>(L, 1);
     if (index == 0) {
-    bool checkable = lua_toboolean(L, 2);
-    self->setCheckable(checkable);
-    return 0;
-    
+        bool checkable = lua_toboolean(L, 2);
+        self->setCheckable(checkable);
+        return 0;
     } else {
         return luaL_error(L, "Wrong arguments for WMenuItem.setCheckable");
     }
@@ -415,10 +386,9 @@ int luawt_WMenuItem_setSelectable(lua_State* L) {
     int index = luawt_getSuitableArgsGroup(L, luawt_WMenuItem_setSelectable_args);
     WMenuItem* self = luawt_checkFromLua<WMenuItem>(L, 1);
     if (index == 0) {
-    bool selectable = lua_toboolean(L, 2);
-    self->setSelectable(selectable);
-    return 0;
-    
+        bool selectable = lua_toboolean(L, 2);
+        self->setSelectable(selectable);
+        return 0;
     } else {
         return luaL_error(L, "Wrong arguments for WMenuItem.setSelectable");
     }
@@ -431,10 +401,9 @@ int luawt_WMenuItem_parentMenu(lua_State* L) {
     int index = luawt_getSuitableArgsGroup(L, luawt_WMenuItem_parentMenu_args);
     WMenuItem* self = luawt_checkFromLua<WMenuItem>(L, 1);
     if (index == 0) {
-    Wt::WMenu * l_result = self->parentMenu();
-    luawt_toLua(L, l_result);
-    return 1;
-
+        Wt::WMenu* l_result = self->parentMenu();
+        luawt_toLua(L, l_result);
+        return 1;
     } else {
         return luaL_error(L, "Wrong arguments for WMenuItem.parentMenu");
     }
@@ -447,10 +416,9 @@ int luawt_WMenuItem_isCloseable(lua_State* L) {
     int index = luawt_getSuitableArgsGroup(L, luawt_WMenuItem_isCloseable_args);
     WMenuItem* self = luawt_checkFromLua<WMenuItem>(L, 1);
     if (index == 0) {
-    bool l_result = self->isCloseable();
-    lua_pushboolean(L, l_result);
-    return 1;
-
+        bool l_result = self->isCloseable();
+        lua_pushboolean(L, l_result);
+        return 1;
     } else {
         return luaL_error(L, "Wrong arguments for WMenuItem.isCloseable");
     }
@@ -463,11 +431,10 @@ int luawt_WMenuItem_setFromInternalPath(lua_State* L) {
     int index = luawt_getSuitableArgsGroup(L, luawt_WMenuItem_setFromInternalPath_args);
     WMenuItem* self = luawt_checkFromLua<WMenuItem>(L, 1);
     if (index == 0) {
-    char const * raw2 = lua_tostring(L, 2);
-    std::string path = std::string(raw2);
-    self->setFromInternalPath(path);
-    return 0;
-    
+        char const* raw2 = lua_tostring(L, 2);
+        std::string path = std::string(raw2);
+        self->setFromInternalPath(path);
+        return 0;
     } else {
         return luaL_error(L, "Wrong arguments for WMenuItem.setFromInternalPath");
     }
@@ -480,10 +447,9 @@ int luawt_WMenuItem_link(lua_State* L) {
     int index = luawt_getSuitableArgsGroup(L, luawt_WMenuItem_link_args);
     WMenuItem* self = luawt_checkFromLua<WMenuItem>(L, 1);
     if (index == 0) {
-    Wt::WLink l_result = self->link();
-    lua_pushstring(L, l_result.url().c_str());
-    return 1;
-
+        Wt::WLink l_result = self->link();
+        lua_pushstring(L, l_result.url().c_str());
+        return 1;
     } else {
         return luaL_error(L, "Wrong arguments for WMenuItem.link");
     }
@@ -496,10 +462,9 @@ int luawt_WMenuItem_setCloseable(lua_State* L) {
     int index = luawt_getSuitableArgsGroup(L, luawt_WMenuItem_setCloseable_args);
     WMenuItem* self = luawt_checkFromLua<WMenuItem>(L, 1);
     if (index == 0) {
-    bool closeable = lua_toboolean(L, 2);
-    self->setCloseable(closeable);
-    return 0;
-    
+        bool closeable = lua_toboolean(L, 2);
+        self->setCloseable(closeable);
+        return 0;
     } else {
         return luaL_error(L, "Wrong arguments for WMenuItem.setCloseable");
     }
@@ -512,10 +477,9 @@ int luawt_WMenuItem_pathComponent(lua_State* L) {
     int index = luawt_getSuitableArgsGroup(L, luawt_WMenuItem_pathComponent_args);
     WMenuItem* self = luawt_checkFromLua<WMenuItem>(L, 1);
     if (index == 0) {
-    std::string l_result = self->pathComponent();
-    lua_pushstring(L, l_result.c_str());
-    return 1;
-
+        std::string l_result = self->pathComponent();
+        lua_pushstring(L, l_result.c_str());
+        return 1;
     } else {
         return luaL_error(L, "Wrong arguments for WMenuItem.pathComponent");
     }
@@ -528,16 +492,15 @@ int luawt_WMenuItem_setLinkTarget(lua_State* L) {
     int index = luawt_getSuitableArgsGroup(L, luawt_WMenuItem_setLinkTarget_args);
     WMenuItem* self = luawt_checkFromLua<WMenuItem>(L, 1);
     if (index == 0) {
-    Wt::AnchorTarget target = static_cast<Wt::AnchorTarget>(luawt_getEnum(
-        L,
-        luawt_enum_AnchorTarget_str,
-        luawt_enum_AnchorTarget_val,
-        2,
-        "Wrong enum type in args of WMenuItem.setLinkTarget"
-    ));
-    self->setLinkTarget(target);
-    return 0;
-    
+        Wt::AnchorTarget target = static_cast<Wt::AnchorTarget>(luawt_getEnum(
+                    L,
+                    luawt_enum_AnchorTarget_str,
+                    luawt_enum_AnchorTarget_val,
+                    2,
+                    "Wrong enum type in args of WMenuItem.setLinkTarget"
+                ));
+        self->setLinkTarget(target);
+        return 0;
     } else {
         return luaL_error(L, "Wrong arguments for WMenuItem.setLinkTarget");
     }
@@ -550,10 +513,9 @@ int luawt_WMenuItem_icon(lua_State* L) {
     int index = luawt_getSuitableArgsGroup(L, luawt_WMenuItem_icon_args);
     WMenuItem* self = luawt_checkFromLua<WMenuItem>(L, 1);
     if (index == 0) {
-    std::string l_result = self->icon();
-    lua_pushstring(L, l_result.c_str());
-    return 1;
-
+        std::string l_result = self->icon();
+        lua_pushstring(L, l_result.c_str());
+        return 1;
     } else {
         return luaL_error(L, "Wrong arguments for WMenuItem.icon");
     }
@@ -566,10 +528,9 @@ int luawt_WMenuItem_checkBox(lua_State* L) {
     int index = luawt_getSuitableArgsGroup(L, luawt_WMenuItem_checkBox_args);
     WMenuItem* self = luawt_checkFromLua<WMenuItem>(L, 1);
     if (index == 0) {
-    Wt::WCheckBox * l_result = self->checkBox();
-    luawt_toLua(L, l_result);
-    return 1;
-
+        Wt::WCheckBox* l_result = self->checkBox();
+        luawt_toLua(L, l_result);
+        return 1;
     } else {
         return luaL_error(L, "Wrong arguments for WMenuItem.checkBox");
     }
@@ -582,11 +543,10 @@ int luawt_WMenuItem_setPathComponent(lua_State* L) {
     int index = luawt_getSuitableArgsGroup(L, luawt_WMenuItem_setPathComponent_args);
     WMenuItem* self = luawt_checkFromLua<WMenuItem>(L, 1);
     if (index == 0) {
-    char const * raw2 = lua_tostring(L, 2);
-    std::string path = std::string(raw2);
-    self->setPathComponent(path);
-    return 0;
-    
+        char const* raw2 = lua_tostring(L, 2);
+        std::string path = std::string(raw2);
+        self->setPathComponent(path);
+        return 0;
     } else {
         return luaL_error(L, "Wrong arguments for WMenuItem.setPathComponent");
     }
@@ -599,11 +559,10 @@ int luawt_WMenuItem_setIcon(lua_State* L) {
     int index = luawt_getSuitableArgsGroup(L, luawt_WMenuItem_setIcon_args);
     WMenuItem* self = luawt_checkFromLua<WMenuItem>(L, 1);
     if (index == 0) {
-    char const * raw2 = lua_tostring(L, 2);
-    std::string path = std::string(raw2);
-    self->setIcon(path);
-    return 0;
-    
+        char const* raw2 = lua_tostring(L, 2);
+        std::string path = std::string(raw2);
+        self->setIcon(path);
+        return 0;
     } else {
         return luaL_error(L, "Wrong arguments for WMenuItem.setIcon");
     }
@@ -616,11 +575,10 @@ int luawt_WMenuItem_setText(lua_State* L) {
     int index = luawt_getSuitableArgsGroup(L, luawt_WMenuItem_setText_args);
     WMenuItem* self = luawt_checkFromLua<WMenuItem>(L, 1);
     if (index == 0) {
-    char const * raw2 = lua_tostring(L, 2);
-    Wt::WString text = Wt::WString(raw2);
-    self->setText(text);
-    return 0;
-    
+        char const* raw2 = lua_tostring(L, 2);
+        Wt::WString text = Wt::WString(raw2);
+        self->setText(text);
+        return 0;
     } else {
         return luaL_error(L, "Wrong arguments for WMenuItem.setText");
     }
@@ -633,10 +591,9 @@ int luawt_WMenuItem_isSectionHeader(lua_State* L) {
     int index = luawt_getSuitableArgsGroup(L, luawt_WMenuItem_isSectionHeader_args);
     WMenuItem* self = luawt_checkFromLua<WMenuItem>(L, 1);
     if (index == 0) {
-    bool l_result = self->isSectionHeader();
-    lua_pushboolean(L, l_result);
-    return 1;
-
+        bool l_result = self->isSectionHeader();
+        lua_pushboolean(L, l_result);
+        return 1;
     } else {
         return luaL_error(L, "Wrong arguments for WMenuItem.isSectionHeader");
     }
@@ -649,10 +606,9 @@ int luawt_WMenuItem_isSeparator(lua_State* L) {
     int index = luawt_getSuitableArgsGroup(L, luawt_WMenuItem_isSeparator_args);
     WMenuItem* self = luawt_checkFromLua<WMenuItem>(L, 1);
     if (index == 0) {
-    bool l_result = self->isSeparator();
-    lua_pushboolean(L, l_result);
-    return 1;
-
+        bool l_result = self->isSeparator();
+        lua_pushboolean(L, l_result);
+        return 1;
     } else {
         return luaL_error(L, "Wrong arguments for WMenuItem.isSeparator");
     }
@@ -665,11 +621,10 @@ int luawt_WMenuItem_setLink(lua_State* L) {
     int index = luawt_getSuitableArgsGroup(L, luawt_WMenuItem_setLink_args);
     WMenuItem* self = luawt_checkFromLua<WMenuItem>(L, 1);
     if (index == 0) {
-    char const * raw2 = lua_tostring(L, 2);
-    Wt::WLink link = Wt::WLink(raw2);
-    self->setLink(link);
-    return 0;
-    
+        char const* raw2 = lua_tostring(L, 2);
+        Wt::WLink link = Wt::WLink(raw2);
+        self->setLink(link);
+        return 0;
     } else {
         return luaL_error(L, "Wrong arguments for WMenuItem.setLink");
     }

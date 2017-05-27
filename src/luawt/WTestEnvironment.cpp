@@ -13,8 +13,8 @@ using namespace Test;
 
 int luawt_WTestEnvironment_make(lua_State* L) {
     WTestEnvironment* wtest = reinterpret_cast<WTestEnvironment*>(
-        lua_newuserdata(L, sizeof(WTestEnvironment))
-    );
+            lua_newuserdata(L, sizeof(WTestEnvironment))
+        );
     new (wtest) WTestEnvironment();
     luaL_getmetatable(L, "luawt_WTestEnvironment");
     lua_setmetatable(L, -2);
@@ -23,8 +23,8 @@ int luawt_WTestEnvironment_make(lua_State* L) {
 
 int luawt_WTestEnvironment_gc(lua_State* L) {
     WTestEnvironment* s = reinterpret_cast<WTestEnvironment*>(
-        luaL_checkudata(L, 1, "luawt_WTestEnvironment")
-    );
+            luaL_checkudata(L, 1, "luawt_WTestEnvironment")
+        );
     s->WTestEnvironment::~WTestEnvironment();
     return 0;
 }

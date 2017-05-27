@@ -17,24 +17,22 @@ int luawt_WDialog_positionAt(lua_State* L) {
     int index = luawt_getSuitableArgsGroup(L, luawt_WDialog_positionAt_args);
     WDialog* self = luawt_checkFromLua<WDialog>(L, 1);
     if (index == 0) {
-    Wt::WWidget* widget =
-        luawt_checkFromLua<Wt::WWidget>(L, 2);
-    self->positionAt(widget);
-    return 0;
-    
+        Wt::WWidget* widget =
+            luawt_checkFromLua<Wt::WWidget>(L, 2);
+        self->positionAt(widget);
+        return 0;
     } else if (index == 1) {
-    Wt::WWidget* widget =
-        luawt_checkFromLua<Wt::WWidget>(L, 2);
-    Wt::Orientation orientation = static_cast<Wt::Orientation>(luawt_getEnum(
-        L,
-        luawt_enum_Orientation_str,
-        luawt_enum_Orientation_val,
-        3,
-        "Wrong enum type in args of WDialog.positionAt"
-    ));
-    self->positionAt(widget, orientation);
-    return 0;
-    
+        Wt::WWidget* widget =
+            luawt_checkFromLua<Wt::WWidget>(L, 2);
+        Wt::Orientation orientation = static_cast<Wt::Orientation>(luawt_getEnum(
+                    L,
+                    luawt_enum_Orientation_str,
+                    luawt_enum_Orientation_val,
+                    3,
+                    "Wrong enum type in args of WDialog.positionAt"
+                ));
+        self->positionAt(widget, orientation);
+        return 0;
     } else {
         return luaL_error(L, "Wrong arguments for WDialog.positionAt");
     }
@@ -47,13 +45,12 @@ int luawt_WDialog_setMinimumSize(lua_State* L) {
     int index = luawt_getSuitableArgsGroup(L, luawt_WDialog_setMinimumSize_args);
     WDialog* self = luawt_checkFromLua<WDialog>(L, 1);
     if (index == 0) {
-    double raw2 = lua_tonumber(L, 2);
-    Wt::WLength width = Wt::WLength(raw2);
-    double raw3 = lua_tonumber(L, 3);
-    Wt::WLength height = Wt::WLength(raw3);
-    self->setMinimumSize(width, height);
-    return 0;
-    
+        double raw2 = lua_tonumber(L, 2);
+        Wt::WLength width = Wt::WLength(raw2);
+        double raw3 = lua_tonumber(L, 3);
+        Wt::WLength height = Wt::WLength(raw3);
+        self->setMinimumSize(width, height);
+        return 0;
     } else {
         return luaL_error(L, "Wrong arguments for WDialog.setMinimumSize");
     }
@@ -66,9 +63,8 @@ int luawt_WDialog_accept(lua_State* L) {
     int index = luawt_getSuitableArgsGroup(L, luawt_WDialog_accept_args);
     WDialog* self = luawt_checkFromLua<WDialog>(L, 1);
     if (index == 0) {
-    self->accept();
-    return 0;
-    
+        self->accept();
+        return 0;
     } else {
         return luaL_error(L, "Wrong arguments for WDialog.accept");
     }
@@ -81,16 +77,15 @@ int luawt_WDialog_done(lua_State* L) {
     int index = luawt_getSuitableArgsGroup(L, luawt_WDialog_done_args);
     WDialog* self = luawt_checkFromLua<WDialog>(L, 1);
     if (index == 0) {
-    Wt::WDialog::DialogCode r = static_cast<Wt::WDialog::DialogCode>(luawt_getEnum(
-        L,
-        luawt_enum_WDialog_DialogCode_str,
-        luawt_enum_WDialog_DialogCode_val,
-        2,
-        "Wrong enum type in args of WDialog.done"
-    ));
-    self->done(r);
-    return 0;
-    
+        Wt::WDialog::DialogCode r = static_cast<Wt::WDialog::DialogCode>(luawt_getEnum(
+                    L,
+                    luawt_enum_WDialog_DialogCode_str,
+                    luawt_enum_WDialog_DialogCode_val,
+                    2,
+                    "Wrong enum type in args of WDialog.done"
+                ));
+        self->done(r);
+        return 0;
     } else {
         return luaL_error(L, "Wrong arguments for WDialog.done");
     }
@@ -103,10 +98,9 @@ int luawt_WDialog_result(lua_State* L) {
     int index = luawt_getSuitableArgsGroup(L, luawt_WDialog_result_args);
     WDialog* self = luawt_checkFromLua<WDialog>(L, 1);
     if (index == 0) {
-    Wt::WDialog::DialogCode l_result = self->result();
-    luawt_returnEnum(L, luawt_enum_WDialog_DialogCode_str, luawt_enum_WDialog_DialogCode_val, l_result, "WDialog::DialogCode");
-    return 1;
-
+        Wt::WDialog::DialogCode l_result = self->result();
+        luawt_returnEnum(L, luawt_enum_WDialog_DialogCode_str, luawt_enum_WDialog_DialogCode_val, l_result, "WDialog::DialogCode");
+        return 1;
     } else {
         return luaL_error(L, "Wrong arguments for WDialog.result");
     }
@@ -119,10 +113,9 @@ int luawt_WDialog_setModal(lua_State* L) {
     int index = luawt_getSuitableArgsGroup(L, luawt_WDialog_setModal_args);
     WDialog* self = luawt_checkFromLua<WDialog>(L, 1);
     if (index == 0) {
-    bool modal = lua_toboolean(L, 2);
-    self->setModal(modal);
-    return 0;
-    
+        bool modal = lua_toboolean(L, 2);
+        self->setModal(modal);
+        return 0;
     } else {
         return luaL_error(L, "Wrong arguments for WDialog.setModal");
     }
@@ -135,13 +128,12 @@ int luawt_WDialog_setMaximumSize(lua_State* L) {
     int index = luawt_getSuitableArgsGroup(L, luawt_WDialog_setMaximumSize_args);
     WDialog* self = luawt_checkFromLua<WDialog>(L, 1);
     if (index == 0) {
-    double raw2 = lua_tonumber(L, 2);
-    Wt::WLength width = Wt::WLength(raw2);
-    double raw3 = lua_tonumber(L, 3);
-    Wt::WLength height = Wt::WLength(raw3);
-    self->setMaximumSize(width, height);
-    return 0;
-    
+        double raw2 = lua_tonumber(L, 2);
+        Wt::WLength width = Wt::WLength(raw2);
+        double raw3 = lua_tonumber(L, 3);
+        Wt::WLength height = Wt::WLength(raw3);
+        self->setMaximumSize(width, height);
+        return 0;
     } else {
         return luaL_error(L, "Wrong arguments for WDialog.setMaximumSize");
     }
@@ -154,10 +146,9 @@ int luawt_WDialog_titleBar(lua_State* L) {
     int index = luawt_getSuitableArgsGroup(L, luawt_WDialog_titleBar_args);
     WDialog* self = luawt_checkFromLua<WDialog>(L, 1);
     if (index == 0) {
-    Wt::WContainerWidget * l_result = self->titleBar();
-    luawt_toLua(L, l_result);
-    return 1;
-
+        Wt::WContainerWidget* l_result = self->titleBar();
+        luawt_toLua(L, l_result);
+        return 1;
     } else {
         return luaL_error(L, "Wrong arguments for WDialog.titleBar");
     }
@@ -170,10 +161,9 @@ int luawt_WDialog_contents(lua_State* L) {
     int index = luawt_getSuitableArgsGroup(L, luawt_WDialog_contents_args);
     WDialog* self = luawt_checkFromLua<WDialog>(L, 1);
     if (index == 0) {
-    Wt::WContainerWidget * l_result = self->contents();
-    luawt_toLua(L, l_result);
-    return 1;
-
+        Wt::WContainerWidget* l_result = self->contents();
+        luawt_toLua(L, l_result);
+        return 1;
     } else {
         return luaL_error(L, "Wrong arguments for WDialog.contents");
     }
@@ -186,10 +176,9 @@ int luawt_WDialog_setResizable(lua_State* L) {
     int index = luawt_getSuitableArgsGroup(L, luawt_WDialog_setResizable_args);
     WDialog* self = luawt_checkFromLua<WDialog>(L, 1);
     if (index == 0) {
-    bool resizable = lua_toboolean(L, 2);
-    self->setResizable(resizable);
-    return 0;
-    
+        bool resizable = lua_toboolean(L, 2);
+        self->setResizable(resizable);
+        return 0;
     } else {
         return luaL_error(L, "Wrong arguments for WDialog.setResizable");
     }
@@ -202,10 +191,9 @@ int luawt_WDialog_windowTitle(lua_State* L) {
     int index = luawt_getSuitableArgsGroup(L, luawt_WDialog_windowTitle_args);
     WDialog* self = luawt_checkFromLua<WDialog>(L, 1);
     if (index == 0) {
-    Wt::WString l_result = self->windowTitle();
-    lua_pushstring(L, l_result.toUTF8().c_str());
-    return 1;
-
+        Wt::WString l_result = self->windowTitle();
+        lua_pushstring(L, l_result.toUTF8().c_str());
+        return 1;
     } else {
         return luaL_error(L, "Wrong arguments for WDialog.windowTitle");
     }
@@ -218,10 +206,9 @@ int luawt_WDialog_setTitleBarEnabled(lua_State* L) {
     int index = luawt_getSuitableArgsGroup(L, luawt_WDialog_setTitleBarEnabled_args);
     WDialog* self = luawt_checkFromLua<WDialog>(L, 1);
     if (index == 0) {
-    bool enabled = lua_toboolean(L, 2);
-    self->setTitleBarEnabled(enabled);
-    return 0;
-    
+        bool enabled = lua_toboolean(L, 2);
+        self->setTitleBarEnabled(enabled);
+        return 0;
     } else {
         return luaL_error(L, "Wrong arguments for WDialog.setTitleBarEnabled");
     }
@@ -234,9 +221,8 @@ int luawt_WDialog_reject(lua_State* L) {
     int index = luawt_getSuitableArgsGroup(L, luawt_WDialog_reject_args);
     WDialog* self = luawt_checkFromLua<WDialog>(L, 1);
     if (index == 0) {
-    self->reject();
-    return 0;
-    
+        self->reject();
+        return 0;
     } else {
         return luaL_error(L, "Wrong arguments for WDialog.reject");
     }
@@ -249,10 +235,9 @@ int luawt_WDialog_setClosable(lua_State* L) {
     int index = luawt_getSuitableArgsGroup(L, luawt_WDialog_setClosable_args);
     WDialog* self = luawt_checkFromLua<WDialog>(L, 1);
     if (index == 0) {
-    bool closable = lua_toboolean(L, 2);
-    self->setClosable(closable);
-    return 0;
-    
+        bool closable = lua_toboolean(L, 2);
+        self->setClosable(closable);
+        return 0;
     } else {
         return luaL_error(L, "Wrong arguments for WDialog.setClosable");
     }
@@ -265,10 +250,9 @@ int luawt_WDialog_isModal(lua_State* L) {
     int index = luawt_getSuitableArgsGroup(L, luawt_WDialog_isModal_args);
     WDialog* self = luawt_checkFromLua<WDialog>(L, 1);
     if (index == 0) {
-    bool l_result = self->isModal();
-    lua_pushboolean(L, l_result);
-    return 1;
-
+        bool l_result = self->isModal();
+        lua_pushboolean(L, l_result);
+        return 1;
     } else {
         return luaL_error(L, "Wrong arguments for WDialog.isModal");
     }
@@ -281,11 +265,10 @@ int luawt_WDialog_setWindowTitle(lua_State* L) {
     int index = luawt_getSuitableArgsGroup(L, luawt_WDialog_setWindowTitle_args);
     WDialog* self = luawt_checkFromLua<WDialog>(L, 1);
     if (index == 0) {
-    char const * raw2 = lua_tostring(L, 2);
-    Wt::WString title = Wt::WString(raw2);
-    self->setWindowTitle(title);
-    return 0;
-    
+        char const* raw2 = lua_tostring(L, 2);
+        Wt::WString title = Wt::WString(raw2);
+        self->setWindowTitle(title);
+        return 0;
     } else {
         return luaL_error(L, "Wrong arguments for WDialog.setWindowTitle");
     }
@@ -298,10 +281,9 @@ int luawt_WDialog_resizable(lua_State* L) {
     int index = luawt_getSuitableArgsGroup(L, luawt_WDialog_resizable_args);
     WDialog* self = luawt_checkFromLua<WDialog>(L, 1);
     if (index == 0) {
-    bool l_result = self->resizable();
-    lua_pushboolean(L, l_result);
-    return 1;
-
+        bool l_result = self->resizable();
+        lua_pushboolean(L, l_result);
+        return 1;
     } else {
         return luaL_error(L, "Wrong arguments for WDialog.resizable");
     }
@@ -314,10 +296,9 @@ int luawt_WDialog_closable(lua_State* L) {
     int index = luawt_getSuitableArgsGroup(L, luawt_WDialog_closable_args);
     WDialog* self = luawt_checkFromLua<WDialog>(L, 1);
     if (index == 0) {
-    bool l_result = self->closable();
-    lua_pushboolean(L, l_result);
-    return 1;
-
+        bool l_result = self->closable();
+        lua_pushboolean(L, l_result);
+        return 1;
     } else {
         return luaL_error(L, "Wrong arguments for WDialog.closable");
     }
@@ -330,11 +311,10 @@ int luawt_WDialog_setCaption(lua_State* L) {
     int index = luawt_getSuitableArgsGroup(L, luawt_WDialog_setCaption_args);
     WDialog* self = luawt_checkFromLua<WDialog>(L, 1);
     if (index == 0) {
-    char const * raw2 = lua_tostring(L, 2);
-    Wt::WString caption = Wt::WString(raw2);
-    self->setCaption(caption);
-    return 0;
-    
+        char const* raw2 = lua_tostring(L, 2);
+        Wt::WString caption = Wt::WString(raw2);
+        self->setCaption(caption);
+        return 0;
     } else {
         return luaL_error(L, "Wrong arguments for WDialog.setCaption");
     }
@@ -347,10 +327,9 @@ int luawt_WDialog_isTitleBarEnabled(lua_State* L) {
     int index = luawt_getSuitableArgsGroup(L, luawt_WDialog_isTitleBarEnabled_args);
     WDialog* self = luawt_checkFromLua<WDialog>(L, 1);
     if (index == 0) {
-    bool l_result = self->isTitleBarEnabled();
-    lua_pushboolean(L, l_result);
-    return 1;
-
+        bool l_result = self->isTitleBarEnabled();
+        lua_pushboolean(L, l_result);
+        return 1;
     } else {
         return luaL_error(L, "Wrong arguments for WDialog.isTitleBarEnabled");
     }
@@ -363,10 +342,9 @@ int luawt_WDialog_footer(lua_State* L) {
     int index = luawt_getSuitableArgsGroup(L, luawt_WDialog_footer_args);
     WDialog* self = luawt_checkFromLua<WDialog>(L, 1);
     if (index == 0) {
-    Wt::WContainerWidget * l_result = self->footer();
-    luawt_toLua(L, l_result);
-    return 1;
-
+        Wt::WContainerWidget* l_result = self->footer();
+        luawt_toLua(L, l_result);
+        return 1;
     } else {
         return luaL_error(L, "Wrong arguments for WDialog.footer");
     }
@@ -379,15 +357,13 @@ int luawt_WDialog_caption(lua_State* L) {
     int index = luawt_getSuitableArgsGroup(L, luawt_WDialog_caption_args);
     WDialog* self = luawt_checkFromLua<WDialog>(L, 1);
     if (index == 0) {
-    Wt::WString l_result = self->caption();
-    lua_pushstring(L, l_result.toUTF8().c_str());
-    return 1;
-
+        Wt::WString l_result = self->caption();
+        lua_pushstring(L, l_result.toUTF8().c_str());
+        return 1;
     } else {
         return luaL_error(L, "Wrong arguments for WDialog.caption");
     }
 }
-
 
 static const luaL_Reg luawt_WDialog_methods[] = {
     METHOD(WDialog, setWindowTitle),

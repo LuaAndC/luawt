@@ -13,17 +13,15 @@ static const char* const* const luawt_WDefaultLoadingIndicator_make_args[] = {WD
 int luawt_WDefaultLoadingIndicator_make(lua_State* L) {
     int index = luawt_getSuitableArgsGroup(L, luawt_WDefaultLoadingIndicator_make_args);
     if (index == 0) {
-    WDefaultLoadingIndicator * l_result = new WDefaultLoadingIndicator();
-    MyApplication* app = MyApplication::instance();
-    if (!app) {
-        delete l_result;
-        throw std::logic_error("No WApplication when creating WDefaultLoadingIndicator");
-    }
-    app->root()->addWidget(l_result);
-    
-    luawt_toLua(L, l_result);
-    return 1;
-
+        WDefaultLoadingIndicator* l_result = new WDefaultLoadingIndicator();
+        MyApplication* app = MyApplication::instance();
+        if (!app) {
+            delete l_result;
+            throw std::logic_error("No WApplication when creating WDefaultLoadingIndicator");
+        }
+        app->root()->addWidget(l_result);
+        luawt_toLua(L, l_result);
+        return 1;
     } else {
         return luaL_error(L, "Wrong arguments for WDefaultLoadingIndicator.make");
     }
@@ -36,10 +34,9 @@ int luawt_WDefaultLoadingIndicator_widget(lua_State* L) {
     int index = luawt_getSuitableArgsGroup(L, luawt_WDefaultLoadingIndicator_widget_args);
     WDefaultLoadingIndicator* self = luawt_checkFromLua<WDefaultLoadingIndicator>(L, 1);
     if (index == 0) {
-    Wt::WWidget * l_result = self->widget();
-    luawt_toLua(L, l_result);
-    return 1;
-
+        Wt::WWidget* l_result = self->widget();
+        luawt_toLua(L, l_result);
+        return 1;
     } else {
         return luaL_error(L, "Wrong arguments for WDefaultLoadingIndicator.widget");
     }
@@ -52,11 +49,10 @@ int luawt_WDefaultLoadingIndicator_setMessage(lua_State* L) {
     int index = luawt_getSuitableArgsGroup(L, luawt_WDefaultLoadingIndicator_setMessage_args);
     WDefaultLoadingIndicator* self = luawt_checkFromLua<WDefaultLoadingIndicator>(L, 1);
     if (index == 0) {
-    char const * raw2 = lua_tostring(L, 2);
-    Wt::WString text = Wt::WString(raw2);
-    self->setMessage(text);
-    return 0;
-    
+        char const* raw2 = lua_tostring(L, 2);
+        Wt::WString text = Wt::WString(raw2);
+        self->setMessage(text);
+        return 0;
     } else {
         return luaL_error(L, "Wrong arguments for WDefaultLoadingIndicator.setMessage");
     }

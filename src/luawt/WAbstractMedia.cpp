@@ -14,9 +14,8 @@ int luawt_WAbstractMedia_play(lua_State* L) {
     int index = luawt_getSuitableArgsGroup(L, luawt_WAbstractMedia_play_args);
     WAbstractMedia* self = luawt_checkFromLua<WAbstractMedia>(L, 1);
     if (index == 0) {
-    self->play();
-    return 0;
-    
+        self->play();
+        return 0;
     } else {
         return luaL_error(L, "Wrong arguments for WAbstractMedia.play");
     }
@@ -29,9 +28,8 @@ int luawt_WAbstractMedia_pause(lua_State* L) {
     int index = luawt_getSuitableArgsGroup(L, luawt_WAbstractMedia_pause_args);
     WAbstractMedia* self = luawt_checkFromLua<WAbstractMedia>(L, 1);
     if (index == 0) {
-    self->pause();
-    return 0;
-    
+        self->pause();
+        return 0;
     } else {
         return luaL_error(L, "Wrong arguments for WAbstractMedia.pause");
     }
@@ -46,29 +44,26 @@ int luawt_WAbstractMedia_addSource(lua_State* L) {
     int index = luawt_getSuitableArgsGroup(L, luawt_WAbstractMedia_addSource_args);
     WAbstractMedia* self = luawt_checkFromLua<WAbstractMedia>(L, 1);
     if (index == 0) {
-    char const * raw2 = lua_tostring(L, 2);
-    Wt::WLink source = Wt::WLink(raw2);
-    self->addSource(source);
-    return 0;
-    
+        char const* raw2 = lua_tostring(L, 2);
+        Wt::WLink source = Wt::WLink(raw2);
+        self->addSource(source);
+        return 0;
     } else if (index == 1) {
-    char const * raw2 = lua_tostring(L, 2);
-    Wt::WLink source = Wt::WLink(raw2);
-    char const * raw3 = lua_tostring(L, 3);
-    std::string type = std::string(raw3);
-    self->addSource(source, type);
-    return 0;
-    
+        char const* raw2 = lua_tostring(L, 2);
+        Wt::WLink source = Wt::WLink(raw2);
+        char const* raw3 = lua_tostring(L, 3);
+        std::string type = std::string(raw3);
+        self->addSource(source, type);
+        return 0;
     } else if (index == 2) {
-    char const * raw2 = lua_tostring(L, 2);
-    Wt::WLink source = Wt::WLink(raw2);
-    char const * raw3 = lua_tostring(L, 3);
-    std::string type = std::string(raw3);
-    char const * raw4 = lua_tostring(L, 4);
-    std::string media = std::string(raw4);
-    self->addSource(source, type, media);
-    return 0;
-    
+        char const* raw2 = lua_tostring(L, 2);
+        Wt::WLink source = Wt::WLink(raw2);
+        char const* raw3 = lua_tostring(L, 3);
+        std::string type = std::string(raw3);
+        char const* raw4 = lua_tostring(L, 4);
+        std::string media = std::string(raw4);
+        self->addSource(source, type, media);
+        return 0;
     } else {
         return luaL_error(L, "Wrong arguments for WAbstractMedia.addSource");
     }
@@ -81,10 +76,9 @@ int luawt_WAbstractMedia_readyState(lua_State* L) {
     int index = luawt_getSuitableArgsGroup(L, luawt_WAbstractMedia_readyState_args);
     WAbstractMedia* self = luawt_checkFromLua<WAbstractMedia>(L, 1);
     if (index == 0) {
-    Wt::WAbstractMedia::ReadyState l_result = self->readyState();
-    luawt_returnEnum(L, luawt_enum_WAbstractMedia_ReadyState_str, luawt_enum_WAbstractMedia_ReadyState_val, l_result, "WAbstractMedia::ReadyState");
-    return 1;
-
+        Wt::WAbstractMedia::ReadyState l_result = self->readyState();
+        luawt_returnEnum(L, luawt_enum_WAbstractMedia_ReadyState_str, luawt_enum_WAbstractMedia_ReadyState_val, l_result, "WAbstractMedia::ReadyState");
+        return 1;
     } else {
         return luaL_error(L, "Wrong arguments for WAbstractMedia.readyState");
     }
@@ -97,9 +91,8 @@ int luawt_WAbstractMedia_clearSources(lua_State* L) {
     int index = luawt_getSuitableArgsGroup(L, luawt_WAbstractMedia_clearSources_args);
     WAbstractMedia* self = luawt_checkFromLua<WAbstractMedia>(L, 1);
     if (index == 0) {
-    self->clearSources();
-    return 0;
-    
+        self->clearSources();
+        return 0;
     } else {
         return luaL_error(L, "Wrong arguments for WAbstractMedia.clearSources");
     }
@@ -112,10 +105,9 @@ int luawt_WAbstractMedia_jsMediaRef(lua_State* L) {
     int index = luawt_getSuitableArgsGroup(L, luawt_WAbstractMedia_jsMediaRef_args);
     WAbstractMedia* self = luawt_checkFromLua<WAbstractMedia>(L, 1);
     if (index == 0) {
-    std::string l_result = self->jsMediaRef();
-    lua_pushstring(L, l_result.c_str());
-    return 1;
-
+        std::string l_result = self->jsMediaRef();
+        lua_pushstring(L, l_result.c_str());
+        return 1;
     } else {
         return luaL_error(L, "Wrong arguments for WAbstractMedia.jsMediaRef");
     }
@@ -128,16 +120,15 @@ int luawt_WAbstractMedia_setPreloadMode(lua_State* L) {
     int index = luawt_getSuitableArgsGroup(L, luawt_WAbstractMedia_setPreloadMode_args);
     WAbstractMedia* self = luawt_checkFromLua<WAbstractMedia>(L, 1);
     if (index == 0) {
-    Wt::WAbstractMedia::PreloadMode mode = static_cast<Wt::WAbstractMedia::PreloadMode>(luawt_getEnum(
-        L,
-        luawt_enum_WAbstractMedia_PreloadMode_str,
-        luawt_enum_WAbstractMedia_PreloadMode_val,
-        2,
-        "Wrong enum type in args of WAbstractMedia.setPreloadMode"
-    ));
-    self->setPreloadMode(mode);
-    return 0;
-    
+        Wt::WAbstractMedia::PreloadMode mode = static_cast<Wt::WAbstractMedia::PreloadMode>(luawt_getEnum(
+                    L,
+                    luawt_enum_WAbstractMedia_PreloadMode_str,
+                    luawt_enum_WAbstractMedia_PreloadMode_val,
+                    2,
+                    "Wrong enum type in args of WAbstractMedia.setPreloadMode"
+                ));
+        self->setPreloadMode(mode);
+        return 0;
     } else {
         return luaL_error(L, "Wrong arguments for WAbstractMedia.setPreloadMode");
     }
@@ -150,11 +141,10 @@ int luawt_WAbstractMedia_setAlternativeContent(lua_State* L) {
     int index = luawt_getSuitableArgsGroup(L, luawt_WAbstractMedia_setAlternativeContent_args);
     WAbstractMedia* self = luawt_checkFromLua<WAbstractMedia>(L, 1);
     if (index == 0) {
-    Wt::WWidget* alternative =
-        luawt_checkFromLua<Wt::WWidget>(L, 2);
-    self->setAlternativeContent(alternative);
-    return 0;
-    
+        Wt::WWidget* alternative =
+            luawt_checkFromLua<Wt::WWidget>(L, 2);
+        self->setAlternativeContent(alternative);
+        return 0;
     } else {
         return luaL_error(L, "Wrong arguments for WAbstractMedia.setAlternativeContent");
     }
@@ -167,10 +157,9 @@ int luawt_WAbstractMedia_playing(lua_State* L) {
     int index = luawt_getSuitableArgsGroup(L, luawt_WAbstractMedia_playing_args);
     WAbstractMedia* self = luawt_checkFromLua<WAbstractMedia>(L, 1);
     if (index == 0) {
-    bool l_result = self->playing();
-    lua_pushboolean(L, l_result);
-    return 1;
-
+        bool l_result = self->playing();
+        lua_pushboolean(L, l_result);
+        return 1;
     } else {
         return luaL_error(L, "Wrong arguments for WAbstractMedia.playing");
     }
@@ -183,10 +172,9 @@ int luawt_WAbstractMedia_getOptions(lua_State* L) {
     int index = luawt_getSuitableArgsGroup(L, luawt_WAbstractMedia_getOptions_args);
     WAbstractMedia* self = luawt_checkFromLua<WAbstractMedia>(L, 1);
     if (index == 0) {
-    Wt::WFlags<Wt::WAbstractMedia::Options> l_result = self->getOptions();
-    luawt_returnEnum(L, luawt_enum_WAbstractMedia_Options_str, luawt_enum_WAbstractMedia_Options_val, l_result, "WAbstractMedia::Options");
-    return 1;
-
+        Wt::WFlags<Wt::WAbstractMedia::Options> l_result = self->getOptions();
+        luawt_returnEnum(L, luawt_enum_WAbstractMedia_Options_str, luawt_enum_WAbstractMedia_Options_val, l_result, "WAbstractMedia::Options");
+        return 1;
     } else {
         return luaL_error(L, "Wrong arguments for WAbstractMedia.getOptions");
     }
@@ -199,10 +187,9 @@ int luawt_WAbstractMedia_preloadMode(lua_State* L) {
     int index = luawt_getSuitableArgsGroup(L, luawt_WAbstractMedia_preloadMode_args);
     WAbstractMedia* self = luawt_checkFromLua<WAbstractMedia>(L, 1);
     if (index == 0) {
-    Wt::WAbstractMedia::PreloadMode l_result = self->preloadMode();
-    luawt_returnEnum(L, luawt_enum_WAbstractMedia_PreloadMode_str, luawt_enum_WAbstractMedia_PreloadMode_val, l_result, "WAbstractMedia::PreloadMode");
-    return 1;
-
+        Wt::WAbstractMedia::PreloadMode l_result = self->preloadMode();
+        luawt_returnEnum(L, luawt_enum_WAbstractMedia_PreloadMode_str, luawt_enum_WAbstractMedia_PreloadMode_val, l_result, "WAbstractMedia::PreloadMode");
+        return 1;
     } else {
         return luaL_error(L, "Wrong arguments for WAbstractMedia.preloadMode");
     }

@@ -13,16 +13,15 @@ int luawt_WPaintedWidget_setPreferredMethod(lua_State* L) {
     int index = luawt_getSuitableArgsGroup(L, luawt_WPaintedWidget_setPreferredMethod_args);
     WPaintedWidget* self = luawt_checkFromLua<WPaintedWidget>(L, 1);
     if (index == 0) {
-    Wt::WPaintedWidget::Method method = static_cast<Wt::WPaintedWidget::Method>(luawt_getEnum(
-        L,
-        luawt_enum_WPaintedWidget_Method_str,
-        luawt_enum_WPaintedWidget_Method_val,
-        2,
-        "Wrong enum type in args of WPaintedWidget.setPreferredMethod"
-    ));
-    self->setPreferredMethod(method);
-    return 0;
-    
+        Wt::WPaintedWidget::Method method = static_cast<Wt::WPaintedWidget::Method>(luawt_getEnum(
+                    L,
+                    luawt_enum_WPaintedWidget_Method_str,
+                    luawt_enum_WPaintedWidget_Method_val,
+                    2,
+                    "Wrong enum type in args of WPaintedWidget.setPreferredMethod"
+                ));
+        self->setPreferredMethod(method);
+        return 0;
     } else {
         return luaL_error(L, "Wrong arguments for WPaintedWidget.setPreferredMethod");
     }
@@ -36,20 +35,18 @@ int luawt_WPaintedWidget_update(lua_State* L) {
     int index = luawt_getSuitableArgsGroup(L, luawt_WPaintedWidget_update_args);
     WPaintedWidget* self = luawt_checkFromLua<WPaintedWidget>(L, 1);
     if (index == 0) {
-    self->update();
-    return 0;
-    
+        self->update();
+        return 0;
     } else if (index == 1) {
-    Wt::WFlags<Wt::PaintFlag> flags = static_cast<Wt::PaintFlag>(luawt_getEnum(
-        L,
-        luawt_enum_PaintFlag_str,
-        luawt_enum_PaintFlag_val,
-        2,
-        "Wrong enum type in args of WPaintedWidget.update"
-    ));
-    self->update(flags);
-    return 0;
-    
+        Wt::WFlags<Wt::PaintFlag> flags = static_cast<Wt::PaintFlag>(luawt_getEnum(
+                    L,
+                    luawt_enum_PaintFlag_str,
+                    luawt_enum_PaintFlag_val,
+                    2,
+                    "Wrong enum type in args of WPaintedWidget.update"
+                ));
+        self->update(flags);
+        return 0;
     } else {
         return luaL_error(L, "Wrong arguments for WPaintedWidget.update");
     }
@@ -62,13 +59,12 @@ int luawt_WPaintedWidget_resize(lua_State* L) {
     int index = luawt_getSuitableArgsGroup(L, luawt_WPaintedWidget_resize_args);
     WPaintedWidget* self = luawt_checkFromLua<WPaintedWidget>(L, 1);
     if (index == 0) {
-    double raw2 = lua_tonumber(L, 2);
-    Wt::WLength width = Wt::WLength(raw2);
-    double raw3 = lua_tonumber(L, 3);
-    Wt::WLength height = Wt::WLength(raw3);
-    self->resize(width, height);
-    return 0;
-    
+        double raw2 = lua_tonumber(L, 2);
+        Wt::WLength width = Wt::WLength(raw2);
+        double raw3 = lua_tonumber(L, 3);
+        Wt::WLength height = Wt::WLength(raw3);
+        self->resize(width, height);
+        return 0;
     } else {
         return luaL_error(L, "Wrong arguments for WPaintedWidget.resize");
     }
@@ -81,10 +77,9 @@ int luawt_WPaintedWidget_preferredMethod(lua_State* L) {
     int index = luawt_getSuitableArgsGroup(L, luawt_WPaintedWidget_preferredMethod_args);
     WPaintedWidget* self = luawt_checkFromLua<WPaintedWidget>(L, 1);
     if (index == 0) {
-    Wt::WPaintedWidget::Method l_result = self->preferredMethod();
-    luawt_returnEnum(L, luawt_enum_WPaintedWidget_Method_str, luawt_enum_WPaintedWidget_Method_val, l_result, "WPaintedWidget::Method");
-    return 1;
-
+        Wt::WPaintedWidget::Method l_result = self->preferredMethod();
+        luawt_returnEnum(L, luawt_enum_WPaintedWidget_Method_str, luawt_enum_WPaintedWidget_Method_val, l_result, "WPaintedWidget::Method");
+        return 1;
     } else {
         return luaL_error(L, "Wrong arguments for WPaintedWidget.preferredMethod");
     }

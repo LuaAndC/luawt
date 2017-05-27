@@ -12,10 +12,9 @@ int luawt_WTimerWidget_timerStart(lua_State* L) {
     int index = luawt_getSuitableArgsGroup(L, luawt_WTimerWidget_timerStart_args);
     WTimerWidget* self = luawt_checkFromLua<WTimerWidget>(L, 1);
     if (index == 0) {
-    bool jsRepeat = lua_toboolean(L, 2);
-    self->timerStart(jsRepeat);
-    return 0;
-    
+        bool jsRepeat = lua_toboolean(L, 2);
+        self->timerStart(jsRepeat);
+        return 0;
     } else {
         return luaL_error(L, "Wrong arguments for WTimerWidget.timerStart");
     }
@@ -28,10 +27,9 @@ int luawt_WTimerWidget_timerExpired(lua_State* L) {
     int index = luawt_getSuitableArgsGroup(L, luawt_WTimerWidget_timerExpired_args);
     WTimerWidget* self = luawt_checkFromLua<WTimerWidget>(L, 1);
     if (index == 0) {
-    bool l_result = self->timerExpired();
-    lua_pushboolean(L, l_result);
-    return 1;
-
+        bool l_result = self->timerExpired();
+        lua_pushboolean(L, l_result);
+        return 1;
     } else {
         return luaL_error(L, "Wrong arguments for WTimerWidget.timerExpired");
     }

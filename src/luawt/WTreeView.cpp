@@ -15,24 +15,21 @@ static const char* const* const luawt_WTreeView_make_args[] = {WTreeView_make_ar
 int luawt_WTreeView_make(lua_State* L) {
     int index = luawt_getSuitableArgsGroup(L, luawt_WTreeView_make_args);
     if (index == 0) {
-    WTreeView * l_result = new WTreeView();
-    MyApplication* app = MyApplication::instance();
-    if (!app) {
-        delete l_result;
-        throw std::logic_error("No WApplication when creating WTreeView");
-    }
-    app->root()->addWidget(l_result);
-    
-    luawt_toLua(L, l_result);
-    return 1;
-
+        WTreeView* l_result = new WTreeView();
+        MyApplication* app = MyApplication::instance();
+        if (!app) {
+            delete l_result;
+            throw std::logic_error("No WApplication when creating WTreeView");
+        }
+        app->root()->addWidget(l_result);
+        luawt_toLua(L, l_result);
+        return 1;
     } else if (index == 1) {
-    Wt::WContainerWidget* parent =
-        luawt_checkFromLua<Wt::WContainerWidget>(L, 1);
-    WTreeView * l_result = new WTreeView(parent);
-    luawt_toLua(L, l_result);
-    return 1;
-
+        Wt::WContainerWidget* parent =
+            luawt_checkFromLua<Wt::WContainerWidget>(L, 1);
+        WTreeView* l_result = new WTreeView(parent);
+        luawt_toLua(L, l_result);
+        return 1;
     } else {
         return luaL_error(L, "Wrong arguments for WTreeView.make");
     }
@@ -45,11 +42,10 @@ int luawt_WTreeView_setRowHeight(lua_State* L) {
     int index = luawt_getSuitableArgsGroup(L, luawt_WTreeView_setRowHeight_args);
     WTreeView* self = luawt_checkFromLua<WTreeView>(L, 1);
     if (index == 0) {
-    double raw2 = lua_tonumber(L, 2);
-    Wt::WLength rowHeight = Wt::WLength(raw2);
-    self->setRowHeight(rowHeight);
-    return 0;
-    
+        double raw2 = lua_tonumber(L, 2);
+        Wt::WLength rowHeight = Wt::WLength(raw2);
+        self->setRowHeight(rowHeight);
+        return 0;
     } else {
         return luaL_error(L, "Wrong arguments for WTreeView.setRowHeight");
     }
@@ -62,10 +58,9 @@ int luawt_WTreeView_currentPage(lua_State* L) {
     int index = luawt_getSuitableArgsGroup(L, luawt_WTreeView_currentPage_args);
     WTreeView* self = luawt_checkFromLua<WTreeView>(L, 1);
     if (index == 0) {
-    int l_result = self->currentPage();
-    lua_pushinteger(L, l_result);
-    return 1;
-
+        int l_result = self->currentPage();
+        lua_pushinteger(L, l_result);
+        return 1;
     } else {
         return luaL_error(L, "Wrong arguments for WTreeView.currentPage");
     }
@@ -78,10 +73,9 @@ int luawt_WTreeView_pageSize(lua_State* L) {
     int index = luawt_getSuitableArgsGroup(L, luawt_WTreeView_pageSize_args);
     WTreeView* self = luawt_checkFromLua<WTreeView>(L, 1);
     if (index == 0) {
-    int l_result = self->pageSize();
-    lua_pushinteger(L, l_result);
-    return 1;
-
+        int l_result = self->pageSize();
+        lua_pushinteger(L, l_result);
+        return 1;
     } else {
         return luaL_error(L, "Wrong arguments for WTreeView.pageSize");
     }
@@ -94,10 +88,9 @@ int luawt_WTreeView_pageCount(lua_State* L) {
     int index = luawt_getSuitableArgsGroup(L, luawt_WTreeView_pageCount_args);
     WTreeView* self = luawt_checkFromLua<WTreeView>(L, 1);
     if (index == 0) {
-    int l_result = self->pageCount();
-    lua_pushinteger(L, l_result);
-    return 1;
-
+        int l_result = self->pageCount();
+        lua_pushinteger(L, l_result);
+        return 1;
     } else {
         return luaL_error(L, "Wrong arguments for WTreeView.pageCount");
     }
@@ -110,12 +103,11 @@ int luawt_WTreeView_setColumnFormat(lua_State* L) {
     int index = luawt_getSuitableArgsGroup(L, luawt_WTreeView_setColumnFormat_args);
     WTreeView* self = luawt_checkFromLua<WTreeView>(L, 1);
     if (index == 0) {
-    int column = lua_tointeger(L, 2);
-    char const * raw3 = lua_tostring(L, 3);
-    Wt::WString format = Wt::WString(raw3);
-    self->setColumnFormat(column, format);
-    return 0;
-    
+        int column = lua_tointeger(L, 2);
+        char const* raw3 = lua_tostring(L, 3);
+        Wt::WString format = Wt::WString(raw3);
+        self->setColumnFormat(column, format);
+        return 0;
     } else {
         return luaL_error(L, "Wrong arguments for WTreeView.setColumnFormat");
     }
@@ -128,10 +120,9 @@ int luawt_WTreeView_setAlternatingRowColors(lua_State* L) {
     int index = luawt_getSuitableArgsGroup(L, luawt_WTreeView_setAlternatingRowColors_args);
     WTreeView* self = luawt_checkFromLua<WTreeView>(L, 1);
     if (index == 0) {
-    bool enable = lua_toboolean(L, 2);
-    self->setAlternatingRowColors(enable);
-    return 0;
-    
+        bool enable = lua_toboolean(L, 2);
+        self->setAlternatingRowColors(enable);
+        return 0;
     } else {
         return luaL_error(L, "Wrong arguments for WTreeView.setAlternatingRowColors");
     }
@@ -144,12 +135,11 @@ int luawt_WTreeView_setColumnWidth(lua_State* L) {
     int index = luawt_getSuitableArgsGroup(L, luawt_WTreeView_setColumnWidth_args);
     WTreeView* self = luawt_checkFromLua<WTreeView>(L, 1);
     if (index == 0) {
-    int column = lua_tointeger(L, 2);
-    double raw3 = lua_tonumber(L, 3);
-    Wt::WLength width = Wt::WLength(raw3);
-    self->setColumnWidth(column, width);
-    return 0;
-    
+        int column = lua_tointeger(L, 2);
+        double raw3 = lua_tonumber(L, 3);
+        Wt::WLength width = Wt::WLength(raw3);
+        self->setColumnWidth(column, width);
+        return 0;
     } else {
         return luaL_error(L, "Wrong arguments for WTreeView.setColumnWidth");
     }
@@ -162,10 +152,9 @@ int luawt_WTreeView_rootIsDecorated(lua_State* L) {
     int index = luawt_getSuitableArgsGroup(L, luawt_WTreeView_rootIsDecorated_args);
     WTreeView* self = luawt_checkFromLua<WTreeView>(L, 1);
     if (index == 0) {
-    bool l_result = self->rootIsDecorated();
-    lua_pushboolean(L, l_result);
-    return 1;
-
+        bool l_result = self->rootIsDecorated();
+        lua_pushboolean(L, l_result);
+        return 1;
     } else {
         return luaL_error(L, "Wrong arguments for WTreeView.rootIsDecorated");
     }
@@ -178,10 +167,9 @@ int luawt_WTreeView_expandToDepth(lua_State* L) {
     int index = luawt_getSuitableArgsGroup(L, luawt_WTreeView_expandToDepth_args);
     WTreeView* self = luawt_checkFromLua<WTreeView>(L, 1);
     if (index == 0) {
-    int depth = lua_tointeger(L, 2);
-    self->expandToDepth(depth);
-    return 0;
-    
+        int depth = lua_tointeger(L, 2);
+        self->expandToDepth(depth);
+        return 0;
     } else {
         return luaL_error(L, "Wrong arguments for WTreeView.expandToDepth");
     }
@@ -194,10 +182,9 @@ int luawt_WTreeView_setRootIsDecorated(lua_State* L) {
     int index = luawt_getSuitableArgsGroup(L, luawt_WTreeView_setRootIsDecorated_args);
     WTreeView* self = luawt_checkFromLua<WTreeView>(L, 1);
     if (index == 0) {
-    bool show = lua_toboolean(L, 2);
-    self->setRootIsDecorated(show);
-    return 0;
-    
+        bool show = lua_toboolean(L, 2);
+        self->setRootIsDecorated(show);
+        return 0;
     } else {
         return luaL_error(L, "Wrong arguments for WTreeView.setRootIsDecorated");
     }
@@ -210,10 +197,9 @@ int luawt_WTreeView_setRowHeaderCount(lua_State* L) {
     int index = luawt_getSuitableArgsGroup(L, luawt_WTreeView_setRowHeaderCount_args);
     WTreeView* self = luawt_checkFromLua<WTreeView>(L, 1);
     if (index == 0) {
-    int count = lua_tointeger(L, 2);
-    self->setRowHeaderCount(count);
-    return 0;
-    
+        int count = lua_tointeger(L, 2);
+        self->setRowHeaderCount(count);
+        return 0;
     } else {
         return luaL_error(L, "Wrong arguments for WTreeView.setRowHeaderCount");
     }
@@ -226,11 +212,10 @@ int luawt_WTreeView_setColumnHidden(lua_State* L) {
     int index = luawt_getSuitableArgsGroup(L, luawt_WTreeView_setColumnHidden_args);
     WTreeView* self = luawt_checkFromLua<WTreeView>(L, 1);
     if (index == 0) {
-    int column = lua_tointeger(L, 2);
-    bool hidden = lua_toboolean(L, 3);
-    self->setColumnHidden(column, hidden);
-    return 0;
-    
+        int column = lua_tointeger(L, 2);
+        bool hidden = lua_toboolean(L, 3);
+        self->setColumnHidden(column, hidden);
+        return 0;
     } else {
         return luaL_error(L, "Wrong arguments for WTreeView.setColumnHidden");
     }
@@ -243,11 +228,10 @@ int luawt_WTreeView_setHeaderHeight(lua_State* L) {
     int index = luawt_getSuitableArgsGroup(L, luawt_WTreeView_setHeaderHeight_args);
     WTreeView* self = luawt_checkFromLua<WTreeView>(L, 1);
     if (index == 0) {
-    double raw2 = lua_tonumber(L, 2);
-    Wt::WLength height = Wt::WLength(raw2);
-    self->setHeaderHeight(height);
-    return 0;
-    
+        double raw2 = lua_tonumber(L, 2);
+        Wt::WLength height = Wt::WLength(raw2);
+        self->setHeaderHeight(height);
+        return 0;
     } else {
         return luaL_error(L, "Wrong arguments for WTreeView.setHeaderHeight");
     }
@@ -260,11 +244,10 @@ int luawt_WTreeView_columnFormat(lua_State* L) {
     int index = luawt_getSuitableArgsGroup(L, luawt_WTreeView_columnFormat_args);
     WTreeView* self = luawt_checkFromLua<WTreeView>(L, 1);
     if (index == 0) {
-    int column = lua_tointeger(L, 2);
-    Wt::WString l_result = self->columnFormat(column);
-    lua_pushstring(L, l_result.toUTF8().c_str());
-    return 1;
-
+        int column = lua_tointeger(L, 2);
+        Wt::WString l_result = self->columnFormat(column);
+        lua_pushstring(L, l_result.toUTF8().c_str());
+        return 1;
     } else {
         return luaL_error(L, "Wrong arguments for WTreeView.columnFormat");
     }
@@ -277,10 +260,9 @@ int luawt_WTreeView_setCurrentPage(lua_State* L) {
     int index = luawt_getSuitableArgsGroup(L, luawt_WTreeView_setCurrentPage_args);
     WTreeView* self = luawt_checkFromLua<WTreeView>(L, 1);
     if (index == 0) {
-    int page = lua_tointeger(L, 2);
-    self->setCurrentPage(page);
-    return 0;
-    
+        int page = lua_tointeger(L, 2);
+        self->setCurrentPage(page);
+        return 0;
     } else {
         return luaL_error(L, "Wrong arguments for WTreeView.setCurrentPage");
     }
@@ -293,18 +275,16 @@ int luawt_WTreeView_resize(lua_State* L) {
     int index = luawt_getSuitableArgsGroup(L, luawt_WTreeView_resize_args);
     WTreeView* self = luawt_checkFromLua<WTreeView>(L, 1);
     if (index == 0) {
-    double raw2 = lua_tonumber(L, 2);
-    Wt::WLength width = Wt::WLength(raw2);
-    double raw3 = lua_tonumber(L, 3);
-    Wt::WLength height = Wt::WLength(raw3);
-    self->resize(width, height);
-    return 0;
-    
+        double raw2 = lua_tonumber(L, 2);
+        Wt::WLength width = Wt::WLength(raw2);
+        double raw3 = lua_tonumber(L, 3);
+        Wt::WLength height = Wt::WLength(raw3);
+        self->resize(width, height);
+        return 0;
     } else {
         return luaL_error(L, "Wrong arguments for WTreeView.resize");
     }
 }
-
 
 static const luaL_Reg luawt_WTreeView_methods[] = {
     METHOD(WTreeView, setColumnFormat),

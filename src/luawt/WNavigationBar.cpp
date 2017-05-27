@@ -18,24 +18,21 @@ static const char* const* const luawt_WNavigationBar_make_args[] = {WNavigationB
 int luawt_WNavigationBar_make(lua_State* L) {
     int index = luawt_getSuitableArgsGroup(L, luawt_WNavigationBar_make_args);
     if (index == 0) {
-    WNavigationBar * l_result = new WNavigationBar();
-    MyApplication* app = MyApplication::instance();
-    if (!app) {
-        delete l_result;
-        throw std::logic_error("No WApplication when creating WNavigationBar");
-    }
-    app->root()->addWidget(l_result);
-    
-    luawt_toLua(L, l_result);
-    return 1;
-
+        WNavigationBar* l_result = new WNavigationBar();
+        MyApplication* app = MyApplication::instance();
+        if (!app) {
+            delete l_result;
+            throw std::logic_error("No WApplication when creating WNavigationBar");
+        }
+        app->root()->addWidget(l_result);
+        luawt_toLua(L, l_result);
+        return 1;
     } else if (index == 1) {
-    Wt::WContainerWidget* parent =
-        luawt_checkFromLua<Wt::WContainerWidget>(L, 1);
-    WNavigationBar * l_result = new WNavigationBar(parent);
-    luawt_toLua(L, l_result);
-    return 1;
-
+        Wt::WContainerWidget* parent =
+            luawt_checkFromLua<Wt::WContainerWidget>(L, 1);
+        WNavigationBar* l_result = new WNavigationBar(parent);
+        luawt_toLua(L, l_result);
+        return 1;
     } else {
         return luaL_error(L, "Wrong arguments for WNavigationBar.make");
     }
@@ -49,24 +46,22 @@ int luawt_WNavigationBar_addSearch(lua_State* L) {
     int index = luawt_getSuitableArgsGroup(L, luawt_WNavigationBar_addSearch_args);
     WNavigationBar* self = luawt_checkFromLua<WNavigationBar>(L, 1);
     if (index == 0) {
-    Wt::WLineEdit* field =
-        luawt_checkFromLua<Wt::WLineEdit>(L, 2);
-    self->addSearch(field);
-    return 0;
-    
+        Wt::WLineEdit* field =
+            luawt_checkFromLua<Wt::WLineEdit>(L, 2);
+        self->addSearch(field);
+        return 0;
     } else if (index == 1) {
-    Wt::WLineEdit* field =
-        luawt_checkFromLua<Wt::WLineEdit>(L, 2);
-    Wt::AlignmentFlag alignment = static_cast<Wt::AlignmentFlag>(luawt_getEnum(
-        L,
-        luawt_enum_AlignmentFlag_str,
-        luawt_enum_AlignmentFlag_val,
-        3,
-        "Wrong enum type in args of WNavigationBar.addSearch"
-    ));
-    self->addSearch(field, alignment);
-    return 0;
-    
+        Wt::WLineEdit* field =
+            luawt_checkFromLua<Wt::WLineEdit>(L, 2);
+        Wt::AlignmentFlag alignment = static_cast<Wt::AlignmentFlag>(luawt_getEnum(
+                    L,
+                    luawt_enum_AlignmentFlag_str,
+                    luawt_enum_AlignmentFlag_val,
+                    3,
+                    "Wrong enum type in args of WNavigationBar.addSearch"
+                ));
+        self->addSearch(field, alignment);
+        return 0;
     } else {
         return luaL_error(L, "Wrong arguments for WNavigationBar.addSearch");
     }
@@ -80,19 +75,17 @@ int luawt_WNavigationBar_setTitle(lua_State* L) {
     int index = luawt_getSuitableArgsGroup(L, luawt_WNavigationBar_setTitle_args);
     WNavigationBar* self = luawt_checkFromLua<WNavigationBar>(L, 1);
     if (index == 0) {
-    char const * raw2 = lua_tostring(L, 2);
-    Wt::WString title = Wt::WString(raw2);
-    self->setTitle(title);
-    return 0;
-    
+        char const* raw2 = lua_tostring(L, 2);
+        Wt::WString title = Wt::WString(raw2);
+        self->setTitle(title);
+        return 0;
     } else if (index == 1) {
-    char const * raw2 = lua_tostring(L, 2);
-    Wt::WString title = Wt::WString(raw2);
-    char const * raw3 = lua_tostring(L, 3);
-    Wt::WLink link = Wt::WLink(raw3);
-    self->setTitle(title, link);
-    return 0;
-    
+        char const* raw2 = lua_tostring(L, 2);
+        Wt::WString title = Wt::WString(raw2);
+        char const* raw3 = lua_tostring(L, 3);
+        Wt::WLink link = Wt::WLink(raw3);
+        self->setTitle(title, link);
+        return 0;
     } else {
         return luaL_error(L, "Wrong arguments for WNavigationBar.setTitle");
     }
@@ -106,24 +99,22 @@ int luawt_WNavigationBar_addMenu(lua_State* L) {
     int index = luawt_getSuitableArgsGroup(L, luawt_WNavigationBar_addMenu_args);
     WNavigationBar* self = luawt_checkFromLua<WNavigationBar>(L, 1);
     if (index == 0) {
-    Wt::WMenu* menu =
-        luawt_checkFromLua<Wt::WMenu>(L, 2);
-    self->addMenu(menu);
-    return 0;
-    
+        Wt::WMenu* menu =
+            luawt_checkFromLua<Wt::WMenu>(L, 2);
+        self->addMenu(menu);
+        return 0;
     } else if (index == 1) {
-    Wt::WMenu* menu =
-        luawt_checkFromLua<Wt::WMenu>(L, 2);
-    Wt::AlignmentFlag alignment = static_cast<Wt::AlignmentFlag>(luawt_getEnum(
-        L,
-        luawt_enum_AlignmentFlag_str,
-        luawt_enum_AlignmentFlag_val,
-        3,
-        "Wrong enum type in args of WNavigationBar.addMenu"
-    ));
-    self->addMenu(menu, alignment);
-    return 0;
-    
+        Wt::WMenu* menu =
+            luawt_checkFromLua<Wt::WMenu>(L, 2);
+        Wt::AlignmentFlag alignment = static_cast<Wt::AlignmentFlag>(luawt_getEnum(
+                    L,
+                    luawt_enum_AlignmentFlag_str,
+                    luawt_enum_AlignmentFlag_val,
+                    3,
+                    "Wrong enum type in args of WNavigationBar.addMenu"
+                ));
+        self->addMenu(menu, alignment);
+        return 0;
     } else {
         return luaL_error(L, "Wrong arguments for WNavigationBar.addMenu");
     }
@@ -137,24 +128,22 @@ int luawt_WNavigationBar_addFormField(lua_State* L) {
     int index = luawt_getSuitableArgsGroup(L, luawt_WNavigationBar_addFormField_args);
     WNavigationBar* self = luawt_checkFromLua<WNavigationBar>(L, 1);
     if (index == 0) {
-    Wt::WWidget* widget =
-        luawt_checkFromLua<Wt::WWidget>(L, 2);
-    self->addFormField(widget);
-    return 0;
-    
+        Wt::WWidget* widget =
+            luawt_checkFromLua<Wt::WWidget>(L, 2);
+        self->addFormField(widget);
+        return 0;
     } else if (index == 1) {
-    Wt::WWidget* widget =
-        luawt_checkFromLua<Wt::WWidget>(L, 2);
-    Wt::AlignmentFlag alignment = static_cast<Wt::AlignmentFlag>(luawt_getEnum(
-        L,
-        luawt_enum_AlignmentFlag_str,
-        luawt_enum_AlignmentFlag_val,
-        3,
-        "Wrong enum type in args of WNavigationBar.addFormField"
-    ));
-    self->addFormField(widget, alignment);
-    return 0;
-    
+        Wt::WWidget* widget =
+            luawt_checkFromLua<Wt::WWidget>(L, 2);
+        Wt::AlignmentFlag alignment = static_cast<Wt::AlignmentFlag>(luawt_getEnum(
+                    L,
+                    luawt_enum_AlignmentFlag_str,
+                    luawt_enum_AlignmentFlag_val,
+                    3,
+                    "Wrong enum type in args of WNavigationBar.addFormField"
+                ));
+        self->addFormField(widget, alignment);
+        return 0;
     } else {
         return luaL_error(L, "Wrong arguments for WNavigationBar.addFormField");
     }
@@ -168,24 +157,22 @@ int luawt_WNavigationBar_addWidget(lua_State* L) {
     int index = luawt_getSuitableArgsGroup(L, luawt_WNavigationBar_addWidget_args);
     WNavigationBar* self = luawt_checkFromLua<WNavigationBar>(L, 1);
     if (index == 0) {
-    Wt::WWidget* widget =
-        luawt_checkFromLua<Wt::WWidget>(L, 2);
-    self->addWidget(widget);
-    return 0;
-    
+        Wt::WWidget* widget =
+            luawt_checkFromLua<Wt::WWidget>(L, 2);
+        self->addWidget(widget);
+        return 0;
     } else if (index == 1) {
-    Wt::WWidget* widget =
-        luawt_checkFromLua<Wt::WWidget>(L, 2);
-    Wt::AlignmentFlag alignment = static_cast<Wt::AlignmentFlag>(luawt_getEnum(
-        L,
-        luawt_enum_AlignmentFlag_str,
-        luawt_enum_AlignmentFlag_val,
-        3,
-        "Wrong enum type in args of WNavigationBar.addWidget"
-    ));
-    self->addWidget(widget, alignment);
-    return 0;
-    
+        Wt::WWidget* widget =
+            luawt_checkFromLua<Wt::WWidget>(L, 2);
+        Wt::AlignmentFlag alignment = static_cast<Wt::AlignmentFlag>(luawt_getEnum(
+                    L,
+                    luawt_enum_AlignmentFlag_str,
+                    luawt_enum_AlignmentFlag_val,
+                    3,
+                    "Wrong enum type in args of WNavigationBar.addWidget"
+                ));
+        self->addWidget(widget, alignment);
+        return 0;
     } else {
         return luaL_error(L, "Wrong arguments for WNavigationBar.addWidget");
     }
@@ -198,10 +185,9 @@ int luawt_WNavigationBar_setResponsive(lua_State* L) {
     int index = luawt_getSuitableArgsGroup(L, luawt_WNavigationBar_setResponsive_args);
     WNavigationBar* self = luawt_checkFromLua<WNavigationBar>(L, 1);
     if (index == 0) {
-    bool responsive = lua_toboolean(L, 2);
-    self->setResponsive(responsive);
-    return 0;
-    
+        bool responsive = lua_toboolean(L, 2);
+        self->setResponsive(responsive);
+        return 0;
     } else {
         return luaL_error(L, "Wrong arguments for WNavigationBar.setResponsive");
     }

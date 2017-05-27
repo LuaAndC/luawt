@@ -15,10 +15,9 @@ int luawt_WMessageBox_text(lua_State* L) {
     int index = luawt_getSuitableArgsGroup(L, luawt_WMessageBox_text_args);
     WMessageBox* self = luawt_checkFromLua<WMessageBox>(L, 1);
     if (index == 0) {
-    Wt::WString const & l_result = self->text();
-    lua_pushstring(L, l_result.toUTF8().c_str());
-    return 1;
-
+        Wt::WString const& l_result = self->text();
+        lua_pushstring(L, l_result.toUTF8().c_str());
+        return 1;
     } else {
         return luaL_error(L, "Wrong arguments for WMessageBox.text");
     }
@@ -31,11 +30,10 @@ int luawt_WMessageBox_setText(lua_State* L) {
     int index = luawt_getSuitableArgsGroup(L, luawt_WMessageBox_setText_args);
     WMessageBox* self = luawt_checkFromLua<WMessageBox>(L, 1);
     if (index == 0) {
-    char const * raw2 = lua_tostring(L, 2);
-    Wt::WString text = Wt::WString(raw2);
-    self->setText(text);
-    return 0;
-    
+        char const* raw2 = lua_tostring(L, 2);
+        Wt::WString text = Wt::WString(raw2);
+        self->setText(text);
+        return 0;
     } else {
         return luaL_error(L, "Wrong arguments for WMessageBox.setText");
     }
@@ -48,10 +46,9 @@ int luawt_WMessageBox_textWidget(lua_State* L) {
     int index = luawt_getSuitableArgsGroup(L, luawt_WMessageBox_textWidget_args);
     WMessageBox* self = luawt_checkFromLua<WMessageBox>(L, 1);
     if (index == 0) {
-    Wt::WText * l_result = self->textWidget();
-    luawt_toLua(L, l_result);
-    return 1;
-
+        Wt::WText* l_result = self->textWidget();
+        luawt_toLua(L, l_result);
+        return 1;
     } else {
         return luaL_error(L, "Wrong arguments for WMessageBox.textWidget");
     }
@@ -64,19 +61,18 @@ int luawt_WMessageBox_addButton(lua_State* L) {
     int index = luawt_getSuitableArgsGroup(L, luawt_WMessageBox_addButton_args);
     WMessageBox* self = luawt_checkFromLua<WMessageBox>(L, 1);
     if (index == 0) {
-    char const * raw2 = lua_tostring(L, 2);
-    Wt::WString text = Wt::WString(raw2);
-    Wt::StandardButton result = static_cast<Wt::StandardButton>(luawt_getEnum(
-        L,
-        luawt_enum_StandardButton_str,
-        luawt_enum_StandardButton_val,
-        3,
-        "Wrong enum type in args of WMessageBox.addButton"
-    ));
-    Wt::WPushButton * l_result = self->addButton(text, result);
-    luawt_toLua(L, l_result);
-    return 1;
-
+        char const* raw2 = lua_tostring(L, 2);
+        Wt::WString text = Wt::WString(raw2);
+        Wt::StandardButton result = static_cast<Wt::StandardButton>(luawt_getEnum(
+                    L,
+                    luawt_enum_StandardButton_str,
+                    luawt_enum_StandardButton_val,
+                    3,
+                    "Wrong enum type in args of WMessageBox.addButton"
+                ));
+        Wt::WPushButton* l_result = self->addButton(text, result);
+        luawt_toLua(L, l_result);
+        return 1;
     } else {
         return luaL_error(L, "Wrong arguments for WMessageBox.addButton");
     }
@@ -89,10 +85,9 @@ int luawt_WMessageBox_buttonResult(lua_State* L) {
     int index = luawt_getSuitableArgsGroup(L, luawt_WMessageBox_buttonResult_args);
     WMessageBox* self = luawt_checkFromLua<WMessageBox>(L, 1);
     if (index == 0) {
-    Wt::StandardButton l_result = self->buttonResult();
-    luawt_returnEnum(L, luawt_enum_StandardButton_str, luawt_enum_StandardButton_val, l_result, "StandardButton");
-    return 1;
-
+        Wt::StandardButton l_result = self->buttonResult();
+        luawt_returnEnum(L, luawt_enum_StandardButton_str, luawt_enum_StandardButton_val, l_result, "StandardButton");
+        return 1;
     } else {
         return luaL_error(L, "Wrong arguments for WMessageBox.buttonResult");
     }
@@ -105,17 +100,16 @@ int luawt_WMessageBox_button(lua_State* L) {
     int index = luawt_getSuitableArgsGroup(L, luawt_WMessageBox_button_args);
     WMessageBox* self = luawt_checkFromLua<WMessageBox>(L, 1);
     if (index == 0) {
-    Wt::StandardButton b = static_cast<Wt::StandardButton>(luawt_getEnum(
-        L,
-        luawt_enum_StandardButton_str,
-        luawt_enum_StandardButton_val,
-        2,
-        "Wrong enum type in args of WMessageBox.button"
-    ));
-    Wt::WPushButton * l_result = self->button(b);
-    luawt_toLua(L, l_result);
-    return 1;
-
+        Wt::StandardButton b = static_cast<Wt::StandardButton>(luawt_getEnum(
+                    L,
+                    luawt_enum_StandardButton_str,
+                    luawt_enum_StandardButton_val,
+                    2,
+                    "Wrong enum type in args of WMessageBox.button"
+                ));
+        Wt::WPushButton* l_result = self->button(b);
+        luawt_toLua(L, l_result);
+        return 1;
     } else {
         return luaL_error(L, "Wrong arguments for WMessageBox.button");
     }
@@ -128,16 +122,15 @@ int luawt_WMessageBox_setIcon(lua_State* L) {
     int index = luawt_getSuitableArgsGroup(L, luawt_WMessageBox_setIcon_args);
     WMessageBox* self = luawt_checkFromLua<WMessageBox>(L, 1);
     if (index == 0) {
-    Wt::Icon icon = static_cast<Wt::Icon>(luawt_getEnum(
-        L,
-        luawt_enum_Icon_str,
-        luawt_enum_Icon_val,
-        2,
-        "Wrong enum type in args of WMessageBox.setIcon"
-    ));
-    self->setIcon(icon);
-    return 0;
-    
+        Wt::Icon icon = static_cast<Wt::Icon>(luawt_getEnum(
+                    L,
+                    luawt_enum_Icon_str,
+                    luawt_enum_Icon_val,
+                    2,
+                    "Wrong enum type in args of WMessageBox.setIcon"
+                ));
+        self->setIcon(icon);
+        return 0;
     } else {
         return luaL_error(L, "Wrong arguments for WMessageBox.setIcon");
     }
@@ -150,16 +143,15 @@ int luawt_WMessageBox_setButtons(lua_State* L) {
     int index = luawt_getSuitableArgsGroup(L, luawt_WMessageBox_setButtons_args);
     WMessageBox* self = luawt_checkFromLua<WMessageBox>(L, 1);
     if (index == 0) {
-    Wt::WFlags<Wt::StandardButton> buttons = static_cast<Wt::StandardButton>(luawt_getEnum(
-        L,
-        luawt_enum_StandardButton_str,
-        luawt_enum_StandardButton_val,
-        2,
-        "Wrong enum type in args of WMessageBox.setButtons"
-    ));
-    self->setButtons(buttons);
-    return 0;
-    
+        Wt::WFlags<Wt::StandardButton> buttons = static_cast<Wt::StandardButton>(luawt_getEnum(
+                    L,
+                    luawt_enum_StandardButton_str,
+                    luawt_enum_StandardButton_val,
+                    2,
+                    "Wrong enum type in args of WMessageBox.setButtons"
+                ));
+        self->setButtons(buttons);
+        return 0;
     } else {
         return luaL_error(L, "Wrong arguments for WMessageBox.setButtons");
     }
@@ -172,15 +164,13 @@ int luawt_WMessageBox_icon(lua_State* L) {
     int index = luawt_getSuitableArgsGroup(L, luawt_WMessageBox_icon_args);
     WMessageBox* self = luawt_checkFromLua<WMessageBox>(L, 1);
     if (index == 0) {
-    Wt::Icon l_result = self->icon();
-    luawt_returnEnum(L, luawt_enum_Icon_str, luawt_enum_Icon_val, l_result, "Icon");
-    return 1;
-
+        Wt::Icon l_result = self->icon();
+        luawt_returnEnum(L, luawt_enum_Icon_str, luawt_enum_Icon_val, l_result, "Icon");
+        return 1;
     } else {
         return luaL_error(L, "Wrong arguments for WMessageBox.icon");
     }
 }
-
 
 static const luaL_Reg luawt_WMessageBox_methods[] = {
     METHOD(WMessageBox, setText),

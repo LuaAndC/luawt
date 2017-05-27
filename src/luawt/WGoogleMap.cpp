@@ -15,57 +15,51 @@ static const char* const* const luawt_WGoogleMap_make_args[] = {WGoogleMap_make_
 int luawt_WGoogleMap_make(lua_State* L) {
     int index = luawt_getSuitableArgsGroup(L, luawt_WGoogleMap_make_args);
     if (index == 0) {
-    Wt::WGoogleMap::ApiVersion version = static_cast<Wt::WGoogleMap::ApiVersion>(luawt_getEnum(
-        L,
-        luawt_enum_WGoogleMap_ApiVersion_str,
-        luawt_enum_WGoogleMap_ApiVersion_val,
-        1,
-        "Wrong enum type in args of WGoogleMap.make"
-    ));
-    WGoogleMap * l_result = new WGoogleMap(version);
-    MyApplication* app = MyApplication::instance();
-    if (!app) {
-        delete l_result;
-        throw std::logic_error("No WApplication when creating WGoogleMap");
-    }
-    app->root()->addWidget(l_result);
-    
-    luawt_toLua(L, l_result);
-    return 1;
-
+        Wt::WGoogleMap::ApiVersion version = static_cast<Wt::WGoogleMap::ApiVersion>(luawt_getEnum(
+                    L,
+                    luawt_enum_WGoogleMap_ApiVersion_str,
+                    luawt_enum_WGoogleMap_ApiVersion_val,
+                    1,
+                    "Wrong enum type in args of WGoogleMap.make"
+                ));
+        WGoogleMap* l_result = new WGoogleMap(version);
+        MyApplication* app = MyApplication::instance();
+        if (!app) {
+            delete l_result;
+            throw std::logic_error("No WApplication when creating WGoogleMap");
+        }
+        app->root()->addWidget(l_result);
+        luawt_toLua(L, l_result);
+        return 1;
     } else if (index == 1) {
-    Wt::WGoogleMap::ApiVersion version = static_cast<Wt::WGoogleMap::ApiVersion>(luawt_getEnum(
-        L,
-        luawt_enum_WGoogleMap_ApiVersion_str,
-        luawt_enum_WGoogleMap_ApiVersion_val,
-        1,
-        "Wrong enum type in args of WGoogleMap.make"
-    ));
-    Wt::WContainerWidget* parent =
-        luawt_checkFromLua<Wt::WContainerWidget>(L, 2);
-    WGoogleMap * l_result = new WGoogleMap(version, parent);
-    luawt_toLua(L, l_result);
-    return 1;
-
+        Wt::WGoogleMap::ApiVersion version = static_cast<Wt::WGoogleMap::ApiVersion>(luawt_getEnum(
+                    L,
+                    luawt_enum_WGoogleMap_ApiVersion_str,
+                    luawt_enum_WGoogleMap_ApiVersion_val,
+                    1,
+                    "Wrong enum type in args of WGoogleMap.make"
+                ));
+        Wt::WContainerWidget* parent =
+            luawt_checkFromLua<Wt::WContainerWidget>(L, 2);
+        WGoogleMap* l_result = new WGoogleMap(version, parent);
+        luawt_toLua(L, l_result);
+        return 1;
     } else if (index == 2) {
-    WGoogleMap * l_result = new WGoogleMap();
-    MyApplication* app = MyApplication::instance();
-    if (!app) {
-        delete l_result;
-        throw std::logic_error("No WApplication when creating WGoogleMap");
-    }
-    app->root()->addWidget(l_result);
-    
-    luawt_toLua(L, l_result);
-    return 1;
-
+        WGoogleMap* l_result = new WGoogleMap();
+        MyApplication* app = MyApplication::instance();
+        if (!app) {
+            delete l_result;
+            throw std::logic_error("No WApplication when creating WGoogleMap");
+        }
+        app->root()->addWidget(l_result);
+        luawt_toLua(L, l_result);
+        return 1;
     } else if (index == 3) {
-    Wt::WContainerWidget* parent =
-        luawt_checkFromLua<Wt::WContainerWidget>(L, 1);
-    WGoogleMap * l_result = new WGoogleMap(parent);
-    luawt_toLua(L, l_result);
-    return 1;
-
+        Wt::WContainerWidget* parent =
+            luawt_checkFromLua<Wt::WContainerWidget>(L, 1);
+        WGoogleMap* l_result = new WGoogleMap(parent);
+        luawt_toLua(L, l_result);
+        return 1;
     } else {
         return luaL_error(L, "Wrong arguments for WGoogleMap.make");
     }
@@ -78,9 +72,8 @@ int luawt_WGoogleMap_enableDoubleClickZoom(lua_State* L) {
     int index = luawt_getSuitableArgsGroup(L, luawt_WGoogleMap_enableDoubleClickZoom_args);
     WGoogleMap* self = luawt_checkFromLua<WGoogleMap>(L, 1);
     if (index == 0) {
-    self->enableDoubleClickZoom();
-    return 0;
-    
+        self->enableDoubleClickZoom();
+        return 0;
     } else {
         return luaL_error(L, "Wrong arguments for WGoogleMap.enableDoubleClickZoom");
     }
@@ -93,9 +86,8 @@ int luawt_WGoogleMap_zoomOut(lua_State* L) {
     int index = luawt_getSuitableArgsGroup(L, luawt_WGoogleMap_zoomOut_args);
     WGoogleMap* self = luawt_checkFromLua<WGoogleMap>(L, 1);
     if (index == 0) {
-    self->zoomOut();
-    return 0;
-    
+        self->zoomOut();
+        return 0;
     } else {
         return luaL_error(L, "Wrong arguments for WGoogleMap.zoomOut");
     }
@@ -108,10 +100,9 @@ int luawt_WGoogleMap_apiVersion(lua_State* L) {
     int index = luawt_getSuitableArgsGroup(L, luawt_WGoogleMap_apiVersion_args);
     WGoogleMap* self = luawt_checkFromLua<WGoogleMap>(L, 1);
     if (index == 0) {
-    Wt::WGoogleMap::ApiVersion l_result = self->apiVersion();
-    luawt_returnEnum(L, luawt_enum_WGoogleMap_ApiVersion_str, luawt_enum_WGoogleMap_ApiVersion_val, l_result, "WGoogleMap::ApiVersion");
-    return 1;
-
+        Wt::WGoogleMap::ApiVersion l_result = self->apiVersion();
+        luawt_returnEnum(L, luawt_enum_WGoogleMap_ApiVersion_str, luawt_enum_WGoogleMap_ApiVersion_val, l_result, "WGoogleMap::ApiVersion");
+        return 1;
     } else {
         return luaL_error(L, "Wrong arguments for WGoogleMap.apiVersion");
     }
@@ -124,9 +115,8 @@ int luawt_WGoogleMap_enableScrollWheelZoom(lua_State* L) {
     int index = luawt_getSuitableArgsGroup(L, luawt_WGoogleMap_enableScrollWheelZoom_args);
     WGoogleMap* self = luawt_checkFromLua<WGoogleMap>(L, 1);
     if (index == 0) {
-    self->enableScrollWheelZoom();
-    return 0;
-    
+        self->enableScrollWheelZoom();
+        return 0;
     } else {
         return luaL_error(L, "Wrong arguments for WGoogleMap.enableScrollWheelZoom");
     }
@@ -139,10 +129,9 @@ int luawt_WGoogleMap_setZoom(lua_State* L) {
     int index = luawt_getSuitableArgsGroup(L, luawt_WGoogleMap_setZoom_args);
     WGoogleMap* self = luawt_checkFromLua<WGoogleMap>(L, 1);
     if (index == 0) {
-    int level = lua_tointeger(L, 2);
-    self->setZoom(level);
-    return 0;
-    
+        int level = lua_tointeger(L, 2);
+        self->setZoom(level);
+        return 0;
     } else {
         return luaL_error(L, "Wrong arguments for WGoogleMap.setZoom");
     }
@@ -155,9 +144,8 @@ int luawt_WGoogleMap_disableDragging(lua_State* L) {
     int index = luawt_getSuitableArgsGroup(L, luawt_WGoogleMap_disableDragging_args);
     WGoogleMap* self = luawt_checkFromLua<WGoogleMap>(L, 1);
     if (index == 0) {
-    self->disableDragging();
-    return 0;
-    
+        self->disableDragging();
+        return 0;
     } else {
         return luaL_error(L, "Wrong arguments for WGoogleMap.disableDragging");
     }
@@ -170,9 +158,8 @@ int luawt_WGoogleMap_enableDragging(lua_State* L) {
     int index = luawt_getSuitableArgsGroup(L, luawt_WGoogleMap_enableDragging_args);
     WGoogleMap* self = luawt_checkFromLua<WGoogleMap>(L, 1);
     if (index == 0) {
-    self->enableDragging();
-    return 0;
-    
+        self->enableDragging();
+        return 0;
     } else {
         return luaL_error(L, "Wrong arguments for WGoogleMap.enableDragging");
     }
@@ -185,16 +172,15 @@ int luawt_WGoogleMap_setMapTypeControl(lua_State* L) {
     int index = luawt_getSuitableArgsGroup(L, luawt_WGoogleMap_setMapTypeControl_args);
     WGoogleMap* self = luawt_checkFromLua<WGoogleMap>(L, 1);
     if (index == 0) {
-    Wt::WGoogleMap::MapTypeControl type = static_cast<Wt::WGoogleMap::MapTypeControl>(luawt_getEnum(
-        L,
-        luawt_enum_WGoogleMap_MapTypeControl_str,
-        luawt_enum_WGoogleMap_MapTypeControl_val,
-        2,
-        "Wrong enum type in args of WGoogleMap.setMapTypeControl"
-    ));
-    self->setMapTypeControl(type);
-    return 0;
-    
+        Wt::WGoogleMap::MapTypeControl type = static_cast<Wt::WGoogleMap::MapTypeControl>(luawt_getEnum(
+                    L,
+                    luawt_enum_WGoogleMap_MapTypeControl_str,
+                    luawt_enum_WGoogleMap_MapTypeControl_val,
+                    2,
+                    "Wrong enum type in args of WGoogleMap.setMapTypeControl"
+                ));
+        self->setMapTypeControl(type);
+        return 0;
     } else {
         return luaL_error(L, "Wrong arguments for WGoogleMap.setMapTypeControl");
     }
@@ -207,9 +193,8 @@ int luawt_WGoogleMap_disableScrollWheelZoom(lua_State* L) {
     int index = luawt_getSuitableArgsGroup(L, luawt_WGoogleMap_disableScrollWheelZoom_args);
     WGoogleMap* self = luawt_checkFromLua<WGoogleMap>(L, 1);
     if (index == 0) {
-    self->disableScrollWheelZoom();
-    return 0;
-    
+        self->disableScrollWheelZoom();
+        return 0;
     } else {
         return luaL_error(L, "Wrong arguments for WGoogleMap.disableScrollWheelZoom");
     }
@@ -222,9 +207,8 @@ int luawt_WGoogleMap_returnToSavedPosition(lua_State* L) {
     int index = luawt_getSuitableArgsGroup(L, luawt_WGoogleMap_returnToSavedPosition_args);
     WGoogleMap* self = luawt_checkFromLua<WGoogleMap>(L, 1);
     if (index == 0) {
-    self->returnToSavedPosition();
-    return 0;
-    
+        self->returnToSavedPosition();
+        return 0;
     } else {
         return luaL_error(L, "Wrong arguments for WGoogleMap.returnToSavedPosition");
     }
@@ -237,9 +221,8 @@ int luawt_WGoogleMap_enableGoogleBar(lua_State* L) {
     int index = luawt_getSuitableArgsGroup(L, luawt_WGoogleMap_enableGoogleBar_args);
     WGoogleMap* self = luawt_checkFromLua<WGoogleMap>(L, 1);
     if (index == 0) {
-    self->enableGoogleBar();
-    return 0;
-    
+        self->enableGoogleBar();
+        return 0;
     } else {
         return luaL_error(L, "Wrong arguments for WGoogleMap.enableGoogleBar");
     }
@@ -252,9 +235,8 @@ int luawt_WGoogleMap_savePosition(lua_State* L) {
     int index = luawt_getSuitableArgsGroup(L, luawt_WGoogleMap_savePosition_args);
     WGoogleMap* self = luawt_checkFromLua<WGoogleMap>(L, 1);
     if (index == 0) {
-    self->savePosition();
-    return 0;
-    
+        self->savePosition();
+        return 0;
     } else {
         return luaL_error(L, "Wrong arguments for WGoogleMap.savePosition");
     }
@@ -267,9 +249,8 @@ int luawt_WGoogleMap_checkResize(lua_State* L) {
     int index = luawt_getSuitableArgsGroup(L, luawt_WGoogleMap_checkResize_args);
     WGoogleMap* self = luawt_checkFromLua<WGoogleMap>(L, 1);
     if (index == 0) {
-    self->checkResize();
-    return 0;
-    
+        self->checkResize();
+        return 0;
     } else {
         return luaL_error(L, "Wrong arguments for WGoogleMap.checkResize");
     }
@@ -282,9 +263,8 @@ int luawt_WGoogleMap_disableGoogleBar(lua_State* L) {
     int index = luawt_getSuitableArgsGroup(L, luawt_WGoogleMap_disableGoogleBar_args);
     WGoogleMap* self = luawt_checkFromLua<WGoogleMap>(L, 1);
     if (index == 0) {
-    self->disableGoogleBar();
-    return 0;
-    
+        self->disableGoogleBar();
+        return 0;
     } else {
         return luaL_error(L, "Wrong arguments for WGoogleMap.disableGoogleBar");
     }
@@ -297,9 +277,8 @@ int luawt_WGoogleMap_disableDoubleClickZoom(lua_State* L) {
     int index = luawt_getSuitableArgsGroup(L, luawt_WGoogleMap_disableDoubleClickZoom_args);
     WGoogleMap* self = luawt_checkFromLua<WGoogleMap>(L, 1);
     if (index == 0) {
-    self->disableDoubleClickZoom();
-    return 0;
-    
+        self->disableDoubleClickZoom();
+        return 0;
     } else {
         return luaL_error(L, "Wrong arguments for WGoogleMap.disableDoubleClickZoom");
     }
@@ -312,9 +291,8 @@ int luawt_WGoogleMap_zoomIn(lua_State* L) {
     int index = luawt_getSuitableArgsGroup(L, luawt_WGoogleMap_zoomIn_args);
     WGoogleMap* self = luawt_checkFromLua<WGoogleMap>(L, 1);
     if (index == 0) {
-    self->zoomIn();
-    return 0;
-    
+        self->zoomIn();
+        return 0;
     } else {
         return luaL_error(L, "Wrong arguments for WGoogleMap.zoomIn");
     }
@@ -327,14 +305,12 @@ int luawt_WGoogleMap_clearOverlays(lua_State* L) {
     int index = luawt_getSuitableArgsGroup(L, luawt_WGoogleMap_clearOverlays_args);
     WGoogleMap* self = luawt_checkFromLua<WGoogleMap>(L, 1);
     if (index == 0) {
-    self->clearOverlays();
-    return 0;
-    
+        self->clearOverlays();
+        return 0;
     } else {
         return luaL_error(L, "Wrong arguments for WGoogleMap.clearOverlays");
     }
 }
-
 
 static const luaL_Reg luawt_WGoogleMap_methods[] = {
     METHOD(WGoogleMap, clearOverlays),

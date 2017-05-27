@@ -14,24 +14,21 @@ static const char* const* const luawt_WTable_make_args[] = {WTable_make_args0, W
 int luawt_WTable_make(lua_State* L) {
     int index = luawt_getSuitableArgsGroup(L, luawt_WTable_make_args);
     if (index == 0) {
-    WTable * l_result = new WTable();
-    MyApplication* app = MyApplication::instance();
-    if (!app) {
-        delete l_result;
-        throw std::logic_error("No WApplication when creating WTable");
-    }
-    app->root()->addWidget(l_result);
-    
-    luawt_toLua(L, l_result);
-    return 1;
-
+        WTable* l_result = new WTable();
+        MyApplication* app = MyApplication::instance();
+        if (!app) {
+            delete l_result;
+            throw std::logic_error("No WApplication when creating WTable");
+        }
+        app->root()->addWidget(l_result);
+        luawt_toLua(L, l_result);
+        return 1;
     } else if (index == 1) {
-    Wt::WContainerWidget* parent =
-        luawt_checkFromLua<Wt::WContainerWidget>(L, 1);
-    WTable * l_result = new WTable(parent);
-    luawt_toLua(L, l_result);
-    return 1;
-
+        Wt::WContainerWidget* parent =
+            luawt_checkFromLua<Wt::WContainerWidget>(L, 1);
+        WTable* l_result = new WTable(parent);
+        luawt_toLua(L, l_result);
+        return 1;
     } else {
         return luaL_error(L, "Wrong arguments for WTable.make");
     }
@@ -44,10 +41,9 @@ int luawt_WTable_columnCount(lua_State* L) {
     int index = luawt_getSuitableArgsGroup(L, luawt_WTable_columnCount_args);
     WTable* self = luawt_checkFromLua<WTable>(L, 1);
     if (index == 0) {
-    int l_result = self->columnCount();
-    lua_pushinteger(L, l_result);
-    return 1;
-
+        int l_result = self->columnCount();
+        lua_pushinteger(L, l_result);
+        return 1;
     } else {
         return luaL_error(L, "Wrong arguments for WTable.columnCount");
     }
@@ -61,22 +57,20 @@ int luawt_WTable_setHeaderCount(lua_State* L) {
     int index = luawt_getSuitableArgsGroup(L, luawt_WTable_setHeaderCount_args);
     WTable* self = luawt_checkFromLua<WTable>(L, 1);
     if (index == 0) {
-    int count = lua_tointeger(L, 2);
-    self->setHeaderCount(count);
-    return 0;
-    
+        int count = lua_tointeger(L, 2);
+        self->setHeaderCount(count);
+        return 0;
     } else if (index == 1) {
-    int count = lua_tointeger(L, 2);
-    Wt::Orientation orientation = static_cast<Wt::Orientation>(luawt_getEnum(
-        L,
-        luawt_enum_Orientation_str,
-        luawt_enum_Orientation_val,
-        3,
-        "Wrong enum type in args of WTable.setHeaderCount"
-    ));
-    self->setHeaderCount(count, orientation);
-    return 0;
-    
+        int count = lua_tointeger(L, 2);
+        Wt::Orientation orientation = static_cast<Wt::Orientation>(luawt_getEnum(
+                    L,
+                    luawt_enum_Orientation_str,
+                    luawt_enum_Orientation_val,
+                    3,
+                    "Wrong enum type in args of WTable.setHeaderCount"
+                ));
+        self->setHeaderCount(count, orientation);
+        return 0;
     } else {
         return luaL_error(L, "Wrong arguments for WTable.setHeaderCount");
     }
@@ -89,12 +83,11 @@ int luawt_WTable_elementAt(lua_State* L) {
     int index = luawt_getSuitableArgsGroup(L, luawt_WTable_elementAt_args);
     WTable* self = luawt_checkFromLua<WTable>(L, 1);
     if (index == 0) {
-    int row = lua_tointeger(L, 2);
-    int column = lua_tointeger(L, 3);
-    Wt::WTableCell * l_result = self->elementAt(row, column);
-    luawt_toLua(L, l_result);
-    return 1;
-
+        int row = lua_tointeger(L, 2);
+        int column = lua_tointeger(L, 3);
+        Wt::WTableCell* l_result = self->elementAt(row, column);
+        luawt_toLua(L, l_result);
+        return 1;
     } else {
         return luaL_error(L, "Wrong arguments for WTable.elementAt");
     }
@@ -107,11 +100,10 @@ int luawt_WTable_moveRow(lua_State* L) {
     int index = luawt_getSuitableArgsGroup(L, luawt_WTable_moveRow_args);
     WTable* self = luawt_checkFromLua<WTable>(L, 1);
     if (index == 0) {
-    int from = lua_tointeger(L, 2);
-    int to = lua_tointeger(L, 3);
-    self->moveRow(from, to);
-    return 0;
-    
+        int from = lua_tointeger(L, 2);
+        int to = lua_tointeger(L, 3);
+        self->moveRow(from, to);
+        return 0;
     } else {
         return luaL_error(L, "Wrong arguments for WTable.moveRow");
     }
@@ -125,22 +117,20 @@ int luawt_WTable_headerCount(lua_State* L) {
     int index = luawt_getSuitableArgsGroup(L, luawt_WTable_headerCount_args);
     WTable* self = luawt_checkFromLua<WTable>(L, 1);
     if (index == 0) {
-    int l_result = self->headerCount();
-    lua_pushinteger(L, l_result);
-    return 1;
-
+        int l_result = self->headerCount();
+        lua_pushinteger(L, l_result);
+        return 1;
     } else if (index == 1) {
-    Wt::Orientation orientation = static_cast<Wt::Orientation>(luawt_getEnum(
-        L,
-        luawt_enum_Orientation_str,
-        luawt_enum_Orientation_val,
-        2,
-        "Wrong enum type in args of WTable.headerCount"
-    ));
-    int l_result = self->headerCount(orientation);
-    lua_pushinteger(L, l_result);
-    return 1;
-
+        Wt::Orientation orientation = static_cast<Wt::Orientation>(luawt_getEnum(
+                    L,
+                    luawt_enum_Orientation_str,
+                    luawt_enum_Orientation_val,
+                    2,
+                    "Wrong enum type in args of WTable.headerCount"
+                ));
+        int l_result = self->headerCount(orientation);
+        lua_pushinteger(L, l_result);
+        return 1;
     } else {
         return luaL_error(L, "Wrong arguments for WTable.headerCount");
     }
@@ -153,9 +143,8 @@ int luawt_WTable_clear(lua_State* L) {
     int index = luawt_getSuitableArgsGroup(L, luawt_WTable_clear_args);
     WTable* self = luawt_checkFromLua<WTable>(L, 1);
     if (index == 0) {
-    self->clear();
-    return 0;
-    
+        self->clear();
+        return 0;
     } else {
         return luaL_error(L, "Wrong arguments for WTable.clear");
     }
@@ -168,11 +157,10 @@ int luawt_WTable_moveColumn(lua_State* L) {
     int index = luawt_getSuitableArgsGroup(L, luawt_WTable_moveColumn_args);
     WTable* self = luawt_checkFromLua<WTable>(L, 1);
     if (index == 0) {
-    int from = lua_tointeger(L, 2);
-    int to = lua_tointeger(L, 3);
-    self->moveColumn(from, to);
-    return 0;
-    
+        int from = lua_tointeger(L, 2);
+        int to = lua_tointeger(L, 3);
+        self->moveColumn(from, to);
+        return 0;
     } else {
         return luaL_error(L, "Wrong arguments for WTable.moveColumn");
     }
@@ -185,10 +173,9 @@ int luawt_WTable_rowCount(lua_State* L) {
     int index = luawt_getSuitableArgsGroup(L, luawt_WTable_rowCount_args);
     WTable* self = luawt_checkFromLua<WTable>(L, 1);
     if (index == 0) {
-    int l_result = self->rowCount();
-    lua_pushinteger(L, l_result);
-    return 1;
-
+        int l_result = self->rowCount();
+        lua_pushinteger(L, l_result);
+        return 1;
     } else {
         return luaL_error(L, "Wrong arguments for WTable.rowCount");
     }
@@ -201,10 +188,9 @@ int luawt_WTable_deleteRow(lua_State* L) {
     int index = luawt_getSuitableArgsGroup(L, luawt_WTable_deleteRow_args);
     WTable* self = luawt_checkFromLua<WTable>(L, 1);
     if (index == 0) {
-    int row = lua_tointeger(L, 2);
-    self->deleteRow(row);
-    return 0;
-    
+        int row = lua_tointeger(L, 2);
+        self->deleteRow(row);
+        return 0;
     } else {
         return luaL_error(L, "Wrong arguments for WTable.deleteRow");
     }
@@ -218,17 +204,15 @@ int luawt_WTable_removeCell(lua_State* L) {
     int index = luawt_getSuitableArgsGroup(L, luawt_WTable_removeCell_args);
     WTable* self = luawt_checkFromLua<WTable>(L, 1);
     if (index == 0) {
-    Wt::WTableCell* item =
-        luawt_checkFromLua<Wt::WTableCell>(L, 2);
-    self->removeCell(item);
-    return 0;
-    
+        Wt::WTableCell* item =
+            luawt_checkFromLua<Wt::WTableCell>(L, 2);
+        self->removeCell(item);
+        return 0;
     } else if (index == 1) {
-    int row = lua_tointeger(L, 2);
-    int column = lua_tointeger(L, 3);
-    self->removeCell(row, column);
-    return 0;
-    
+        int row = lua_tointeger(L, 2);
+        int column = lua_tointeger(L, 3);
+        self->removeCell(row, column);
+        return 0;
     } else {
         return luaL_error(L, "Wrong arguments for WTable.removeCell");
     }
@@ -241,10 +225,9 @@ int luawt_WTable_deleteColumn(lua_State* L) {
     int index = luawt_getSuitableArgsGroup(L, luawt_WTable_deleteColumn_args);
     WTable* self = luawt_checkFromLua<WTable>(L, 1);
     if (index == 0) {
-    int column = lua_tointeger(L, 2);
-    self->deleteColumn(column);
-    return 0;
-    
+        int column = lua_tointeger(L, 2);
+        self->deleteColumn(column);
+        return 0;
     } else {
         return luaL_error(L, "Wrong arguments for WTable.deleteColumn");
     }

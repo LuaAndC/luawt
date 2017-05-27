@@ -17,47 +17,41 @@ static const char* const* const luawt_WTemplate_make_args[] = {WTemplate_make_ar
 int luawt_WTemplate_make(lua_State* L) {
     int index = luawt_getSuitableArgsGroup(L, luawt_WTemplate_make_args);
     if (index == 0) {
-    WTemplate * l_result = new WTemplate();
-    MyApplication* app = MyApplication::instance();
-    if (!app) {
-        delete l_result;
-        throw std::logic_error("No WApplication when creating WTemplate");
-    }
-    app->root()->addWidget(l_result);
-    
-    luawt_toLua(L, l_result);
-    return 1;
-
+        WTemplate* l_result = new WTemplate();
+        MyApplication* app = MyApplication::instance();
+        if (!app) {
+            delete l_result;
+            throw std::logic_error("No WApplication when creating WTemplate");
+        }
+        app->root()->addWidget(l_result);
+        luawt_toLua(L, l_result);
+        return 1;
     } else if (index == 1) {
-    Wt::WContainerWidget* parent =
-        luawt_checkFromLua<Wt::WContainerWidget>(L, 1);
-    WTemplate * l_result = new WTemplate(parent);
-    luawt_toLua(L, l_result);
-    return 1;
-
+        Wt::WContainerWidget* parent =
+            luawt_checkFromLua<Wt::WContainerWidget>(L, 1);
+        WTemplate* l_result = new WTemplate(parent);
+        luawt_toLua(L, l_result);
+        return 1;
     } else if (index == 2) {
-    char const * raw1 = lua_tostring(L, 1);
-    Wt::WString text = Wt::WString(raw1);
-    WTemplate * l_result = new WTemplate(text);
-    MyApplication* app = MyApplication::instance();
-    if (!app) {
-        delete l_result;
-        throw std::logic_error("No WApplication when creating WTemplate");
-    }
-    app->root()->addWidget(l_result);
-    
-    luawt_toLua(L, l_result);
-    return 1;
-
+        char const* raw1 = lua_tostring(L, 1);
+        Wt::WString text = Wt::WString(raw1);
+        WTemplate* l_result = new WTemplate(text);
+        MyApplication* app = MyApplication::instance();
+        if (!app) {
+            delete l_result;
+            throw std::logic_error("No WApplication when creating WTemplate");
+        }
+        app->root()->addWidget(l_result);
+        luawt_toLua(L, l_result);
+        return 1;
     } else if (index == 3) {
-    char const * raw1 = lua_tostring(L, 1);
-    Wt::WString text = Wt::WString(raw1);
-    Wt::WContainerWidget* parent =
-        luawt_checkFromLua<Wt::WContainerWidget>(L, 2);
-    WTemplate * l_result = new WTemplate(text, parent);
-    luawt_toLua(L, l_result);
-    return 1;
-
+        char const* raw1 = lua_tostring(L, 1);
+        Wt::WString text = Wt::WString(raw1);
+        Wt::WContainerWidget* parent =
+            luawt_checkFromLua<Wt::WContainerWidget>(L, 2);
+        WTemplate* l_result = new WTemplate(text, parent);
+        luawt_toLua(L, l_result);
+        return 1;
     } else {
         return luaL_error(L, "Wrong arguments for WTemplate.make");
     }
@@ -70,12 +64,11 @@ int luawt_WTemplate_conditionValue(lua_State* L) {
     int index = luawt_getSuitableArgsGroup(L, luawt_WTemplate_conditionValue_args);
     WTemplate* self = luawt_checkFromLua<WTemplate>(L, 1);
     if (index == 0) {
-    char const * raw2 = lua_tostring(L, 2);
-    std::string name = std::string(raw2);
-    bool l_result = self->conditionValue(name);
-    lua_pushboolean(L, l_result);
-    return 1;
-
+        char const* raw2 = lua_tostring(L, 2);
+        std::string name = std::string(raw2);
+        bool l_result = self->conditionValue(name);
+        lua_pushboolean(L, l_result);
+        return 1;
     } else {
         return luaL_error(L, "Wrong arguments for WTemplate.conditionValue");
     }
@@ -88,12 +81,11 @@ int luawt_WTemplate_setCondition(lua_State* L) {
     int index = luawt_getSuitableArgsGroup(L, luawt_WTemplate_setCondition_args);
     WTemplate* self = luawt_checkFromLua<WTemplate>(L, 1);
     if (index == 0) {
-    char const * raw2 = lua_tostring(L, 2);
-    std::string name = std::string(raw2);
-    bool value = lua_toboolean(L, 3);
-    self->setCondition(name, value);
-    return 0;
-    
+        char const* raw2 = lua_tostring(L, 2);
+        std::string name = std::string(raw2);
+        bool value = lua_toboolean(L, 3);
+        self->setCondition(name, value);
+        return 0;
     } else {
         return luaL_error(L, "Wrong arguments for WTemplate.setCondition");
     }
@@ -107,24 +99,22 @@ int luawt_WTemplate_setTemplateText(lua_State* L) {
     int index = luawt_getSuitableArgsGroup(L, luawt_WTemplate_setTemplateText_args);
     WTemplate* self = luawt_checkFromLua<WTemplate>(L, 1);
     if (index == 0) {
-    char const * raw2 = lua_tostring(L, 2);
-    Wt::WString text = Wt::WString(raw2);
-    self->setTemplateText(text);
-    return 0;
-    
+        char const* raw2 = lua_tostring(L, 2);
+        Wt::WString text = Wt::WString(raw2);
+        self->setTemplateText(text);
+        return 0;
     } else if (index == 1) {
-    char const * raw2 = lua_tostring(L, 2);
-    Wt::WString text = Wt::WString(raw2);
-    Wt::TextFormat textFormat = static_cast<Wt::TextFormat>(luawt_getEnum(
-        L,
-        luawt_enum_TextFormat_str,
-        luawt_enum_TextFormat_val,
-        3,
-        "Wrong enum type in args of WTemplate.setTemplateText"
-    ));
-    self->setTemplateText(text, textFormat);
-    return 0;
-    
+        char const* raw2 = lua_tostring(L, 2);
+        Wt::WString text = Wt::WString(raw2);
+        Wt::TextFormat textFormat = static_cast<Wt::TextFormat>(luawt_getEnum(
+                    L,
+                    luawt_enum_TextFormat_str,
+                    luawt_enum_TextFormat_val,
+                    3,
+                    "Wrong enum type in args of WTemplate.setTemplateText"
+                ));
+        self->setTemplateText(text, textFormat);
+        return 0;
     } else {
         return luaL_error(L, "Wrong arguments for WTemplate.setTemplateText");
     }
@@ -137,11 +127,10 @@ int luawt_WTemplate_bindEmpty(lua_State* L) {
     int index = luawt_getSuitableArgsGroup(L, luawt_WTemplate_bindEmpty_args);
     WTemplate* self = luawt_checkFromLua<WTemplate>(L, 1);
     if (index == 0) {
-    char const * raw2 = lua_tostring(L, 2);
-    std::string varName = std::string(raw2);
-    self->bindEmpty(varName);
-    return 0;
-    
+        char const* raw2 = lua_tostring(L, 2);
+        std::string varName = std::string(raw2);
+        self->bindEmpty(varName);
+        return 0;
     } else {
         return luaL_error(L, "Wrong arguments for WTemplate.bindEmpty");
     }
@@ -154,10 +143,9 @@ int luawt_WTemplate_hasInternalPathEncoding(lua_State* L) {
     int index = luawt_getSuitableArgsGroup(L, luawt_WTemplate_hasInternalPathEncoding_args);
     WTemplate* self = luawt_checkFromLua<WTemplate>(L, 1);
     if (index == 0) {
-    bool l_result = self->hasInternalPathEncoding();
-    lua_pushboolean(L, l_result);
-    return 1;
-
+        bool l_result = self->hasInternalPathEncoding();
+        lua_pushboolean(L, l_result);
+        return 1;
     } else {
         return luaL_error(L, "Wrong arguments for WTemplate.hasInternalPathEncoding");
     }
@@ -170,10 +158,9 @@ int luawt_WTemplate_templateText(lua_State* L) {
     int index = luawt_getSuitableArgsGroup(L, luawt_WTemplate_templateText_args);
     WTemplate* self = luawt_checkFromLua<WTemplate>(L, 1);
     if (index == 0) {
-    Wt::WString const & l_result = self->templateText();
-    lua_pushstring(L, l_result.toUTF8().c_str());
-    return 1;
-
+        Wt::WString const& l_result = self->templateText();
+        lua_pushstring(L, l_result.toUTF8().c_str());
+        return 1;
     } else {
         return luaL_error(L, "Wrong arguments for WTemplate.templateText");
     }
@@ -186,9 +173,8 @@ int luawt_WTemplate_clear(lua_State* L) {
     int index = luawt_getSuitableArgsGroup(L, luawt_WTemplate_clear_args);
     WTemplate* self = luawt_checkFromLua<WTemplate>(L, 1);
     if (index == 0) {
-    self->clear();
-    return 0;
-    
+        self->clear();
+        return 0;
     } else {
         return luaL_error(L, "Wrong arguments for WTemplate.clear");
     }
@@ -202,28 +188,26 @@ int luawt_WTemplate_bindString(lua_State* L) {
     int index = luawt_getSuitableArgsGroup(L, luawt_WTemplate_bindString_args);
     WTemplate* self = luawt_checkFromLua<WTemplate>(L, 1);
     if (index == 0) {
-    char const * raw2 = lua_tostring(L, 2);
-    std::string varName = std::string(raw2);
-    char const * raw3 = lua_tostring(L, 3);
-    Wt::WString value = Wt::WString(raw3);
-    self->bindString(varName, value);
-    return 0;
-    
+        char const* raw2 = lua_tostring(L, 2);
+        std::string varName = std::string(raw2);
+        char const* raw3 = lua_tostring(L, 3);
+        Wt::WString value = Wt::WString(raw3);
+        self->bindString(varName, value);
+        return 0;
     } else if (index == 1) {
-    char const * raw2 = lua_tostring(L, 2);
-    std::string varName = std::string(raw2);
-    char const * raw3 = lua_tostring(L, 3);
-    Wt::WString value = Wt::WString(raw3);
-    Wt::TextFormat textFormat = static_cast<Wt::TextFormat>(luawt_getEnum(
-        L,
-        luawt_enum_TextFormat_str,
-        luawt_enum_TextFormat_val,
-        4,
-        "Wrong enum type in args of WTemplate.bindString"
-    ));
-    self->bindString(varName, value, textFormat);
-    return 0;
-    
+        char const* raw2 = lua_tostring(L, 2);
+        std::string varName = std::string(raw2);
+        char const* raw3 = lua_tostring(L, 3);
+        Wt::WString value = Wt::WString(raw3);
+        Wt::TextFormat textFormat = static_cast<Wt::TextFormat>(luawt_getEnum(
+                    L,
+                    luawt_enum_TextFormat_str,
+                    luawt_enum_TextFormat_val,
+                    4,
+                    "Wrong enum type in args of WTemplate.bindString"
+                ));
+        self->bindString(varName, value, textFormat);
+        return 0;
     } else {
         return luaL_error(L, "Wrong arguments for WTemplate.bindString");
     }
@@ -236,9 +220,8 @@ int luawt_WTemplate_refresh(lua_State* L) {
     int index = luawt_getSuitableArgsGroup(L, luawt_WTemplate_refresh_args);
     WTemplate* self = luawt_checkFromLua<WTemplate>(L, 1);
     if (index == 0) {
-    self->refresh();
-    return 0;
-    
+        self->refresh();
+        return 0;
     } else {
         return luaL_error(L, "Wrong arguments for WTemplate.refresh");
     }
@@ -251,13 +234,12 @@ int luawt_WTemplate_bindWidget(lua_State* L) {
     int index = luawt_getSuitableArgsGroup(L, luawt_WTemplate_bindWidget_args);
     WTemplate* self = luawt_checkFromLua<WTemplate>(L, 1);
     if (index == 0) {
-    char const * raw2 = lua_tostring(L, 2);
-    std::string varName = std::string(raw2);
-    Wt::WWidget* widget =
-        luawt_checkFromLua<Wt::WWidget>(L, 3);
-    self->bindWidget(varName, widget);
-    return 0;
-    
+        char const* raw2 = lua_tostring(L, 2);
+        std::string varName = std::string(raw2);
+        Wt::WWidget* widget =
+            luawt_checkFromLua<Wt::WWidget>(L, 3);
+        self->bindWidget(varName, widget);
+        return 0;
     } else {
         return luaL_error(L, "Wrong arguments for WTemplate.bindWidget");
     }
@@ -270,12 +252,11 @@ int luawt_WTemplate_takeWidget(lua_State* L) {
     int index = luawt_getSuitableArgsGroup(L, luawt_WTemplate_takeWidget_args);
     WTemplate* self = luawt_checkFromLua<WTemplate>(L, 1);
     if (index == 0) {
-    char const * raw2 = lua_tostring(L, 2);
-    std::string varName = std::string(raw2);
-    Wt::WWidget * l_result = self->takeWidget(varName);
-    luawt_toLua(L, l_result);
-    return 1;
-
+        char const* raw2 = lua_tostring(L, 2);
+        std::string varName = std::string(raw2);
+        Wt::WWidget* l_result = self->takeWidget(varName);
+        luawt_toLua(L, l_result);
+        return 1;
     } else {
         return luaL_error(L, "Wrong arguments for WTemplate.takeWidget");
     }
@@ -288,12 +269,11 @@ int luawt_WTemplate_resolveWidget(lua_State* L) {
     int index = luawt_getSuitableArgsGroup(L, luawt_WTemplate_resolveWidget_args);
     WTemplate* self = luawt_checkFromLua<WTemplate>(L, 1);
     if (index == 0) {
-    char const * raw2 = lua_tostring(L, 2);
-    std::string varName = std::string(raw2);
-    Wt::WWidget * l_result = self->resolveWidget(varName);
-    luawt_toLua(L, l_result);
-    return 1;
-
+        char const* raw2 = lua_tostring(L, 2);
+        std::string varName = std::string(raw2);
+        Wt::WWidget* l_result = self->resolveWidget(varName);
+        luawt_toLua(L, l_result);
+        return 1;
     } else {
         return luaL_error(L, "Wrong arguments for WTemplate.resolveWidget");
     }
@@ -306,10 +286,9 @@ int luawt_WTemplate_setInternalPathEncoding(lua_State* L) {
     int index = luawt_getSuitableArgsGroup(L, luawt_WTemplate_setInternalPathEncoding_args);
     WTemplate* self = luawt_checkFromLua<WTemplate>(L, 1);
     if (index == 0) {
-    bool enabled = lua_toboolean(L, 2);
-    self->setInternalPathEncoding(enabled);
-    return 0;
-    
+        bool enabled = lua_toboolean(L, 2);
+        self->setInternalPathEncoding(enabled);
+        return 0;
     } else {
         return luaL_error(L, "Wrong arguments for WTemplate.setInternalPathEncoding");
     }
@@ -322,12 +301,11 @@ int luawt_WTemplate_bindInt(lua_State* L) {
     int index = luawt_getSuitableArgsGroup(L, luawt_WTemplate_bindInt_args);
     WTemplate* self = luawt_checkFromLua<WTemplate>(L, 1);
     if (index == 0) {
-    char const * raw2 = lua_tostring(L, 2);
-    std::string varName = std::string(raw2);
-    int value = lua_tointeger(L, 3);
-    self->bindInt(varName, value);
-    return 0;
-    
+        char const* raw2 = lua_tostring(L, 2);
+        std::string varName = std::string(raw2);
+        int value = lua_tointeger(L, 3);
+        self->bindInt(varName, value);
+        return 0;
     } else {
         return luaL_error(L, "Wrong arguments for WTemplate.bindInt");
     }

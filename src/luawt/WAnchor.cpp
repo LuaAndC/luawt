@@ -22,101 +22,89 @@ static const char* const* const luawt_WAnchor_make_args[] = {WAnchor_make_args0,
 int luawt_WAnchor_make(lua_State* L) {
     int index = luawt_getSuitableArgsGroup(L, luawt_WAnchor_make_args);
     if (index == 0) {
-    WAnchor * l_result = new WAnchor();
-    MyApplication* app = MyApplication::instance();
-    if (!app) {
-        delete l_result;
-        throw std::logic_error("No WApplication when creating WAnchor");
-    }
-    app->root()->addWidget(l_result);
-    
-    luawt_toLua(L, l_result);
-    return 1;
-
+        WAnchor* l_result = new WAnchor();
+        MyApplication* app = MyApplication::instance();
+        if (!app) {
+            delete l_result;
+            throw std::logic_error("No WApplication when creating WAnchor");
+        }
+        app->root()->addWidget(l_result);
+        luawt_toLua(L, l_result);
+        return 1;
     } else if (index == 1) {
-    Wt::WContainerWidget* parent =
-        luawt_checkFromLua<Wt::WContainerWidget>(L, 1);
-    WAnchor * l_result = new WAnchor(parent);
-    luawt_toLua(L, l_result);
-    return 1;
-
+        Wt::WContainerWidget* parent =
+            luawt_checkFromLua<Wt::WContainerWidget>(L, 1);
+        WAnchor* l_result = new WAnchor(parent);
+        luawt_toLua(L, l_result);
+        return 1;
     } else if (index == 2) {
-    char const * raw1 = lua_tostring(L, 1);
-    Wt::WLink link = Wt::WLink(raw1);
-    WAnchor * l_result = new WAnchor(link);
-    MyApplication* app = MyApplication::instance();
-    if (!app) {
-        delete l_result;
-        throw std::logic_error("No WApplication when creating WAnchor");
-    }
-    app->root()->addWidget(l_result);
-    
-    luawt_toLua(L, l_result);
-    return 1;
-
+        char const* raw1 = lua_tostring(L, 1);
+        Wt::WLink link = Wt::WLink(raw1);
+        WAnchor* l_result = new WAnchor(link);
+        MyApplication* app = MyApplication::instance();
+        if (!app) {
+            delete l_result;
+            throw std::logic_error("No WApplication when creating WAnchor");
+        }
+        app->root()->addWidget(l_result);
+        luawt_toLua(L, l_result);
+        return 1;
     } else if (index == 3) {
-    char const * raw1 = lua_tostring(L, 1);
-    Wt::WLink link = Wt::WLink(raw1);
-    Wt::WContainerWidget* parent =
-        luawt_checkFromLua<Wt::WContainerWidget>(L, 2);
-    WAnchor * l_result = new WAnchor(link, parent);
-    luawt_toLua(L, l_result);
-    return 1;
-
+        char const* raw1 = lua_tostring(L, 1);
+        Wt::WLink link = Wt::WLink(raw1);
+        Wt::WContainerWidget* parent =
+            luawt_checkFromLua<Wt::WContainerWidget>(L, 2);
+        WAnchor* l_result = new WAnchor(link, parent);
+        luawt_toLua(L, l_result);
+        return 1;
     } else if (index == 4) {
-    char const * raw1 = lua_tostring(L, 1);
-    Wt::WLink link = Wt::WLink(raw1);
-    char const * raw2 = lua_tostring(L, 2);
-    Wt::WString text = Wt::WString(raw2);
-    WAnchor * l_result = new WAnchor(link, text);
-    MyApplication* app = MyApplication::instance();
-    if (!app) {
-        delete l_result;
-        throw std::logic_error("No WApplication when creating WAnchor");
-    }
-    app->root()->addWidget(l_result);
-    
-    luawt_toLua(L, l_result);
-    return 1;
-
+        char const* raw1 = lua_tostring(L, 1);
+        Wt::WLink link = Wt::WLink(raw1);
+        char const* raw2 = lua_tostring(L, 2);
+        Wt::WString text = Wt::WString(raw2);
+        WAnchor* l_result = new WAnchor(link, text);
+        MyApplication* app = MyApplication::instance();
+        if (!app) {
+            delete l_result;
+            throw std::logic_error("No WApplication when creating WAnchor");
+        }
+        app->root()->addWidget(l_result);
+        luawt_toLua(L, l_result);
+        return 1;
     } else if (index == 5) {
-    char const * raw1 = lua_tostring(L, 1);
-    Wt::WLink link = Wt::WLink(raw1);
-    char const * raw2 = lua_tostring(L, 2);
-    Wt::WString text = Wt::WString(raw2);
-    Wt::WContainerWidget* parent =
-        luawt_checkFromLua<Wt::WContainerWidget>(L, 3);
-    WAnchor * l_result = new WAnchor(link, text, parent);
-    luawt_toLua(L, l_result);
-    return 1;
-
+        char const* raw1 = lua_tostring(L, 1);
+        Wt::WLink link = Wt::WLink(raw1);
+        char const* raw2 = lua_tostring(L, 2);
+        Wt::WString text = Wt::WString(raw2);
+        Wt::WContainerWidget* parent =
+            luawt_checkFromLua<Wt::WContainerWidget>(L, 3);
+        WAnchor* l_result = new WAnchor(link, text, parent);
+        luawt_toLua(L, l_result);
+        return 1;
     } else if (index == 6) {
-    char const * raw1 = lua_tostring(L, 1);
-    Wt::WLink link = Wt::WLink(raw1);
-    Wt::WImage* image =
-        luawt_checkFromLua<Wt::WImage>(L, 2);
-    WAnchor * l_result = new WAnchor(link, image);
-    MyApplication* app = MyApplication::instance();
-    if (!app) {
-        delete l_result;
-        throw std::logic_error("No WApplication when creating WAnchor");
-    }
-    app->root()->addWidget(l_result);
-    
-    luawt_toLua(L, l_result);
-    return 1;
-
+        char const* raw1 = lua_tostring(L, 1);
+        Wt::WLink link = Wt::WLink(raw1);
+        Wt::WImage* image =
+            luawt_checkFromLua<Wt::WImage>(L, 2);
+        WAnchor* l_result = new WAnchor(link, image);
+        MyApplication* app = MyApplication::instance();
+        if (!app) {
+            delete l_result;
+            throw std::logic_error("No WApplication when creating WAnchor");
+        }
+        app->root()->addWidget(l_result);
+        luawt_toLua(L, l_result);
+        return 1;
     } else if (index == 7) {
-    char const * raw1 = lua_tostring(L, 1);
-    Wt::WLink link = Wt::WLink(raw1);
-    Wt::WImage* image =
-        luawt_checkFromLua<Wt::WImage>(L, 2);
-    Wt::WContainerWidget* parent =
-        luawt_checkFromLua<Wt::WContainerWidget>(L, 3);
-    WAnchor * l_result = new WAnchor(link, image, parent);
-    luawt_toLua(L, l_result);
-    return 1;
-
+        char const* raw1 = lua_tostring(L, 1);
+        Wt::WLink link = Wt::WLink(raw1);
+        Wt::WImage* image =
+            luawt_checkFromLua<Wt::WImage>(L, 2);
+        Wt::WContainerWidget* parent =
+            luawt_checkFromLua<Wt::WContainerWidget>(L, 3);
+        WAnchor* l_result = new WAnchor(link, image, parent);
+        luawt_toLua(L, l_result);
+        return 1;
     } else {
         return luaL_error(L, "Wrong arguments for WAnchor.make");
     }
@@ -129,10 +117,9 @@ int luawt_WAnchor_wordWrap(lua_State* L) {
     int index = luawt_getSuitableArgsGroup(L, luawt_WAnchor_wordWrap_args);
     WAnchor* self = luawt_checkFromLua<WAnchor>(L, 1);
     if (index == 0) {
-    bool l_result = self->wordWrap();
-    lua_pushboolean(L, l_result);
-    return 1;
-
+        bool l_result = self->wordWrap();
+        lua_pushboolean(L, l_result);
+        return 1;
     } else {
         return luaL_error(L, "Wrong arguments for WAnchor.wordWrap");
     }
@@ -145,10 +132,9 @@ int luawt_WAnchor_setWordWrap(lua_State* L) {
     int index = luawt_getSuitableArgsGroup(L, luawt_WAnchor_setWordWrap_args);
     WAnchor* self = luawt_checkFromLua<WAnchor>(L, 1);
     if (index == 0) {
-    bool wordWrap = lua_toboolean(L, 2);
-    self->setWordWrap(wordWrap);
-    return 0;
-    
+        bool wordWrap = lua_toboolean(L, 2);
+        self->setWordWrap(wordWrap);
+        return 0;
     } else {
         return luaL_error(L, "Wrong arguments for WAnchor.setWordWrap");
     }
@@ -161,11 +147,10 @@ int luawt_WAnchor_setImage(lua_State* L) {
     int index = luawt_getSuitableArgsGroup(L, luawt_WAnchor_setImage_args);
     WAnchor* self = luawt_checkFromLua<WAnchor>(L, 1);
     if (index == 0) {
-    Wt::WImage* image =
-        luawt_checkFromLua<Wt::WImage>(L, 2);
-    self->setImage(image);
-    return 0;
-    
+        Wt::WImage* image =
+            luawt_checkFromLua<Wt::WImage>(L, 2);
+        self->setImage(image);
+        return 0;
     } else {
         return luaL_error(L, "Wrong arguments for WAnchor.setImage");
     }
@@ -178,10 +163,9 @@ int luawt_WAnchor_text(lua_State* L) {
     int index = luawt_getSuitableArgsGroup(L, luawt_WAnchor_text_args);
     WAnchor* self = luawt_checkFromLua<WAnchor>(L, 1);
     if (index == 0) {
-    Wt::WString const & l_result = self->text();
-    lua_pushstring(L, l_result.toUTF8().c_str());
-    return 1;
-
+        Wt::WString const& l_result = self->text();
+        lua_pushstring(L, l_result.toUTF8().c_str());
+        return 1;
     } else {
         return luaL_error(L, "Wrong arguments for WAnchor.text");
     }
@@ -194,11 +178,10 @@ int luawt_WAnchor_setText(lua_State* L) {
     int index = luawt_getSuitableArgsGroup(L, luawt_WAnchor_setText_args);
     WAnchor* self = luawt_checkFromLua<WAnchor>(L, 1);
     if (index == 0) {
-    char const * raw2 = lua_tostring(L, 2);
-    Wt::WString text = Wt::WString(raw2);
-    self->setText(text);
-    return 0;
-    
+        char const* raw2 = lua_tostring(L, 2);
+        Wt::WString text = Wt::WString(raw2);
+        self->setText(text);
+        return 0;
     } else {
         return luaL_error(L, "Wrong arguments for WAnchor.setText");
     }
@@ -211,11 +194,10 @@ int luawt_WAnchor_setLink(lua_State* L) {
     int index = luawt_getSuitableArgsGroup(L, luawt_WAnchor_setLink_args);
     WAnchor* self = luawt_checkFromLua<WAnchor>(L, 1);
     if (index == 0) {
-    char const * raw2 = lua_tostring(L, 2);
-    Wt::WLink link = Wt::WLink(raw2);
-    self->setLink(link);
-    return 0;
-    
+        char const* raw2 = lua_tostring(L, 2);
+        Wt::WLink link = Wt::WLink(raw2);
+        self->setLink(link);
+        return 0;
     } else {
         return luaL_error(L, "Wrong arguments for WAnchor.setLink");
     }
@@ -228,16 +210,15 @@ int luawt_WAnchor_setTarget(lua_State* L) {
     int index = luawt_getSuitableArgsGroup(L, luawt_WAnchor_setTarget_args);
     WAnchor* self = luawt_checkFromLua<WAnchor>(L, 1);
     if (index == 0) {
-    Wt::AnchorTarget target = static_cast<Wt::AnchorTarget>(luawt_getEnum(
-        L,
-        luawt_enum_AnchorTarget_str,
-        luawt_enum_AnchorTarget_val,
-        2,
-        "Wrong enum type in args of WAnchor.setTarget"
-    ));
-    self->setTarget(target);
-    return 0;
-    
+        Wt::AnchorTarget target = static_cast<Wt::AnchorTarget>(luawt_getEnum(
+                    L,
+                    luawt_enum_AnchorTarget_str,
+                    luawt_enum_AnchorTarget_val,
+                    2,
+                    "Wrong enum type in args of WAnchor.setTarget"
+                ));
+        self->setTarget(target);
+        return 0;
     } else {
         return luaL_error(L, "Wrong arguments for WAnchor.setTarget");
     }
@@ -250,10 +231,9 @@ int luawt_WAnchor_link(lua_State* L) {
     int index = luawt_getSuitableArgsGroup(L, luawt_WAnchor_link_args);
     WAnchor* self = luawt_checkFromLua<WAnchor>(L, 1);
     if (index == 0) {
-    Wt::WLink const & l_result = self->link();
-    lua_pushstring(L, l_result.url().c_str());
-    return 1;
-
+        Wt::WLink const& l_result = self->link();
+        lua_pushstring(L, l_result.url().c_str());
+        return 1;
     } else {
         return luaL_error(L, "Wrong arguments for WAnchor.link");
     }
@@ -266,10 +246,9 @@ int luawt_WAnchor_image(lua_State* L) {
     int index = luawt_getSuitableArgsGroup(L, luawt_WAnchor_image_args);
     WAnchor* self = luawt_checkFromLua<WAnchor>(L, 1);
     if (index == 0) {
-    Wt::WImage * l_result = self->image();
-    luawt_toLua(L, l_result);
-    return 1;
-
+        Wt::WImage* l_result = self->image();
+        luawt_toLua(L, l_result);
+        return 1;
     } else {
         return luaL_error(L, "Wrong arguments for WAnchor.image");
     }
@@ -282,11 +261,10 @@ int luawt_WAnchor_setRefInternalPath(lua_State* L) {
     int index = luawt_getSuitableArgsGroup(L, luawt_WAnchor_setRefInternalPath_args);
     WAnchor* self = luawt_checkFromLua<WAnchor>(L, 1);
     if (index == 0) {
-    char const * raw2 = lua_tostring(L, 2);
-    std::string path = std::string(raw2);
-    self->setRefInternalPath(path);
-    return 0;
-    
+        char const* raw2 = lua_tostring(L, 2);
+        std::string path = std::string(raw2);
+        self->setRefInternalPath(path);
+        return 0;
     } else {
         return luaL_error(L, "Wrong arguments for WAnchor.setRefInternalPath");
     }
@@ -299,11 +277,10 @@ int luawt_WAnchor_setRef(lua_State* L) {
     int index = luawt_getSuitableArgsGroup(L, luawt_WAnchor_setRef_args);
     WAnchor* self = luawt_checkFromLua<WAnchor>(L, 1);
     if (index == 0) {
-    char const * raw2 = lua_tostring(L, 2);
-    std::string url = std::string(raw2);
-    self->setRef(url);
-    return 0;
-    
+        char const* raw2 = lua_tostring(L, 2);
+        std::string url = std::string(raw2);
+        self->setRef(url);
+        return 0;
     } else {
         return luaL_error(L, "Wrong arguments for WAnchor.setRef");
     }
@@ -316,10 +293,9 @@ int luawt_WAnchor_textFormat(lua_State* L) {
     int index = luawt_getSuitableArgsGroup(L, luawt_WAnchor_textFormat_args);
     WAnchor* self = luawt_checkFromLua<WAnchor>(L, 1);
     if (index == 0) {
-    Wt::TextFormat l_result = self->textFormat();
-    luawt_returnEnum(L, luawt_enum_TextFormat_str, luawt_enum_TextFormat_val, l_result, "TextFormat");
-    return 1;
-
+        Wt::TextFormat l_result = self->textFormat();
+        luawt_returnEnum(L, luawt_enum_TextFormat_str, luawt_enum_TextFormat_val, l_result, "TextFormat");
+        return 1;
     } else {
         return luaL_error(L, "Wrong arguments for WAnchor.textFormat");
     }
@@ -332,16 +308,15 @@ int luawt_WAnchor_setTextFormat(lua_State* L) {
     int index = luawt_getSuitableArgsGroup(L, luawt_WAnchor_setTextFormat_args);
     WAnchor* self = luawt_checkFromLua<WAnchor>(L, 1);
     if (index == 0) {
-    Wt::TextFormat format = static_cast<Wt::TextFormat>(luawt_getEnum(
-        L,
-        luawt_enum_TextFormat_str,
-        luawt_enum_TextFormat_val,
-        2,
-        "Wrong enum type in args of WAnchor.setTextFormat"
-    ));
-    self->setTextFormat(format);
-    return 0;
-    
+        Wt::TextFormat format = static_cast<Wt::TextFormat>(luawt_getEnum(
+                    L,
+                    luawt_enum_TextFormat_str,
+                    luawt_enum_TextFormat_val,
+                    2,
+                    "Wrong enum type in args of WAnchor.setTextFormat"
+                ));
+        self->setTextFormat(format);
+        return 0;
     } else {
         return luaL_error(L, "Wrong arguments for WAnchor.setTextFormat");
     }
@@ -354,10 +329,9 @@ int luawt_WAnchor_target(lua_State* L) {
     int index = luawt_getSuitableArgsGroup(L, luawt_WAnchor_target_args);
     WAnchor* self = luawt_checkFromLua<WAnchor>(L, 1);
     if (index == 0) {
-    Wt::AnchorTarget l_result = self->target();
-    luawt_returnEnum(L, luawt_enum_AnchorTarget_str, luawt_enum_AnchorTarget_val, l_result, "AnchorTarget");
-    return 1;
-
+        Wt::AnchorTarget l_result = self->target();
+        luawt_returnEnum(L, luawt_enum_AnchorTarget_str, luawt_enum_AnchorTarget_val, l_result, "AnchorTarget");
+        return 1;
     } else {
         return luaL_error(L, "Wrong arguments for WAnchor.target");
     }

@@ -14,24 +14,21 @@ static const char* const* const luawt_WToolBar_make_args[] = {WToolBar_make_args
 int luawt_WToolBar_make(lua_State* L) {
     int index = luawt_getSuitableArgsGroup(L, luawt_WToolBar_make_args);
     if (index == 0) {
-    WToolBar * l_result = new WToolBar();
-    MyApplication* app = MyApplication::instance();
-    if (!app) {
-        delete l_result;
-        throw std::logic_error("No WApplication when creating WToolBar");
-    }
-    app->root()->addWidget(l_result);
-    
-    luawt_toLua(L, l_result);
-    return 1;
-
+        WToolBar* l_result = new WToolBar();
+        MyApplication* app = MyApplication::instance();
+        if (!app) {
+            delete l_result;
+            throw std::logic_error("No WApplication when creating WToolBar");
+        }
+        app->root()->addWidget(l_result);
+        luawt_toLua(L, l_result);
+        return 1;
     } else if (index == 1) {
-    Wt::WContainerWidget* parent =
-        luawt_checkFromLua<Wt::WContainerWidget>(L, 1);
-    WToolBar * l_result = new WToolBar(parent);
-    luawt_toLua(L, l_result);
-    return 1;
-
+        Wt::WContainerWidget* parent =
+            luawt_checkFromLua<Wt::WContainerWidget>(L, 1);
+        WToolBar* l_result = new WToolBar(parent);
+        luawt_toLua(L, l_result);
+        return 1;
     } else {
         return luaL_error(L, "Wrong arguments for WToolBar.make");
     }
@@ -44,10 +41,9 @@ int luawt_WToolBar_count(lua_State* L) {
     int index = luawt_getSuitableArgsGroup(L, luawt_WToolBar_count_args);
     WToolBar* self = luawt_checkFromLua<WToolBar>(L, 1);
     if (index == 0) {
-    int l_result = self->count();
-    lua_pushinteger(L, l_result);
-    return 1;
-
+        int l_result = self->count();
+        lua_pushinteger(L, l_result);
+        return 1;
     } else {
         return luaL_error(L, "Wrong arguments for WToolBar.count");
     }
@@ -60,11 +56,10 @@ int luawt_WToolBar_widget(lua_State* L) {
     int index = luawt_getSuitableArgsGroup(L, luawt_WToolBar_widget_args);
     WToolBar* self = luawt_checkFromLua<WToolBar>(L, 1);
     if (index == 0) {
-    int index = lua_tointeger(L, 2);
-    Wt::WWidget * l_result = self->widget(index);
-    luawt_toLua(L, l_result);
-    return 1;
-
+        int index = lua_tointeger(L, 2);
+        Wt::WWidget* l_result = self->widget(index);
+        luawt_toLua(L, l_result);
+        return 1;
     } else {
         return luaL_error(L, "Wrong arguments for WToolBar.widget");
     }
@@ -77,10 +72,9 @@ int luawt_WToolBar_isCompact(lua_State* L) {
     int index = luawt_getSuitableArgsGroup(L, luawt_WToolBar_isCompact_args);
     WToolBar* self = luawt_checkFromLua<WToolBar>(L, 1);
     if (index == 0) {
-    bool l_result = self->isCompact();
-    lua_pushboolean(L, l_result);
-    return 1;
-
+        bool l_result = self->isCompact();
+        lua_pushboolean(L, l_result);
+        return 1;
     } else {
         return luaL_error(L, "Wrong arguments for WToolBar.isCompact");
     }
@@ -93,10 +87,9 @@ int luawt_WToolBar_setCompact(lua_State* L) {
     int index = luawt_getSuitableArgsGroup(L, luawt_WToolBar_setCompact_args);
     WToolBar* self = luawt_checkFromLua<WToolBar>(L, 1);
     if (index == 0) {
-    bool compact = lua_toboolean(L, 2);
-    self->setCompact(compact);
-    return 0;
-    
+        bool compact = lua_toboolean(L, 2);
+        self->setCompact(compact);
+        return 0;
     } else {
         return luaL_error(L, "Wrong arguments for WToolBar.setCompact");
     }
@@ -109,14 +102,12 @@ int luawt_WToolBar_addSeparator(lua_State* L) {
     int index = luawt_getSuitableArgsGroup(L, luawt_WToolBar_addSeparator_args);
     WToolBar* self = luawt_checkFromLua<WToolBar>(L, 1);
     if (index == 0) {
-    self->addSeparator();
-    return 0;
-    
+        self->addSeparator();
+        return 0;
     } else {
         return luaL_error(L, "Wrong arguments for WToolBar.addSeparator");
     }
 }
-
 
 static const luaL_Reg luawt_WToolBar_methods[] = {
     METHOD(WToolBar, addSeparator),

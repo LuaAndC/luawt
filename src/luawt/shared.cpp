@@ -23,8 +23,8 @@ struct ProtectedMap {
 
 int luawt_Shared_index(lua_State* L) {
     ProtectedMap* pm = reinterpret_cast<ProtectedMap*>(
-        luawt_getShared(L)
-    );
+            luawt_getShared(L)
+        );
     boost::mutex::scoped_lock lock(pm->mtx);
     size_t key_len;
     const char* key = luaL_checklstring(L, 2, &key_len);
@@ -40,8 +40,8 @@ int luawt_Shared_index(lua_State* L) {
 
 int luawt_Shared_newindex(lua_State* L) {
     ProtectedMap* pm = reinterpret_cast<ProtectedMap*>(
-        luawt_getShared(L)
-    );
+            luawt_getShared(L)
+        );
     boost::mutex::scoped_lock lock(pm->mtx);
     size_t key_len, value_len;
     const char* key = luaL_checklstring(L, 2, &key_len);

@@ -13,24 +13,21 @@ static const char* const* const luawt_WAudio_make_args[] = {WAudio_make_args0, W
 int luawt_WAudio_make(lua_State* L) {
     int index = luawt_getSuitableArgsGroup(L, luawt_WAudio_make_args);
     if (index == 0) {
-    WAudio * l_result = new WAudio();
-    MyApplication* app = MyApplication::instance();
-    if (!app) {
-        delete l_result;
-        throw std::logic_error("No WApplication when creating WAudio");
-    }
-    app->root()->addWidget(l_result);
-    
-    luawt_toLua(L, l_result);
-    return 1;
-
+        WAudio* l_result = new WAudio();
+        MyApplication* app = MyApplication::instance();
+        if (!app) {
+            delete l_result;
+            throw std::logic_error("No WApplication when creating WAudio");
+        }
+        app->root()->addWidget(l_result);
+        luawt_toLua(L, l_result);
+        return 1;
     } else if (index == 1) {
-    Wt::WContainerWidget* parent =
-        luawt_checkFromLua<Wt::WContainerWidget>(L, 1);
-    WAudio * l_result = new WAudio(parent);
-    luawt_toLua(L, l_result);
-    return 1;
-
+        Wt::WContainerWidget* parent =
+            luawt_checkFromLua<Wt::WContainerWidget>(L, 1);
+        WAudio* l_result = new WAudio(parent);
+        luawt_toLua(L, l_result);
+        return 1;
     } else {
         return luaL_error(L, "Wrong arguments for WAudio.make");
     }
@@ -43,10 +40,9 @@ int luawt_WAudio_jsAudioRef(lua_State* L) {
     int index = luawt_getSuitableArgsGroup(L, luawt_WAudio_jsAudioRef_args);
     WAudio* self = luawt_checkFromLua<WAudio>(L, 1);
     if (index == 0) {
-    std::string l_result = self->jsAudioRef();
-    lua_pushstring(L, l_result.c_str());
-    return 1;
-
+        std::string l_result = self->jsAudioRef();
+        lua_pushstring(L, l_result.c_str());
+        return 1;
     } else {
         return luaL_error(L, "Wrong arguments for WAudio.jsAudioRef");
     }

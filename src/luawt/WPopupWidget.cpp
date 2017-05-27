@@ -13,10 +13,9 @@ int luawt_WPopupWidget_orientation(lua_State* L) {
     int index = luawt_getSuitableArgsGroup(L, luawt_WPopupWidget_orientation_args);
     WPopupWidget* self = luawt_checkFromLua<WPopupWidget>(L, 1);
     if (index == 0) {
-    Wt::Orientation l_result = self->orientation();
-    luawt_returnEnum(L, luawt_enum_Orientation_str, luawt_enum_Orientation_val, l_result, "Orientation");
-    return 1;
-
+        Wt::Orientation l_result = self->orientation();
+        luawt_returnEnum(L, luawt_enum_Orientation_str, luawt_enum_Orientation_val, l_result, "Orientation");
+        return 1;
     } else {
         return luaL_error(L, "Wrong arguments for WPopupWidget.orientation");
     }
@@ -29,10 +28,9 @@ int luawt_WPopupWidget_isTransient(lua_State* L) {
     int index = luawt_getSuitableArgsGroup(L, luawt_WPopupWidget_isTransient_args);
     WPopupWidget* self = luawt_checkFromLua<WPopupWidget>(L, 1);
     if (index == 0) {
-    bool l_result = self->isTransient();
-    lua_pushboolean(L, l_result);
-    return 1;
-
+        bool l_result = self->isTransient();
+        lua_pushboolean(L, l_result);
+        return 1;
     } else {
         return luaL_error(L, "Wrong arguments for WPopupWidget.isTransient");
     }
@@ -45,10 +43,9 @@ int luawt_WPopupWidget_autoHideDelay(lua_State* L) {
     int index = luawt_getSuitableArgsGroup(L, luawt_WPopupWidget_autoHideDelay_args);
     WPopupWidget* self = luawt_checkFromLua<WPopupWidget>(L, 1);
     if (index == 0) {
-    int l_result = self->autoHideDelay();
-    lua_pushinteger(L, l_result);
-    return 1;
-
+        int l_result = self->autoHideDelay();
+        lua_pushinteger(L, l_result);
+        return 1;
     } else {
         return luaL_error(L, "Wrong arguments for WPopupWidget.autoHideDelay");
     }
@@ -62,16 +59,14 @@ int luawt_WPopupWidget_setTransient(lua_State* L) {
     int index = luawt_getSuitableArgsGroup(L, luawt_WPopupWidget_setTransient_args);
     WPopupWidget* self = luawt_checkFromLua<WPopupWidget>(L, 1);
     if (index == 0) {
-    bool transient = lua_toboolean(L, 2);
-    self->setTransient(transient);
-    return 0;
-    
+        bool transient = lua_toboolean(L, 2);
+        self->setTransient(transient);
+        return 0;
     } else if (index == 1) {
-    bool transient = lua_toboolean(L, 2);
-    int autoHideDelay = lua_tointeger(L, 3);
-    self->setTransient(transient, autoHideDelay);
-    return 0;
-    
+        bool transient = lua_toboolean(L, 2);
+        int autoHideDelay = lua_tointeger(L, 3);
+        self->setTransient(transient, autoHideDelay);
+        return 0;
     } else {
         return luaL_error(L, "Wrong arguments for WPopupWidget.setTransient");
     }
@@ -85,24 +80,22 @@ int luawt_WPopupWidget_setAnchorWidget(lua_State* L) {
     int index = luawt_getSuitableArgsGroup(L, luawt_WPopupWidget_setAnchorWidget_args);
     WPopupWidget* self = luawt_checkFromLua<WPopupWidget>(L, 1);
     if (index == 0) {
-    Wt::WWidget* widget =
-        luawt_checkFromLua<Wt::WWidget>(L, 2);
-    self->setAnchorWidget(widget);
-    return 0;
-    
+        Wt::WWidget* widget =
+            luawt_checkFromLua<Wt::WWidget>(L, 2);
+        self->setAnchorWidget(widget);
+        return 0;
     } else if (index == 1) {
-    Wt::WWidget* widget =
-        luawt_checkFromLua<Wt::WWidget>(L, 2);
-    Wt::Orientation orientation = static_cast<Wt::Orientation>(luawt_getEnum(
-        L,
-        luawt_enum_Orientation_str,
-        luawt_enum_Orientation_val,
-        3,
-        "Wrong enum type in args of WPopupWidget.setAnchorWidget"
-    ));
-    self->setAnchorWidget(widget, orientation);
-    return 0;
-    
+        Wt::WWidget* widget =
+            luawt_checkFromLua<Wt::WWidget>(L, 2);
+        Wt::Orientation orientation = static_cast<Wt::Orientation>(luawt_getEnum(
+                    L,
+                    luawt_enum_Orientation_str,
+                    luawt_enum_Orientation_val,
+                    3,
+                    "Wrong enum type in args of WPopupWidget.setAnchorWidget"
+                ));
+        self->setAnchorWidget(widget, orientation);
+        return 0;
     } else {
         return luaL_error(L, "Wrong arguments for WPopupWidget.setAnchorWidget");
     }
@@ -115,15 +108,13 @@ int luawt_WPopupWidget_anchorWidget(lua_State* L) {
     int index = luawt_getSuitableArgsGroup(L, luawt_WPopupWidget_anchorWidget_args);
     WPopupWidget* self = luawt_checkFromLua<WPopupWidget>(L, 1);
     if (index == 0) {
-    Wt::WWidget * l_result = self->anchorWidget();
-    luawt_toLua(L, l_result);
-    return 1;
-
+        Wt::WWidget* l_result = self->anchorWidget();
+        luawt_toLua(L, l_result);
+        return 1;
     } else {
         return luaL_error(L, "Wrong arguments for WPopupWidget.anchorWidget");
     }
 }
-
 
 static const luaL_Reg luawt_WPopupWidget_methods[] = {
     METHOD(WPopupWidget, setAnchorWidget),

@@ -33,6 +33,8 @@ before_script:
   - sudo apt-get install --yes valgrind
   - luarocks install busted
   - luarocks install luasocket
+  - git clone https://github.com/starius/config
+  - ./config/.bin/install-astyle
 
 script:
   - export LD_PRELOAD=/lib/x86_64-linux-gnu/libpthread.so.0
@@ -44,7 +46,7 @@ script:
   # catch errors in automate_bindings.py, but all the errors in
   # `after_success` sections are ignored by the worker.
   - coveralls --include src
-  - ./tools/automate_bindings.py --bind /usr/include/Wt/WText
+  - ./tools/automate_bindings.sh --bind /usr/include/Wt/WText
   - mv src/luawt/WText.cpp src/luawt/WText.cpp.orig
-  - ./tools/automate_bindings.py --bind /usr/include/Wt/WText --blacklist tools/blacklist_test.yaml --module-only
+  - ./tools/automate_bindings.sh --bind /usr/include/Wt/WText --blacklist tools/blacklist_test.yaml --module-only
   - "! cmp src/luawt/WText.cpp src/luawt/WText.cpp.orig"

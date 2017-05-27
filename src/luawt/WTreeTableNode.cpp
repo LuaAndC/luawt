@@ -18,53 +18,47 @@ static const char* const* const luawt_WTreeTableNode_make_args[] = {WTreeTableNo
 int luawt_WTreeTableNode_make(lua_State* L) {
     int index = luawt_getSuitableArgsGroup(L, luawt_WTreeTableNode_make_args);
     if (index == 0) {
-    char const * raw1 = lua_tostring(L, 1);
-    Wt::WString labelText = Wt::WString(raw1);
-    WTreeTableNode * l_result = new WTreeTableNode(labelText);
-    MyApplication* app = MyApplication::instance();
-    if (!app) {
-        delete l_result;
-        throw std::logic_error("No WApplication when creating WTreeTableNode");
-    }
-    app->root()->addWidget(l_result);
-    
-    luawt_toLua(L, l_result);
-    return 1;
-
+        char const* raw1 = lua_tostring(L, 1);
+        Wt::WString labelText = Wt::WString(raw1);
+        WTreeTableNode* l_result = new WTreeTableNode(labelText);
+        MyApplication* app = MyApplication::instance();
+        if (!app) {
+            delete l_result;
+            throw std::logic_error("No WApplication when creating WTreeTableNode");
+        }
+        app->root()->addWidget(l_result);
+        luawt_toLua(L, l_result);
+        return 1;
     } else if (index == 1) {
-    char const * raw1 = lua_tostring(L, 1);
-    Wt::WString labelText = Wt::WString(raw1);
-    Wt::WIconPair* labelIcon =
-        luawt_checkFromLua<Wt::WIconPair>(L, 2);
-    WTreeTableNode * l_result = new WTreeTableNode(labelText, labelIcon);
-    MyApplication* app = MyApplication::instance();
-    if (!app) {
-        delete l_result;
-        throw std::logic_error("No WApplication when creating WTreeTableNode");
-    }
-    app->root()->addWidget(l_result);
-    
-    luawt_toLua(L, l_result);
-    return 1;
-
+        char const* raw1 = lua_tostring(L, 1);
+        Wt::WString labelText = Wt::WString(raw1);
+        Wt::WIconPair* labelIcon =
+            luawt_checkFromLua<Wt::WIconPair>(L, 2);
+        WTreeTableNode* l_result = new WTreeTableNode(labelText, labelIcon);
+        MyApplication* app = MyApplication::instance();
+        if (!app) {
+            delete l_result;
+            throw std::logic_error("No WApplication when creating WTreeTableNode");
+        }
+        app->root()->addWidget(l_result);
+        luawt_toLua(L, l_result);
+        return 1;
     } else if (index == 2) {
-    char const * raw1 = lua_tostring(L, 1);
-    Wt::WString labelText = Wt::WString(raw1);
-    Wt::WIconPair* labelIcon =
-        luawt_checkFromLua<Wt::WIconPair>(L, 2);
-    Wt::WTreeTableNode* parentNode =
-        luawt_checkFromLua<Wt::WTreeTableNode>(L, 3);
-    WTreeTableNode * l_result = new WTreeTableNode(labelText, labelIcon, parentNode);
-    MyApplication* app = MyApplication::instance();
-    if (!app) {
-        delete l_result;
-        throw std::logic_error("No WApplication when creating WTreeTableNode");
-    }
-    app->root()->addWidget(l_result);
-    
-    luawt_toLua(L, l_result);
-    return 1;
-
+        char const* raw1 = lua_tostring(L, 1);
+        Wt::WString labelText = Wt::WString(raw1);
+        Wt::WIconPair* labelIcon =
+            luawt_checkFromLua<Wt::WIconPair>(L, 2);
+        Wt::WTreeTableNode* parentNode =
+            luawt_checkFromLua<Wt::WTreeTableNode>(L, 3);
+        WTreeTableNode* l_result = new WTreeTableNode(labelText, labelIcon, parentNode);
+        MyApplication* app = MyApplication::instance();
+        if (!app) {
+            delete l_result;
+            throw std::logic_error("No WApplication when creating WTreeTableNode");
+        }
+        app->root()->addWidget(l_result);
+        luawt_toLua(L, l_result);
+        return 1;
     } else {
         return luaL_error(L, "Wrong arguments for WTreeTableNode.make");
     }
@@ -77,12 +71,11 @@ int luawt_WTreeTableNode_insertChildNode(lua_State* L) {
     int index = luawt_getSuitableArgsGroup(L, luawt_WTreeTableNode_insertChildNode_args);
     WTreeTableNode* self = luawt_checkFromLua<WTreeTableNode>(L, 1);
     if (index == 0) {
-    int index = lua_tointeger(L, 2);
-    Wt::WTreeNode* node =
-        luawt_checkFromLua<Wt::WTreeNode>(L, 3);
-    self->insertChildNode(index, node);
-    return 0;
-    
+        int index = lua_tointeger(L, 2);
+        Wt::WTreeNode* node =
+            luawt_checkFromLua<Wt::WTreeNode>(L, 3);
+        self->insertChildNode(index, node);
+        return 0;
     } else {
         return luaL_error(L, "Wrong arguments for WTreeTableNode.insertChildNode");
     }
@@ -95,10 +88,9 @@ int luawt_WTreeTableNode_table(lua_State* L) {
     int index = luawt_getSuitableArgsGroup(L, luawt_WTreeTableNode_table_args);
     WTreeTableNode* self = luawt_checkFromLua<WTreeTableNode>(L, 1);
     if (index == 0) {
-    Wt::WTreeTable * l_result = self->table();
-    luawt_toLua(L, l_result);
-    return 1;
-
+        Wt::WTreeTable* l_result = self->table();
+        luawt_toLua(L, l_result);
+        return 1;
     } else {
         return luaL_error(L, "Wrong arguments for WTreeTableNode.table");
     }
@@ -111,12 +103,11 @@ int luawt_WTreeTableNode_setColumnWidget(lua_State* L) {
     int index = luawt_getSuitableArgsGroup(L, luawt_WTreeTableNode_setColumnWidget_args);
     WTreeTableNode* self = luawt_checkFromLua<WTreeTableNode>(L, 1);
     if (index == 0) {
-    int column = lua_tointeger(L, 2);
-    Wt::WWidget* item =
-        luawt_checkFromLua<Wt::WWidget>(L, 3);
-    self->setColumnWidget(column, item);
-    return 0;
-    
+        int column = lua_tointeger(L, 2);
+        Wt::WWidget* item =
+            luawt_checkFromLua<Wt::WWidget>(L, 3);
+        self->setColumnWidget(column, item);
+        return 0;
     } else {
         return luaL_error(L, "Wrong arguments for WTreeTableNode.setColumnWidget");
     }
@@ -129,11 +120,10 @@ int luawt_WTreeTableNode_columnWidget(lua_State* L) {
     int index = luawt_getSuitableArgsGroup(L, luawt_WTreeTableNode_columnWidget_args);
     WTreeTableNode* self = luawt_checkFromLua<WTreeTableNode>(L, 1);
     if (index == 0) {
-    int column = lua_tointeger(L, 2);
-    Wt::WWidget * l_result = self->columnWidget(column);
-    luawt_toLua(L, l_result);
-    return 1;
-
+        int column = lua_tointeger(L, 2);
+        Wt::WWidget* l_result = self->columnWidget(column);
+        luawt_toLua(L, l_result);
+        return 1;
     } else {
         return luaL_error(L, "Wrong arguments for WTreeTableNode.columnWidget");
     }
