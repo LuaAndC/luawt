@@ -139,65 +139,6 @@ def isBaseOrItsDescendant(child, base_name, Wt):
         return True
     return False
 
-def checkArgumentType(method_name, arg_type, Wt):
-    if isTemplate(method_name, arg_type, Wt):
-        return False
-    # Is built-in or problematic
-    if getBuiltinType(str(arg_type)):
-        # Is problematic
-        if findCorrespondingKeyInDict(
-            PROBLEMATIC_TO_BUILTIN_CONVERSIONS,
-            str(arg_type),
-        ):
-            if pygccxml.declarations.is_reference(arg_type):
-                if isConstReference(arg_type):
-                    return True
-            elif not pygccxml.declarations.is_pointer(arg_type):
-                return True
-        # Is built-in
-        else:
-            if not pygccxml.declarations.is_pointer(arg_type):
-                if not pygccxml.declarations.is_reference(arg_type):
-                    return True
-    elif isBaseOrItsDescendant(clearType(arg_type), 'WWidget', Wt):
-        if not pygccxml.declarations.is_pointer(arg_type):
-            logging.info(
-                'Argument of method %s has strange type %s',
-                method_name,
-                arg_type,
-            )
-        return True
-    logging.warning(
-        'Its impossible to bind method %s: its arg has type %s',
-        method_name,
-        arg_type,
-    )
-    return False
-
-def checkReturnType(method_name, raw_return_type, Wt):
-    # Special cases.
-    if isTemplate(method_name, raw_return_type, Wt):
-        return False
-    if str(raw_return_type) == 'void':
-        return True
-    # Built-in or problematic return type.
-    if getBuiltinType(str(raw_return_type)):
-        if isConstReference(raw_return_type):
-            return True
-        elif not pygccxml.declarations.is_pointer(raw_return_type):
-            return True
-    elif isBaseOrItsDescendant(clearType(raw_return_type), 'WWidget', Wt):
-        if pygccxml.declarations.is_pointer(raw_return_type):
-            return True
-        elif isConstReference(raw_return_type):
-            return True
-    logging.warning(
-        'Its impossible to bind method %s: of its return type %s',
-        method_name,
-        raw_return_type,
-    )
-    return False
-
 def getInternalNamespace(decl_str):
     chunks = decl_str.split('::')
     if len(chunks) == 2:
@@ -217,7 +158,7 @@ def enumObjFromNamespace(enum_str, namespace):
 def getEnumObj(enum_str, default_namespace):
     chunks = enum_str.split('::')
     if len(chunks) == 2:
-        # Namespace::Enum --> Enum
+        # Namespace::Enum --> Enum.
         enum_str = chunks[1]
     enum_obj = enumObjFromNamespace(enum_str, default_namespace)
     if not enum_obj:
@@ -272,6 +213,69 @@ def getArgType(arg):
     arg_field = hasattr(arg, 'decl_type') and arg.decl_type or arg.type
     return arg_field
 
+# =============================================================================
+# Checker functions: checkArgumentType, checkReturnType and checkWtFunction.
+# They do check that current version of luawt supports them.
+
+def checkArgumentType(method_name, arg_type, Wt):
+    if isTemplate(method_name, arg_type, Wt):
+        return False
+    # Is built-in or problematic.
+    if getBuiltinType(str(arg_type)):
+        # Is problematic.
+        if findCorrespondingKeyInDict(
+            PROBLEMATIC_TO_BUILTIN_CONVERSIONS,
+            str(arg_type),
+        ):
+            if pygccxml.declarations.is_reference(arg_type):
+                if isConstReference(arg_type):
+                    return True
+            elif not pygccxml.declarations.is_pointer(arg_type):
+                return True
+        # Is built-in.
+        else:
+            if not pygccxml.declarations.is_pointer(arg_type):
+                if not pygccxml.declarations.is_reference(arg_type):
+                    return True
+    elif isBaseOrItsDescendant(clearType(arg_type), 'WWidget', Wt):
+        if not pygccxml.declarations.is_pointer(arg_type):
+            logging.info(
+                'Argument of method %s has strange type %s',
+                method_name,
+                arg_type,
+            )
+        return True
+    logging.warning(
+        'Its impossible to bind method %s: its arg has type %s',
+        method_name,
+        arg_type,
+    )
+    return False
+
+def checkReturnType(method_name, raw_return_type, Wt):
+    # Special cases.
+    if isTemplate(method_name, raw_return_type, Wt):
+        return False
+    if str(raw_return_type) == 'void':
+        return True
+    # Built-in or problematic return type.
+    if getBuiltinType(str(raw_return_type)):
+        if isConstReference(raw_return_type):
+            return True
+        elif not pygccxml.declarations.is_pointer(raw_return_type):
+            return True
+    elif isBaseOrItsDescendant(clearType(raw_return_type), 'WWidget', Wt):
+        if pygccxml.declarations.is_pointer(raw_return_type):
+            return True
+        elif isConstReference(raw_return_type):
+            return True
+    logging.warning(
+        'Its impossible to bind method %s: of its return type %s',
+        method_name,
+        raw_return_type,
+    )
+    return False
+
 def checkWtFunction(is_constructor, func, Wt):
     if func.access_type != 'public':
         return False
@@ -286,6 +290,8 @@ def checkWtFunction(is_constructor, func, Wt):
            return False
     # OK, all checks've passed.
     return True
+
+# =============================================================================
 
 def isSignal(func):
     if len(func.arguments) != 0:
@@ -344,7 +350,7 @@ def getMembers(global_namespace, module_name, blacklisted):
     if module_name == 'WWidget' or module_name == 'WApplication':
         base_r = '0'
     if not base_r:
-        raise Exception('Unable to bind %s, because it isnt descendant of WWidget' % module_name)
+        raise Exception('Unable to bind %s, because it isn\'t descendant of WWidget' % module_name)
     custom_matcher = pygccxml.declarations.custom_matcher_t(
         lambda decl: checkWtFunction(False, decl, Wt),
     )
@@ -376,8 +382,8 @@ def noParent(args):
 # For widget tests generation.
 # Function returns flag - constructors type:
 # - 0 means error - no constructors supported by luawt.test are available;
-# - 1 - only no-args constructors are available
-# - 2 means that there're constructors with single WContainerWidget arg
+# - 1 - only no-args constructors are available;
+# - 2 means that there're constructors with single WContainerWidget arg.
 def getConstructorsType(constructors):
     has_void_args = False
     has_sing_arg = False
@@ -444,11 +450,15 @@ def getIncludes(module_name, methods, constructors):
         includes += getModulesFromFuncSig(method)
     for constructor in constructors:
         includes += getModulesFromFuncSig(constructor)
-    # Erase repeats
+    # Erase repeats.
     return set(includes)
 
 def getModuleName(filename):
     return os.path.basename(filename)
+
+
+# =============================================================================
+# Generator functions (actual logic of generating the code of bindings).
 
 INCLUDES_TEMPLATE = r'''
 #include "boost-xtime.hpp"
@@ -569,7 +579,7 @@ def getBuiltinTypeArgument(options):
         return code
     else:
         if 'static_cast' in options['func']:
-            # Enum
+            # Enum.
             return get_enum_arg_template.lstrip() % options
         else:
             return get_builtin_arg_template.lstrip() % options
@@ -656,12 +666,12 @@ def returnValue(return_type):
     else:
         ref_str = ''
         builtin_type = getBuiltinType(return_type)
-        # func - function for returning values to Lua
+        # func - function for returning values to Lua.
         if builtin_type:
             _, func_name = BUILTIN_TYPES_CONVERTERS[builtin_type]
         else:
             func_name = 'luawt_toLua'
-            # Is reference
+            # Is reference.
             if '&' in return_type:
                 ref_str = '&'
         # Method to convert problematic type to built-in.
@@ -857,7 +867,7 @@ def generateModuleFunc(module_name, base, is_not_abstract):
     assert(base);
     '''
     if base == '0':
-        # WApplication or WWidget
+        # WApplication or WWidget.
         get_base = ''
     else:
         get_base = base_frame.strip() % base.name
@@ -1017,6 +1027,8 @@ def generateModule(module_name, methods, base, constructors, signals):
     ))
     return ''.join(source)
 
+# =============================================================================
+
 def getMatchRange(pattern, content):
     first, last = 0, 0
     for i, line in enumerate(content):
@@ -1065,17 +1077,6 @@ def addItem(
                 break
     content.insert(curr_index, added_str)
     return ''.join(content)
-
-def writeToFile(filename, what):
-    with open(filename, 'wt') as f:
-        f.write(what)
-
-def readFile(filename):
-    with open(filename, 'rt') as f:
-        return f.readlines()
-
-def writeSourceToFile(module_name, source):
-    writeToFile('src/luawt/%s' % module_name, source)
 
 def addItemToFiles(parameters, module_name, Wt = None):
     for parameter in parameters:
@@ -1179,7 +1180,7 @@ def bind(modules, module_only, blacklist, gen_enums=False):
             if not module_only:
                 addModuleToLists(module_name, global_namespace.namespace('Wt'))
             if constructors:
-                # Is not abstract
+                # Is not abstract.
                 addTest(module_name, constructors_type)
             writeSourceToFile(module_name + '.cpp', source)
         except Exception as e:
@@ -1275,6 +1276,22 @@ def generateBlacklist(mem1, mem2):
         if 'signatures' in blacklisted:
             blacklisted['signatures'].sort()
     return blacklist
+
+# =============================================================================
+# Utility functions.
+
+def writeToFile(filename, what):
+    with open(filename, 'wt') as f:
+        f.write(what)
+
+def readFile(filename):
+    with open(filename, 'rt') as f:
+        return f.readlines()
+
+def writeSourceToFile(module_name, source):
+    writeToFile('src/luawt/%s' % module_name, source)
+
+# =============================================================================
 
 def main():
     parser = argparse.ArgumentParser(
