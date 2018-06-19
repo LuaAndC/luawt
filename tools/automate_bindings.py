@@ -41,6 +41,10 @@ PROBLEMATIC_TO_BUILTIN_CONVERSIONS = {
 XML_CACHE = 'src/luawt/xml'
 INCLUDE_WT = '/usr/include/Wt'
 
+# =============================================================================
+# Loading/parsing functions: parse, loadAdditionalChunk.
+# Get namespace object by the filename / module name.
+
 def parse(filename, include_paths=None):
     # Make sure Wt is installed to correct directory.
     wconfigh = '%s/WConfig.h' % INCLUDE_WT
@@ -75,6 +79,9 @@ def loadAdditionalChunk(module_str):
         return parse(file_str).namespace('Wt')
     else:
         raise Exception('Unable to load module called %s' % module_str)
+
+# =============================================================================
+# Utility functions to transform or extract types/declarations or to get some info about them.
 
 def isTemplate(method_name, decl_obj, namespace):
     # Luawt doesn't support C++ templates.
@@ -209,7 +216,7 @@ def addEnum(type_obj, namespace):
         GLOBAL_ENUMS_REGISTRY[type_str][1].sort()
 
 def getArgType(arg):
-    # For compatibility with pygccxml v1.7.1
+    # For compatibility with pygccxml v1.7.1.
     arg_field = hasattr(arg, 'decl_type') and arg.decl_type or arg.type
     return arg_field
 
@@ -292,6 +299,7 @@ def checkWtFunction(is_constructor, func, Wt):
     return True
 
 # =============================================================================
+# Getter functions: getSignals, getMembers, getConstructors, getIncludes etc.
 
 def isSignal(func):
     if len(func.arguments) != 0:
@@ -1028,6 +1036,8 @@ def generateModule(module_name, methods, base, constructors, signals):
     return ''.join(source)
 
 # =============================================================================
+# Main functionality functions (called directly from main()).
+# bind, generateBlacklist, addModuleToLists, collectMembers.
 
 def getMatchRange(pattern, content):
     first, last = 0, 0
