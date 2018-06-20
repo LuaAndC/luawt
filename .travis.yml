@@ -20,6 +20,7 @@ before_install:
   - sudo apt-get update
   - sudo apt-get install --yes gccxml libwt-dev libwthttp-dev libwttest-dev libyaml-dev
   - sudo pip install cpp-coveralls
+  - sudo pip install urllib3 # for cpp-coveralls.
   - sudo pip install hererocks
   - sudo pip install pygccxml
   - sudo pip install pyyaml
