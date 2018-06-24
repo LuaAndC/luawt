@@ -64,6 +64,21 @@ int luawt_WInteractWidget_setMouseOverDelay(lua_State* L) {
     }
 }
 
+static const char* WInteractWidget_setPopup_args0[] = {luawt_typeToStr<WInteractWidget>(), "bool", NULL};
+static const char* const* const luawt_WInteractWidget_setPopup_args[] = {WInteractWidget_setPopup_args0, NULL};
+
+int luawt_WInteractWidget_setPopup(lua_State* L) {
+    int index = luawt_getSuitableArgsGroup(L, luawt_WInteractWidget_setPopup_args);
+    WInteractWidget* self = luawt_checkFromLua<WInteractWidget>(L, 1);
+    if (index == 0) {
+        bool popup = lua_toboolean(L, 2);
+        self->setPopup(popup);
+        return 0;
+    } else {
+        return luaL_error(L, "Wrong arguments for WInteractWidget.setPopup");
+    }
+}
+
 ADD_SIGNAL(keyWentDown, WInteractWidget, Wt::WKeyEvent)
 ADD_SIGNAL(keyPressed, WInteractWidget, Wt::WKeyEvent)
 ADD_SIGNAL(keyWentUp, WInteractWidget, Wt::WKeyEvent)
@@ -88,6 +103,7 @@ ADD_SIGNAL(gestureEnded, WInteractWidget, Wt::WGestureEvent)
 static const luaL_Reg luawt_WInteractWidget_methods[] = {
     METHOD(WInteractWidget, setMouseOverDelay),
     METHOD(WInteractWidget, mouseOverDelay),
+    METHOD(WInteractWidget, setPopup),
     METHOD(WInteractWidget, load),
     METHOD(WInteractWidget, isEnabled),
     METHOD(WInteractWidget, keyWentDown),

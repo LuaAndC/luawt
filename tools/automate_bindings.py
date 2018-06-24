@@ -632,7 +632,8 @@ def addWidgetToContainer(module_name):
     '''
     return frame % module_name
 
-def callWtConstructor(return_type, args, module_name):
+def callWtConstructor(args, module_name):
+    return_type = module_name + ' *'
     call_s = 'new %s(' % module_name
     args_s = getArgsStr(args)
     constructor_s = call_s + args_s + ');'
@@ -780,9 +781,9 @@ def implementLuaCFunction(
     is_constructor,
     module_name,
     method_name,
-    args_overloads,
-    return_type,
+    functions_group,
 ):
+    args_overloads = makeArgsOverloads(functions_group)
     body = []
     body.append(storeArgsIndex(module_name, method_name))
     # In Lua indices start with 1.
@@ -792,6 +793,7 @@ def implementLuaCFunction(
         arg_index_offset += 1
         body.append(getSelf(module_name))
     for index, args in enumerate(args_overloads):
+        return_type = functions_group[index].return_type
         body.append(ifIndex(index))
         for i, arg in enumerate(args):
             arg_field = getArgType(arg)
@@ -811,7 +813,7 @@ def implementLuaCFunction(
             else:
                 body.append(getComplexArgument(options))
         if is_constructor:
-            body.append(callWtConstructor(str(return_type), args, module_name))
+            body.append(callWtConstructor(args, module_name))
             if noParent(args):
                 body.append(addWidgetToContainer(module_name))
         else:
@@ -896,13 +898,11 @@ def generateConstructor(module_name, constructors):
     if not constructors:
         return ''
     constructor_name = 'make'
-    constructor_return_type = module_name + ' *'
     return implementLuaCFunction(
         True,
         module_name,
         constructor_name,
-        makeArgsOverloads(constructors),
-        constructor_return_type,
+        constructors,
     )
 
 def generateSignals(signals, module_name):
@@ -1016,15 +1016,11 @@ def generateModule(module_name, methods, base, constructors, signals):
             name2methods[method.name] = []
         name2methods[method.name].append(method)
     for method_name, group in name2methods.items():
-        return_type = group[0].return_type
-        for method in group:
-            assert method.return_type == return_type
         source.append(implementLuaCFunction(
             False,
             module_name,
             method_name,
-            makeArgsOverloads(group),
-            return_type,
+            group,
         ))
     source.append(generateSignals(signals, module_name))
     source.append(generateMethodsArray(module_name, methods + signals))
