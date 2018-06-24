@@ -100,14 +100,14 @@ int luawt_WMessageBox_button(lua_State* L) {
     int index = luawt_getSuitableArgsGroup(L, luawt_WMessageBox_button_args);
     WMessageBox* self = luawt_checkFromLua<WMessageBox>(L, 1);
     if (index == 0) {
-        Wt::StandardButton b = static_cast<Wt::StandardButton>(luawt_getEnum(
+        Wt::StandardButton button = static_cast<Wt::StandardButton>(luawt_getEnum(
                     L,
                     luawt_enum_StandardButton_str,
                     luawt_enum_StandardButton_val,
                     2,
                     "Wrong enum type in args of WMessageBox.button"
                 ));
-        Wt::WPushButton* l_result = self->button(b);
+        Wt::WPushButton* l_result = self->button(button);
         luawt_toLua(L, l_result);
         return 1;
     } else {
