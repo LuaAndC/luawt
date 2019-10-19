@@ -96,6 +96,6 @@ The tool [gen docs][gen-docs] is used to generate
 [wt]: https://www.webtoolkit.eu/
 [luarocks]: https://luarocks.org/
 [hello-source]: https://github.com/LuaAndC/luawt/tree/master/examples/hello
-[hello-demo]: http://hello.locksat.tk/
+[hello-demo]: http://78.47.9.147:12346/
 [luacheck-source]: https://github.com/LuaAndC/luawt/tree/master/examples/luacheck
-[luacheck-demo]: http://luawt.locksat.tk/
+[luacheck-demo]: http://78.47.9.147:12345/
