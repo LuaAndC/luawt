@@ -289,15 +289,24 @@ inline void luawt_toLua<MyApplication>(
 
 template<lua_CFunction F>
 struct wrap {
-    static int func(lua_State* L) {
+    static int internalFunc(lua_State* L) {
         try {
             return F(L);
         } catch (std::exception& e) {
             lua_pushstring(L, e.what());
+            return -1;
         } catch (...) {
             lua_pushliteral(L, "Unknown exception");
+            return -1;
         }
-        return lua_error(L);
+    }
+
+    static int func(lua_State* L) {
+        int result = internalFunc(L);
+        if (result == -1) {
+            return lua_error(L);
+        }
+        return result;
     }
 };
 
